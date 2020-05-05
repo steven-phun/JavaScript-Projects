@@ -1,4 +1,5 @@
 import pygame
+
 ##
 # created by Steven Phun on May 5, 2020.
 #
@@ -37,6 +38,7 @@ import pygame
 #                         16 | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
 #                            +------------++------------++------------++------------+
 ##
+
 
 # 16x16 grid
 GRID_SIZE = 16
@@ -78,13 +80,16 @@ def solve_sudoku():
     for row in range(0, GRID_SIZE):  # represents the 16 rows in grid
         for column in range(0, GRID_SIZE):  # represents the 16 column in grid
             if sudoku_grid[row][column] == EMPTY_SQUARE:  # find first empty square in grid
+
                 for element in range(1, GRID_SIZE + 1):  # generate the numbers to pencil in
                     if safe_to_pencil_element(row, column, element):  # check if element passes constraint
                         sudoku_grid[row][column] = element  # pencil element
-                        if solve_sudoku():  # base case: element leads to a solution
+
+                        if solve_sudoku():  # base case: elements leads to a solution
                             return True
                         else:
                             sudoku_grid[row][column] = EMPTY_SQUARE  # backtrack
+
                 return False  # sudoku has no solution
     return True  # sudoku solved
 
@@ -140,8 +145,40 @@ def boxes_contain_element(row, column, element):
     return False
 
 
+# constant variables
+WIDTH = 600
+HEIGHT = 600
+
+WHITE = [255, 255, 255]
+BLACK = [0, 0, 0]
+
+
+# initialize GUI screen
+def setup_screen():
+    # set up drawing window
+    pygame.init()
+    pygame.display.set_caption("Computer Scientist's 16x16 Sudoku")
+
+    # set screen size
+    surface = pygame.display.set_mode([WIDTH, HEIGHT])
+
+    # set background color
+    surface.fill(WHITE)
+
+
 def main():
-    solve_sudoku()
+    setup_screen()
+
+    # run until the Sudoku is solved
+    run = True
+    while run:
+
+        # get user inputs
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+
+        pygame.display.update()
 
 
 main()
