@@ -1,3 +1,4 @@
+import pygame
 ##
 # created by Steven Phun on May 5, 2020.
 #
@@ -144,3 +145,4 @@ def main():
 
 
 main()
+pygame.quit()
