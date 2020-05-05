@@ -65,6 +65,16 @@ sudoku_grid = [[5, 11, 12, 8, 4, 16, 7, 3, 2, 13, 9, 10, 6, 14, 15, 1],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
 
+# @param        row and column represents the position of the column in the grid.
+# @param        element is the element being penciled in
+#
+# @return      true, if the given element does not exists in the same row, column, and row.
+def safe_to_pencil_element(row, column, element):
+    return not (rows_contain_element(row, element) or
+                columns_contain_element(column, element) or
+                boxes_contain_element(row, column, element))
+
+
 # @param        row represents the position of the row in the grid.
 # @param        element is the number or letter to pencil
 #
