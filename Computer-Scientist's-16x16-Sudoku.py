@@ -87,3 +87,20 @@ def columns_contain_element(column, element):
             return True
 
     return False
+
+
+# @param        row and column represents the row and column position in the grid.
+# @param        element is the element being penciled in
+#
+# @return      false, if the row does not contain the element
+def boxes_contain_element(row, column, element):
+    # find box with given row and column
+    row_box_number = row - row % NUMBER_OF_BOXES
+    column_box_number = column - column % NUMBER_OF_BOXES
+
+    for box in range(row_box_number, row_box_number + NUMBER_OF_BOXES):
+        for square in range(column_box_number, column_box_number + NUMBER_OF_BOXES):
+            if sudoku_grid[box][square] == element:
+                return True
+
+    return False
