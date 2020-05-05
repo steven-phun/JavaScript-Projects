@@ -146,8 +146,11 @@ def boxes_contain_element(row, column, element):
 
 
 # constant variables
-WIDTH = 600
-HEIGHT = 600
+WIDTH = 800
+HEIGHT = 800
+
+VERTICAL_SPACE = WIDTH / GRID_SIZE
+HORIZONTAL_SPACE = HEIGHT / GRID_SIZE
 
 WHITE = [255, 255, 255]
 BLACK = [0, 0, 0]
@@ -164,6 +167,23 @@ def setup_screen():
 
     # set background color
     surface.fill(WHITE)
+
+    draw_grid_lines(surface)
+
+
+# draw vertical and horizontal lines for the grid
+def draw_grid_lines(surface):
+    # draw lines for grid
+    for i in range(GRID_SIZE + 1):
+        if i % 4 == 0 and i != 0:
+            line_width = 4
+        else:
+            line_width = 1
+
+        # vertical line
+        pygame.draw.line(surface, BLACK, (i * VERTICAL_SPACE, 0), (i * VERTICAL_SPACE, WIDTH), line_width)
+        # horizontal line
+        pygame.draw.line(surface, BLACK, (0, i * VERTICAL_SPACE), (HEIGHT, i * VERTICAL_SPACE), line_width)
 
 
 def main():
