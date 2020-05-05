@@ -63,3 +63,27 @@ sudoku_grid = [[5, 11, 12, 8, 4, 16, 7, 3, 2, 13, 9, 10, 6, 14, 15, 1],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
+
+# @param        row represents the position of the row in the grid.
+# @param        element is the number or letter to pencil
+#
+# @return      false, if the row does not contain the element
+def rows_contain_element(row, element):
+    for column in range(0, GRID_SIZE):
+        if sudoku_grid[row][column] == element:
+            return True
+
+    return False
+
+
+# @param        column represents the position of the column in the grid.
+# @param        element is the number or letter to pencil
+#
+# @return      false, if the row does not contain the element
+def columns_contain_element(column, element):
+    for row in range(0, GRID_SIZE):
+        if sudoku_grid[row][column] == element:
+            return True
+
+    return False
