@@ -137,3 +137,10 @@ def boxes_contain_element(row, column, element):
                 return True
 
     return False
+
+
+def main():
+    solve_sudoku()
+
+
+main()
