@@ -65,6 +65,29 @@ sudoku_grid = [[5, 11, 12, 8, 4, 16, 7, 3, 2, 13, 9, 10, 6, 14, 15, 1],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
 
+# @post                 solve and print the solution to the given Sudoku
+#                       by using backtracking recursion
+#
+# @raise                ValueError if given grid is invalid
+# @return               true, if a solution is found
+def solve_sudoku():
+    if len(sudoku_grid) != GRID_SIZE:
+        raise ValueError("given sudoku does not match the 16x16 format")
+
+    for row in range(0, GRID_SIZE):  # represents the 16 rows in grid
+        for column in range(0, GRID_SIZE):  # represents the 16 column in grid
+            if sudoku_grid[row][column] == EMPTY_SQUARE:  # find first empty square in grid
+                for element in range(1, GRID_SIZE + 1):  # generate the numbers to pencil in
+                    if safe_to_pencil_element(row, column, element):  # check if element passes constraint
+                        sudoku_grid[row][column] = element  # pencil element
+                        if solve_sudoku():  # base case: element leads to a solution
+                            return True
+                        else:
+                            sudoku_grid[row][column] = EMPTY_SQUARE  # backtrack
+                return False  # sudoku has no solution
+    return True  # sudoku solved
+
+
 # @param        row and column represents the position of the column in the grid.
 # @param        element is the element being penciled in
 #
