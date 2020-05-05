@@ -12,4 +12,4 @@ Inspired by professor, Benjamin Sanders, allowing students to solve his Sudoku a
 
 Developed in:
 
--Python
+- Python
