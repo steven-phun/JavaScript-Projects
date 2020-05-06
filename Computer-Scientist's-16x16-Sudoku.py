@@ -222,6 +222,7 @@ def draw_setter():
 #
 # @post                  display the 'text' on coordinates 'position' on the screen
 def print_text(text, position_x, position_y, color):
+
     if isinstance(text, int):
         # convert 10 to A, 11 to B, 12 to C
         if text > 9:
@@ -252,8 +253,8 @@ def wait_for_user_input():
     # object stores the user's input key
     key = None
     # mouse coordinates relative to grid index
-    position_x = 0
-    position_y = 0
+    position_x = None
+    position_y = None
     # mouse coordinates relative to center of square
     print_x = None
     print_y = None
@@ -279,21 +280,54 @@ def wait_for_user_input():
                 print_x = int(position_x * SQUARE_SIZE) + CENTER_X
                 print_y = int(position_y * SQUARE_SIZE) + CENTER_Y
 
-            if sudoku_grid[position_y][position_x] is None:
-                # key input from user
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_1:
-                        key = 1
-                        print_text(key, print_x, print_y, GREY)
+            # key input from user
+            if event.type == pygame.KEYDOWN:
 
-                    if event.key == pygame.K_RETURN:
-                        solve_sudoku()
-                        print(solve_sudoku())
+                if event.key == pygame.K_RETURN:
+                    solve_sudoku()
+                    print(solve_sudoku())
 
-                    if event.key == pygame.K_TAB:
-                        print_text(key, print_x, print_y, RED)
-                    if event.key == pygame.K_BACKSPACE:
-                        erase(print_x, print_y)
+                if event.key == pygame.K_TAB:
+                    print_text(key, print_x, print_y, RED)
+
+                if event.key == pygame.K_BACKSPACE:
+                    erase(print_x, print_y)
+
+                if event.key == pygame.K_1:
+                    key = 1
+                if event.key == pygame.K_2:
+                    key = 2
+                if event.key == pygame.K_3:
+                    key = 3
+                if event.key == pygame.K_4:
+                    key = 4
+                if event.key == pygame.K_5:
+                    key = 5
+                if event.key == pygame.K_6:
+                    key = 6
+                if event.key == pygame.K_7:
+                    key = 7
+                if event.key == pygame.K_8:
+                    key = 8
+                if event.key == pygame.K_9:
+                    key = 9
+                if event.key == pygame.K_a:
+                    key = "A"
+                if event.key == pygame.K_b:
+                    key = "B"
+                if event.key == pygame.K_c:
+                    key = "C"
+                if event.key == pygame.K_d:
+                    key = "D"
+                if event.key == pygame.K_e:
+                    key = "E"
+                if event.key == pygame.K_f:
+                    key = "F"
+
+                # print only if square is empty
+                if sudoku_grid[position_y][position_x] is None:
+                    erase(print_x, print_y)
+                    print_text(key, print_x, print_y, GREY)
 
         pygame.display.update()
 
