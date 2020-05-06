@@ -12,6 +12,7 @@ import pygame
 # -grid                     has 16 rows, 16 columns, and 16 boxes, each having 16 squares (256 total).
 # -constraint               is that each element(numbers/letters) appears only once in each row, column, and row.
 # -pencil                   write a number or letter in the square.
+# -setter                   fixed number of letters that cannot be erased
 #
 # grid layout in code
 #
@@ -48,38 +49,47 @@ GRID_SIZE = 16
 NUMBER_OF_BOXES = 4
 
 # 0 in grid represents an empty square
-EMPTY_SQUARE = 0
+EMPTY_SQUARE = None
 
 # constant variables
 WIDTH = 800
 HEIGHT = 800
+LEGEND_HEIGHT = 100
 
 SQUARE_SIZE = WIDTH / GRID_SIZE
 HORIZONTAL_SPACE = HEIGHT / GRID_SIZE
 
+# values to add to center text in square
+CENTER_X = GRID_SIZE
+CENTER_Y = 2
+
+
 WHITE = [255, 255, 255]
 BLACK = [0, 0, 0]
+BLUE = [0, 0, 255]
+RED = [255, 0, 0]
+GREY = [192, 192, 192]
 
 # initialize interface object for user
-display_surface = pygame.display.set_mode([WIDTH, HEIGHT])
+display_surface = pygame.display.set_mode([WIDTH, HEIGHT + LEGEND_HEIGHT])
 
 # user's grid to play or solve with
-sudoku_grid = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+sudoku_grid = [[None, None, None, None, None, None, 0, None, None, None, None, None, None, None, None, None],
+               [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None],
+               [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None],
+               [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None],
+               [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None],
+               [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None],
+               [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None],
+               [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None],
+               [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None],
+               [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None],
+               [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None],
+               [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None],
+               [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None],
+               [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None],
+               [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None],
+               [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]]
 
 
 # @post                 solve and print the solution to the given Sudoku
@@ -97,16 +107,16 @@ def solve_sudoku():
         for column in range(0, GRID_SIZE):  # represents the 16 column in grid
             if sudoku_grid[row][column] == EMPTY_SQUARE:  # find first empty square in grid
 
-                for element in range(1, GRID_SIZE + 1):  # generate the numbers to pencil in
+                for element in range(0, GRID_SIZE):  # generate the numbers to pencil in
                     if safe_to_pencil_element(row, column, element):  # check if element passes constraint
                         sudoku_grid[row][column] = element  # pencil element
-                        print_text(element, (column * SQUARE_SIZE + 16, row * SQUARE_SIZE + 2))  # display to GUI
+                        print_text(element, (column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y), BLACK)
 
                         if solve_sudoku():  # base case: elements leads to a solution
                             return True
                         else:
                             sudoku_grid[row][column] = EMPTY_SQUARE  # backtrack
-                            erase_text(element, (row * SQUARE_SIZE + 16, column * SQUARE_SIZE + 2))  # display to GUI
+                            print_text(element, (column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y), WHITE)
                 return False  # sudoku has no solution
     return True  # sudoku solved
 
@@ -174,6 +184,12 @@ def setup_screen():
     # set grid lines
     draw_grid_lines()
 
+    # display setters
+    draw_setter()
+
+    # display key map
+    display_legend()
+
 
 # helper method draws vertical and horizontal lines for the Sudoku grid
 def draw_grid_lines():
@@ -191,40 +207,44 @@ def draw_grid_lines():
         pygame.draw.line(display_surface, BLACK, (0, i * SQUARE_SIZE), (HEIGHT, i * SQUARE_SIZE), line_width)
 
 
+# @post display the fixed numbers and letters of the grid
+def draw_setter():
+    for row in range(0, GRID_SIZE):
+        for column in range(0, GRID_SIZE):
+            if sudoku_grid[row][column] != EMPTY_SQUARE:
+                print_text(sudoku_grid[row][column],
+                           (column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y), BLUE)
+
+
 # @param text        is object to be printed on the screen
 # @param position    is the coordinates the user wants the 'text' to be displayed
 #
 # @post              display the 'text' on coordinates 'position' on the screen
-def print_text(text, position):
-    # this sudoku starts with 0 instead of 1
-    text -= 1
+def print_text(text, position, color):
 
     # convert 10 to A, 11 to B, 12 to C
-    if text > 9:
-        text += 65 - 10  # ASCII code for A is 65
-        text = chr(text)
+    if isinstance(text, int):
+        if text > 9:
+            text += 65 - 10  # ASCII code for A is 65
+            text = chr(text)
 
     font = pygame.font.SysFont('Comic Sans MS', 30)
-    text_surface = font.render(str(text), True, BLACK)
+    text_surface = font.render(str(text), True, color)
     display_surface.blit(text_surface, position)
     pygame.display.update()
 
 
-# @param text        is object to be erase off the screen
-# @param position    is the coordinates the user wants the 'text' to be erase
-#
-# @post              erase the 'text' on coordinates 'position' off the screen
-def erase_text(text, position):
-    font = pygame.font.SysFont('Comic Sans MS', 30)
-    text_surface = font.render(str(text), True, WHITE)
-    display_surface.blit(text_surface, position)
-    pygame.display.update()
+def display_legend():
+    print_text("To pencil 'Key' element then 'Click' the square", (0, WIDTH), BLACK)
+    print_text("To solve press 'Enter'", (0, WIDTH + 35), BLACK)
 
 
 # this method records the user's key and mouse input
 # and displays the input using GUI for the user
 def wait_for_user_input():
-    pencil = None
+    key = None
+    mouse_position_x = None
+    mouse_position_y = None
 
     # run until the Sudoku is solved
     input_loop = True
@@ -239,15 +259,26 @@ def wait_for_user_input():
 
             # click input from user
             if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_position = pygame.mouse.get_pos()
+                # return the center position of square
+                mouse_position_x, mouse_position_y = pygame.mouse.get_pos()
+                mouse_position_x = int(mouse_position_x / SQUARE_SIZE) * SQUARE_SIZE + CENTER_X
+                mouse_position_y = int(mouse_position_y / SQUARE_SIZE) * SQUARE_SIZE + CENTER_Y
 
             # key input from user
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_1:
-                    print_text("1", mouse_position)
+                    key = 1
 
                 if event.key == pygame.K_RETURN:
                     solve_sudoku()
+
+                if event.key == pygame.K_TAB:
+
+                    print_text(key, (mouse_position_x, mouse_position_y), RED)
+
+            # display input to GUI
+            if key and mouse_position_y and mouse_position_x is not None:
+                print_text(key, (mouse_position_x, mouse_position_y), GREY)
 
         pygame.display.update()
 
