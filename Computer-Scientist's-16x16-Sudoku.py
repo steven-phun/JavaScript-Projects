@@ -111,7 +111,7 @@ def solve_sudoku():
                 for element in range(0, GRID_SIZE):  # generate the numbers to pencil in
                     if safe_to_pencil_element(row, column, element):  # check if element passes constraint
                         sudoku_grid[row][column] = element  # pencil element
-                        print_text(element, (column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y), BLACK)
+                        print_text(element, column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y, BLACK)
 
                         if solve_sudoku():  # base case: elements leads to a solution
                             return True
@@ -252,8 +252,8 @@ def wait_for_user_input():
     # object stores the user's input key
     key = None
     # mouse coordinates relative to grid index
-    position_x = None
-    position_y = None
+    position_x = 0
+    position_y = 0
     # mouse coordinates relative to center of square
     print_x = None
     print_y = None
@@ -276,23 +276,24 @@ def wait_for_user_input():
                 position_x = int(position_x / SQUARE_SIZE)
                 position_y = int(position_y / SQUARE_SIZE)
 
-                print_x = position_x * SQUARE_SIZE + CENTER_X
-                print_y = position_y * SQUARE_SIZE + CENTER_Y
+                print_x = int(position_x * SQUARE_SIZE) + CENTER_X
+                print_y = int(position_y * SQUARE_SIZE) + CENTER_Y
 
-            # key input from user
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_1:
-                    key = 1
-                    print_text(key, print_x, print_y, GREY)
+            if sudoku_grid[position_y][position_x] is None:
+                # key input from user
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_1:
+                        key = 1
+                        print_text(key, print_x, print_y, GREY)
 
-                if event.key == pygame.K_RETURN:
-                    solve_sudoku()
-                    print(solve_sudoku())
+                    if event.key == pygame.K_RETURN:
+                        solve_sudoku()
+                        print(solve_sudoku())
 
-                if event.key == pygame.K_TAB:
-                    print_text(key, print_x, print_y, RED)
-                if event.key == pygame.K_BACKSPACE:
-                    erase(print_x, print_y)
+                    if event.key == pygame.K_TAB:
+                        print_text(key, print_x, print_y, RED)
+                    if event.key == pygame.K_BACKSPACE:
+                        erase(print_x, print_y)
 
         pygame.display.update()
 
