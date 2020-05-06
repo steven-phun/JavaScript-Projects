@@ -54,7 +54,7 @@ EMPTY_SQUARE = 0
 WIDTH = 800
 HEIGHT = 800
 
-VERTICAL_SPACE = WIDTH / GRID_SIZE
+SQUARE_SIZE = WIDTH / GRID_SIZE
 HORIZONTAL_SPACE = HEIGHT / GRID_SIZE
 
 WHITE = [255, 255, 255]
@@ -64,7 +64,7 @@ BLACK = [0, 0, 0]
 display_surface = pygame.display.set_mode([WIDTH, HEIGHT])
 
 # user's grid to play or solve with
-sudoku_grid = [[5, 11, 12, 8, 4, 16, 7, 3, 2, 13, 9, 10, 6, 14, 15, 1],
+sudoku_grid = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -100,12 +100,13 @@ def solve_sudoku():
                 for element in range(1, GRID_SIZE + 1):  # generate the numbers to pencil in
                     if safe_to_pencil_element(row, column, element):  # check if element passes constraint
                         sudoku_grid[row][column] = element  # pencil element
+                        print_text(element, (column * SQUARE_SIZE + 16, row * SQUARE_SIZE + 2))  # display to GUI
 
                         if solve_sudoku():  # base case: elements leads to a solution
                             return True
                         else:
                             sudoku_grid[row][column] = EMPTY_SQUARE  # backtrack
-
+                            erase_text(element, (row * SQUARE_SIZE + 16, column * SQUARE_SIZE + 2))  # display to GUI
                 return False  # sudoku has no solution
     return True  # sudoku solved
 
@@ -185,9 +186,9 @@ def draw_grid_lines():
             line_width = 1
 
         # draw vertical line
-        pygame.draw.line(display_surface, BLACK, (i * VERTICAL_SPACE, 0), (i * VERTICAL_SPACE, WIDTH), line_width)
+        pygame.draw.line(display_surface, BLACK, (i * SQUARE_SIZE, 0), (i * SQUARE_SIZE, WIDTH), line_width)
         # draw horizontal line
-        pygame.draw.line(display_surface, BLACK, (0, i * VERTICAL_SPACE), (HEIGHT, i * VERTICAL_SPACE), line_width)
+        pygame.draw.line(display_surface, BLACK, (0, i * SQUARE_SIZE), (HEIGHT, i * SQUARE_SIZE), line_width)
 
 
 # @param text        is object to be printed on the screen
@@ -195,9 +196,29 @@ def draw_grid_lines():
 #
 # @post              display the 'text' on coordinates 'position' on the screen
 def print_text(text, position):
+    # this sudoku starts with 0 instead of 1
+    text -= 1
+
+    # convert 10 to A, 11 to B, 12 to C
+    if text > 9:
+        text += 65 - 10  # ASCII code for A is 65
+        text = chr(text)
+
     font = pygame.font.SysFont('Comic Sans MS', 30)
-    text_surface = font.render(text, True, BLACK)
+    text_surface = font.render(str(text), True, BLACK)
     display_surface.blit(text_surface, position)
+    pygame.display.update()
+
+
+# @param text        is object to be erase off the screen
+# @param position    is the coordinates the user wants the 'text' to be erase
+#
+# @post              erase the 'text' on coordinates 'position' off the screen
+def erase_text(text, position):
+    font = pygame.font.SysFont('Comic Sans MS', 30)
+    text_surface = font.render(str(text), True, WHITE)
+    display_surface.blit(text_surface, position)
+    pygame.display.update()
 
 
 # this method records the user's key and mouse input
@@ -225,30 +246,10 @@ def wait_for_user_input():
                 if event.key == pygame.K_1:
                     print_text("1", mouse_position)
 
+                if event.key == pygame.K_RETURN:
+                    solve_sudoku()
+
         pygame.display.update()
-
-
-# # this class represents the Sudoku Grid GUI
-# class Sudoku:
-#
-#     # row       represents the number of rows in grid
-#     # column    represents the number of columns in grid
-#     # width     represents the width of the GUI
-#     # height    represents the height of the GUI
-#     # surface   represents the object that the user is interacting with
-#     def __init__(self, row, column, width, height, surface):
-#         self.row = row
-#         self.column = column
-#         self.width = width
-#         self.height = height
-#         self.surface = surface
-
-
-class Square:
-    def __init__(self, data, row, column):
-        self.data = data
-        self.row = row
-        self.column = column
 
 
 def main():
