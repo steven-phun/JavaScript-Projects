@@ -39,6 +39,7 @@ import pygame
 #                            +------------++------------++------------++------------+
 ##
 
+# global variables
 
 # 16x16 grid
 GRID_SIZE = 16
@@ -48,6 +49,19 @@ NUMBER_OF_BOXES = 4
 
 # 0 in grid represents an empty square
 EMPTY_SQUARE = 0
+
+# constant variables
+WIDTH = 800
+HEIGHT = 800
+
+VERTICAL_SPACE = WIDTH / GRID_SIZE
+HORIZONTAL_SPACE = HEIGHT / GRID_SIZE
+
+WHITE = [255, 255, 255]
+BLACK = [0, 0, 0]
+
+# initialize interface object for user
+display_surface = pygame.display.set_mode([WIDTH, HEIGHT])
 
 # user's grid to play or solve with
 sudoku_grid = [[5, 11, 12, 8, 4, 16, 7, 3, 2, 13, 9, 10, 6, 14, 15, 1],
@@ -74,6 +88,8 @@ sudoku_grid = [[5, 11, 12, 8, 4, 16, 7, 3, 2, 13, 9, 10, 6, 14, 15, 1],
 # @raise                ValueError if given grid is invalid
 # @return               true, if a solution is found
 def solve_sudoku():
+    global sudoku_grid
+
     if len(sudoku_grid) != GRID_SIZE:
         raise ValueError("given sudoku does not match the 16x16 format")
 
@@ -145,35 +161,19 @@ def boxes_contain_element(row, column, element):
     return False
 
 
-# constant variables
-WIDTH = 800
-HEIGHT = 800
-
-VERTICAL_SPACE = WIDTH / GRID_SIZE
-HORIZONTAL_SPACE = HEIGHT / GRID_SIZE
-
-WHITE = [255, 255, 255]
-BLACK = [0, 0, 0]
-
-# initialize interface object for user
-surface = pygame.display.set_mode([WIDTH, HEIGHT])
-
-
 # this method initializes GUI screen for the user to interact with
 def setup_screen():
     # set up drawing window
-    pygame.init()
+    pygame.font.init()
     pygame.display.set_caption("Computer Scientist's 16x16 Sudoku")
 
     # set background color
-    surface.fill(WHITE)
+    display_surface.fill(WHITE)
 
     # set grid lines
     draw_grid_lines()
 
 
-# @param surface is the object that displays the program to the user
-#
 # helper method draws vertical and horizontal lines for the Sudoku grid
 def draw_grid_lines():
     # draw lines for grid
@@ -185,36 +185,70 @@ def draw_grid_lines():
             line_width = 1
 
         # draw vertical line
-        pygame.draw.line(surface, BLACK, (i * VERTICAL_SPACE, 0), (i * VERTICAL_SPACE, WIDTH), line_width)
+        pygame.draw.line(display_surface, BLACK, (i * VERTICAL_SPACE, 0), (i * VERTICAL_SPACE, WIDTH), line_width)
         # draw horizontal line
-        pygame.draw.line(surface, BLACK, (0, i * VERTICAL_SPACE), (HEIGHT, i * VERTICAL_SPACE), line_width)
+        pygame.draw.line(display_surface, BLACK, (0, i * VERTICAL_SPACE), (HEIGHT, i * VERTICAL_SPACE), line_width)
 
 
+# @param text        is object to be printed on the screen
+# @param position    is the coordinates the user wants the 'text' to be displayed
+#
+# @post              display the 'text' on coordinates 'position' on the screen
+def print_text(text, position):
+    font = pygame.font.SysFont('Comic Sans MS', 30)
+    text_surface = font.render(text, True, BLACK)
+    display_surface.blit(text_surface, position)
+
+
+# this method records the user's key and mouse input
+# and displays the input using GUI for the user
 def wait_for_user_input():
     pencil = None
 
     # run until the Sudoku is solved
-    loop = True
-    while loop:
+    input_loop = True
+    while input_loop:
 
         # get user inputs
         for event in pygame.event.get():
 
             # exit the program
             if event.type == pygame.QUIT:
-                loop = False
+                input_loop = False
 
             # click input from user
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_position = pygame.mouse.get_pos()
-                print(mouse_position)
 
             # key input from user
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_1:
-                    pencil = 1
+                    print_text("1", mouse_position)
 
         pygame.display.update()
+
+
+# # this class represents the Sudoku Grid GUI
+# class Sudoku:
+#
+#     # row       represents the number of rows in grid
+#     # column    represents the number of columns in grid
+#     # width     represents the width of the GUI
+#     # height    represents the height of the GUI
+#     # surface   represents the object that the user is interacting with
+#     def __init__(self, row, column, width, height, surface):
+#         self.row = row
+#         self.column = column
+#         self.width = width
+#         self.height = height
+#         self.surface = surface
+
+
+class Square:
+    def __init__(self, data, row, column):
+        self.data = data
+        self.row = row
+        self.column = column
 
 
 def main():
