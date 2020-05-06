@@ -155,50 +155,71 @@ HORIZONTAL_SPACE = HEIGHT / GRID_SIZE
 WHITE = [255, 255, 255]
 BLACK = [0, 0, 0]
 
+# initialize interface object for user
+surface = pygame.display.set_mode([WIDTH, HEIGHT])
 
-# initialize GUI screen
+
+# this method initializes GUI screen for the user to interact with
 def setup_screen():
     # set up drawing window
     pygame.init()
     pygame.display.set_caption("Computer Scientist's 16x16 Sudoku")
 
-    # set screen size
-    surface = pygame.display.set_mode([WIDTH, HEIGHT])
-
     # set background color
     surface.fill(WHITE)
 
-    draw_grid_lines(surface)
+    # set grid lines
+    draw_grid_lines()
 
 
-# draw vertical and horizontal lines for the grid
-def draw_grid_lines(surface):
+# @param surface is the object that displays the program to the user
+#
+# helper method draws vertical and horizontal lines for the Sudoku grid
+def draw_grid_lines():
     # draw lines for grid
     for i in range(GRID_SIZE + 1):
+        # draw outline for boxes
         if i % 4 == 0 and i != 0:
             line_width = 4
         else:
             line_width = 1
 
-        # vertical line
+        # draw vertical line
         pygame.draw.line(surface, BLACK, (i * VERTICAL_SPACE, 0), (i * VERTICAL_SPACE, WIDTH), line_width)
-        # horizontal line
+        # draw horizontal line
         pygame.draw.line(surface, BLACK, (0, i * VERTICAL_SPACE), (HEIGHT, i * VERTICAL_SPACE), line_width)
+
+
+def wait_for_user_input():
+    pencil = None
+
+    # run until the Sudoku is solved
+    loop = True
+    while loop:
+
+        # get user inputs
+        for event in pygame.event.get():
+
+            # exit the program
+            if event.type == pygame.QUIT:
+                loop = False
+
+            # click input from user
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_position = pygame.mouse.get_pos()
+                print(mouse_position)
+
+            # key input from user
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_1:
+                    pencil = 1
+
+        pygame.display.update()
 
 
 def main():
     setup_screen()
-
-    # run until the Sudoku is solved
-    run = True
-    while run:
-
-        # get user inputs
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-
-        pygame.display.update()
+    wait_for_user_input()
 
 
 main()
