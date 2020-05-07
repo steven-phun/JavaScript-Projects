@@ -1,3 +1,5 @@
+import math
+
 import pygame
 import time
 
@@ -49,7 +51,7 @@ GRID_SIZE = 16
 # 4 boxes per row and column
 NUMBER_OF_BOXES = 4
 
-# 0 in grid represents an empty square
+# represents an empty square in the grid
 EMPTY_SQUARE = None
 
 # constant variables
@@ -64,11 +66,16 @@ HORIZONTAL_SPACE = HEIGHT / GRID_SIZE
 CENTER_X = GRID_SIZE
 CENTER_Y = 2
 
+# rbh color
 WHITE = [255, 255, 255]
 BLACK = [0, 0, 0]
 BLUE = [0, 0, 255]
 RED = [255, 0, 0]
 GREY = [192, 192, 192]
+
+# font size
+LARGE = 30
+SMALL = 20
 
 # initialize interface object for user
 display_surface = pygame.display.set_mode([WIDTH, HEIGHT + LEGEND_HEIGHT])
@@ -111,15 +118,17 @@ def solve_sudoku():
                 for element in range(0, GRID_SIZE):  # generate the numbers to pencil in
                     if safe_to_pencil_element(row, column, element):  # check if element passes constraint
                         sudoku_grid[row][column] = element  # pencil element
-                        print_text(element, column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y, BLACK)
+                        print_text(element, column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y, LARGE, BLACK)
 
                         if solve_sudoku():  # base case: elements leads to a solution
                             return True
                         else:
                             sudoku_grid[row][column] = EMPTY_SQUARE  # backtrack
                             erase(column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y)
+
                 return False  # sudoku has no solution
-    return True  # sudoku solved
+
+        return True  # sudoku solved
 
 
 # @param        row and column represents the position of the column in the grid.
@@ -214,14 +223,16 @@ def draw_setter():
         for column in range(0, GRID_SIZE):
             if sudoku_grid[row][column] != EMPTY_SQUARE:
                 print_text(sudoku_grid[row][column],
-                           column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y, BLUE)
+                           column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y, LARGE, BLUE)
 
 
 # @param text            is object to be printed on the screen
 # @param position x,y    is the coordinates the user wants the 'text' to be displayed
 #
 # @post                  display the 'text' on coordinates 'position' on the screen
-def print_text(text, position_x, position_y, color):
+def print_text(text, position_x, position_y, size, color):
+
+    erase(position_x, position_y)
 
     if isinstance(text, int):
         # convert 10 to A, 11 to B, 12 to C
@@ -229,7 +240,7 @@ def print_text(text, position_x, position_y, color):
             text += 65 - 10  # ASCII code for A is 65
             text = chr(text)
 
-    font = pygame.font.SysFont('Comic Sans MS', 30)
+    font = pygame.font.SysFont('Comic Sans MS', size)
     text_surface = font.render(str(text), True, color)
     display_surface.blit(text_surface, (position_x, position_y))
     pygame.display.update()
@@ -241,20 +252,27 @@ def erase(x, y):
 
 
 def display_legend():
-    print_text("To pencil 'Click' square then 'Key' the element", 0, WIDTH, BLACK)
-    print_text("To guess 'Pencil' element then press 'Tab'", 0, WIDTH + 35, BLACK)
-    print_text("To erase 'Click' square then press 'Backspace'", 0, WIDTH + 35 * 2, BLACK)
-    print_text("To solve press 'Enter'", 0, WIDTH + 35 * 3, BLACK)
+    print_text("To pencil 'Click' square then 'Key' the element", 0, WIDTH, SMALL, BLACK)
+    print_text("To guess 'Pencil' element then press 'Tab'", 0, WIDTH + 35, SMALL, BLACK)
+    print_text("To erase 'Click' square then press 'Backspace'", 0, WIDTH + 35 * 2, SMALL, BLACK)
+    print_text("To solve press 'Enter'", 0, WIDTH + 35 * 3, SMALL, BLACK)
+    print_text("Stopwatch:", 625, WIDTH + 35 * 3, SMALL, BLACK)
 
 
 # this method records the user's key and mouse input
 # and displays the input using GUI for the user
 def wait_for_user_input():
+    # object represents a stopwatch
+    stopwatch = pygame.time.Clock()
+    timer = 0
+
     # object stores the user's input key
     key = None
+
     # mouse coordinates relative to grid index
     position_x = None
     position_y = None
+
     # mouse coordinates relative to center of square
     print_x = None
     print_y = None
@@ -262,6 +280,11 @@ def wait_for_user_input():
     # run until the Sudoku is solved
     input_loop = True
     while input_loop:
+
+        # start stopwatch
+        seconds = stopwatch.tick() / 1000.0  # represents the milliseconds that has gone by
+        timer += seconds
+        display_timer = math.trunc(timer)
 
         # get user inputs
         for event in pygame.event.get():
@@ -283,15 +306,10 @@ def wait_for_user_input():
             # key input from user
             if event.type == pygame.KEYDOWN:
 
+                # enter to solve the sudoku
                 if event.key == pygame.K_RETURN:
                     solve_sudoku()
                     print(solve_sudoku())
-
-                if event.key == pygame.K_TAB:
-                    print_text(key, print_x, print_y, RED)
-
-                if event.key == pygame.K_BACKSPACE:
-                    erase(print_x, print_y)
 
                 if event.key == pygame.K_1:
                     key = 1
@@ -325,9 +343,21 @@ def wait_for_user_input():
                     key = "F"
 
                 # print only if square is empty
-                if sudoku_grid[position_y][position_x] is None:
+                if key is not None and position_x <= WIDTH and position_y <= HEIGHT:
+                    if sudoku_grid[position_y][position_x] is None:
+                        erase(print_x, print_y)
+                        print_text(key, print_x, print_y, LARGE, GREY)
+
+                # tab to guess an element
+                if event.key == pygame.K_TAB:
+                    print_text(key, print_x, print_y, LARGE, RED)
+
+                # backspace to remove a non setter element
+                if event.key == pygame.K_BACKSPACE:
                     erase(print_x, print_y)
-                    print_text(key, print_x, print_y, GREY)
+
+        # display stop watch
+        print_text(str(display_timer), 750, 905, SMALL, BLACK)
 
         pygame.display.update()
 
