@@ -360,7 +360,6 @@ def wait_for_user_input():
                         if sudoku_grid[position_y][position_x] is None:
 
                             # print element to square
-                            erase(print_x, print_y)
                             print_text(key, print_x, print_y, LARGE, GREY)
 
                             # checks if element is safe to be placed in square
