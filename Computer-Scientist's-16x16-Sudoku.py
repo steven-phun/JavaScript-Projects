@@ -128,7 +128,7 @@ def solve_sudoku():
 
                 return False  # sudoku has no solution
 
-        return True  # sudoku solved
+    return True  # sudoku solved
 
 
 # @param        row and column represents the position of the column in the grid.
@@ -252,11 +252,22 @@ def erase(x, y):
 
 
 def display_legend():
-    print_text("To pencil 'Click' square then 'Key' the element", 0, WIDTH, SMALL, BLACK)
-    print_text("To guess 'Pencil' element then press 'Tab'", 0, WIDTH + 35, SMALL, BLACK)
-    print_text("To erase 'Click' square then press 'Backspace'", 0, WIDTH + 35 * 2, SMALL, BLACK)
-    print_text("To solve press 'Enter'", 0, WIDTH + 35 * 3, SMALL, BLACK)
-    print_text("Stopwatch:", 625, WIDTH + 35 * 3, SMALL, BLACK)
+    clear_legend()
+    print_text(" -Key- to pencil desire the element", 0, WIDTH + 5, SMALL, BLACK)
+    print_text(" -Tab- to place a guess", 0, WIDTH + 40, SMALL, BLACK)
+    print_text(" -Backspace- to erase", 0, WIDTH + 40 * 2, SMALL, BLACK)
+    print_text(" -Enter- to solve", 0, WIDTH + 40 * 3, SMALL, BLACK)
+    print_text("Stopwatch:", 625, WIDTH + 40 * 3, SMALL, BLACK)
+
+
+def update_legend():
+    clear_legend()
+    print_text("Time:", 675, WIDTH + 40 * 3, SMALL, BLACK)
+    print_text(" Solution Found:  " + str(solve_sudoku()), 0, WIDTH + 40, SMALL, BLACK)
+
+
+def clear_legend():
+    pygame.draw.rect(display_surface, WHITE, (0, HEIGHT + 2, WIDTH, HEIGHT + LEGEND_HEIGHT), 0)
 
 
 # this method records the user's key and mouse input
@@ -277,89 +288,102 @@ def wait_for_user_input():
     print_x = None
     print_y = None
 
-    # run until the Sudoku is solved
+    run_loop = True  # allow user to to see the solution and timestamp
     input_loop = True
-    while input_loop:
+    while run_loop:
+        while input_loop:
 
-        # start stopwatch
-        seconds = stopwatch.tick() / 1000.0  # represents the milliseconds that has gone by
-        timer += seconds
-        display_timer = math.trunc(timer)
+            # get user inputs
+            for event in pygame.event.get():
 
-        # get user inputs
-        for event in pygame.event.get():
+                # exit the program
+                if event.type == pygame.QUIT:
+                    input_loop = False
 
-            # exit the program
-            if event.type == pygame.QUIT:
-                input_loop = False
+                # click input from user
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    position_x, position_y = pygame.mouse.get_pos()
 
-            # click input from user
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                position_x, position_y = pygame.mouse.get_pos()
+                    position_x = int(position_x / SQUARE_SIZE)
+                    position_y = int(position_y / SQUARE_SIZE)
 
-                position_x = int(position_x / SQUARE_SIZE)
-                position_y = int(position_y / SQUARE_SIZE)
+                    print_x = int(position_x * SQUARE_SIZE) + CENTER_X
+                    print_y = int(position_y * SQUARE_SIZE) + CENTER_Y
 
-                print_x = int(position_x * SQUARE_SIZE) + CENTER_X
-                print_y = int(position_y * SQUARE_SIZE) + CENTER_Y
+                # key input from user
+                if event.type == pygame.KEYDOWN:
 
-            # key input from user
-            if event.type == pygame.KEYDOWN:
+                    # enter to solve the sudoku
+                    if event.key == pygame.K_RETURN:
+                        clear_legend()
+                        print_text(" Searching for Solution ...", 0, WIDTH + 40, SMALL, BLACK)
+                        solve_sudoku()
+                        update_legend()
 
-                # enter to solve the sudoku
-                if event.key == pygame.K_RETURN:
-                    solve_sudoku()
-                    print(solve_sudoku())
+                        input_loop = False
+                    if event.key == pygame.K_0:
+                        key = 0
+                    if event.key == pygame.K_1:
+                        key = 1
+                    if event.key == pygame.K_2:
+                        key = 2
+                    if event.key == pygame.K_3:
+                        key = 3
+                    if event.key == pygame.K_4:
+                        key = 4
+                    if event.key == pygame.K_5:
+                        key = 5
+                    if event.key == pygame.K_6:
+                        key = 6
+                    if event.key == pygame.K_7:
+                        key = 7
+                    if event.key == pygame.K_8:
+                        key = 8
+                    if event.key == pygame.K_9:
+                        key = 9
+                    if event.key == pygame.K_a:
+                        key = 10
+                    if event.key == pygame.K_b:
+                        key = 11
+                    if event.key == pygame.K_c:
+                        key = 12
+                    if event.key == pygame.K_d:
+                        key = 13
+                    if event.key == pygame.K_e:
+                        key = 14
+                    if event.key == pygame.K_f:
+                        key = 15
 
-                if event.key == pygame.K_1:
-                    key = 1
-                if event.key == pygame.K_2:
-                    key = 2
-                if event.key == pygame.K_3:
-                    key = 3
-                if event.key == pygame.K_4:
-                    key = 4
-                if event.key == pygame.K_5:
-                    key = 5
-                if event.key == pygame.K_6:
-                    key = 6
-                if event.key == pygame.K_7:
-                    key = 7
-                if event.key == pygame.K_8:
-                    key = 8
-                if event.key == pygame.K_9:
-                    key = 9
-                if event.key == pygame.K_a:
-                    key = "A"
-                if event.key == pygame.K_b:
-                    key = "B"
-                if event.key == pygame.K_c:
-                    key = "C"
-                if event.key == pygame.K_d:
-                    key = "D"
-                if event.key == pygame.K_e:
-                    key = "E"
-                if event.key == pygame.K_f:
-                    key = "F"
+                    # edge case: if user tries to make changes outside of grid
+                    if key is not None and position_x <= WIDTH and position_y <= HEIGHT:
+                        # edge case: if user tries to edit a setter element
+                        if sudoku_grid[position_y][position_x] is None:
 
-                # print only if square is empty
-                if key is not None and position_x <= WIDTH and position_y <= HEIGHT:
-                    if sudoku_grid[position_y][position_x] is None:
-                        erase(print_x, print_y)
-                        print_text(key, print_x, print_y, LARGE, GREY)
+                            # print element to square
+                            erase(print_x, print_y)
+                            print_text(key, print_x, print_y, LARGE, GREY)
 
-                # tab to guess an element
-                if event.key == pygame.K_TAB:
-                    print_text(key, print_x, print_y, LARGE, RED)
+                            # checks if element is safe to be placed in square
+                            if safe_to_pencil_element(position_y, position_x, key):
 
-                # backspace to remove a non setter element
-                if event.key == pygame.K_BACKSPACE:
-                    erase(print_x, print_y)
+                                # tab to place a guess an element
+                                if event.key == pygame.K_TAB:
+                                    sudoku_grid[position_y][position_x] = key
+                                    print_text(key, print_x, print_y, LARGE, RED)
 
-        # display stop watch
-        print_text(str(display_timer), 750, 905, SMALL, BLACK)
+                        # backspace to remove an element from the square
+                        if event.key == pygame.K_BACKSPACE:
+                            sudoku_grid[position_y][position_x] = None
+                            erase(print_x, print_y)
 
-        pygame.display.update()
+            # display stop watch
+            # start stopwatch
+            seconds = stopwatch.tick() / 1000.0  # represents the milliseconds that has gone by
+            timer += seconds
+            display_timer = math.trunc(timer)
+            print_text(str(display_timer), 750, 920, SMALL, BLACK)
+
+            pygame.display.update()
 
 
 def main():
