@@ -14,7 +14,7 @@ import time
 # -sudoku                   is a partially completed grid.
 # -grid                     has 16 rows, 16 columns, and 16 boxes, each having 16 squares (256 total).
 # -constraint               is that each element(numbers/letters) appears only once in each row, column, and row.
-# -pencil                   write a number or letter in the square.
+# -note                     place a temporary number or letter in the square.
 # -setter                   fixed number of letters that cannot be erased
 #
 # grid layout in code
@@ -253,10 +253,9 @@ def erase(x, y):
 
 def display_legend():
     clear_legend()
-    print_text(" -Key- to pencil desire the element", 0, WIDTH + 5, SMALL, BLACK)
-    print_text(" -Tab- to place a guess", 0, WIDTH + 40, SMALL, BLACK)
-    print_text(" -Backspace- to erase", 0, WIDTH + 40 * 2, SMALL, BLACK)
-    print_text(" -Enter- to solve", 0, WIDTH + 40 * 3, SMALL, BLACK)
+    print_text(" -Space-  to place a guess", 0, WIDTH + 40 * 0 + 2, SMALL, BLACK)
+    print_text(" -Backspace-  to erase", 0, WIDTH + 40 * 1, SMALL, BLACK)
+    print_text(" -Enter-  to have the program find a solution", 0, WIDTH + 40 * 3, SMALL, BLACK)
     print_text("Stopwatch:", 625, WIDTH + 40 * 3, SMALL, BLACK)
 
 
