@@ -383,6 +383,8 @@ class sudoku:
 
                 pygame.display.update()
 
+class square:
+    pass
 
 def main():
     setup_screen()
