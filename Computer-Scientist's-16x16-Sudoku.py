@@ -93,7 +93,7 @@ class Sudoku:
 
     def __init__(self, grid_size, gui_size):
         """
-        this constructor instantiates the sudoku grid
+        instantiates a sudoku grid
 
         :param grid_size:    represents the number of rows and columns in the grid
         :param gui_size:     represents the height and weight of the GUI that displays the grid
