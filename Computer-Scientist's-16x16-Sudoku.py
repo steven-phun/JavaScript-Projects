@@ -120,10 +120,12 @@ class Sudoku:
                             self.grid[row][column] = element
                             self.display_to_gui(element, column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y, LARGE,
                                                 BLACK)
-                            if self.solve():  # base case: element leads to a solution
+                            # base case: element leads to a solution
+                            if self.solve():
                                 return True
                             else:
-                                self.grid[row][column] = EMPTY_SQUARE  # backtrack: if solution is not found
+                                # backtrack: if element does not lead to a solution
+                                self.grid[row][column] = EMPTY_SQUARE
                                 self.update_gui(column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y)
                     return False
         return True
