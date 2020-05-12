@@ -42,6 +42,7 @@ import time
 #                            +------------++------------++------------++------------+
 """
 
+
 class sudoku:
     # global variables
 
@@ -80,7 +81,6 @@ class sudoku:
     # initialize interface object for user
     display_surface = pygame.display.set_mode([WIDTH, HEIGHT + LEGEND_HEIGHT])
 
-
     # user's grid to play or solve with
     sudoku_grid = [[None, 5, None, None, None, None, None, 7, 10, None, None, 14, 13, None, None, 15],
                    [14, 10, None, None, None, 15, 13, None, None, None, 11, None, None, 5, None, None],
@@ -99,13 +99,25 @@ class sudoku:
                    [None, None, 4, None, 7, 11, 12, None, 9, None, None, 10, 1, None, None, 13],
                    [2, 15, None, None, 9, None, None, 6, None, None, 5, None, None, None, 11, None]]
 
+    def __init__(self, row, column, height, width):
+        """
+        this constructor instantiates the sudoku grid
+
+        @param row, column      represents the number of rows and columns in the grid
+        @param height, width    represents the size of the GUI that displays the grid
+        """
+
+        self.row = row
+        self.column = column
+        self.height = height
+        self.width = width
 
     # @post                 solve and print the solution to the given Sudoku
     #                       by using backtracking recursion
     #
     # @raise                ValueError if given grid is invalid
     # @return               true, if a solution is found
-    def solve_sudoku():
+    def solve(self):
         global sudoku_grid
 
         if len(sudoku_grid) != GRID_SIZE:
@@ -118,7 +130,8 @@ class sudoku:
                     for element in range(0, GRID_SIZE):  # generate the numbers to pencil in
                         if safe_to_pencil_element(row, column, element):  # check if element passes constraint
                             sudoku_grid[row][column] = element  # pencil element
-                            print_text(element, column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y, LARGE, BLACK)
+                            print_text(element, column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y, LARGE,
+                                       BLACK)
 
                             if solve_sudoku():  # base case: elements leads to a solution
                                 return True
@@ -130,46 +143,42 @@ class sudoku:
 
         return True  # sudoku solved
 
-
     # @param        row and column represents the position of the column in the grid.
     # @param        element is the element being penciled in
     #
     # @return      true, if the given element does not exists in the same row, column, and row.
-    def safe_to_pencil_element(row, column, element):
+    def validate(row, column, element):
         return not (rows_contain_element(row, element) or
                     columns_contain_element(column, element) or
                     boxes_contain_element(row, column, element))
-
 
     # @param        row represents the position of the row in the grid.
     # @param        element is the number or letter to pencil
     #
     # @return      false, if the row does not contain the element
-    def rows_contain_element(row, element):
+    def check_row(row, element):
         for column in range(0, GRID_SIZE):
             if sudoku_grid[row][column] == element:
                 return True
 
         return False
 
-
     # @param        column represents the position of the column in the grid.
     # @param        element is the number or letter to pencil
     #
     # @return      false, if the row does not contain the element
-    def columns_contain_element(column, element):
+    def check_column(column, element):
         for row in range(0, GRID_SIZE):
             if sudoku_grid[row][column] == element:
                 return True
 
         return False
 
-
     # @param        row and column represents the row and column position in the grid.
     # @param        element is the element being penciled in
     #
     # @return      false, if the row does not contain the element
-    def boxes_contain_element(row, column, element):
+    def check_box(row, column, element):
         # find box with given row and column
         row_box_number = row - row % NUMBER_OF_BOXES
         column_box_number = column - column % NUMBER_OF_BOXES
@@ -180,7 +189,6 @@ class sudoku:
                     return True
 
         return False
-
 
     # this method initializes GUI screen for the user to interact with
     def display_screen():
@@ -200,7 +208,6 @@ class sudoku:
         # display key map
         display_legend()
 
-
     # helper method draws vertical and horizontal lines for the Sudoku grid
     def draw_grid_lines():
         # draw lines for grid
@@ -216,7 +223,6 @@ class sudoku:
             # draw horizontal line
             pygame.draw.line(display_surface, BLACK, (0, i * SQUARE_SIZE), (HEIGHT, i * SQUARE_SIZE), line_width)
 
-
     # @post display the fixed numbers and letters of the grid
     def draw_setter():
         for row in range(0, GRID_SIZE):
@@ -224,7 +230,6 @@ class sudoku:
                 if sudoku_grid[row][column] != EMPTY_SQUARE:
                     print_text(sudoku_grid[row][column],
                                column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y, LARGE, BLUE)
-
 
     # @param text            is object to be printed on the screen
     # @param position x,y    is the coordinates the user wants the 'text' to be displayed
@@ -245,11 +250,9 @@ class sudoku:
         display_surface.blit(text_surface, (position_x, position_y))
         pygame.display.update()
 
-
     # @post erase element in square by drawing a white rectangle over it
     def erase(x, y):
         pygame.draw.rect(display_surface, WHITE, (x, y, SQUARE_SIZE - CENTER_X, SQUARE_SIZE - CENTER_Y), 0)
-
 
     def display_legend():
         clear_legend()
@@ -258,16 +261,13 @@ class sudoku:
         print_text(" -Enter-  to have the program find a solution", 0, WIDTH + 40 * 3, SMALL, BLACK)
         print_text("Stopwatch:", 625, WIDTH + 40 * 3, SMALL, BLACK)
 
-
     def update_legend():
         clear_legend()
         print_text("Time:", 675, WIDTH + 40 * 3, SMALL, BLACK)
         print_text(" Solution Found:  " + str(solve_sudoku()), 0, WIDTH + 40, SMALL, BLACK)
 
-
     def clear_legend():
         pygame.draw.rect(display_surface, WHITE, (0, HEIGHT + 2, WIDTH, HEIGHT + LEGEND_HEIGHT), 0)
-
 
     # this method records the user's key and mouse input
     # and displays the input using GUI for the user
@@ -383,12 +383,16 @@ class sudoku:
 
                 pygame.display.update()
 
+
 class square:
     pass
 
+
 def main():
-    setup_screen()
-    wait_for_user_input()
+
+
+    sudoku.setup_screen()
+    sudoku.wait_for_user_input()
 
 
 if __name__ == "__main__":
