@@ -123,7 +123,7 @@ class Sudoku:
                             if self.solve():  # base case: element leads to a solution
                                 return True
                             else:
-                                self.grid[row][column] = EMPTY_SQUARE  # remove element if solution is not found
+                                self.grid[row][column] = EMPTY_SQUARE  # backtrack: if solution is not found
                                 self.update_gui(column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y)
                     return False
         return True
