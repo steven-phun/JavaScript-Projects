@@ -103,8 +103,10 @@ class sudoku:
         """
         this constructor instantiates the sudoku grid
 
-        @param row, column      represents the number of rows and columns in the grid
-        @param height, width    represents the size of the GUI that displays the grid
+        :param row:         represents the number of rows in the grid
+        :param column:      represents the number of columns in the grid
+        :param height:      represents the height of the GUI that displays the grid
+        :param width:       represents the width of the GUI that displays the grid
         """
 
         self.row = row
@@ -117,7 +119,12 @@ class sudoku:
     #
     # @raise                ValueError if given grid is invalid
     # @return               true, if a solution is found
-    def solve(self):
+    def solve(self, row, column):
+        """
+        :param row:
+        :param column:
+        :return:
+        """
         global sudoku_grid
 
         if len(sudoku_grid) != GRID_SIZE:
