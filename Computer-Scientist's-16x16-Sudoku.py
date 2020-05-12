@@ -45,6 +45,14 @@ TODO: """ fix the position param for display_text """
 """
 
 
+class Square:
+
+    def __init__(self, data=None, setter=False):
+        self.data = data
+        self.setter = setter
+        self.notes = set()
+
+
 class Sudoku:
     # represents an empty square in the grid
     EMPTY_SQUARE = None
@@ -98,6 +106,14 @@ class Sudoku:
         self.x_center = self.grid
         self.y_center = 2
 
+        # convert each square to the object Square
+        for row in range(0, self.grid):
+            for column in range(0, self.grid):
+                if self.board[row][column] == Sudoku.EMPTY_SQUARE:
+                    self.board[row][column] = Square()
+                else:
+                    self.board[row][column] = Square(self.board[row][column], True)
+
     def solve(self):
         """
         solve the sudoku using backtracking recursion
@@ -107,18 +123,18 @@ class Sudoku:
 
         for row in range(0, self.grid):
             for column in range(0, self.grid):
-                if self.board[row][column] == Sudoku.EMPTY_SQUARE:
+                if self.board[row][column].data == Sudoku.EMPTY_SQUARE:
                     for element in range(0, self.grid):
                         if self.validate(row, column, element):
-                            self.board[row][column] = element
-                            self.display_text(element, column * self.square + self.x_center,
+                            self.board[row][column].data = element
+                            self.display_text(self.board[row][column].data, column * self.square + self.x_center,
                                               row * self.square + self.y_center, Sudoku.LARGE, Sudoku.BLACK)
                             # base case: if element leads to a solution
                             if self.solve():
                                 return True
                             else:
                                 # backtrack: if element does not lead to a solution
-                                self.board[row][column] = Sudoku.EMPTY_SQUARE
+                                self.board[row][column] = Square()
                                 self.clear_square(column * self.square + self.x_center,
                                                   row * self.square + self.y_center)
                     return False
@@ -144,7 +160,7 @@ class Sudoku:
         :return:            true, if 'row' contains 'element'
         """
         for column in range(0, self.grid):
-            if self.board[row][column] == element:
+            if self.board[row][column].data == element:
                 return True
 
         return False
@@ -156,7 +172,7 @@ class Sudoku:
         :return:            true, if the 'column' contains the 'element'
         """
         for row in range(0, self.grid):
-            if self.board[row][column] == element:
+            if self.board[row][column].data == element:
                 return True
 
         return False
@@ -215,8 +231,8 @@ class Sudoku:
         """
         for row in range(0, self.grid):
             for column in range(0, self.grid):
-                if self.board[row][column] != Sudoku.EMPTY_SQUARE:
-                    self.display_text(self.board[row][column],
+                if self.board[row][column].data != Sudoku.EMPTY_SQUARE:
+                    self.display_text(self.board[row][column].data,
                                       column * self.square + self.x_center,
                                       row * self.square + self.y_center, Sudoku.LARGE, Sudoku.BLUE)
 
@@ -382,7 +398,7 @@ class Sudoku:
                         # edge case: if user tries to make changes outside of grid
                         if key is not None and x_position <= self.gui and y_position <= self.gui:
                             # edge case: if user tries to edit a setter element
-                            if self.board[y_position][x_position] is None:
+                            if self.board[y_position][x_position].data is None:
 
                                 self.display_text(key, print_x, print_y, Sudoku.LARGE, Sudoku.GREY)
 
@@ -393,7 +409,7 @@ class Sudoku:
                                         self.display_text(key, print_x, print_y, Sudoku.LARGE, Sudoku.RED)
 
                             if event.key == pygame.K_BACKSPACE:
-                                self.board[y_position][x_position] = None
+                                self.board[y_position][x_position] = Square()
                                 self.clear_square(print_x, print_y)
 
                 # display stop watch
@@ -404,10 +420,6 @@ class Sudoku:
                 self.display_text(str(display_timer), 750, 920, Sudoku.SMALL, Sudoku.BLACK)
 
                 pygame.display.update()
-
-
-class square:
-    pass
 
 
 def main():
