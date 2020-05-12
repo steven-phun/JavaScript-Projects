@@ -109,7 +109,7 @@ class Sudoku:
         """
         this method will solve the sudoku using backtracking recursion
 
-        :return: 'true' if the program finds a solution to the sudoku
+        :return:    'true' if the program finds a solution to the sudoku
         """
 
         for row in range(0, self.grid_size):
@@ -135,17 +135,25 @@ class Sudoku:
     #
     # @return      true, if the given element does not exists in the same row, column, and row.
     def validate(self, row, column, element):
-        return not (rows_contain_element(row, element) or
-                    columns_contain_element(column, element) or
-                    boxes_contain_element(row, column, element))
+        """
+        this method will check if the element can be placed in the square
+
+        :param row:         the row that the 'element' is in
+        :param column:      the column that the 'element' is in
+        :param element:     the 'element' that is being penciled in
+        :return:            'true' if the element does not already exists in 'row', 'column' and 'box
+        """
+        return not (self.check_row(row, element) or
+                    self.check_column(column, element) or
+                    self.check_box(row, column, element))
 
     # @param        row represents the position of the row in the grid.
     # @param        element is the number or letter to pencil
     #
     # @return      false, if the row does not contain the element
-    def check_row(row, element):
+    def check_row(self, row, element):
         for column in range(0, GRID_SIZE):
-            if grid[row][column] == element:
+            if self.grid[row][column] == element:
                 return True
 
         return False
@@ -154,9 +162,9 @@ class Sudoku:
     # @param        element is the number or letter to pencil
     #
     # @return      false, if the row does not contain the element
-    def check_column(column, element):
+    def check_column(self, column, element):
         for row in range(0, GRID_SIZE):
-            if grid[row][column] == element:
+            if self.grid[row][column] == element:
                 return True
 
         return False
@@ -165,7 +173,7 @@ class Sudoku:
     # @param        element is the element being penciled in
     #
     # @return      false, if the row does not contain the element
-    def check_box(row, column, element):
+    def check_box(self, row, column, element):
         # find box with given row and column
         row_box_number = row - row % NUMBER_OF_BOXES
         column_box_number = column - column % NUMBER_OF_BOXES
