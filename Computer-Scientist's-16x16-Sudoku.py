@@ -120,7 +120,7 @@ class Sudoku:
                             self.grid[row][column] = element
                             self.display_to_gui(element, column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y, LARGE,
                                                 BLACK)
-                            # base case: element leads to a solution
+                            # base case: if element leads to a solution
                             if self.solve():
                                 return True
                             else:
