@@ -118,7 +118,6 @@ class Sudoku:
                     for element in range(0, self.grid_size):
                         if self.validate(row, column, element):
                             self.grid[row][column] = element
-                            # display element to GUI
                             self.display_to_gui(element, column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y, LARGE,
                                                 BLACK)
                             if self.solve():  # base case: element leads to a solution
