@@ -43,21 +43,9 @@ import time
 """
 
 
-class sudoku:
-    # global variables
+class Sudoku:
 
-    # 16x16 grid
-    GRID_SIZE = 16
-
-    # 4 boxes per row and column
-    NUMBER_OF_BOXES = 4
-
-    # represents an empty square in the grid
-    EMPTY_SQUARE = None
-
-    # constant variables
-    WIDTH = 800
-    HEIGHT = 800
+    """
     LEGEND_HEIGHT = 150
 
     SQUARE_SIZE = WIDTH / GRID_SIZE
@@ -67,7 +55,14 @@ class sudoku:
     CENTER_X = GRID_SIZE
     CENTER_Y = 2
 
-    # rbh color
+    # initialize interface object for user
+    display_surface = pygame.display.set_mode([WIDTH, HEIGHT + LEGEND_HEIGHT])
+    """
+
+    # represents an empty square in the grid
+    EMPTY_SQUARE = None
+
+    # rgb color code
     WHITE = [255, 255, 255]
     BLACK = [0, 0, 0]
     BLUE = [0, 0, 255]
@@ -78,83 +73,67 @@ class sudoku:
     LARGE = 30
     SMALL = 20
 
-    # initialize interface object for user
-    display_surface = pygame.display.set_mode([WIDTH, HEIGHT + LEGEND_HEIGHT])
+    # the original state of the user's grid
+    grid = [[None, 5, None, None, None, None, None, 7, 10, None, None, 14, 13, None, None, 15],
+            [14, 10, None, None, None, 15, 13, None, None, None, 11, None, None, 5, None, None],
+            [12, None, 8, 11, None, None, None, None, 2, 15, 13, None, 14, 10, 9, None],
+            [1, None, 15, None, 10, None, 14, 9, 0, None, None, None, None, None, None, None],
+            [None, 14, 10, 9, None, None, 15, 1, 12, 7, 8, 11, None, None, None, None],
+            [11, 12, None, None, 3, 0, 4, 5, 1, 2, None, None, None, None, 10, 9],
+            [4, None, 5, 0, 11, None, 8, None, 14, 10, 9, 6, 15, None, None, 2],
+            [None, 1, None, None, None, 9, None, 10, 5, None, 4, None, None, 12, None, 8],
+            [9, 6, 14, 10, 15, None, None, None, 11, 12, None, None, None, None, None, 5],
+            [8, None, None, None, None, None, 0, None, None, 1, None, 15, 9, None, None, 10],
+            [0, None, 3, 5, 8, 12, None, None, 6, None, 10, None, 2, 15, None, None],
+            [15, 13, None, None, 6, None, 9, 14, 3, 5, 0, None, None, None, 12, 7],
+            [10, 9, None, 14, None, None, None, 15, 8, 11, 12, None, None, 0, 4, 3],
+            [None, None, 11, None, 0, 3, 5, None, 15, None, None, None, 10, 9, None, None],
+            [None, None, 4, None, 7, 11, 12, None, 9, None, None, 10, 1, None, None, 13],
+            [2, 15, None, None, 9, None, None, 6, None, None, 5, None, None, None, 11, None]]
 
-    # user's grid to play or solve with
-    sudoku_grid = [[None, 5, None, None, None, None, None, 7, 10, None, None, 14, 13, None, None, 15],
-                   [14, 10, None, None, None, 15, 13, None, None, None, 11, None, None, 5, None, None],
-                   [12, None, 8, 11, None, None, None, None, 2, 15, 13, None, 14, 10, 9, None],
-                   [1, None, 15, None, 10, None, 14, 9, 0, None, None, None, None, None, None, None],
-                   [None, 14, 10, 9, None, None, 15, 1, 12, 7, 8, 11, None, None, None, None],
-                   [11, 12, None, None, 3, 0, 4, 5, 1, 2, None, None, None, None, 10, 9],
-                   [4, None, 5, 0, 11, None, 8, None, 14, 10, 9, 6, 15, None, None, 2],
-                   [None, 1, None, None, None, 9, None, 10, 5, None, 4, None, None, 12, None, 8],
-                   [9, 6, 14, 10, 15, None, None, None, 11, 12, None, None, None, None, None, 5],
-                   [8, None, None, None, None, None, 0, None, None, 1, None, 15, 9, None, None, 10],
-                   [0, None, 3, 5, 8, 12, None, None, 6, None, 10, None, 2, 15, None, None],
-                   [15, 13, None, None, 6, None, 9, 14, 3, 5, 0, None, None, None, 12, 7],
-                   [10, 9, None, 14, None, None, None, 15, 8, 11, 12, None, None, 0, 4, 3],
-                   [None, None, 11, None, 0, 3, 5, None, 15, None, None, None, 10, 9, None, None],
-                   [None, None, 4, None, 7, 11, 12, None, 9, None, None, 10, 1, None, None, 13],
-                   [2, 15, None, None, 9, None, None, 6, None, None, 5, None, None, None, 11, None]]
-
-    def __init__(self, row, column, height, width):
+    def __init__(self, grid_size, gui_size):
         """
         this constructor instantiates the sudoku grid
 
-        :param row:         represents the number of rows in the grid
-        :param column:      represents the number of columns in the grid
-        :param height:      represents the height of the GUI that displays the grid
-        :param width:       represents the width of the GUI that displays the grid
+        :param grid_size:    represents the number of rows and columns in the grid
+        :param gui_size:     represents the height and weight of the GUI that displays the grid
         """
 
-        self.row = row
-        self.column = column
-        self.height = height
-        self.width = width
+        self.grid_size = grid_size
+        self.sui_size = gui_size
 
-    # @post                 solve and print the solution to the given Sudoku
-    #                       by using backtracking recursion
-    #
-    # @raise                ValueError if given grid is invalid
-    # @return               true, if a solution is found
-    def solve(self, row, column):
+        # represents the number of boxes in each row or column
+        self.num_of_boxes = int(math.sqrt(grid_size))
+
+    def solve(self):
         """
-        :param row:
-        :param column:
-        :return:
+        this method will solve the sudoku using backtracking recursion
+
+        :return: 'true' if the program finds a solution to the sudoku
         """
-        global sudoku_grid
 
-        if len(sudoku_grid) != GRID_SIZE:
-            raise ValueError("given sudoku does not match the 16x16 format")
-
-        for row in range(0, GRID_SIZE):  # represents the 16 rows in grid
-            for column in range(0, GRID_SIZE):  # represents the 16 column in grid
-                if sudoku_grid[row][column] == EMPTY_SQUARE:  # find first empty square in grid
-
-                    for element in range(0, GRID_SIZE):  # generate the numbers to pencil in
-                        if safe_to_pencil_element(row, column, element):  # check if element passes constraint
-                            sudoku_grid[row][column] = element  # pencil element
-                            print_text(element, column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y, LARGE,
-                                       BLACK)
-
-                            if solve_sudoku():  # base case: elements leads to a solution
+        for row in range(0, self.grid_size):
+            for column in range(0, self.grid_size):
+                if self.grid[row][column] == self.EMPTY_SQUARE:
+                    for element in range(0, self.grid_size):
+                        if self.validate(row, column, element):
+                            self.grid[row][column] = element
+                            # display element to GUI
+                            self.display_to_gui(element, column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y, LARGE,
+                                                BLACK)
+                            if self.solve():  # base case: element leads to a solution
                                 return True
                             else:
-                                sudoku_grid[row][column] = EMPTY_SQUARE  # backtrack
-                                erase(column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y)
-
-                    return False  # sudoku has no solution
-
-        return True  # sudoku solved
+                                self.grid[row][column] = EMPTY_SQUARE  # remove element if solution is not found
+                                self.update_gui(column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y)
+                    return False
+        return True
 
     # @param        row and column represents the position of the column in the grid.
     # @param        element is the element being penciled in
     #
     # @return      true, if the given element does not exists in the same row, column, and row.
-    def validate(row, column, element):
+    def validate(self, row, column, element):
         return not (rows_contain_element(row, element) or
                     columns_contain_element(column, element) or
                     boxes_contain_element(row, column, element))
@@ -165,7 +144,7 @@ class sudoku:
     # @return      false, if the row does not contain the element
     def check_row(row, element):
         for column in range(0, GRID_SIZE):
-            if sudoku_grid[row][column] == element:
+            if grid[row][column] == element:
                 return True
 
         return False
@@ -176,7 +155,7 @@ class sudoku:
     # @return      false, if the row does not contain the element
     def check_column(column, element):
         for row in range(0, GRID_SIZE):
-            if sudoku_grid[row][column] == element:
+            if grid[row][column] == element:
                 return True
 
         return False
@@ -192,13 +171,13 @@ class sudoku:
 
         for box in range(row_box_number, row_box_number + NUMBER_OF_BOXES):
             for square in range(column_box_number, column_box_number + NUMBER_OF_BOXES):
-                if sudoku_grid[box][square] == element:
+                if grid[box][square] == element:
                     return True
 
         return False
 
     # this method initializes GUI screen for the user to interact with
-    def display_screen():
+    def display_screen(self):
         # set up drawing window
         pygame.font.init()
         pygame.display.set_caption("Computer Scientist's 16x16 Sudoku")
@@ -234,17 +213,17 @@ class sudoku:
     def draw_setter():
         for row in range(0, GRID_SIZE):
             for column in range(0, GRID_SIZE):
-                if sudoku_grid[row][column] != EMPTY_SQUARE:
-                    print_text(sudoku_grid[row][column],
+                if grid[row][column] != EMPTY_SQUARE:
+                    print_text(grid[row][column],
                                column * SQUARE_SIZE + CENTER_X, row * SQUARE_SIZE + CENTER_Y, LARGE, BLUE)
 
     # @param text            is object to be printed on the screen
     # @param position x,y    is the coordinates the user wants the 'text' to be displayed
     #
     # @post                  display the 'text' on coordinates 'position' on the screen
-    def print_text(text, position_x, position_y, size, color):
+    def display_to_gui(self, text, position_x, position_y, size, color):
 
-        erase(position_x, position_y)
+        self.update_gui(position_x, position_y)
 
         if isinstance(text, int):
             # convert 10 to A, 11 to B, 12 to C
@@ -258,7 +237,7 @@ class sudoku:
         pygame.display.update()
 
     # @post erase element in square by drawing a white rectangle over it
-    def erase(x, y):
+    def update_gui(self, x, y):
         pygame.draw.rect(display_surface, WHITE, (x, y, SQUARE_SIZE - CENTER_X, SQUARE_SIZE - CENTER_Y), 0)
 
     def display_legend():
@@ -363,7 +342,7 @@ class sudoku:
                         # edge case: if user tries to make changes outside of grid
                         if key is not None and position_x <= WIDTH and position_y <= HEIGHT:
                             # edge case: if user tries to edit a setter element
-                            if sudoku_grid[position_y][position_x] is None:
+                            if grid[position_y][position_x] is None:
 
                                 # print element to square
                                 print_text(key, print_x, print_y, LARGE, GREY)
@@ -373,12 +352,12 @@ class sudoku:
 
                                     # tab to place a guess an element
                                     if event.key == pygame.K_TAB:
-                                        sudoku_grid[position_y][position_x] = key
+                                        grid[position_y][position_x] = key
                                         print_text(key, print_x, print_y, LARGE, RED)
 
                             # backspace to remove an element from the square
                             if event.key == pygame.K_BACKSPACE:
-                                sudoku_grid[position_y][position_x] = None
+                                grid[position_y][position_x] = None
                                 erase(print_x, print_y)
 
                 # display stop watch
