@@ -191,6 +191,7 @@ class Sudoku:
         pygame.font.init()
         pygame.display.set_caption("Computer Scientist's 16x16 Sudoku")
 
+
         self.surface.fill(Sudoku.WHITE)
         self.draw_grid_lines()
         self.draw_setter()
