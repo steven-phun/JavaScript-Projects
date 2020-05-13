@@ -5,7 +5,7 @@
 
 Based on the classic game [*Sudoku*](https://en.wikipedia.org/wiki/Sudoku)
 
-Inspired by professor, Benjamin Sanders, allowing students to solve his Sudoku as they pass by his glass door
+Inspired by my professor, allowing students to solve his Sudoku as they pass by his glass door
 
 Developed in:
 
