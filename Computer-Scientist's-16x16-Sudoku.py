@@ -118,7 +118,7 @@ class Sudoku:
                     for element in range(0, self.grid):
                         if self.validate(row, column, element):
                             self.board[row][column].data = element
-                            self.display_text(self.board[row][column].data, column, row, Sudoku.LARGE, Sudoku.BLACK)
+                            self.display_text(self.board[row][column].data, column, row)
                             # base case: if element leads to a solution
                             if self.solve():
                                 return True
@@ -283,22 +283,22 @@ class Sudoku:
         """ display instructions in the legend area """
 
         self.clear_legend()
-        self.display_text(" -Space: to place an answer", 0, self.gui + 40 * 0 + 2, Sudoku.SMALL, Sudoku.BLACK)
-        self.display_text(" -Backspace: to erase", 0, self.gui + 40 * 1, Sudoku.SMALL, Sudoku.BLACK)
-        self.display_text(" -Enter: to have the program solve the Sudoku", 0, self.gui + 40 * 3, Sudoku.SMALL, Sudoku.BLACK)
-        self.display_text("Stopwatch:", 625, self.gui + 40 * 3, Sudoku.SMALL, Sudoku.BLACK)
+        self.display_text(" -Space: to place an answer", 0, self.gui + 40 * 0 + 2, Sudoku.SMALL)
+        self.display_text(" -Backspace: to erase", 0, self.gui + 40 * 1, Sudoku.SMALL)
+        self.display_text(" -Enter: to have the program solve the Sudoku", 0, self.gui + 40 * 3, Sudoku.SMALL)
+        self.display_text("Stopwatch:", 625, self.gui + 40 * 3, Sudoku.SMALL)
 
     def update_legend(self):
         """ update legend area when searching and prompting the user when solution is found """
 
         self.clear_legend()
-        self.display_text(" Searching for Solution ...", 0, self.gui + 40, Sudoku.SMALL, Sudoku.BLACK)
+        self.display_text(" Searching for Solution ...", 0, self.gui + 40, Sudoku.SMALL)
 
         self.solve()
 
         self.clear_legend()
-        self.display_text("Time:", 675, self.grid + 40 * 3, Sudoku.SMALL, Sudoku.BLACK)
-        self.display_text(" Solution Found:  " + str(self.solve), 0, self.grid + 40, Sudoku.SMALL, Sudoku.BLACK)
+        self.display_text("Time:", 675, self.grid + 40 * 3, Sudoku.SMALL)
+        self.display_text(" Solution Found:  " + str(self.solve), 0, self.grid + 40, Sudoku.SMALL)
 
     def clear_legend(self):
         """ erase all text in the legend area """
@@ -414,7 +414,7 @@ class Sudoku:
                 seconds = stopwatch.tick() / 1000.0  # represents the milliseconds that has gone by
                 timer += seconds
                 display_timer = math.trunc(timer)
-                self.display_text(str(display_timer), 750, 920, Sudoku.SMALL, Sudoku.BLACK)
+                self.display_text(str(display_timer), 750, 920, Sudoku.SMALL)
 
                 pygame.display.update()
 
