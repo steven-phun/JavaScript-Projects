@@ -2,9 +2,9 @@
 A collection of my personal projects. 
 
 ### Contents 
-- [16x16 Sudoku Solver](https://github.com/steven-phun/personal-projects/blob/master/Computer-Scientist's-16x16-Sudoku.py)
+- [16x16 Sudoku Solver](https://github.com/steven-phun/projects/blob/master/16x16-Sudoku-Solver.py)
 
-## [16x16 Sudoku Solver](https://.github.com)
+## [16x16 Sudoku Solver](https://github.com/steven-phun/projects/blob/master/16x16-Sudoku-Solver.py)
 
 Based on the classic game [*Sudoku*](https://en.wikipedia.org/wiki/Sudoku)
 
