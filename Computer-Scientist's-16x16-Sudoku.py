@@ -323,55 +323,10 @@ class Sudoku:
         margin = 4
 
         for note in notes:
-
-            if note == 0:
-                self.display_text(note, x_position + space * 0 + margin, y_position + space * 0,
-                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
-            if note == 1:
-                self.display_text(note, x_position + space * 1 + margin, y_position + space * 0,
-                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
-            if note == 2:
-                self.display_text(note, x_position + space * 2 + margin, y_position + space * 0,
-                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
-            if note == 3:
-                self.display_text(note, x_position + space * 3 + margin, y_position + space * 0,
-                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
-            if note == 4:
-                self.display_text(note, x_position + space * 0 + margin, y_position + space * 1,
-                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
-            if note == 5:
-                self.display_text(note, x_position + space * 1 + margin, y_position + space * 1,
-                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
-            if note == 6:
-                self.display_text(note, x_position + space * 2 + margin, y_position + space * 1,
-                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
-            if note == 7:
-                self.display_text(note, x_position + space * 3 + margin, y_position + space * 1,
-                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
-            if note == 8:
-                self.display_text(note, x_position + space * 0 + margin, y_position + space * 2,
-                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
-            if note == 9:
-                self.display_text(note, x_position + space * 1 + margin, y_position + space * 2,
-                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
-            if note == 10:
-                self.display_text(note, x_position + space * 2 + margin, y_position + space * 2,
-                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
-            if note == 11:
-                self.display_text(note, x_position + space * 3 + margin, y_position + space * 2,
-                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
-            if note == 12:
-                self.display_text(note, x_position + space * 0 + margin, y_position + space * 3,
-                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
-            if note == 13:
-                self.display_text(note, x_position + space * 1 + margin, y_position + space * 3,
-                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
-            if note == 14:
-                self.display_text(note, x_position + space * 2 + margin, y_position + space * 3,
-                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
-            if note == 15:
-                self.display_text(note, x_position + space * 3 + margin, y_position + space * 3,
-                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
+            for key in range(0, self.grid):
+                if note == key:
+                    self.display_text(note, x_position + space * (key % 4) + margin,
+                                      y_position + space * int(key / 4), Sudoku.TINY, Sudoku.GREY, False, False, False)
 
     def clear_square(self, x_position, y_position, resize=True):
         """
