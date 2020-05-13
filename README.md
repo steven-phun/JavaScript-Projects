@@ -2,7 +2,7 @@
 A collection of my personal projects. 
 
 ### Contents 
-- [16x16 Sudoku Solver](https://github.com/steven-phun/projects/blob/master/16x16-Sudoku-Solver.py)
+- [16x16 Sudoku Solver](https://steven-phun.github.io/projects/16x16-Sudoku-Solver)
 
 ## [16x16 Sudoku Solver](https://github.com/steven-phun/projects/blob/master/16x16-Sudoku-Solver.py)
 
