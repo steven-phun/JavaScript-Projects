@@ -1,6 +1,3 @@
-# Projects
-A collection of my personal projects. 
-
 ### Contents 
 - [16x16 Sudoku Solver](https://steven-phun.github.io/projects/16x16-Sudoku-Solver)
 
