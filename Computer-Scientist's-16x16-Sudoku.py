@@ -261,17 +261,16 @@ class Sudoku:
         """ display instructions in the legend area """
 
         self.clear_legend()
-        self.display_text("-Space: to place an answer", 0, self.gui, Sudoku.SMALL, Sudoku.BLACK, False)
-        self.display_text("-Backspace: to erase", 0, self.gui + self.square, Sudoku.SMALL, Sudoku.BLACK, False)
-        self.display_text("-Enter: to have the program solve the Sudoku", 0, self.gui + self.square * 2, Sudoku.SMALL,
-                          Sudoku.BLACK, False)
-        self.display_text("Stopwatch:", 625, self.gui + self.square * 2, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("-Space: to place an answer", 0, 800, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("-Backspace: to erase", 0, 850, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("-Enter: to have the program solve the Sudoku", 0, 900, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("Stopwatch:", 600, 900, Sudoku.SMALL, Sudoku.BLACK, False)
 
     def update_legend(self):
         """ update legend area when searching and prompting the user when solution is found """
 
         self.clear_legend()
-        self.display_text(" Searching for Solution ...", 0, self.gui + 40, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text(" Searching for Solution ...", 0, 850, Sudoku.SMALL, Sudoku.BLACK, False)
 
         if self.solve():
             self.display_solution()
@@ -281,7 +280,7 @@ class Sudoku:
             self.clear_legend()
             self.display_text("No Solution Found.", 0, self.gui + self.square, Sudoku.SMALL, Sudoku.BLACK, False)
 
-        self.display_text("Time:", 675, self.gui + self.square * 2, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("Time:", 650, 900, Sudoku.SMALL, Sudoku.BLACK, False)
 
     def display_solution(self):
         """
@@ -290,8 +289,9 @@ class Sudoku:
 
         for row in range(0, self.grid):
             for column in range(0, self.grid):
-                if not self.board[row][column].setter:
-                    self.display_text(self.board[row][column].data, column, row)
+                if not self.board[row][column].setter is True:
+                    if not self.board[row][column].answer is True:
+                        self.display_text(self.board[row][column].data, column, row)
 
     def display_notes(self, notes, x_position, y_position):
         """ display each number and letter in their respective location for each square """
@@ -334,8 +334,10 @@ class Sudoku:
         start_stopwatch = True
         continue_stopwatch = True
 
-        # object stores the user's input key
+        # object stores the user's input
         key = None
+        x_position = None
+        y_position = None
 
         # mouse coordinates relative to grid index
         row = None
@@ -398,30 +400,28 @@ class Sudoku:
                         key = 15
 
                     # edge case: if user tries to make changes outside of grid
-                    if key is not None:
-                        # edge case: if user tries to edit a setter element
+                    if key is not None and x_position <= self.gui and y_position <= self.gui:
+                        # edge case: if user tries to notes a setter or answered element
                         if self.board[row][column].data is None:
                             self.board[row][column].notes.add(key)
                             self.display_notes(self.board[row][column].notes, column, row)
-
-                            if self.validate(row, column, key):
-
-                                if event.key == pygame.K_SPACE:
+                            # edge case: if user tries to place an answer non-validate square
+                            if event.key == pygame.K_SPACE:
+                                if self.validate(row, column, key):
                                     self.board[row][column].data = key
+                                    self.board[row][column].answer = True
                                     self.display_text(key, column, row, Sudoku.LARGE, Sudoku.RED)
-
+                        # edge case: if user tries to delete a setter element
                         if event.key == pygame.K_BACKSPACE:
-                            self.board[row][column] = Square()
-                            self.clear_square(column, row)
+                            if self.board[row][column].setter is not True:
+                                self.board[row][column] = Square()
+                                self.clear_square(column, row)
 
             # display stop watch
             if start_stopwatch:
                 seconds = stopwatch.tick() / 1000.0  # represents the milliseconds that has gone by
                 timer += seconds
-                display_timer = math.trunc(timer)
-                self.display_text(str(display_timer), 750, self.gui + self.square * 2, Sudoku.SMALL, Sudoku.BLACK,
-                                  False)
-
+                self.display_text(str(math.trunc(timer)), 725, 900, Sudoku.SMALL, Sudoku.BLACK, False)
                 if not continue_stopwatch:
                     start_stopwatch = False
 
@@ -430,9 +430,10 @@ class Sudoku:
 
 class Square:
 
-    def __init__(self, data=None, setter=False):
+    def __init__(self, data=None, setter=False, answer=False):
         self.data = data
         self.setter = setter
+        self.answer = answer
         self.notes = set()
 
 
