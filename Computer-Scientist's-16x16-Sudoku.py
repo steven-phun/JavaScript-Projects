@@ -2,48 +2,48 @@ import math
 import pygame
 
 """
-# created by Steven Phun on May 5, 2020.
-#
-#
-# this GUI python program   allows the user to play or have the program solve a 16x16 Sudoku.
-#                           the game is based on the classic 9x9 Sudoku where the basic rules is the same.
-#                           place the numbers 0-9 and letters A-F into each row, column and 4x4 row once.
-#
-# -sudoku                   is a partially completed grid.
-# -grid                     has 16 rows, 16 columns, and 16 boxes, each having 16 squares (256 total).
-# -constraint               is that each element(numbers/letters) appears only once in each row, column, and row.
-# -note                     place a temporary number or letter in the square.
-# -setter                   fixed number of letters that cannot be erased
-#
-# grid layout in code
-#
-#                              0  1  2  3    4  5  6  7    8  9  10 11   12 14 15 16
-#                            +------------++------------++------------++------------+
-#                         0  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
-#                         1  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
-#                         2  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
-#                         3  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
-#                            +------------++------------++------------++------------+
-#                         4  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
-#                         5  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
-#                         6  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
-#                         7  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
-#                            +------------++------------++------------++------------+
-#                         8  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
-#                         9  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
-#                         10 | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
-#                         11 | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
-#                            +------------++------------++------------++------------+
-#                         12 | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
-#                         14 | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
-#                         15 | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
-#                         16 | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
-#                            +------------++------------++------------++------------+
+created by Steven Phun on May 5, 2020.
+
+
+this GUI python program   allows the user to play or have the program solve a 16x16 Sudoku.
+                          the game is based on the classic 9x9 Sudoku where the basic rules is the same.
+                          place the numbers 0-9 and letters A-F into each row, column and 4x4 row once.
+
+-sudoku                   is a partially completed grid.
+-grid                     has 16 rows, 16 columns, and 16 boxes, each having 16 squares (256 total).
+-constraint               is that each element(numbers/letters) appears only once in each row, column, and row.
+-note                     place a temporary number or letter in the square.
+-setter                   fixed number of letters that cannot be erased
+
+grid layout in code
+
+                             0  1  2  3    4  5  6  7    8  9  10 11   12 14 15 16
+                           +------------++------------++------------++------------+
+                        0  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
+                        1  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
+                        2  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
+                        3  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
+                           +------------++------------++------------++------------+
+                        4  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
+                        5  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
+                        6  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
+                        7  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
+                           +------------++------------++------------++------------+
+                        8  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
+                        9  | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
+                        10 | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
+                        11 | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
+                           +------------++------------++------------++------------+
+                        12 | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
+                        14 | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
+                        15 | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
+                        16 | ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? || ?  ?  ?  ? |
+                           +------------++------------++------------++------------+
 """
 
 
 def main():
-    sudoku = Sudoku(16, 1000)
+    sudoku = Sudoku(16, 800)
 
     print(pygame.font.get_fonts())
     sudoku.display_surface()
@@ -66,8 +66,8 @@ class Sudoku:
 
     # font size
     LARGE = 30
-    SMALL = 22
-    TINY = 10
+    SMALL = 20
+    TINY = 15
 
     # the original state of the user's grid
     board = [[None, 5, None, None, None, None, None, 7, 10, None, None, 14, 13, None, None, 15],
@@ -228,7 +228,7 @@ class Sudoku:
                 if self.board[row][column].data != Sudoku.EMPTY_SQUARE:
                     self.display_text(self.board[row][column].data, column, row, Sudoku.LARGE, Sudoku.BLUE)
 
-    def display_text(self, text, x_position, y_position, size=LARGE, color=BLACK, resize=True, center=True):
+    def display_text(self, text, x_position, y_position, size=LARGE, color=BLACK, resize=True, center=True, clear=True):
         """
         :param text:            the 'text' to be displayed on the GUI
         :param x_position:      the x coordinate where 'text' will be displayed
@@ -237,9 +237,11 @@ class Sudoku:
         :param color:           font color
         :param resize:          true, if given coordinates are from an index
         :param center:          true, if elements printed needs to be centered to the square
+        :param clear:           true, if square needs to be erased before printing
         """
 
-        self.clear_square(x_position, y_position, resize)
+        if clear:
+            self.clear_square(x_position, y_position, resize)
 
         # represents the position on the gui from given index
         if resize:
@@ -257,7 +259,7 @@ class Sudoku:
         if center:
             self.surface.blit(text_surface, self.center_element(x_position, y_position))
         else:
-            self.surface.blit(text_surface, x_position, y_position)
+            self.surface.blit(text_surface, (x_position, y_position))
         pygame.display.update()
 
     def center_element(self, x_position, y_position):
@@ -307,10 +309,24 @@ class Sudoku:
 
     def display_notes(self, notes, x_position, y_position, key):
         """ display each number and letter in their respective location for each square """
-        print("x: " + str(x_position))
-        print("y: " + str(y_position))
+
+        space = self.square / 4
+        margin = 3
+
         for note in notes:
-            self.display_text(note, x_position, y_position, Sudoku.TINY, Sudoku.GREY)
+
+            if note == 0:
+                self.display_text(note, x_position * self.square + space * 0 + margin, y_position * self. square,
+                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
+            if note == 1:
+                self.display_text(note, x_position * self.square + space * 1 + margin, y_position * self.square,
+                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
+            if note == 2:
+                self.display_text(note, x_position * self.square + space * 2 + margin, y_position * self.square,
+                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
+            if note == 3:
+                self.display_text(note, x_position * self.square + space * 3 + margin, y_position * self.square,
+                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
 
     def clear_square(self, x_position, y_position, resize=True):
         """
@@ -452,4 +468,4 @@ if __name__ == "__main__":
     main()
 
 TODO: " notes_display each number and letter to their respective position "
-TODO: " delete #'s in header comment "
+TODO: " display_notes make margin scalable"
