@@ -118,14 +118,12 @@ class Sudoku:
                     for element in range(0, self.grid):
                         if self.validate(row, column, element):
                             self.board[row][column].data = element
-                            self.display_text(self.board[row][column].data, column, row)
                             # base case: if element leads to a solution
                             if self.solve():
                                 return True
                             else:
                                 # backtrack: if element does not lead to a solution
                                 self.board[row][column] = Square()
-                                self.clear_square(column, row)
                     return False
         return True
 
@@ -180,7 +178,7 @@ class Sudoku:
 
         for box in range(row_box_index, row_box_index + self.num_of_boxes):
             for square in range(column_box_index, column_box_index + self.num_of_boxes):
-                if self.board[box][square] == element:
+                if self.board[box][square].data == element:
                     return True
 
         return False
@@ -287,10 +285,10 @@ class Sudoku:
         """ display instructions in the legend area """
 
         self.clear_legend()
-        self.display_text(" -Space: to place an answer", 0, self.gui + 40 * 0 + 2, Sudoku.SMALL, Sudoku.BLACK, False)
-        self.display_text(" -Backspace: to erase", 0, self.gui + 40 * 1, Sudoku.SMALL, Sudoku.BLACK, False)
-        self.display_text(" -Enter: to have the program solve the Sudoku", 0, self.gui + 40 * 3, Sudoku.SMALL, Sudoku.BLACK, False)
-        self.display_text("Stopwatch:", 625, self.gui + 40 * 3, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("-Space: to place an answer", 0, self.gui, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("-Backspace: to erase", 0, self.gui + self.square, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("-Enter: to have the program solve the Sudoku", 0, self.gui + self.square * 2, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("Stopwatch:", 625, self.gui + self.square * 2, Sudoku.SMALL, Sudoku.BLACK, False)
 
     def update_legend(self):
         """ update legend area when searching and prompting the user when solution is found """
@@ -299,10 +297,21 @@ class Sudoku:
         self.display_text(" Searching for Solution ...", 0, self.gui + 40, Sudoku.SMALL)
 
         self.solve()
+        self.display_solution()
 
         self.clear_legend()
         self.display_text("Time:", 675, self.grid + 40 * 3, Sudoku.SMALL)
         self.display_text(" Solution Found:  " + str(self.solve), 0, self.grid + 40, Sudoku.SMALL)
+
+    def display_solution(self):
+        """
+        display the solution to GUI
+        """
+
+        for row in range(0, self.grid):
+            for column in range(0, self.grid):
+                if not self.board[row][column].setter:
+                    self.display_text(self.board[row][column].data, column, row)
 
     def clear_legend(self):
         """ erase all text in the legend area """
@@ -363,6 +372,7 @@ class Sudoku:
                             self.update_legend()
 
                             input_loop = False
+
                         if event.key == pygame.K_0:
                             key = 0
                         if event.key == pygame.K_1:
@@ -418,7 +428,7 @@ class Sudoku:
                 seconds = stopwatch.tick() / 1000.0  # represents the milliseconds that has gone by
                 timer += seconds
                 display_timer = math.trunc(timer)
-                self.display_text(str(display_timer), 750, 920, Sudoku.SMALL, Sudoku.BLACK, False)
+                self.display_text(str(display_timer), 750, self.gui + self.square * 2, Sudoku.SMALL, Sudoku.BLACK, False)
 
                 pygame.display.update()
 
