@@ -1,7 +1,6 @@
 import math
 import pygame
 
-
 """
 # created by Steven Phun on May 5, 2020.
 #
@@ -221,10 +220,6 @@ class Sudoku:
                 if self.board[row][column].data != Sudoku.EMPTY_SQUARE:
                     self.display_text(self.board[row][column].data, column, row, Sudoku.LARGE, Sudoku.BLUE)
 
-    # @param text            is object to be printed on the screen
-    # @param position x,y    is the coordinates the user wants the 'text' to be displayed
-    #
-    # @post                  display the 'text' on coordinates 'position' on the screen
     def display_text(self, text, x_position, y_position, size=LARGE, color=BLACK, resize=True):
         """
         :param text:            the 'text' to be displayed on the GUI
@@ -253,25 +248,6 @@ class Sudoku:
         self.surface.blit(text_surface, self.center_element(x_position, y_position))
         pygame.display.update()
 
-    def clear_square(self, x_position, y_position, resize=True):
-        """
-        erase the element at given coordinate
-
-        :param x_position:   represents given x coordinate
-        :param y_position:   represents given y coordinate
-        :param resize:       true, if given coordinates are from an index
-        """
-
-        # represents the position on the gui from given index
-        if resize:
-            x_position = x_position * self.square
-            y_position = y_position * self.square
-
-        rectangle = x_position, y_position, self.square, self.square
-        pygame.draw.rect(self.surface, Sudoku.WHITE, rectangle, 0)
-
-        self.draw_grid_lines()
-
     def center_element(self, x_position, y_position):
         """
         :param x_position:   represents given x coordinate
@@ -287,7 +263,8 @@ class Sudoku:
         self.clear_legend()
         self.display_text("-Space: to place an answer", 0, self.gui, Sudoku.SMALL, Sudoku.BLACK, False)
         self.display_text("-Backspace: to erase", 0, self.gui + self.square, Sudoku.SMALL, Sudoku.BLACK, False)
-        self.display_text("-Enter: to have the program solve the Sudoku", 0, self.gui + self.square * 2, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("-Enter: to have the program solve the Sudoku", 0, self.gui + self.square * 2, Sudoku.SMALL,
+                          Sudoku.BLACK, False)
         self.display_text("Stopwatch:", 625, self.gui + self.square * 2, Sudoku.SMALL, Sudoku.BLACK, False)
 
     def update_legend(self):
@@ -316,14 +293,34 @@ class Sudoku:
                 if not self.board[row][column].setter:
                     self.display_text(self.board[row][column].data, column, row)
 
+    def display_notes(self, notes, x_position, y_position):
+        """ display each number and letter in their respective location for each square """
+        for note in notes:
+            self.display_text(note, x_position, y_position, Sudoku.TINY, Sudoku.GREY)
+
+    def clear_square(self, x_position, y_position, resize=True):
+        """
+        erase the element at given coordinate
+
+        :param x_position:   represents given x coordinate
+        :param y_position:   represents given y coordinate
+        :param resize:       true, if given coordinates are from an index
+        """
+
+        # represents the position on the gui from given index
+        if resize:
+            x_position = x_position * self.square
+            y_position = y_position * self.square
+
+        rectangle = x_position, y_position, self.square, self.square
+        pygame.draw.rect(self.surface, Sudoku.WHITE, rectangle, 0)
+
+        self.draw_grid_lines()
+
     def clear_legend(self):
         """ erase all text in the legend area """
 
         pygame.draw.rect(self.surface, Sudoku.WHITE, (0, self.gui + 2, self.gui, self.gui + Sudoku.LEGEND_HEIGHT), 0)
-
-    def display_notes(self, notes, x_position, y_position):
-        for note in notes:
-            self.display_text(note, x_position, y_position, Sudoku.TINY, Sudoku.GREY)
 
     def allow_user_inputs(self):
         """
@@ -353,7 +350,6 @@ class Sudoku:
 
                 # click input from user
                 if event.type == pygame.MOUSEBUTTONDOWN:
-
                     x_position, y_position = pygame.mouse.get_pos()
 
                     # represents the index of the square clicked
@@ -423,7 +419,8 @@ class Sudoku:
                 seconds = stopwatch.tick() / 1000.0  # represents the milliseconds that has gone by
                 timer += seconds
                 display_timer = math.trunc(timer)
-                self.display_text(str(display_timer), 750, self.gui + self.square * 2, Sudoku.SMALL, Sudoku.BLACK, False)
+                self.display_text(str(display_timer), 750, self.gui + self.square * 2, Sudoku.SMALL, Sudoku.BLACK,
+                                  False)
 
                 if not continue_stopwatch:
                     start_stopwatch = False
@@ -448,3 +445,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+TODO: "display numbers and letters for notes"
