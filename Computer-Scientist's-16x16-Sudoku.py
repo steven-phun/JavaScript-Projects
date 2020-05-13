@@ -42,6 +42,13 @@ import pygame
 """
 
 
+def main():
+    sudoku = Sudoku(16, 1000)
+
+    sudoku.display_surface()
+    sudoku.allow_user_inputs()
+
+
 class Sudoku:
     # represents an empty square in the grid
     EMPTY_SQUARE = None
@@ -255,32 +262,32 @@ class Sudoku:
         :return:             the center (x, y) coordinates of a square
         """
 
-        return x_position + self.grid, y_position + 2
+        return x_position + self.square / 2 - self.num_of_boxes * 2, y_position + self.square / 2 - self.num_of_boxes * 5
 
     def display_legend(self):
         """ display instructions in the legend area """
 
         self.clear_legend()
-        self.display_text("-Space: to place an answer", 0, 800, Sudoku.SMALL, Sudoku.BLACK, False)
-        self.display_text("-Backspace: to erase", 0, 850, Sudoku.SMALL, Sudoku.BLACK, False)
-        self.display_text("-Enter: to have the program solve the Sudoku", 0, 900, Sudoku.SMALL, Sudoku.BLACK, False)
-        self.display_text("Stopwatch:", 600, 900, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("-Space: to place an answer", 0, self.gui, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("-Backspace: to erase", 0, self.gui + 50, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("-Enter: to have the program solve the Sudoku", 0, self.gui + 100, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("Stopwatch:", self.gui - 200, self.gui + Sudoku.LEGEND_HEIGHT - 50, Sudoku.SMALL, Sudoku.BLACK, False)
 
     def update_legend(self):
         """ update legend area when searching and prompting the user when solution is found """
 
         self.clear_legend()
-        self.display_text(" Searching for Solution ...", 0, 850, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text(" Searching for Solution ...", 0, self.gui + 50, Sudoku.SMALL, Sudoku.BLACK, False)
 
         if self.solve():
             self.display_solution()
             self.clear_legend()
-            self.display_text("Solution Found!", 0, self.gui + self.square, Sudoku.SMALL, Sudoku.BLACK, False)
+            self.display_text("Solution Found!", 0, self.gui + 50, Sudoku.SMALL, Sudoku.BLACK, False)
         else:
             self.clear_legend()
-            self.display_text("No Solution Found.", 0, self.gui + self.square, Sudoku.SMALL, Sudoku.BLACK, False)
+            self.display_text("No Solution Found.", 0, self.gui + 50, Sudoku.SMALL, Sudoku.BLACK, False)
 
-        self.display_text("Time:", 650, 900, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("Time:", self.gui - 150, self.gui + Sudoku.LEGEND_HEIGHT - 50, Sudoku.SMALL, Sudoku.BLACK, False)
 
     def display_solution(self):
         """
@@ -295,6 +302,8 @@ class Sudoku:
 
     def display_notes(self, notes, x_position, y_position):
         """ display each number and letter in their respective location for each square """
+        print("x: " + str(x_position))
+        print("y: " + str(y_position))
         for note in notes:
             self.display_text(note, x_position, y_position, Sudoku.TINY, Sudoku.GREY)
 
@@ -350,7 +359,6 @@ class Sudoku:
                     pygame.quit()
                     exit()
 
-                # click input from user
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     x_position, y_position = pygame.mouse.get_pos()
 
@@ -358,7 +366,6 @@ class Sudoku:
                     row = int(y_position / self.square)
                     column = int(x_position / self.square)
 
-                # key input from user
                 if event.type == pygame.KEYDOWN:
 
                     # enter to solve the sudoku
@@ -417,11 +424,11 @@ class Sudoku:
                                 self.board[row][column] = Square()
                                 self.clear_square(column, row)
 
-            # display stop watch
             if start_stopwatch:
                 seconds = stopwatch.tick() / 1000.0  # represents the milliseconds that has gone by
                 timer += seconds
-                self.display_text(str(math.trunc(timer)), 725, 900, Sudoku.SMALL, Sudoku.BLACK, False)
+                self.display_text(str(math.trunc(timer)), self.gui - 75, self.gui + Sudoku.LEGEND_HEIGHT - 50,
+                                  Sudoku.SMALL, Sudoku.BLACK, False)
                 if not continue_stopwatch:
                     start_stopwatch = False
 
@@ -429,20 +436,11 @@ class Sudoku:
 
 
 class Square:
-
     def __init__(self, data=None, setter=False, answer=False):
         self.data = data
         self.setter = setter
         self.answer = answer
         self.notes = set()
-
-
-
-def main():
-    sudoku = Sudoku(16, 800)
-
-    sudoku.display_surface()
-    sudoku.allow_user_inputs()
 
 
 if __name__ == "__main__":
