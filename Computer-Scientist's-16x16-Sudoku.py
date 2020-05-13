@@ -227,20 +227,22 @@ class Sudoku:
     # @param position x,y    is the coordinates the user wants the 'text' to be displayed
     #
     # @post                  display the 'text' on coordinates 'position' on the screen
-    def display_text(self, text, x_position, y_position, size=LARGE, color=BLACK):
+    def display_text(self, text, x_position, y_position, size=LARGE, color=BLACK, resize=True):
         """
         :param text:            the 'text' to be displayed on the GUI
         :param x_position:      the x coordinate where 'text' will be displayed
         :param y_position:      the y coordinate where 'text' will be displayed
         :param size:            font size
         :param color:           font color
+        :param resize:          true, if given coordinates are from an index
         """
 
-        self.clear_square(x_position, y_position)
+        self.clear_square(x_position, y_position, resize)
 
         # represents the position on the gui from given index
-        x_position = x_position * self.square
-        y_position = y_position * self.square
+        if resize:
+            x_position = x_position * self.square
+            y_position = y_position * self.square
 
         if isinstance(text, int):
             # convert int 10+ to A, B, C, D, E, F
@@ -253,17 +255,19 @@ class Sudoku:
         self.surface.blit(text_surface, self.center_element(x_position, y_position))
         pygame.display.update()
 
-    def clear_square(self, x_position, y_position):
+    def clear_square(self, x_position, y_position, resize=True):
         """
         erase the element at given coordinate
 
         :param x_position:   represents given x coordinate
         :param y_position:   represents given y coordinate
+        :param resize:       true, if given coordinates are from an index
         """
 
         # represents the position on the gui from given index
-        x_position = x_position * self.square
-        y_position = y_position * self.square
+        if resize:
+            x_position = x_position * self.square
+            y_position = y_position * self.square
 
         rectangle = x_position, y_position, self.square, self.square
         pygame.draw.rect(self.surface, Sudoku.WHITE, rectangle, 0)
@@ -283,10 +287,10 @@ class Sudoku:
         """ display instructions in the legend area """
 
         self.clear_legend()
-        self.display_text(" -Space: to place an answer", 0, self.gui + 40 * 0 + 2, Sudoku.SMALL)
-        self.display_text(" -Backspace: to erase", 0, self.gui + 40 * 1, Sudoku.SMALL)
-        self.display_text(" -Enter: to have the program solve the Sudoku", 0, self.gui + 40 * 3, Sudoku.SMALL)
-        self.display_text("Stopwatch:", 625, self.gui + 40 * 3, Sudoku.SMALL)
+        self.display_text(" -Space: to place an answer", 0, self.gui + 40 * 0 + 2, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text(" -Backspace: to erase", 0, self.gui + 40 * 1, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text(" -Enter: to have the program solve the Sudoku", 0, self.gui + 40 * 3, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("Stopwatch:", 625, self.gui + 40 * 3, Sudoku.SMALL, Sudoku.BLACK, False)
 
     def update_legend(self):
         """ update legend area when searching and prompting the user when solution is found """
@@ -414,7 +418,7 @@ class Sudoku:
                 seconds = stopwatch.tick() / 1000.0  # represents the milliseconds that has gone by
                 timer += seconds
                 display_timer = math.trunc(timer)
-                self.display_text(str(display_timer), 750, 920, Sudoku.SMALL)
+                self.display_text(str(display_timer), 750, 920, Sudoku.SMALL, Sudoku.BLACK, False)
 
                 pygame.display.update()
 
