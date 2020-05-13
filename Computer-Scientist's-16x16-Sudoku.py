@@ -11,9 +11,10 @@ this GUI python program   allows the user to play or have the program solve a 16
 
 -sudoku                   is a partially completed grid.
 -grid                     has 16 rows, 16 columns, and 16 boxes, each having 16 squares (256 total).
--constraint               is that each element(numbers/letters) appears only once in each row, column, and row.
+-constraint               is that each element(numbers or letters) can appear only once in each row, column, and box.
 -note                     place a temporary number or letter in the square.
--setter                   fixed number of letters that cannot be erased
+-setter                   fixed numbers or letters that appear on the grid before game starts
+-answer                   the number or letter in a square that the user believes is the correct placement
 
 grid layout in code
 
@@ -69,7 +70,6 @@ class Sudoku:
     SMALL = 20
     TINY = 15
 
-    # the original state of the user's grid
     board = [[None, 5, None, None, None, None, None, 7, 10, None, None, 14, 13, None, None, 15],
              [14, 10, None, None, None, 15, 13, None, None, None, 11, None, None, 5, None, None],
              [12, None, 8, 11, None, None, None, None, 2, 15, 13, None, 14, 10, 9, None],
@@ -473,4 +473,6 @@ class Square:
 if __name__ == "__main__":
     main()
 
+TODO: " add a phase where the user can place setters before playing "
+TODO: " make font size scalable"
 TODO: " display_notes make margin scalable"
