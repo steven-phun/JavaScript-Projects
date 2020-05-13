@@ -228,7 +228,7 @@ class Sudoku:
                 if self.board[row][column].data != Sudoku.EMPTY_SQUARE:
                     self.display_text(self.board[row][column].data, column, row, Sudoku.LARGE, Sudoku.BLUE)
 
-    def display_text(self, text, x_position, y_position, size=LARGE, color=BLACK, resize=True):
+    def display_text(self, text, x_position, y_position, size=LARGE, color=BLACK, resize=True, center=True):
         """
         :param text:            the 'text' to be displayed on the GUI
         :param x_position:      the x coordinate where 'text' will be displayed
@@ -236,6 +236,7 @@ class Sudoku:
         :param size:            font size
         :param color:           font color
         :param resize:          true, if given coordinates are from an index
+        :param center:          true, if elements printed needs to be centered to the square
         """
 
         self.clear_square(x_position, y_position, resize)
@@ -253,7 +254,10 @@ class Sudoku:
 
         font = pygame.font.SysFont('bahnschrift', size)
         text_surface = font.render(str(text), True, color)
-        self.surface.blit(text_surface, self.center_element(x_position, y_position))
+        if center:
+            self.surface.blit(text_surface, self.center_element(x_position, y_position))
+        else:
+            self.surface.blit(text_surface, x_position, y_position)
         pygame.display.update()
 
     def center_element(self, x_position, y_position):
@@ -301,7 +305,7 @@ class Sudoku:
                     if not self.board[row][column].answer is True:
                         self.display_text(self.board[row][column].data, column, row)
 
-    def display_notes(self, notes, x_position, y_position):
+    def display_notes(self, notes, x_position, y_position, key):
         """ display each number and letter in their respective location for each square """
         print("x: " + str(x_position))
         print("y: " + str(y_position))
@@ -412,7 +416,7 @@ class Sudoku:
                         # edge case: if user tries to notes a setter or answered element
                         if self.board[row][column].data is None:
                             self.board[row][column].notes.add(key)
-                            self.display_notes(self.board[row][column].notes, column, row)
+                            self.display_notes(self.board[row][column].notes, column, row, key)
                             # edge case: if user tries to place an answer non-validate square
                             if event.key == pygame.K_SPACE:
                                 if self.validate(row, column, key):
