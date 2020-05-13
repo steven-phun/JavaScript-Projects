@@ -294,14 +294,17 @@ class Sudoku:
         """ update legend area when searching and prompting the user when solution is found """
 
         self.clear_legend()
-        self.display_text(" Searching for Solution ...", 0, self.gui + 40, Sudoku.SMALL)
+        self.display_text(" Searching for Solution ...", 0, self.gui + 40, Sudoku.SMALL, Sudoku.BLACK, False)
 
-        self.solve()
-        self.display_solution()
+        if self.solve():
+            self.display_solution()
+            self.clear_legend()
+            self.display_text("Solution Found!", 0, self.gui + self.square, Sudoku.SMALL, Sudoku.BLACK, False)
+        else:
+            self.clear_legend()
+            self.display_text("No Solution Found.", 0, self.gui + self.square, Sudoku.SMALL, Sudoku.BLACK, False)
 
-        self.clear_legend()
-        self.display_text("Time:", 675, self.grid + 40 * 3, Sudoku.SMALL)
-        self.display_text(" Solution Found:  " + str(self.solve), 0, self.grid + 40, Sudoku.SMALL)
+        self.display_text("Time:", 675, self.gui + self.square * 2, Sudoku.SMALL, Sudoku.BLACK, False)
 
     def display_solution(self):
         """
@@ -339,10 +342,6 @@ class Sudoku:
         row = None
         column = None
 
-        # mouse coordinates relative to center of square
-        print_x = None
-        print_y = None
-
         run_loop = True  # allow user to to see the solution and timestamp
         input_loop = True
         while run_loop:
@@ -370,7 +369,6 @@ class Sudoku:
                         # enter to solve the sudoku
                         if event.key == pygame.K_RETURN:
                             self.update_legend()
-
                             input_loop = False
 
                         if event.key == pygame.K_0:
@@ -416,7 +414,7 @@ class Sudoku:
                                 if self.validate(row, column, key):
 
                                     if event.key == pygame.K_SPACE:
-                                        self.board[row][column] = key
+                                        self.board[row][column].data = key
                                         self.display_text(key, column, row, Sudoku.LARGE, Sudoku.RED)
 
                             if event.key == pygame.K_BACKSPACE:
