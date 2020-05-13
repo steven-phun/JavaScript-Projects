@@ -43,7 +43,7 @@ grid layout in code
 
 
 def main():
-    sudoku = Sudoku(16, 800)
+    sudoku = Sudoku(16, 1000)
 
     print(pygame.font.get_fonts())
     sudoku.display_surface()
@@ -277,8 +277,10 @@ class Sudoku:
         self.clear_legend()
         self.display_text("-Space: to place an answer", 0, self.gui, Sudoku.SMALL, Sudoku.BLACK, False)
         self.display_text("-Backspace: to erase", 0, self.gui + 50, Sudoku.SMALL, Sudoku.BLACK, False)
-        self.display_text("-Enter: to have the program solve the Sudoku", 0, self.gui + 100, Sudoku.SMALL, Sudoku.BLACK, False)
-        self.display_text("Stopwatch:", self.gui - 225, self.gui + Sudoku.LEGEND_HEIGHT - 50, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("-Enter: to have the program solve the Sudoku", 0, self.gui + 100, Sudoku.SMALL, Sudoku.BLACK,
+                          False)
+        self.display_text("Stopwatch:", self.gui - 225, self.gui + Sudoku.LEGEND_HEIGHT - 50, Sudoku.SMALL,
+                          Sudoku.BLACK, False)
 
     def update_legend(self):
         """ update legend area when searching and prompting the user when solution is found """
@@ -294,7 +296,8 @@ class Sudoku:
             self.clear_legend()
             self.display_text("No Solution Found.", 0, self.gui + 50, Sudoku.SMALL, Sudoku.BLACK, False)
 
-        self.display_text("Time:", self.gui - 150, self.gui + Sudoku.LEGEND_HEIGHT - 50, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("Time:", self.gui - 150, self.gui + Sudoku.LEGEND_HEIGHT - 50, Sudoku.SMALL, Sudoku.BLACK,
+                          False)
 
     def display_solution(self):
         """
@@ -307,25 +310,67 @@ class Sudoku:
                     if not self.board[row][column].answer is True:
                         self.display_text(self.board[row][column].data, column, row)
 
-    def display_notes(self, notes, x_position, y_position, key):
+    def display_notes(self, notes, x_position, y_position):
         """ display each number and letter in their respective location for each square """
 
+        self.clear_square(x_position, y_position)
+
+        # represents the position on the gui from given index
+        x_position = x_position * self.square
+        y_position = y_position * self.square
+
         space = self.square / 4
-        margin = 3
+        margin = 4
 
         for note in notes:
 
             if note == 0:
-                self.display_text(note, x_position * self.square + space * 0 + margin, y_position * self. square,
+                self.display_text(note, x_position + space * 0 + margin, y_position + space * 0,
                                   Sudoku.TINY, Sudoku.GREY, False, False, False)
             if note == 1:
-                self.display_text(note, x_position * self.square + space * 1 + margin, y_position * self.square,
+                self.display_text(note, x_position + space * 1 + margin, y_position + space * 0,
                                   Sudoku.TINY, Sudoku.GREY, False, False, False)
             if note == 2:
-                self.display_text(note, x_position * self.square + space * 2 + margin, y_position * self.square,
+                self.display_text(note, x_position + space * 2 + margin, y_position + space * 0,
                                   Sudoku.TINY, Sudoku.GREY, False, False, False)
             if note == 3:
-                self.display_text(note, x_position * self.square + space * 3 + margin, y_position * self.square,
+                self.display_text(note, x_position + space * 3 + margin, y_position + space * 0,
+                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
+            if note == 4:
+                self.display_text(note, x_position + space * 0 + margin, y_position + space * 1,
+                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
+            if note == 5:
+                self.display_text(note, x_position + space * 1 + margin, y_position + space * 1,
+                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
+            if note == 6:
+                self.display_text(note, x_position + space * 2 + margin, y_position + space * 1,
+                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
+            if note == 7:
+                self.display_text(note, x_position + space * 3 + margin, y_position + space * 1,
+                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
+            if note == 8:
+                self.display_text(note, x_position + space * 0 + margin, y_position + space * 2,
+                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
+            if note == 9:
+                self.display_text(note, x_position + space * 1 + margin, y_position + space * 2,
+                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
+            if note == 10:
+                self.display_text(note, x_position + space * 2 + margin, y_position + space * 2,
+                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
+            if note == 11:
+                self.display_text(note, x_position + space * 3 + margin, y_position + space * 2,
+                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
+            if note == 12:
+                self.display_text(note, x_position + space * 0 + margin, y_position + space * 3,
+                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
+            if note == 13:
+                self.display_text(note, x_position + space * 1 + margin, y_position + space * 3,
+                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
+            if note == 14:
+                self.display_text(note, x_position + space * 2 + margin, y_position + space * 3,
+                                  Sudoku.TINY, Sudoku.GREY, False, False, False)
+            if note == 15:
+                self.display_text(note, x_position + space * 3 + margin, y_position + space * 3,
                                   Sudoku.TINY, Sudoku.GREY, False, False, False)
 
     def clear_square(self, x_position, y_position, resize=True):
@@ -429,16 +474,21 @@ class Sudoku:
 
                     # edge case: if user tries to make changes outside of grid
                     if key is not None and x_position <= self.gui and y_position <= self.gui:
-                        # edge case: if user tries to notes a setter or answered element
+                        # edge case: if user tries to note or answer on a setter or answer square
                         if self.board[row][column].data is None:
-                            self.board[row][column].notes.add(key)
-                            self.display_notes(self.board[row][column].notes, column, row, key)
-                            # edge case: if user tries to place an answer non-validate square
+                            # edge case: if user tries to place an answer on a non-validate square
                             if event.key == pygame.K_SPACE:
                                 if self.validate(row, column, key):
                                     self.board[row][column].data = key
                                     self.board[row][column].answer = True
                                     self.display_text(key, column, row, Sudoku.LARGE, Sudoku.RED)
+                            else:
+                                if key in self.board[row][column].notes:
+                                    self.board[row][column].notes.remove(key)
+                                else:
+                                    self.board[row][column].notes.add(key)
+                                self.display_notes(self.board[row][column].notes, column, row)
+
                         # edge case: if user tries to delete a setter element
                         if event.key == pygame.K_BACKSPACE:
                             if self.board[row][column].setter is not True:
