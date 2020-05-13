@@ -334,6 +334,8 @@ class Sudoku:
         # object represents a stopwatch
         stopwatch = pygame.time.Clock()
         timer = 0
+        start_stopwatch = True
+        continue_stopwatch = True
 
         # object stores the user's input key
         key = None
@@ -342,93 +344,91 @@ class Sudoku:
         row = None
         column = None
 
-        run_loop = True  # allow user to to see the solution and timestamp
-        input_loop = True
-        while run_loop:
-            while input_loop:
+        while True:
+            for event in pygame.event.get():
 
-                # get user inputs
-                for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
 
-                    # exit the program
-                    if event.type == pygame.QUIT:
-                        input_loop = False
+                # click input from user
+                if event.type == pygame.MOUSEBUTTONDOWN:
 
-                    # click input from user
-                    if event.type == pygame.MOUSEBUTTONDOWN:
+                    x_position, y_position = pygame.mouse.get_pos()
 
-                        x_position, y_position = pygame.mouse.get_pos()
+                    # represents the index of the square clicked
+                    row = int(y_position / self.square)
+                    column = int(x_position / self.square)
 
-                        # represents the index of the square clicked
-                        row = int(y_position / self.square)
-                        column = int(x_position / self.square)
+                # key input from user
+                if event.type == pygame.KEYDOWN:
 
-                    # key input from user
-                    if event.type == pygame.KEYDOWN:
+                    # enter to solve the sudoku
+                    if event.key == pygame.K_RETURN:
+                        self.update_legend()
+                        continue_stopwatch = False
 
-                        # enter to solve the sudoku
-                        if event.key == pygame.K_RETURN:
-                            self.update_legend()
-                            input_loop = False
+                    if event.key == pygame.K_0:
+                        key = 0
+                    if event.key == pygame.K_1:
+                        key = 1
+                    if event.key == pygame.K_2:
+                        key = 2
+                    if event.key == pygame.K_3:
+                        key = 3
+                    if event.key == pygame.K_4:
+                        key = 4
+                    if event.key == pygame.K_5:
+                        key = 5
+                    if event.key == pygame.K_6:
+                        key = 6
+                    if event.key == pygame.K_7:
+                        key = 7
+                    if event.key == pygame.K_8:
+                        key = 8
+                    if event.key == pygame.K_9:
+                        key = 9
+                    if event.key == pygame.K_a:
+                        key = 10
+                    if event.key == pygame.K_b:
+                        key = 11
+                    if event.key == pygame.K_c:
+                        key = 12
+                    if event.key == pygame.K_d:
+                        key = 13
+                    if event.key == pygame.K_e:
+                        key = 14
+                    if event.key == pygame.K_f:
+                        key = 15
 
-                        if event.key == pygame.K_0:
-                            key = 0
-                        if event.key == pygame.K_1:
-                            key = 1
-                        if event.key == pygame.K_2:
-                            key = 2
-                        if event.key == pygame.K_3:
-                            key = 3
-                        if event.key == pygame.K_4:
-                            key = 4
-                        if event.key == pygame.K_5:
-                            key = 5
-                        if event.key == pygame.K_6:
-                            key = 6
-                        if event.key == pygame.K_7:
-                            key = 7
-                        if event.key == pygame.K_8:
-                            key = 8
-                        if event.key == pygame.K_9:
-                            key = 9
-                        if event.key == pygame.K_a:
-                            key = 10
-                        if event.key == pygame.K_b:
-                            key = 11
-                        if event.key == pygame.K_c:
-                            key = 12
-                        if event.key == pygame.K_d:
-                            key = 13
-                        if event.key == pygame.K_e:
-                            key = 14
-                        if event.key == pygame.K_f:
-                            key = 15
+                    # edge case: if user tries to make changes outside of grid
+                    if key is not None:
+                        # edge case: if user tries to edit a setter element
+                        if self.board[row][column].data is None:
+                            self.board[row][column].notes.add(key)
+                            self.display_notes(self.board[row][column].notes, column, row)
 
-                        # edge case: if user tries to make changes outside of grid
-                        if key is not None:
-                            # edge case: if user tries to edit a setter element
-                            if self.board[row][column].data is None:
-                                self.board[row][column].notes.add(key)
-                                self.display_notes(self.board[row][column].notes, column, row)
+                            if self.validate(row, column, key):
 
-                                if self.validate(row, column, key):
+                                if event.key == pygame.K_SPACE:
+                                    self.board[row][column].data = key
+                                    self.display_text(key, column, row, Sudoku.LARGE, Sudoku.RED)
 
-                                    if event.key == pygame.K_SPACE:
-                                        self.board[row][column].data = key
-                                        self.display_text(key, column, row, Sudoku.LARGE, Sudoku.RED)
+                        if event.key == pygame.K_BACKSPACE:
+                            self.board[row][column] = Square()
+                            self.clear_square(column, row)
 
-                            if event.key == pygame.K_BACKSPACE:
-                                self.board[row][column] = Square()
-                                self.clear_square(column, row)
-
-                # display stop watch
-                # start stopwatch
+            # display stop watch
+            if start_stopwatch:
                 seconds = stopwatch.tick() / 1000.0  # represents the milliseconds that has gone by
                 timer += seconds
                 display_timer = math.trunc(timer)
                 self.display_text(str(display_timer), 750, self.gui + self.square * 2, Sudoku.SMALL, Sudoku.BLACK, False)
 
-                pygame.display.update()
+                if not continue_stopwatch:
+                    start_stopwatch = False
+
+            pygame.display.update()
 
 
 class Square:
@@ -448,5 +448,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-pygame.quit()
