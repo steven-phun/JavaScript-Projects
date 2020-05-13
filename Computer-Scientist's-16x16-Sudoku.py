@@ -45,6 +45,7 @@ import pygame
 def main():
     sudoku = Sudoku(16, 1000)
 
+    print(pygame.font.get_fonts())
     sudoku.display_surface()
     sudoku.allow_user_inputs()
 
@@ -65,7 +66,7 @@ class Sudoku:
 
     # font size
     LARGE = 30
-    SMALL = 20
+    SMALL = 22
     TINY = 10
 
     # the original state of the user's grid
@@ -250,7 +251,7 @@ class Sudoku:
                 text += 65 - 10  # ASCII code for A is 65
                 text = chr(text)
 
-        font = pygame.font.SysFont('Comic Sans MS', size)
+        font = pygame.font.SysFont('bahnschrift', size)
         text_surface = font.render(str(text), True, color)
         self.surface.blit(text_surface, self.center_element(x_position, y_position))
         pygame.display.update()
@@ -271,7 +272,7 @@ class Sudoku:
         self.display_text("-Space: to place an answer", 0, self.gui, Sudoku.SMALL, Sudoku.BLACK, False)
         self.display_text("-Backspace: to erase", 0, self.gui + 50, Sudoku.SMALL, Sudoku.BLACK, False)
         self.display_text("-Enter: to have the program solve the Sudoku", 0, self.gui + 100, Sudoku.SMALL, Sudoku.BLACK, False)
-        self.display_text("Stopwatch:", self.gui - 200, self.gui + Sudoku.LEGEND_HEIGHT - 50, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("Stopwatch:", self.gui - 225, self.gui + Sudoku.LEGEND_HEIGHT - 50, Sudoku.SMALL, Sudoku.BLACK, False)
 
     def update_legend(self):
         """ update legend area when searching and prompting the user when solution is found """
