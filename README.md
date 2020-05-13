@@ -2,7 +2,7 @@
 A collection of my personal projects. 
 
 ### Contents 
-- [Computer Scientist's 16x16 Sudoku Solver](https://.github.com)
+- [Computer Scientist's 16x16 Sudoku Solver]((https://steven-phun.github.io/personal-projects)
 
 ## [Computer Scientist's 16x16 Sudoku Solver](https://.github.com)
 
