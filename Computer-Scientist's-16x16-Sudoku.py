@@ -315,18 +315,19 @@ class Sudoku:
 
         self.clear_square(x_position, y_position)
 
-        # represents the position on the gui from given index
-        x_position = x_position * self.square
-        y_position = y_position * self.square
-
         space = self.square / 4
         margin = 4
+
+        # represents the position on the gui from given index
+        x_position = x_position * self.square + margin
+        y_position = y_position * self.square
 
         for note in notes:
             for key in range(0, self.grid):
                 if note == key:
-                    self.display_text(note, x_position + space * (key % 4) + margin,
-                                      y_position + space * int(key / 4), Sudoku.TINY, Sudoku.GREY, False, False, False)
+                    self.display_text(note, x_position + space * (key % self.num_of_boxes),
+                                      y_position + space * int(key / self.num_of_boxes),
+                                      Sudoku.TINY, Sudoku.GREY, False, False, False)
 
     def clear_square(self, x_position, y_position, resize=True):
         """
