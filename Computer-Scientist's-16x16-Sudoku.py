@@ -47,7 +47,7 @@ def main():
     sudoku = Sudoku(16, 1000)
 
     sudoku.display_surface()
-    sudoku.allow_user_inputs()
+    sudoku.play_sudoku()
 
 
 class Sudoku:
@@ -352,7 +352,7 @@ class Sudoku:
 
         pygame.draw.rect(self.surface, Sudoku.WHITE, (0, self.gui + 2, self.gui, self.gui + Sudoku.LEGEND_HEIGHT), 0)
 
-    def allow_user_inputs(self):
+    def play_sudoku(self):
         """
         records user's keyboard and mouse input
         then, displays the outputs to the GUI accordingly
