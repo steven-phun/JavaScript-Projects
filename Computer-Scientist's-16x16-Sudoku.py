@@ -46,7 +46,6 @@ grid layout in code
 def main():
     sudoku = Sudoku(16, 1000)
 
-    print(pygame.font.get_fonts())
     sudoku.display_surface()
     sudoku.allow_user_inputs()
 
