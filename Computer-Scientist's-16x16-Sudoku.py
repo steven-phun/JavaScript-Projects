@@ -45,14 +45,6 @@ TODO: """ fix the position param for display_text """
 """
 
 
-class Square:
-
-    def __init__(self, data=None, setter=False):
-        self.data = data
-        self.setter = setter
-        self.notes = set()
-
-
 class Sudoku:
     # represents an empty square in the grid
     EMPTY_SQUARE = None
@@ -70,6 +62,7 @@ class Sudoku:
     # font size
     LARGE = 30
     SMALL = 20
+    TINY = 10
 
     # the original state of the user's grid
     board = [[None, 5, None, None, None, None, None, 7, 10, None, None, 14, 13, None, None, 15],
@@ -127,16 +120,14 @@ class Sudoku:
                     for element in range(0, self.grid):
                         if self.validate(row, column, element):
                             self.board[row][column].data = element
-                            self.display_text(self.board[row][column].data, column * self.square + self.x_center,
-                                              row * self.square + self.y_center, Sudoku.LARGE, Sudoku.BLACK)
+                            self.display_text(self.board[row][column].data, column, row, Sudoku.LARGE, Sudoku.BLACK)
                             # base case: if element leads to a solution
                             if self.solve():
                                 return True
                             else:
                                 # backtrack: if element does not lead to a solution
                                 self.board[row][column] = Square()
-                                self.clear_square(column * self.square + self.x_center,
-                                                  row * self.square + self.y_center)
+                                self.clear_square(column, row)
                     return False
         return True
 
@@ -232,15 +223,13 @@ class Sudoku:
         for row in range(0, self.grid):
             for column in range(0, self.grid):
                 if self.board[row][column].data != Sudoku.EMPTY_SQUARE:
-                    self.display_text(self.board[row][column].data,
-                                      column * self.square + self.x_center,
-                                      row * self.square + self.y_center, Sudoku.LARGE, Sudoku.BLUE)
+                    self.display_text(self.board[row][column].data, column, row, Sudoku.LARGE, Sudoku.BLUE)
 
     # @param text            is object to be printed on the screen
     # @param position x,y    is the coordinates the user wants the 'text' to be displayed
     #
     # @post                  display the 'text' on coordinates 'position' on the screen
-    def display_text(self, text, x_position, y_position, size, color):
+    def display_text(self, text, x_position, y_position, size=LARGE, color=BLACK):
         """
         :param text:            the 'text' to be displayed on the GUI
         :param x_position:      the x coordinate where 'text' will be displayed
@@ -249,10 +238,11 @@ class Sudoku:
         :param color:           font color
         """
 
-        if color is None:
-            color = Sudoku.BLACK
-
         self.clear_square(x_position, y_position)
+
+        # represents the position on the gui from given index
+        x_position = x_position * self.square
+        y_position = y_position * self.square
 
         if isinstance(text, int):
             # convert int 10+ to A, B, C, D, E, F
@@ -262,7 +252,7 @@ class Sudoku:
 
         font = pygame.font.SysFont('Comic Sans MS', size)
         text_surface = font.render(str(text), True, color)
-        self.surface.blit(text_surface, (x_position, y_position))
+        self.surface.blit(text_surface, self.center_element(x_position, y_position))
         pygame.display.update()
 
     def clear_square(self, x_position, y_position):
@@ -273,8 +263,14 @@ class Sudoku:
         :param y_position:   represents given y coordinate
         """
 
-        rectangle = x_position, y_position, self.square - self.x_center, self.square - self.y_center
+        # represents the position on the gui from given index
+        x_position = x_position * self.square
+        y_position = y_position * self.square
+
+        rectangle = x_position, y_position, self.square, self.square
         pygame.draw.rect(self.surface, Sudoku.WHITE, rectangle, 0)
+
+        self.draw_grid_lines()
 
     def center_element(self, x_position, y_position):
         """
@@ -295,7 +291,7 @@ class Sudoku:
         self.display_text("Stopwatch:", 625, self.gui + 40 * 3, Sudoku.SMALL, Sudoku.BLACK)
 
     def update_legend(self):
-        """ update legend area when searching and prompting the user when solution is found"""
+        """ update legend area when searching and prompting the user when solution is found """
 
         self.clear_legend()
         self.display_text(" Searching for Solution ...", 0, self.gui + 40, Sudoku.SMALL, Sudoku.BLACK)
@@ -311,6 +307,10 @@ class Sudoku:
 
         pygame.draw.rect(self.surface, Sudoku.WHITE, (0, self.gui + 2, self.gui, self.gui + Sudoku.LEGEND_HEIGHT), 0)
 
+    def display_notes(self, notes, x_position, y_position):
+        for note in notes:
+            self.display_text(note, x_position, y_position, Sudoku.TINY, Sudoku.GREY)
+
     def allow_user_inputs(self):
         """
         records user's keyboard and mouse input
@@ -325,8 +325,8 @@ class Sudoku:
         key = None
 
         # mouse coordinates relative to grid index
-        x_position = None
-        y_position = None
+        row = None
+        column = None
 
         # mouse coordinates relative to center of square
         print_x = None
@@ -346,13 +346,12 @@ class Sudoku:
 
                     # click input from user
                     if event.type == pygame.MOUSEBUTTONDOWN:
+
                         x_position, y_position = pygame.mouse.get_pos()
 
-                        x_position = int(x_position / self.square)
-                        y_position = int(y_position / self.square)
-
-                        print_x = int(x_position * self.square) + self.x_center
-                        print_y = int(y_position * self.square) + self.y_center
+                        # represents the index of the square clicked
+                        row = int(y_position / self.square)
+                        column = int(x_position / self.square)
 
                     # key input from user
                     if event.type == pygame.KEYDOWN:
@@ -396,21 +395,21 @@ class Sudoku:
                             key = 15
 
                         # edge case: if user tries to make changes outside of grid
-                        if key is not None and x_position <= self.gui and y_position <= self.gui:
+                        if key is not None:
                             # edge case: if user tries to edit a setter element
-                            if self.board[y_position][x_position].data is None:
+                            if self.board[row][column].data is None:
+                                self.board[row][column].notes.add(key)
+                                self.display_notes(self.board[row][column].notes, column, row)
 
-                                self.display_text(key, print_x, print_y, Sudoku.LARGE, Sudoku.GREY)
-
-                                if self.validate(y_position, x_position, key):
+                                if self.validate(row, column, key):
 
                                     if event.key == pygame.K_SPACE:
-                                        self.board[y_position][x_position] = key
-                                        self.display_text(key, print_x, print_y, Sudoku.LARGE, Sudoku.RED)
+                                        self.board[row][column] = key
+                                        self.display_text(key, column, row, Sudoku.LARGE, Sudoku.RED)
 
                             if event.key == pygame.K_BACKSPACE:
-                                self.board[y_position][x_position] = Square()
-                                self.clear_square(print_x, print_y)
+                                self.board[row][column] = Square()
+                                self.clear_square(column, row)
 
                 # display stop watch
                 # start stopwatch
@@ -420,6 +419,14 @@ class Sudoku:
                 self.display_text(str(display_timer), 750, 920, Sudoku.SMALL, Sudoku.BLACK)
 
                 pygame.display.update()
+
+
+class Square:
+
+    def __init__(self, data=None, setter=False):
+        self.data = data
+        self.setter = setter
+        self.notes = set()
 
 
 def main():
