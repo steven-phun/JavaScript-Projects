@@ -1,8 +1,6 @@
 import math
 import pygame
 
-TODO: """ create a square object """
-TODO: """ fix the position param for display_text """
 
 """
 # created by Steven Phun on May 5, 2020.
