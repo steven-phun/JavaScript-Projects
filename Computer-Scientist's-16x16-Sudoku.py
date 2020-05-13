@@ -437,6 +437,7 @@ class Square:
         self.notes = set()
 
 
+
 def main():
     sudoku = Sudoku(16, 800)
 
