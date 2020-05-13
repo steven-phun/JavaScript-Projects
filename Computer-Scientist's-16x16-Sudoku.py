@@ -51,20 +51,16 @@ def main():
 
 
 class Sudoku:
-    # represents an empty square in the grid
-    EMPTY_SQUARE = None
 
-    # represents the length of the legend in GUI
+    EMPTY_SQUARE = None
     LEGEND_HEIGHT = 150
 
-    # rgb color code
     WHITE = [255, 255, 255]
     BLACK = [0, 0, 0]
     BLUE = [0, 0, 255]
     RED = [255, 0, 0]
     GREY = [192, 192, 192]
 
-    # font size
     LARGE = 30
     SMALL = 20
     TINY = 15
@@ -91,7 +87,7 @@ class Sudoku:
         instantiate a sudoku grid
 
         :param grid_size:    represents the number of rows and columns in the grid
-        :param gui_size:     represents the height and weight of the GUI that displays the grid
+        :param gui_size:     represents the height and width of the GUI that displays the grid
         """
 
         self.grid = grid_size
@@ -100,10 +96,8 @@ class Sudoku:
         self.num_of_boxes = int(math.sqrt(grid_size))  # represents the number of boxes in each row or column
 
         self.surface = pygame.display.set_mode([self.gui, self.gui + Sudoku.LEGEND_HEIGHT])
-        self.x_center = self.grid
-        self.y_center = 2
 
-        # convert each square to the object Square
+        # convert each square in grid to an object
         for row in range(0, self.grid):
             for column in range(0, self.grid):
                 if self.board[row][column] == Sudoku.EMPTY_SQUARE:
@@ -113,9 +107,9 @@ class Sudoku:
 
     def solve(self):
         """
-        solve the sudoku using backtracking recursion
+        find a solution to the sudoku using backtracking recursion
 
-        :return:    'true' if the program finds a solution to the sudoku
+        :return:    'true' if there exists a solution
         """
 
         for row in range(0, self.grid):
@@ -178,7 +172,7 @@ class Sudoku:
         :return:            true, if the 'box' contains the 'element'
         """
 
-        # find every square indices for a box with given 'row' and 'column'
+        # index of the first square from given box
         row_box_index = row - row % self.num_of_boxes
         column_box_index = column - column % self.num_of_boxes
 
@@ -191,7 +185,7 @@ class Sudoku:
 
     def display_surface(self):
         """
-        instantiate the GUI surface for the user to interact with
+        instantiate a GUI surface for the user to interact with
         """
 
         pygame.font.init()
@@ -200,7 +194,7 @@ class Sudoku:
         self.surface.fill(Sudoku.WHITE)
         self.draw_grid_lines()
         self.draw_setter()
-        self.display_legend()
+        self.draw_legend()
 
     def draw_grid_lines(self):
         """
@@ -220,12 +214,40 @@ class Sudoku:
 
     def draw_setter(self):
         """
-        displays the fixed numbers and letters (setter) on the grid
+        displays the fixed numbers and letters (setters) on the grid
         """
         for row in range(0, self.grid):
             for column in range(0, self.grid):
                 if self.board[row][column].data != Sudoku.EMPTY_SQUARE:
                     self.display_text(self.board[row][column].data, column, row, Sudoku.LARGE, Sudoku.BLUE)
+
+    def draw_legend(self):
+        """ display instructions in the legend area """
+
+        self.erase_legend()
+        self.display_text("-Space: to place an answer", 0, self.gui, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("-Backspace: to erase", 0, self.gui + 50, Sudoku.SMALL, Sudoku.BLACK, False)
+        self.display_text("-Enter: to have the program solve the Sudoku", 0, self.gui + 100, Sudoku.SMALL, Sudoku.BLACK,
+                          False)
+        self.display_text("Stopwatch:", self.gui - 225, self.gui + Sudoku.LEGEND_HEIGHT - 50, Sudoku.SMALL,
+                          Sudoku.BLACK, False)
+
+    def update_legend(self):
+        """ update legend area when searching and prompting the user when solution is found """
+
+        self.erase_legend()
+        self.display_text(" Searching for Solution ...", 0, self.gui + 50, Sudoku.SMALL, Sudoku.BLACK, False)
+
+        if self.solve():
+            self.display_solution()
+            self.erase_legend()
+            self.display_text("Solution Found!", 0, self.gui + 50, Sudoku.SMALL, Sudoku.BLACK, False)
+        else:
+            self.erase_legend()
+            self.display_text("No Solution Found.", 0, self.gui + 50, Sudoku.SMALL, Sudoku.BLACK, False)
+
+        self.display_text("Time:", self.gui - 150, self.gui + Sudoku.LEGEND_HEIGHT - 50, Sudoku.SMALL, Sudoku.BLACK,
+                          False)
 
     def display_text(self, text, x_position, y_position, size=LARGE, color=BLACK, resize=True, center=True, clear=True):
         """
@@ -240,7 +262,7 @@ class Sudoku:
         """
 
         if clear:
-            self.clear_square(x_position, y_position, resize)
+            self.erase_square(x_position, y_position, resize)
 
         # represents the position on the gui from given index
         if resize:
@@ -261,43 +283,6 @@ class Sudoku:
             self.surface.blit(text_surface, (x_position, y_position))
         pygame.display.update()
 
-    def center_element(self, x_position, y_position):
-        """
-        :param x_position:   represents given x coordinate
-        :param y_position:   represents given y coordinate
-        :return:             the center (x, y) coordinates of a square
-        """
-
-        return x_position + self.square / 2 - self.num_of_boxes * 2, y_position + self.square / 2 - self.num_of_boxes * 5
-
-    def display_legend(self):
-        """ display instructions in the legend area """
-
-        self.clear_legend()
-        self.display_text("-Space: to place an answer", 0, self.gui, Sudoku.SMALL, Sudoku.BLACK, False)
-        self.display_text("-Backspace: to erase", 0, self.gui + 50, Sudoku.SMALL, Sudoku.BLACK, False)
-        self.display_text("-Enter: to have the program solve the Sudoku", 0, self.gui + 100, Sudoku.SMALL, Sudoku.BLACK,
-                          False)
-        self.display_text("Stopwatch:", self.gui - 225, self.gui + Sudoku.LEGEND_HEIGHT - 50, Sudoku.SMALL,
-                          Sudoku.BLACK, False)
-
-    def update_legend(self):
-        """ update legend area when searching and prompting the user when solution is found """
-
-        self.clear_legend()
-        self.display_text(" Searching for Solution ...", 0, self.gui + 50, Sudoku.SMALL, Sudoku.BLACK, False)
-
-        if self.solve():
-            self.display_solution()
-            self.clear_legend()
-            self.display_text("Solution Found!", 0, self.gui + 50, Sudoku.SMALL, Sudoku.BLACK, False)
-        else:
-            self.clear_legend()
-            self.display_text("No Solution Found.", 0, self.gui + 50, Sudoku.SMALL, Sudoku.BLACK, False)
-
-        self.display_text("Time:", self.gui - 150, self.gui + Sudoku.LEGEND_HEIGHT - 50, Sudoku.SMALL, Sudoku.BLACK,
-                          False)
-
     def display_solution(self):
         """
         display the solution to GUI
@@ -312,7 +297,7 @@ class Sudoku:
     def display_notes(self, notes, x_position, y_position):
         """ display each number and letter in their respective location for each square """
 
-        self.clear_square(x_position, y_position)
+        self.erase_square(x_position, y_position)
 
         space = self.square / 4
         margin = 4
@@ -328,7 +313,16 @@ class Sudoku:
                                       y_position + space * int(key / self.num_of_boxes),
                                       Sudoku.TINY, Sudoku.GREY, False, False, False)
 
-    def clear_square(self, x_position, y_position, resize=True):
+    def center_element(self, x_position, y_position):
+        """
+        :param x_position:   represents given x coordinate
+        :param y_position:   represents given y coordinate
+        :return:             the center (x, y) coordinates of a square
+        """
+
+        return x_position + self.square / 2 - self.num_of_boxes * 2, y_position + self.square / 2 - self.num_of_boxes * 5
+
+    def erase_square(self, x_position, y_position, resize=True):
         """
         erase the element at given coordinate
 
@@ -347,7 +341,7 @@ class Sudoku:
 
         self.draw_grid_lines()
 
-    def clear_legend(self):
+    def erase_legend(self):
         """ erase all text in the legend area """
 
         pygame.draw.rect(self.surface, Sudoku.WHITE, (0, self.gui + 2, self.gui, self.gui + Sudoku.LEGEND_HEIGHT), 0)
@@ -358,18 +352,14 @@ class Sudoku:
         then, displays the outputs to the GUI accordingly
         """
 
-        # object represents a stopwatch
         stopwatch = pygame.time.Clock()
-        timer = 0
+
         start_stopwatch = True
         continue_stopwatch = True
-
-        # object stores the user's input
+        timer = 0
         key = None
         x_position = None
         y_position = None
-
-        # mouse coordinates relative to grid index
         row = None
         column = None
 
@@ -388,8 +378,6 @@ class Sudoku:
                     column = int(x_position / self.square)
 
                 if event.type == pygame.KEYDOWN:
-
-                    # enter to solve the sudoku
                     if event.key == pygame.K_RETURN:
                         self.update_legend()
                         continue_stopwatch = False
@@ -448,7 +436,7 @@ class Sudoku:
                         if event.key == pygame.K_BACKSPACE:
                             if self.board[row][column].setter is not True:
                                 self.board[row][column] = Square()
-                                self.clear_square(column, row)
+                                self.erase_square(column, row)
 
             if start_stopwatch:
                 seconds = stopwatch.tick() / 1000.0  # represents the milliseconds that has gone by
