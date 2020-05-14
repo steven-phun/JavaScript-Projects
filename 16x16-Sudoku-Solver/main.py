@@ -1,5 +1,7 @@
-import math
+import django
 import pygame
+import math
+
 
 """
 created by Steven Phun on May 5, 2020.
