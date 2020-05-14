@@ -1,4 +1,3 @@
-import django
 import pygame
 import math
 
@@ -462,7 +461,3 @@ class Square:
 
 if __name__ == "__main__":
     main()
-
-TODO: " add a phase where the user can place setters before playing "
-TODO: " make font size scalable"
-TODO: " display_notes make margin scalable"
