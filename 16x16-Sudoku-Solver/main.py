@@ -7,8 +7,8 @@ import math
 created by Steven Phun on May 5, 2020.
 
 
-this GUI python program   allows the user to play or have the program solve a 16x16 Sudoku.
-                          the game is based on the classic 9x9 Sudoku where the basic rules is the same.
+this GUI python program   allows the user to play or have the program solve a 16x16 sudoku.
+                          the game is based on the classic 9x9 sudoku where the basic rules is the same.
                           place the numbers 0-9 and letters A-F into each row, column and 4x4 row once.
 
 -sudoku                   is a partially completed grid.
@@ -174,7 +174,7 @@ class Sudoku:
         :return:            true, if the 'box' contains the 'element'
         """
 
-        # index of the first square from given box
+        # sudoku of the first square from given box
         row_box_index = row - row % self.num_of_boxes
         column_box_index = column - column % self.num_of_boxes
 
@@ -191,7 +191,7 @@ class Sudoku:
         """
 
         pygame.font.init()
-        pygame.display.set_caption("Computer Scientist's 16x16 Sudoku")
+        pygame.display.set_caption("Computer Scientist's 16x16 sudoku")
 
 
         self.surface.fill(Sudoku.WHITE)
@@ -230,7 +230,7 @@ class Sudoku:
         self.erase_legend()
         self.display_text("-Space: to place an answer", 0, self.gui, Sudoku.SMALL, Sudoku.BLACK, False)
         self.display_text("-Backspace: to erase", 0, self.gui + 50, Sudoku.SMALL, Sudoku.BLACK, False)
-        self.display_text("-Enter: to have the program solve the Sudoku", 0, self.gui + 100, Sudoku.SMALL, Sudoku.BLACK,
+        self.display_text("-Enter: to have the program solve the sudoku", 0, self.gui + 100, Sudoku.SMALL, Sudoku.BLACK,
                           False)
         self.display_text("Stopwatch:", self.gui - 225, self.gui + Sudoku.LEGEND_HEIGHT - 50, Sudoku.SMALL,
                           Sudoku.BLACK, False)
@@ -259,7 +259,7 @@ class Sudoku:
         :param y_position:      the y coordinate where 'text' will be displayed
         :param size:            font size
         :param color:           font color
-        :param resize:          true, if given coordinates are from an index
+        :param resize:          true, if given coordinates are from an sudoku
         :param center:          true, if elements printed needs to be centered to the square
         :param clear:           true, if square needs to be erased before printing
         """
@@ -267,7 +267,7 @@ class Sudoku:
         if clear:
             self.erase_square(x_position, y_position, resize)
 
-        # represents the position on the gui from given index
+        # represents the position on the gui from given sudoku
         if resize:
             x_position = x_position * self.square
             y_position = y_position * self.square
@@ -305,7 +305,7 @@ class Sudoku:
         space = self.square / 4
         margin = 4
 
-        # represents the position on the gui from given index
+        # represents the position on the gui from given sudoku
         x_position = x_position * self.square + margin
         y_position = y_position * self.square
 
@@ -331,10 +331,10 @@ class Sudoku:
 
         :param x_position:   represents given x coordinate
         :param y_position:   represents given y coordinate
-        :param resize:       true, if given coordinates are from an index
+        :param resize:       true, if given coordinates are from an sudoku
         """
 
-        # represents the position on the gui from given index
+        # represents the position on the gui from given sudoku
         if resize:
             x_position = x_position * self.square
             y_position = y_position * self.square
@@ -376,7 +376,7 @@ class Sudoku:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     x_position, y_position = pygame.mouse.get_pos()
 
-                    # represents the index of the square clicked
+                    # represents the sudoku of the square clicked
                     row = int(y_position / self.square)
                     column = int(x_position / self.square)
 
