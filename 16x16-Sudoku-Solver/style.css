@@ -2,22 +2,33 @@
   font-family: 'Source Sans Pro', sans-serif;
   margin: 0px;
   padding: 0px;
+  background-color: #f4f4f4;
 }
 
-header>h1 {
+.sudoku-wrapper {}
+
+.sudoku-header {
+  padding: 25px;
+}
+
+.sudoku-header>h1 {
   text-align: center;
   margin: auto;
+  color: #3ac2cb;
 }
 
-.sudoku-wrapper {
-  width: 800px;
+.sudoku-content-wrapper {
+  width: 750px;
   margin: auto;
 }
 
-colgroup, tbody {
-  border: solid medium;
+.sudoku-grid-wrapper {}
+
+.sudoku-col, .sudoku-row {
+  border: solid thin;
 }
 
-td {
-  border: solid thin;
+table {
+  height: 750px;
+  width: 750px;
 }
