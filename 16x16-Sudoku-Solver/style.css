@@ -1,74 +1,32 @@
+/* Global */
 * {
-  font-family: 'Source Sans Pro', sans-serif;
+  font: 14px/1.5 'Source Sans Pro', sans-serif;
+  letter-spacing: 3px;
   margin: 0px;
   padding: 0px;
   background-color: #f4f4f4;
-  letter-spacing: 3px;
-  font-size: 14px;
 }
 
-.sudoku-wrapper {}
-
-.sudoku-header {
-  padding: 15px;
-}
-
-.sudoku-content-wrapper {
-  width: 1000px;
+.container {
+  width: 70%;
+  height: 70%;
   margin: auto;
 }
 
-.sudoku-grid-display {}
-
-.sudoku-col, .sudoku-row {
-  color: #BDBDBD;
-  border: solid 1px;
-}
-
-.sudoku-col:hover, .sudoku-row:hover {
-  background: #E5E5E5;
-  cursor: pointer;
-}
-
-table.sudoku-grid {
+/* Header */
+/* Play Area */
+#sudoku table {
   border-collapse: collapse;
+  min-width: 600px;
 }
 
-td.sudoku-row, td.sudoku-col {
-  width: 40px;
-  height: 40px;
+#sudoku td {
+  width: 35px;
+  height: 35px;
+  border: solid 1px;
+  font-size: 20px;
+  text-align: center;
 }
 
-table.sudoku-grid {
-  border: solid 3px;
-}
-
-.sudoku-col-section {
-  border-left: #000000 solid 3px;
-}
-
-.sudoku-row-section {
-  border-top: #000000 solid 3px;
-}
-
-.how-to-play-wrapper {
-  padding: 15px;
-}
-
-.how-to-play-title {
-  padding-bottom: 10px;
-}
-
-.how-to-play-title>h1 {
-  color: #5DADE2;
-  font-size: 18px;
-  letter-spacing: 3px;
-}
-
-.how-to-play-instructions {
-  padding-bottom: 10px;
-}
-
-.how-to-play-constraints {
-  padding-bottom: 10px;
-}
+/* How to Play */
+/* Footer */
