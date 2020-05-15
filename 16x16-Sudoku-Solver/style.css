@@ -21,13 +21,13 @@
 .sudoku-grid-wrapper {}
 
 .sudoku-col, .sudoku-row {
-  border: solid 1px;
   color: #BDBDBD;
+  border: dashed 1px;
 }
 
 .sudoku-col:hover, .sudoku-row:hover {
-  cursor: pointer;
   background: #E5E5E5;
+  cursor: pointer;
 }
 
 table.sudoku-grid {
@@ -39,8 +39,16 @@ td.sudoku-row, td.sudoku-col {
   width: 45px;
 }
 
-tbody.sudoku-tbody {
-  border: solid 3px;
+table.sudoku-grid {
+  border: solid 1px;
+}
+
+.sudoku-col-section {
+  border-left: #000000 solid 1px;
+}
+
+.sudoku-row-section {
+  border-top: #000000 solid 1px;
 }
 
 .how-to-play-wrapper {
@@ -49,6 +57,12 @@ tbody.sudoku-tbody {
 
 .how-to-play-title {
   padding-bottom: 10px;
+}
+
+.how-to-play-title>h1 {
+  color: #5DADE2;
+  font-size: 18px;
+  letter-spacing: 3px;
 }
 
 .how-to-play-instructions {
