@@ -1,12 +1,10 @@
 /*jshint esversion: 6 */
 
-function drawGrid() {
-  const getTag = document.querySelector("div.sudoku-grid-display");
-  const table = document.createElement("table");
-  table.className = "sudoku-grid";
+function drawGrid(tag) {
+  const getTag = document.querySelector(tag);
 
   for (i = 0; i < 16; i++) {
-    const row = table.insertRow();
+    const row = getTag.insertRow();
     row.classList.add("sudoku-row");
     if (i !== 0 && i % 4 === 0) {
       row.classList.add("sudoku-row-section");
@@ -19,7 +17,7 @@ function drawGrid() {
       }
     }
   }
-  getTag.append(table);
+  getTag.appendChild(table);
 }
 
-drawGrid();
+drawGrid("table.sudoku-grid");
