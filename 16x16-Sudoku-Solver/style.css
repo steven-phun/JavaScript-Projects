@@ -22,7 +22,7 @@
 
 .sudoku-col, .sudoku-row {
   color: #BDBDBD;
-  border: dashed 1px;
+  border: solid 1px;
 }
 
 .sudoku-col:hover, .sudoku-row:hover {
@@ -40,15 +40,15 @@ td.sudoku-row, td.sudoku-col {
 }
 
 table.sudoku-grid {
-  border: solid 1px;
+  border: solid 2px;
 }
 
 .sudoku-col-section {
-  border-left: #000000 solid 1px;
+  border-left: #000000 solid 2px;
 }
 
 .sudoku-row-section {
-  border-top: #000000 solid 1px;
+  border-top: #000000 solid 2px;
 }
 
 .how-to-play-wrapper {
