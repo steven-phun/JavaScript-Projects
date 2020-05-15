@@ -8,17 +8,11 @@
 .sudoku-wrapper {}
 
 .sudoku-header {
-  padding: 25px;
-}
-
-.sudoku-header>h1 {
-  text-align: center;
-  margin: auto;
-  color: #3ac2cb;
+  padding: 15px;
 }
 
 .sudoku-content-wrapper {
-  width: 750px;
+  width: 1000px;
   margin: auto;
 }
 
@@ -30,8 +24,8 @@
 }
 
 .sudoku-grid {
-  height: 750px;
-  width: 750px;
+  height: 700px;
+  width: 700px;
   border-collapse: collapse;
 }
 
