@@ -18,7 +18,7 @@
   margin: auto;
 }
 
-.sudoku-grid-wrapper {}
+.sudoku-grid-display {}
 
 .sudoku-col, .sudoku-row {
   color: #BDBDBD;
@@ -35,20 +35,20 @@ table.sudoku-grid {
 }
 
 td.sudoku-row, td.sudoku-col {
-  height: 45px;
-  width: 45px;
+  width: 40px;
+  height: 40px;
 }
 
 table.sudoku-grid {
-  border: solid 2px;
+  border: solid 3px;
 }
 
 .sudoku-col-section {
-  border-left: #000000 solid 2px;
+  border-left: #000000 solid 3px;
 }
 
 .sudoku-row-section {
-  border-top: #000000 solid 2px;
+  border-top: #000000 solid 3px;
 }
 
 .how-to-play-wrapper {
