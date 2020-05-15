@@ -23,6 +23,11 @@
   color: #BDBDBD;
 }
 
+.sudoku-col:hover, .sudoku-row:hover {
+  cursor: pointer;
+  background: #E5E5E5;
+}
+
 .sudoku-grid {
   height: 700px;
   width: 700px;
