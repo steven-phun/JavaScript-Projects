@@ -19,6 +19,7 @@
   border-collapse: collapse;
   min-width: 600px;
   border: solid 3px;
+  cursor: pointer;
 }
 
 #sudoku td {

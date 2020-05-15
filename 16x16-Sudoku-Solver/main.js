@@ -9,14 +9,31 @@ function drawGrid(tag) {
     for (j = 0; j < 16; j++) {
       const col = row.insertCell();
       col.classList.add("col");
-      col.setAttribute("onclick", "displayInput()");
+
+      getTag.rows[i].setAttribute('onclick', 'getRow(this)');
+      getTag.rows[i].cells[j].setAttribute('onclick', 'getCol(this)');
     }
   }
   getTag.rows[5].cells[2].innerHTML = "A";
 }
 
-function displayInput() {
-  alert("it works!");
+function getValue(value) {
+  console.log("value is: " + value);
+
+  return value;
+}
+
+function getRow(row) {
+  console.log("row is: " + row.rowIndex);
+
+  return row;
+}
+
+function getCol(col) {
+  getValue(col.innerHTML);
+  console.log("col is: " + col.cellIndex);
+
+  return col;
 }
 
 drawGrid("#sudoku>table");
