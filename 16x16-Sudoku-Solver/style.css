@@ -17,6 +17,7 @@
 header {
   margin-top: 50px;
 }
+
 /* Play Area */
 #sudoku table {
   border-collapse: collapse;
@@ -55,4 +56,5 @@ header {
 #how-to-play p, #how-to-play li {
   font-size: 13px;
 }
+
 /* Footer */
