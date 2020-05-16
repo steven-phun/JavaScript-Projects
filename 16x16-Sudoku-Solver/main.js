@@ -20,8 +20,10 @@ test = [
   [2, 15, null, null, 9, null, null, 6, null, null, 5, null, null, null, 11, null]
 ];
 
+
 /* global variables/instances */
 const size = 16; // represents the 16x16 grid size
+const empty = ""; // represents an empty cell
 let board = null; // represents the sudoku gird
 let row = null; // row index of the grid
 let col = null; // column index of the grid
@@ -32,6 +34,7 @@ let val = null; // value of the square
 function main() {
   window.addEventListener('keydown', writeToCell);
   drawGrid('#sudoku>table');
+  //solve();
 }
 
 
@@ -41,9 +44,34 @@ function main() {
  * @return true if there a solution
  */
 function solve() {
-  // backtracking recursion
 
+  // backtracking recursion
+  for (row = 0; row < size; row++) {
+    this.row = row;
+    for (col = 0; col < size; col++) {
+      this.col = col;
+      if (this.board.rows[row].cells[col].innerHTML == empty) {
+        for (val = 0; val < size; val++) {
+          this.val = val;
+          if (validate()) {
+            this.board.rows[row].cells[col].innerHTML = changeColor(val.toString());
+
+            // base case: if value leads to a solution
+            if (solve()) {
+              return true;
+              // backtrack: if value does not lead to a solution
+            } else {
+              this.board.rows[row].cells[col].innerHTML = empty;
+            }
+          }
+          return false;
+        }
+      }
+    }
+  }
+  return true;
 }
+
 
 /*
  * @return true if there does not exists the same element placed
@@ -183,7 +211,7 @@ function checkInput(input) {
 }
 
 /*
- * change color of the 'text'
+ * change the color of a string 'text'
  *
  * @pram text     the text to change color
  * @return        the text with its corresponding color
