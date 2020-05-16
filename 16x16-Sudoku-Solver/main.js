@@ -1,39 +1,43 @@
 /*jshint esversion: 6 */
 
+const board = drawGrid("#sudoku>table");
+let col = "";
+let row = "";
+let val = "";
+
+
 function drawGrid(tag) {
-  const getTag = document.querySelector(tag);
+  const grid = document.querySelector(tag);
 
   for (i = 0; i < 16; i++) {
-    const row = getTag.insertRow();
+    const row = grid.insertRow();
     row.classList.add("row");
     for (j = 0; j < 16; j++) {
       const col = row.insertCell();
       col.classList.add("col");
 
-      getTag.rows[i].setAttribute('onclick', 'getRow(this)');
-      getTag.rows[i].cells[j].setAttribute('onclick', 'getCol(this)');
+      grid.rows[i].setAttribute('onclick', 'getClickRow(this)');
+      grid.rows[i].cells[j].setAttribute('onclick', 'getClickCol(this)');
     }
   }
-  getTag.rows[5].cells[2].innerHTML = "A";
+  return grid;
 }
 
-function getValue(value) {
-  console.log("value is: " + value);
 
-  return value;
+function getClickRow(row) {
+  this.row = row.rowIndex;
 }
 
-function getRow(row) {
-  console.log("row is: " + row.rowIndex);
 
-  return row;
+function getClickCol(col) {
+  this.col = col.cellIndex;
+  val = col.innerHTML;
 }
 
-function getCol(col) {
-  getValue(col.innerHTML);
-  console.log("col is: " + col.cellIndex);
 
-  return col;
+function writeToCell(event) {
+  board.rows[this.row].cells[this.col].innerHTML = event.key;
 }
 
-drawGrid("#sudoku>table");
+
+window.addEventListener("keydown", writeToCell);

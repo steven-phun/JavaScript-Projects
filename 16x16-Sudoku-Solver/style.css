@@ -39,4 +39,15 @@
 }
 
 /* How to Play */
+#how-to-play {
+  padding-top: 18px;
+}
+
+#how-to-play h1 {
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  color: #5DADE2;
+}
+
 /* Footer */
