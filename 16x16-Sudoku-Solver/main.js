@@ -30,6 +30,11 @@ function main() {
 }
 
 
+/*
+* generates the table <tr> and <td> for the sudoku grid
+*
+* @param tag    the parent HTML tag that the table will be inserted
+*/
 function drawGrid(tag) {
   this.board = document.querySelector(tag);
 
@@ -42,35 +47,79 @@ function drawGrid(tag) {
       col.classList.add("col");
 
       if (this.test[i][j] !== null) {
-        this.board.rows[i].cells[j].innerHTML = this.test[i][j];
-        this.board.rows[i].cells[j].setAttribute('onclick', 'getClickSetter()');
+        this.board.rows[i].cells[j].innerHTML = convertToChar(this.test[i][j]);
+        this.board.rows[i].cells[j].setAttribute('onclick', 'resetMouseClick()');
       } else {
-        this.board.rows[i].cells[j].setAttribute('onclick', 'getClickCell(' + i + ',' + j + ')');
+        this.board.rows[i].cells[j].setAttribute('onclick', 'getCell(' + i + ',' + j + ')');
       }
     }
   }
 }
 
-function getClickCell(row, col) {
+
+/*
+* return the row and column index of a cell
+*
+* @param row    the row being indexed
+* @param col    the column being indexed
+*/
+function getCell(row, col) {
   this.row = row;
   this.col = col;
-  console.log(this.row);
-  console.log(this.col);
 }
 
-function getClickSetter() {
+
+/*
+* resets the mouse click posistion
+*/
+function resetMouseClick() {
   this.row = null;
   this.col = null;
 }
 
+
+/*
+* allows the user to write a valid input on the sudoku board.
+* a valid input is a number 0-9 or letter A-F
+* @param event    user''s keyboard key input
+*/
 function writeToCell(event) {
-  if (this.row !== null && this.col !== null) {
-    this.board.rows[this.row].cells[this.col].innerHTML = event.key;
+  if (this.row === null || this.col === null) return;
+
+  let key = event.key;
+  if(checkInput(key.toUpperCase())) {
+    key = key.fontcolor("#5DADE2"); // sky blue
+    this.board.rows[this.row].cells[this.col].innerHTML = key;
   }
 }
 
 
+/*
+* @return true if the keyboard key is a number 0-9 or letter A-F
+*/
+function checkInput(input) {
+  if ((input >= 0 && input <= 15) || input >= 'A' && input <= 'F') return true;
+
+  return false;
+}
+
+
+/*
+* converts double digits to single character
+*
+* @param num    the number to be converted to char
+* @return       number = 10 return 'A'
+*               number = 11 return 'B'
+*/
+function convertToChar(num) {
+  if (!checkInput(num)) return;
+
+  if (num > 9) {
+    num = String.fromCharCode(num - 10 + 'A'.charCodeAt(0));
+  }
+  return num;
+}
+
 
 main();
-
 window.addEventListener('keydown', writeToCell);

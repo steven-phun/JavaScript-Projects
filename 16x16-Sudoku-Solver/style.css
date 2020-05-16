@@ -1,6 +1,6 @@
 /* Global */
 * {
-  font: 14px/1.5 'Source Sans Pro', sans-serif;
+  font: 20px/1.5 'Source Sans Pro', sans-serif;
   letter-spacing: 3px;
   margin: 0px;
   padding: 0px;
@@ -14,6 +14,9 @@
 }
 
 /* Header */
+header {
+  margin-top: 50px;
+}
 /* Play Area */
 #sudoku table {
   border-collapse: collapse;
@@ -25,8 +28,8 @@
 #sudoku td {
   width: 35px;
   height: 35px;
-  font-size: 20px;
   text-align: center;
+  text-transform: uppercase;
   border: solid 1px;
 }
 
@@ -44,10 +47,12 @@
 }
 
 #how-to-play h1 {
-  font-size: 20px;
   font-weight: bold;
   letter-spacing: 4px;
   color: #5DADE2;
 }
 
+#how-to-play p, #how-to-play li {
+  font-size: 13px;
+}
 /* Footer */
