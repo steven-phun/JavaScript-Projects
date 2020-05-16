@@ -43,8 +43,8 @@ header {
 }
 
 /* How to Play */
-#how-to-play {
-  padding-top: 18px;
+#title, #instructions, #rules {
+  padding-top: 20px;
 }
 
 #how-to-play h1 {

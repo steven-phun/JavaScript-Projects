@@ -1,5 +1,6 @@
 /*jshint esversion: 6 */
 
+/* board with setters */
 test = [
   [null, 5, null, null, null, null, null, 7, 10, null, null, 14, 13, null, null, 15],
   [14, 10, null, null, null, 15, 13, null, null, null, 11, null, null, 5, null, null],
@@ -19,15 +20,82 @@ test = [
   [2, 15, null, null, 9, null, null, 6, null, null, 5, null, null, null, 11, null]
 ];
 
-let board = null;
-let row = null;
-let col = null;
-let val = null;
+/* global variables/instances */
+const size = 16; // represents the 16x16 grid size
+let board = null; // represents the sudoku gird
+let row = null; // row index of the grid
+let col = null; // column index of the grid
+let val = null; // value of the square
 
 
+/* main */
 function main() {
+  window.addEventListener('keydown', writeToCell);
   drawGrid('#sudoku>table');
 }
+
+
+/*
+ * fill the board with a solution
+ *
+ * @return true if there a solution
+ */
+function solve() {
+  // backtracking recursion
+
+}
+
+/*
+ * @return true if there does not exists the same element placed
+ *                  in its row, column, and 4x4 section
+ */
+function validate() {
+  return checkRow() && checkColumn() && checkSection();
+}
+
+
+/*
+ * return true if there does not exists the same element in this row
+ */
+function checkRow() {
+  for (i = 0; i < size; i++) {
+    if (this.board.rows[this.row].cells[i].innerHTML === this.value) return false;
+  }
+  return true;
+}
+
+
+/*
+ * return true if there does not exists the same element in this column
+ */
+function checkColumn() {
+  for (i = 0; i < size; i++) {
+    if (this.board.rows[i].cells[this.col].innerHTML === this.value) return false;
+  }
+  return true;
+
+}
+
+
+/*
+ * return true if there does not exists the same element in this section
+ */
+function checkSection() {
+  const sectionSize = Math.sqrt(size); // represents the 4x4 section
+
+  // formula for the first cell in given 4x4 section
+  const rowSection = this.row - (this.row % sectionSize);
+  const colSection = this.col - (this.col % sectionSize);
+
+  for (i = rowSection; i < rowSection + sectionSize; i++) {
+    for (j = colSection; j < colSection + sectionSize; j++) {
+      if (this.board.rows[i].cells[j].innerHTML === this.value) return false;
+    }
+  }
+  return true;
+}
+
+
 
 
 /*
@@ -36,13 +104,14 @@ function main() {
  * @param tag    the parent HTML tag that the table will be inserted
  */
 function drawGrid(tag) {
+
   this.board = document.querySelector(tag);
 
-  for (i = 0; i < 16; i++) {
+  for (i = 0; i < size; i++) {
     const row = this.board.insertRow();
     row.classList.add("row");
 
-    for (j = 0; j < 16; j++) {
+    for (j = 0; j < size; j++) {
       const col = row.insertCell();
       col.classList.add("col");
 
@@ -66,6 +135,10 @@ function drawGrid(tag) {
 function getCell(row, col) {
   this.row = row;
   this.col = col;
+
+  /* TODO: DELETE DEBUG CODE IN PRODUCTION */
+  console.log("row: " + this.row);
+  console.log("col: " + this.col);
 }
 
 
@@ -88,7 +161,13 @@ function writeToCell(event) {
 
   if (!checkInput(event.keyCode)) return;
 
-  key = event.key.fontcolor("#5DADE2"); // sky blue
+  let key = event.key.toUpperCase();
+  this.value = key;
+
+  /* TODO: DELETE DEBUG CODE IN PRODUCTION */
+  console.log("value: " + value);
+
+  key = changeColor(key);
   this.board.rows[this.row].cells[this.col].innerHTML = key;
 }
 
@@ -103,6 +182,20 @@ function checkInput(input) {
   return false;
 }
 
+/*
+ * change color of the 'text'
+ *
+ * @pram text     the text to change color
+ * @return        the text with its corresponding color
+ */
+function changeColor(text) {
+  if (validate()) {
+    text = text.fontcolor("#5DADE2"); // sky blue
+  } else {
+    text = text.fontcolor("#EC7063"); // red
+  }
+  return text;
+}
 
 /*
  * converts double digits to single character
@@ -112,13 +205,12 @@ function checkInput(input) {
  *               number = 11 return 'B'
  */
 function convertToChar(num) {
-
-  if (num > 9) {
-    num = String.fromCharCode(num - 10 + 'A'.charCodeAt(0));
+  let doubleDigit = 10; // represents when a number hits double digits
+  if (num >= doubleDigit) {
+    num = String.fromCharCode(num - doubleDigit + 'A'.charCodeAt(0));
   }
   return num;
 }
 
 
 main();
-window.addEventListener('keydown', writeToCell);
