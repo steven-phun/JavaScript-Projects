@@ -55,7 +55,9 @@ function solve() {
           this.val = val;
           console.log("value: " + this.val);
           if (validate()) {
-            this.board.rows[row].cells[col].innerHTML = changeColor(val.toString());
+            console.log("actual values" + this.val);
+            console.log("test val" + this.board.rows[row].cells[col].innerHTML);
+            this.board.rows[row].cells[col].innerHTML = changeColor(val);
             // base case: if value leads to a solution
             if (solve()) {
               return true;
@@ -89,7 +91,6 @@ function checkRow() {
   for (i = 0; i < size; i++) {
     if (i != this.col) { // do not check itself
       if (this.board.rows[this.row].cells[i].innerHTML == this.value) {
-        console.log("check row" + this.row + i);
         return false;
       }
     }
@@ -221,7 +222,7 @@ function checkInput(input) {
 
 
 /*
- * change the color of a string type 'text'
+ * change the color of given 'text'
  *
  * @pram text     the text to change color
  * @return        the text with its corresponding color
