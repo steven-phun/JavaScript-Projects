@@ -34,7 +34,8 @@ let val = null; // value of the square
 function main() {
   window.addEventListener('keydown', writeToCell);
   drawGrid('#sudoku>table');
-  solve();
+  //solve();
+  console.log(solve());
 }
 
 
@@ -44,30 +45,29 @@ function main() {
  * @return true if there a solution
  */
 function solve() {
-
   // backtracking recursion
-  for (row = 0; row < size; row++) {
-    this.row = row;
-    for (col = 0; col < size; col++) {
-      this.col = col;
-      if (this.board.rows[row].cells[col].innerHTML == empty) {
-        for (val = 0; val < size; val++) {
-          this.val = val;
-          console.log("value: " + this.val);
+  for (let i = 0; i < size; i++) {
+    row = i;
+    for (let j = 0; j < size; j++) {
+      col = j;
+      if (board.rows[row].cells[col].innerHTML === empty) {
+        for (let k = 0; k < size; k++) {
+          val = k;
+          console.log("value: " + val);
           if (validate()) {
-            console.log("actual values" + this.val);
-            console.log("test val" + this.board.rows[row].cells[col].innerHTML);
-            this.board.rows[row].cells[col].innerHTML = changeColor(val);
+            console.log("actual values" + val);
+            console.log("test val" + board.rows[row].cells[col].innerHTML);
+            board.rows[row].cells[col].innerHTML = changeColor(val);
             // base case: if value leads to a solution
             if (solve()) {
               return true;
               // backtrack: if value does not lead to a solution
             } else {
-              this.board.rows[row].cells[col].innerHTML = empty;
+              board.rows[row].cells[col].innerHTML = this.empty;
             }
           }
-          return false;
         }
+        return false;
       }
     }
   }
@@ -88,9 +88,9 @@ function validate() {
  * return true if there does not exists the same element in this row
  */
 function checkRow() {
-  for (i = 0; i < size; i++) {
-    if (i != this.col) { // do not check itself
-      if (this.board.rows[this.row].cells[i].innerHTML == this.value) {
+  for (let i = 0; i < size; i++) {
+    if (i != col) { // do not check itself
+      if (board.rows[row].cells[i].innerHTML == val) {
         return false;
       }
     }
@@ -103,9 +103,9 @@ function checkRow() {
  * return true if there does not exists the same element in this column
  */
 function checkColumn() {
-  for (i = 0; i < size; i++) {
+  for (let i = 0; i < size; i++) {
     if (i != this.row) { // do not check itself
-      if (this.board.rows[i].cells[this.col].innerHTML == this.value) return false;
+      if (board.rows[i].cells[col].innerHTML === val) return false;
     }
   }
   return true;
@@ -123,11 +123,11 @@ function checkSection() {
   const rowSection = this.row - (this.row % sectionSize);
   const colSection = this.col - (this.col % sectionSize);
 
-  for (i = rowSection; i < rowSection + sectionSize; i++) {
-    if (rowSection != this.row) { // do not check itself
-      for (j = colSection; j < colSection + sectionSize; j++) {
-        if (colSection != this.col) {
-          if (this.board.rows[i].cells[j].innerHTML == this.value) return false;
+  for (let i = rowSection; i < rowSection + sectionSize; i++) {
+    if (rowSection != row) { // do not check itself
+      for (let j = colSection; j < colSection + sectionSize; j++) {
+        if (colSection != col) {
+          if (board.rows[i].cells[j].innerHTML == val) return false;
         }
       }
     }
@@ -143,21 +143,22 @@ function checkSection() {
  */
 function drawGrid(tag) {
 
-  this.board = document.querySelector(tag);
+  board = document.querySelector(tag);
 
-  for (i = 0; i < size; i++) {
-    const row = this.board.insertRow();
-    row.classList.add("row");
+  for (let i = 0; i < size; i++) {
+    const tempRow = board.insertRow();
+    tempRow.classList.add("row");
 
-    for (j = 0; j < size; j++) {
-      const col = row.insertCell();
-      col.classList.add("col");
+    for (let j = 0; j < size; j++) {
+      const tempCol = tempRow.insertCell();
+      tempCol.classList.add("col");
 
-      if (this.test[i][j] !== null) {
-        this.board.rows[i].cells[j].innerHTML = convertToChar(this.test[i][j]);
-        this.board.rows[i].cells[j].setAttribute('onclick', 'resetMouseClick()');
+      if (test[i][j] !== null) {
+        board.rows[i].cells[j].setAttribute('onclick', 'resetMouseClick()');
+        board.rows[i].cells[j].innerHTML = convertToChar(test[i][j]);
       } else {
-        this.board.rows[i].cells[j].setAttribute('onclick', 'getCell(' + i + ',' + j + ')');
+        board.rows[i].cells[j].setAttribute('onclick', 'getCell(' + i + ',' + j + ')');
+        board.rows[i].cells[j].innerHTML = empty;
       }
     }
   }
@@ -167,16 +168,16 @@ function drawGrid(tag) {
 /*
  * return the row and column index of a cell
  *
- * @param row    the row being indexed
- * @param col    the column being indexed
+ * @param rowIndex    the row being indexed
+ * @param colIndex    the column being indexed
  */
-function getCell(row, col) {
-  this.row = row;
-  this.col = col;
+function getCell(rowIndex, colIndex) {
+  row = rowIndex;
+  col = colIndex;
 
   /* TODO: DELETE DEBUG CODE IN PRODUCTION */
-  console.log("row: " + this.row);
-  console.log("col: " + this.col);
+  console.log("row: " + row);
+  console.log("col: " + col);
 }
 
 
@@ -184,8 +185,8 @@ function getCell(row, col) {
  * resets the mouse click posistion
  */
 function resetMouseClick() {
-  this.row = null;
-  this.col = null;
+  row = null;
+  col = null;
 }
 
 
@@ -195,18 +196,18 @@ function resetMouseClick() {
  * @param event    user''s keyboard key input
  */
 function writeToCell(event) {
-  if (this.row === null || this.col === null) return;
+  if (row === null || col === null) return;
 
   if (!checkInput(event.keyCode)) return;
 
   let key = event.key.toUpperCase();
-  this.value = key;
+  val = key;
 
   /* TODO: DELETE DEBUG CODE IN PRODUCTION */
-  console.log("value: " + value);
+  console.log("value: " + val);
 
   key = changeColor(key);
-  this.board.rows[this.row].cells[this.col].innerHTML = key;
+  board.rows[row].cells[col].innerHTML = key;
 }
 
 
@@ -229,7 +230,7 @@ function checkInput(input) {
  */
 function changeColor(text) {
   // add the color class to its tag and change the color in CSS
-  const tag = this.board.rows[this.row].cells[this.col];
+  const tag = board.rows[row].cells[col];
   const correctColor = "correct-color";
   const wrongColor = "wrong-color";
 
