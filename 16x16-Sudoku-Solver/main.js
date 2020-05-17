@@ -34,7 +34,7 @@ let val = null; // value of the square
 function main() {
   window.addEventListener('keydown', writeToCell);
   drawGrid('#sudoku>table');
-  //solve();
+  solve();
 }
 
 
@@ -53,9 +53,9 @@ function solve() {
       if (this.board.rows[row].cells[col].innerHTML == empty) {
         for (val = 0; val < size; val++) {
           this.val = val;
+          console.log("value: " + this.val);
           if (validate()) {
             this.board.rows[row].cells[col].innerHTML = changeColor(val.toString());
-
             // base case: if value leads to a solution
             if (solve()) {
               return true;
@@ -87,7 +87,12 @@ function validate() {
  */
 function checkRow() {
   for (i = 0; i < size; i++) {
-    if (this.board.rows[this.row].cells[i].innerHTML === this.value) return false;
+    if (i != this.col) { // do not check itself
+      if (this.board.rows[this.row].cells[i].innerHTML == this.value) {
+        console.log("check row" + this.row + i);
+        return false;
+      }
+    }
   }
   return true;
 }
@@ -98,7 +103,9 @@ function checkRow() {
  */
 function checkColumn() {
   for (i = 0; i < size; i++) {
-    if (this.board.rows[i].cells[this.col].innerHTML === this.value) return false;
+    if (i != this.row) { // do not check itself
+      if (this.board.rows[i].cells[this.col].innerHTML == this.value) return false;
+    }
   }
   return true;
 
@@ -116,14 +123,16 @@ function checkSection() {
   const colSection = this.col - (this.col % sectionSize);
 
   for (i = rowSection; i < rowSection + sectionSize; i++) {
-    for (j = colSection; j < colSection + sectionSize; j++) {
-      if (this.board.rows[i].cells[j].innerHTML === this.value) return false;
+    if (rowSection != this.row) { // do not check itself
+      for (j = colSection; j < colSection + sectionSize; j++) {
+        if (colSection != this.col) {
+          if (this.board.rows[i].cells[j].innerHTML == this.value) return false;
+        }
+      }
     }
   }
   return true;
 }
-
-
 
 
 /*
@@ -210,20 +219,29 @@ function checkInput(input) {
   return false;
 }
 
+
 /*
- * change the color of a string 'text'
+ * change the color of a string type 'text'
  *
  * @pram text     the text to change color
  * @return        the text with its corresponding color
  */
 function changeColor(text) {
+  // add the color class to its tag and change the color in CSS
+  const tag = this.board.rows[this.row].cells[this.col];
+  const correctColor = "correct-color";
+  const wrongColor = "wrong-color";
+
   if (validate()) {
-    text = text.fontcolor("#5DADE2"); // sky blue
+    tag.classList.add(correctColor);
+    tag.classList.remove(wrongColor);
   } else {
-    text = text.fontcolor("#EC7063"); // red
+    tag.classList.add(wrongColor);
+    tag.classList.remove(correctColor);
   }
   return text;
 }
+
 
 /*
  * converts double digits to single character

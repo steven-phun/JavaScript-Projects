@@ -22,7 +22,7 @@ header {
 #sudoku table {
   border-collapse: collapse;
   min-width: 600px;
-  border: solid 3px;
+  border: #000000 solid 3px;
   cursor: pointer;
 }
 
@@ -31,15 +31,24 @@ header {
   height: 35px;
   text-align: center;
   text-transform: uppercase;
-  border: solid 1px;
+  border: #000000 solid 1px;
 }
 
 #sudoku tr:nth-child(4n) {
-  border-bottom: solid 3px;
+  border-bottom: #000000 solid 3px;
 }
 
 #sudoku td:nth-child(4n) {
-  border-right: solid 3px;
+  border-right: #000000 solid 3px;
+}
+
+.correct-color {
+  color: #5DADE2;
+   !important
+}
+
+.wrong-color {
+  color: #EC7063;
 }
 
 /* How to Play */
