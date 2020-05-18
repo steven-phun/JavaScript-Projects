@@ -35,7 +35,6 @@ function main() {
 
   window.addEventListener('keydown', writeToCell);
   drawGrid('#sudoku>table');
-  solve();
 }
 
 
@@ -46,31 +45,19 @@ function main() {
  */
 function solve() {
   // backtracking recursion
-  for (let i = 0; i < size; i++) {
-    row = i;
-    for (let j = 0; j < size; j++) {
-      col = j;
-      if (array[i][j] === empty) {
-        for (let k = 0; k < size; k++) {
-          row = i;
-          row = j;
-          val = k;
-
-          if (validate()) {
-            /*TODO: delete in production */
-            //console.log("added " + val + " in row " + row + " in col " + col);
-            array[i][j] = k;
-
-            //board.rows[i].cells[j].innerHTML = changeColor(k);
+  for (let row = 0; row < size; row++) {
+    for (let col = 0; col < size; col++) {
+      if (array[row][col] === empty) {
+        for (let val = 0; val < size; val++) {
+          if (validate(row, col, val)) {
+            array[row][col] = val;
+            board.rows[row].cells[col].innerHTML = changeColor(val.toString(), row, col, val);
             // base case: if value leads to a solution
             if (solve()) {
               return true;
               // backtrack: if value does not lead to a solution
             } else {
-              /*TODO: delete in production */
-              //console.log("del row: " + row + "del col: " + col + "del value: " + val);
-              array[i][j] = empty;
-              //board.rows[i].cells[j].innerHTML = empty;
+              array[row][col] = empty;
             }
           }
         }
@@ -86,17 +73,17 @@ function solve() {
  * @return true if there does not exists the same element placed
  *                  in its row, column, and 4x4 section
  */
-function validate() {
-  return checkRow() && checkColumn() && checkSection();
+function validate(row, col, val) {
+  return checkRow(row, val) && checkColumn(col, val) && checkSection(row, col, val);
 }
 
 
 /**
  * return true if there does not exists the same element in this row
  */
-function checkRow() {
-  for (let i = 0; i < size; i++) {
-    if (array[row][i] === val) return false;
+function checkRow(row, val) {
+  for (let col = 0; col < size; col++) {
+    if (array[row][col] === val) return false;
   }
   return true;
 }
@@ -105,9 +92,9 @@ function checkRow() {
 /**
  * return true if there does not exists the same element in this column
  */
-function checkColumn() {
-  for (let i = 0; i < size; i++) {
-    if (array[i][col] === val) return false;
+function checkColumn(col, val) {
+  for (let row = 0; row < size; row++) {
+    if (array[row][col] === val) return false;
   }
   return true;
 }
@@ -116,7 +103,7 @@ function checkColumn() {
 /**
  * return true if there does not exists the same element in this section
  */
-function checkSection() {
+function checkSection(row, col, val) {
   const sectionSize = Math.sqrt(size); // represents the 4x4 section
 
   // formula for the first cell in given 4x4 section
@@ -169,10 +156,6 @@ function drawGrid(tag) {
 function getCell(rowIndex, colIndex) {
   row = rowIndex;
   col = colIndex;
-
-  /* TODO: DELETE DEBUG CODE IN PRODUCTION */
-  console.log("row: " + row);
-  console.log("col: " + col);
 }
 
 
@@ -198,9 +181,6 @@ function writeToCell(event) {
   let key = event.key.toUpperCase();
   val = key;
 
-  /* TODO: DELETE DEBUG CODE IN PRODUCTION */
-  console.log("value: " + val);
-
   key = changeColor(key);
   board.rows[row].cells[col].innerHTML = key;
 }
@@ -221,13 +201,13 @@ function checkInput(input) {
  * @pram text     the text to change color
  * @return        the text with its corresponding color
  */
-function changeColor(text) {
+function changeColor(text, row, col, val) {
   // add the color class to its tag and change the color in CSS
   const tag = board.rows[row].cells[col];
   const correctColor = "correct-color";
   const wrongColor = "wrong-color";
 
-  if (validate()) {
+  if (validate(row, col, val)) {
     tag.classList.add(correctColor);
     tag.classList.remove(wrongColor);
   } else {
