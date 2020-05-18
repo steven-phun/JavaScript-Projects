@@ -5,20 +5,33 @@
   margin: 0;
   padding: 0;
   background-color: #F4F4F4;
+  color: #707B7C;
 }
 
 .container {
-  width: 70%;
-  height: 70%;
+  width: 50%;
   margin: auto;
 }
+
 
 /* Header */
 header {
   margin-top: 50px;
 }
 
+
 /* Play Area */
+#content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: auto;
+}
+
+#sudoku {
+  margin-right: 15px;
+}
+
 #sudoku table {
   border-collapse: collapse;
   min-width: 600px;
@@ -31,7 +44,7 @@ header {
   height: 35px;
   text-align: center;
   text-transform: uppercase;
-  border: #000000 solid 1px;
+  border: #707B7C solid 1px;
 }
 
 #sudoku tr:nth-child(4n) {
@@ -42,12 +55,14 @@ header {
   border-right: #000000 solid 3px;
 }
 
-.correct-color {
-  color: #5DADE2;
-}
+#keypad button {
+  border: solid 1px;
+  text-align: center;
+  text-decoration: none;
 
-.wrong-color {
-  color: #EC7063;
+  width: 50px;
+  padding: 20px;
+  float: left;
 }
 
 /* How to Play */
@@ -65,4 +80,15 @@ header {
   font-size: 13px;
 }
 
+
 /* Footer */
+
+
+/* JavaScript Functions */
+.correct-color {
+  color: #5DADE2;
+}
+
+.wrong-color {
+  color: #EC7063;
+}
