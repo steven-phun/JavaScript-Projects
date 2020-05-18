@@ -194,7 +194,7 @@ function write(event) {
 
   if (!checkInput(event.keyCode)) return;
 
-  board.rows[row].cells[col].innerHTML = changeColor(event.key.toString(), row, col, event.key);
+  board.rows[row].cells[col].innerHTML = changeColor(event.key, row, col, Number(event.key));
 }
 
 
