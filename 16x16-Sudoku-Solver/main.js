@@ -35,6 +35,7 @@ function main() {
 
   window.addEventListener('keydown', writeToCell);
   drawGrid('#sudoku>table');
+  solve();
 }
 
 
@@ -127,20 +128,20 @@ function checkSection(row, col, val) {
 function drawGrid(tag) {
   board = document.querySelector(tag);
 
-  for (let i = 0; i < size; i++) {
+  for (let row = 0; row < size; row++) {
     const tempRow = board.insertRow();
     tempRow.classList.add("row");
 
-    for (let j = 0; j < size; j++) {
+    for (let col = 0; col < size; col++) {
       const tempCol = tempRow.insertCell();
       tempCol.classList.add("col");
 
-      if (array[i][j] !== empty) {
-        board.rows[i].cells[j].setAttribute('onclick', 'resetMouseClick()');
-        board.rows[i].cells[j].innerHTML = array[i][j];
+      if (array[row][col] !== empty) {
+        board.rows[row].cells[col].setAttribute('onclick', 'resetMouseClick()');
+        board.rows[row].cells[col].innerHTML = array[row][col];
       } else {
-        board.rows[i].cells[j].setAttribute('onclick', 'getCell(' + i + ',' + j + ')');
-        board.rows[i].cells[j].innerHTML = empty;
+        board.rows[row].cells[col].setAttribute('onclick', 'getCell(' + row + ',' + col + ')');
+        board.rows[row].cells[col].innerHTML = empty;
       }
     }
   }
@@ -174,7 +175,7 @@ function resetMouseClick() {
  * @param event    user''s keyboard key input
  */
 function writeToCell(event) {
-  if (row === null || col === null) return;
+  if (row === undefined || col === undefined) return;
 
   if (!checkInput(event.keyCode)) return;
 
