@@ -32,6 +32,7 @@ let array = [
 
 /** main */
 function main() {
+
   window.addEventListener('keydown', writeToCell);
   drawGrid('#sudoku>table');
   solve();
@@ -49,16 +50,18 @@ function solve() {
     row = i;
     for (let j = 0; j < size; j++) {
       col = j;
-      if (array[row][col] === empty) {
+      if (array[i][j] === empty) {
         for (let k = 0; k < size; k++) {
+          row = i;
+          row = j;
           val = k;
-                      console.log(val);
+
           if (validate()) {
             /*TODO: delete in production */
             //console.log("added " + val + " in row " + row + " in col " + col);
-            array[row][col] = val;
+            array[i][j] = k;
 
-            board.rows[row].cells[col].innerHTML = changeColor(val);
+            //board.rows[i].cells[j].innerHTML = changeColor(k);
             // base case: if value leads to a solution
             if (solve()) {
               return true;
@@ -66,12 +69,12 @@ function solve() {
             } else {
               /*TODO: delete in production */
               //console.log("del row: " + row + "del col: " + col + "del value: " + val);
-              array[row][col] = empty;
-              board.rows[row].cells[col].innerHTML = empty;
+              array[i][j] = empty;
+              //board.rows[i].cells[j].innerHTML = empty;
             }
           }
         }
-        //return false;
+        return false;
       }
     }
   }
