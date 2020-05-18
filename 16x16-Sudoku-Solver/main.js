@@ -238,8 +238,10 @@ function changeColor(text, row, col, val) {
  */
 function toHex(num) {
   let decimal = 10; // represents when a Decimal needs to convert to Hexadecimal
+  let hexadecimal = 'A'.charCodeAt(0)
+
   if (num >= decimal) {
-    num = String.fromCharCode(num - decimal + 'A'.charCodeAt(0));
+    num = String.fromCharCode(num - decimal + hexadecimal);
   }
   return num;
 }
@@ -251,10 +253,12 @@ function toHex(num) {
  * @return       10 if char = 'A'  ,  11 if char = 'B'  ...  15 if char = 'F'
  */
 function toDec(char) {
-  let hexadecimal = 10; // represents when a Hexadecimal needs to convert to Decimal
-  char = char.toUpperCase().charCodeAt(0);
-  if (!char <= hexadecimal) {
-    char = char - 'A'.charCodeAt(0) + hexadecimal;
+  let decimal = 10; // represents the Decimal form of a Hexadecimal
+  let hexadecimal = 'A'.charCodeAt(0);
+  let asiic = char.toUpperCase().charCodeAt(0);
+
+  if (Number(asiic) >= hexadecimal) {
+    char = asiic - 'A'.charCodeAt(0) + decimal;
   }
   return char;
 }
