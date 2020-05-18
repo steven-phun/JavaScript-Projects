@@ -1,46 +1,44 @@
 /*jshint esversion: 6 */
 
-/* represents the board in array form */
+
+/** global variables/instances */
+const size = 16; // represents the 16x16 grid size
+const empty = ""; // represents an empty cell
+let board = undefined; // represents the sudoku gird
+let row = undefined; // row index of the grid
+let col = undefined; // column index of the grid
+let val = undefined; // value of the square
+
+/** represents the board in array form */
 let array = [
-  [null, 5, null, null, null, null, null, 7, 10, null, null, 14, 13, null, null, 15],
-  [14, 10, null, null, null, 15, 13, null, null, null, 11, null, null, 5, null, null],
-  [12, null, 8, 11, null, null, null, null, 2, 15, 13, null, 14, 10, 9, null],
-  [1, null, 15, null, 10, null, 14, 9, 0, null, null, null, null, null, null, null],
-  [null, 14, 10, 9, null, null, 15, 1, 12, 7, 8, 11, null, null, null, null],
-  [11, 12, null, null, 3, 0, 4, 5, 1, 2, null, null, null, null, 10, 9],
-  [4, null, 5, 0, 11, null, 8, null, 14, 10, 9, 6, 15, null, null, 2],
-  [null, 1, null, null, null, 9, null, 10, 5, null, 4, null, null, 12, null, 8],
-  [9, 6, 14, 10, 15, null, null, null, 11, 12, null, null, null, null, null, 5],
-  [8, null, null, null, null, null, 0, null, null, 1, null, 15, 9, null, null, 10],
-  [0, null, 3, 5, 8, 12, null, null, 6, null, 10, null, 2, 15, null, null],
-  [15, 13, null, null, 6, null, 9, 14, 3, 5, 0, null, null, null, 12, 7],
-  [10, 9, null, 14, null, null, null, 15, 8, 11, 12, null, null, 0, 4, 3],
-  [null, null, 11, null, 0, 3, 5, null, 15, null, null, null, 10, 9, null, null],
-  [null, null, 4, null, 7, 11, 12, null, 9, null, null, 10, 1, null, null, 13],
-  [2, 15, null, null, 9, null, null, 6, null, null, 5, null, null, null, 11, null]
+  [empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty, 14, 13, empty, empty, 15],
+  [14, 10, empty, empty, empty, 15, 13, empty, empty, empty, 11, empty, empty, 5, empty, empty],
+  [12, empty, 8, 11, empty, empty, empty, empty, 2, 15, 13, empty, 14, 10, 9, empty],
+  [1, empty, 15, empty, 10, empty, 14, 9, 0, empty, empty, empty, empty, empty, empty, empty],
+  [empty, 14, 10, 9, empty, empty, 15, 1, 12, 7, 8, 11, empty, empty, empty, empty],
+  [11, 12, empty, empty, 3, 0, 4, 5, 1, 2, empty, empty, empty, empty, 10, 9],
+  [4, empty, 5, 0, 11, empty, 8, empty, 14, 10, 9, 6, 15, empty, empty, 2],
+  [empty, 1, empty, empty, empty, 9, empty, 10, 5, empty, 4, empty, empty, 12, empty, 8],
+  [9, 6, 14, 10, 15, empty, empty, empty, 11, 12, empty, empty, empty, empty, empty, 5],
+  [8, empty, empty, empty, empty, empty, 0, empty, empty, 1, empty, 15, 9, empty, empty, 10],
+  [0, empty, 3, 5, 8, 12, empty, empty, 6, empty, 10, empty, 2, 15, empty, empty],
+  [15, 13, empty, empty, 6, empty, 9, 14, 3, 5, 0, empty, empty, empty, 12, 7],
+  [10, 9, empty, 14, empty, empty, empty, 15, 8, 11, 12, empty, empty, 0, 4, 3],
+  [empty, empty, 11, empty, 0, 3, 5, empty, 15, empty, empty, empty, 10, 9, empty, empty],
+  [empty, empty, 4, empty, 7, 11, 12, empty, 9, empty, empty, 10, 1, empty, empty, 13],
+  [2, 15, empty, empty, 9, empty, empty, 6, empty, empty, 5, empty, empty, empty, 11, empty]
 ];
 
 
-/* global variables/instances */
-const size = 16; // represents the 16x16 grid size
-const empty = null; // represents an empty cell
-let board = null; // represents the sudoku gird
-let row = null; // row index of the grid
-let col = null; // column index of the grid
-let val = null; // value of the square
-
-
-/* main */
+/** main */
 function main() {
   window.addEventListener('keydown', writeToCell);
   drawGrid('#sudoku>table');
-  //solve();
-  //console.log("solve: " + solve());
-  //console.log(array);
+  solve();
 }
 
 
-/*
+/**
  * fill the board with a solution if there is one
  *
  * @return true if program found a solution to the current board
@@ -81,7 +79,7 @@ function solve() {
 }
 
 
-/*
+/**
  * @return true if there does not exists the same element placed
  *                  in its row, column, and 4x4 section
  */
@@ -90,29 +88,29 @@ function validate() {
 }
 
 
-/*
+/**
  * return true if there does not exists the same element in this row
  */
 function checkRow() {
   for (let i = 0; i < size; i++) {
-    if (array[row][i] == val) return false;
+    if (array[row][i] === val) return false;
   }
   return true;
 }
 
 
-/*
+/**
  * return true if there does not exists the same element in this column
  */
 function checkColumn() {
   for (let i = 0; i < size; i++) {
-    if (array[i][col] == val) return false;
+    if (array[i][col] === val) return false;
   }
   return true;
 }
 
 
-/*
+/**
  * return true if there does not exists the same element in this section
  */
 function checkSection() {
@@ -124,14 +122,14 @@ function checkSection() {
 
   for (let i = rowSection; i < rowSection + sectionSize; i++) {
     for (let j = colSection; j < colSection + sectionSize; j++) {
-      if (array[i][j] == val) return false;
+      if (array[i][j] === val) return false;
     }
   }
   return true;
 }
 
 
-/*
+/**
  * generates the table <tr> and <td> for the sudoku grid
  *
  * @param tag    the parent HTML tag that the table will be inserted
@@ -147,7 +145,7 @@ function drawGrid(tag) {
       const tempCol = tempRow.insertCell();
       tempCol.classList.add("col");
 
-      if (array[i][j] != empty) {
+      if (array[i][j] !== empty) {
         board.rows[i].cells[j].setAttribute('onclick', 'resetMouseClick()');
         board.rows[i].cells[j].innerHTML = array[i][j];
       } else {
@@ -159,7 +157,7 @@ function drawGrid(tag) {
 }
 
 
-/*
+/**
  * return the row and column index of a cell
  *
  * @param rowIndex    the row being indexed
@@ -175,8 +173,8 @@ function getCell(rowIndex, colIndex) {
 }
 
 
-/*
- * resets the mouse click posistion
+/**
+ * resets the mouse click position
  */
 function resetMouseClick() {
   row = null;
@@ -184,7 +182,7 @@ function resetMouseClick() {
 }
 
 
-/*
+/**
  * allows the user to write a valid input on the sudoku board.
  * a valid input is a number 0-9 or letter A-F
  * @param event    user''s keyboard key input
@@ -209,14 +207,12 @@ function writeToCell(event) {
  * @return true if the keyboard key is a number 0-9 or letter A-F
  */
 function checkInput(input) {
-  // keyCode  48 -> 0        57 -> 9          65 -> A        70 -> F
-  if ((input >= 48 && input <= 57) || (input >= 65 && input <= 70)) return true;
-
-  return false;
+  // keyCode       48 -> 0        57 -> 9          65 -> A        70 -> F
+  return (input >= 48 && input <= 57) || (input >= 65 && input <= 70);
 }
 
 
-/*
+/**
  * change the color of given 'text'
  *
  * @pram text     the text to change color
@@ -239,7 +235,7 @@ function changeColor(text) {
 }
 
 
-/*
+/**
  * converts double digits to single character
  *
  * @param num    the number to be converted to char

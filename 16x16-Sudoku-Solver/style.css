@@ -2,8 +2,8 @@
 * {
   font: 20px/1.5 'Source Sans Pro', sans-serif;
   letter-spacing: 3px;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   background-color: #f4f4f4;
 }
 
@@ -47,7 +47,7 @@ header {
 }
 
 .wrong-color {
-  color: #EC7063;
+  color: #ec7063;
 }
 
 /* How to Play */
