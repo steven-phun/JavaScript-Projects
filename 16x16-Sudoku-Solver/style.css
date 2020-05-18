@@ -55,15 +55,21 @@ header {
   border-right: #000000 solid 3px;
 }
 
-#keypad button {
+#keypad table {
+  border-collapse: collapse;
+}
+
+#keypad td {
   border: solid 1px;
   text-align: center;
-  text-decoration: none;
-
   width: 50px;
-  padding: 20px;
-  float: left;
+  height: 50px;
 }
+
+.button-group button:not(:last-child) {
+  border-right: none;
+}
+
 
 /* How to Play */
 #title, #instructions, #rules {
