@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 
-/* board with setters */
-test = [
+/* represents the board in array form */
+let array = [
   [null, 5, null, null, null, null, null, 7, 10, null, null, 14, 13, null, null, 15],
   [14, 10, null, null, null, 15, 13, null, null, null, 11, null, null, 5, null, null],
   [12, null, 8, 11, null, null, null, null, 2, 15, 13, null, 14, 10, 9, null],
@@ -23,7 +23,7 @@ test = [
 
 /* global variables/instances */
 const size = 16; // represents the 16x16 grid size
-const empty = ""; // represents an empty cell
+const empty = null; // represents an empty cell
 let board = null; // represents the sudoku gird
 let row = null; // row index of the grid
 let col = null; // column index of the grid
@@ -35,14 +35,15 @@ function main() {
   window.addEventListener('keydown', writeToCell);
   drawGrid('#sudoku>table');
   //solve();
-  console.log(solve());
+  //console.log("solve: " + solve());
+  //console.log(array);
 }
 
 
 /*
- * fill the board with a solution
+ * fill the board with a solution if there is one
  *
- * @return true if there a solution
+ * @return true if program found a solution to the current board
  */
 function solve() {
   // backtracking recursion
@@ -50,24 +51,29 @@ function solve() {
     row = i;
     for (let j = 0; j < size; j++) {
       col = j;
-      if (board.rows[row].cells[col].innerHTML === empty) {
+      if (array[row][col] === empty) {
         for (let k = 0; k < size; k++) {
           val = k;
-          console.log("value: " + val);
+                      console.log(val);
           if (validate()) {
-            console.log("actual values" + val);
-            console.log("test val" + board.rows[row].cells[col].innerHTML);
+            /*TODO: delete in production */
+            //console.log("added " + val + " in row " + row + " in col " + col);
+            array[row][col] = val;
+
             board.rows[row].cells[col].innerHTML = changeColor(val);
             // base case: if value leads to a solution
             if (solve()) {
               return true;
               // backtrack: if value does not lead to a solution
             } else {
-              board.rows[row].cells[col].innerHTML = this.empty;
+              /*TODO: delete in production */
+              //console.log("del row: " + row + "del col: " + col + "del value: " + val);
+              array[row][col] = empty;
+              board.rows[row].cells[col].innerHTML = empty;
             }
           }
         }
-        return false;
+        //return false;
       }
     }
   }
@@ -89,11 +95,7 @@ function validate() {
  */
 function checkRow() {
   for (let i = 0; i < size; i++) {
-    if (i != col) { // do not check itself
-      if (board.rows[row].cells[i].innerHTML == val) {
-        return false;
-      }
-    }
+    if (array[row][i] == val) return false;
   }
   return true;
 }
@@ -104,12 +106,9 @@ function checkRow() {
  */
 function checkColumn() {
   for (let i = 0; i < size; i++) {
-    if (i != this.row) { // do not check itself
-      if (board.rows[i].cells[col].innerHTML === val) return false;
-    }
+    if (array[i][col] == val) return false;
   }
   return true;
-
 }
 
 
@@ -120,16 +119,12 @@ function checkSection() {
   const sectionSize = Math.sqrt(size); // represents the 4x4 section
 
   // formula for the first cell in given 4x4 section
-  const rowSection = this.row - (this.row % sectionSize);
-  const colSection = this.col - (this.col % sectionSize);
+  const rowSection = row - (row % sectionSize);
+  const colSection = col - (col % sectionSize);
 
   for (let i = rowSection; i < rowSection + sectionSize; i++) {
-    if (rowSection != row) { // do not check itself
-      for (let j = colSection; j < colSection + sectionSize; j++) {
-        if (colSection != col) {
-          if (board.rows[i].cells[j].innerHTML == val) return false;
-        }
-      }
+    for (let j = colSection; j < colSection + sectionSize; j++) {
+      if (array[i][j] == val) return false;
     }
   }
   return true;
@@ -142,7 +137,6 @@ function checkSection() {
  * @param tag    the parent HTML tag that the table will be inserted
  */
 function drawGrid(tag) {
-
   board = document.querySelector(tag);
 
   for (let i = 0; i < size; i++) {
@@ -153,9 +147,9 @@ function drawGrid(tag) {
       const tempCol = tempRow.insertCell();
       tempCol.classList.add("col");
 
-      if (test[i][j] !== null) {
+      if (array[i][j] != empty) {
         board.rows[i].cells[j].setAttribute('onclick', 'resetMouseClick()');
-        board.rows[i].cells[j].innerHTML = convertToChar(test[i][j]);
+        board.rows[i].cells[j].innerHTML = array[i][j];
       } else {
         board.rows[i].cells[j].setAttribute('onclick', 'getCell(' + i + ',' + j + ')');
         board.rows[i].cells[j].innerHTML = empty;
