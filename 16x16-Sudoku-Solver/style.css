@@ -13,6 +13,11 @@
   margin: auto;
 }
 
+.content {
+  padding: 0 15%;
+  display: flex;
+  flex-direction: row;
+}
 
 /* Header */
 header {
@@ -21,26 +26,21 @@ header {
 
 
 /* Play Area */
-
-.content {
-  padding-left: 15%;
-  padding-right: 15%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+#play-area {
+  width: 100%;
 }
 
-.content table {
+#play-area table {
   border-collapse: collapse;
   table-layout: fixed;
   cursor: pointer;
 }
-.content td:hover {
+#play-area td:hover {
   background: #FEF9E7;
 }
 
 #sudoku {
-  margin-right: 15px;
+  margin-bottom: 10px;
 }
 
 #sudoku table {
@@ -63,7 +63,12 @@ header {
 }
 
 #buttons {
+  display: flex;
+  flex-direction: row;
+}
 
+#buttons table{
+  width: 100%;
 }
 
 #buttons td {
@@ -79,24 +84,21 @@ header {
 }
 #function-pad td {
   border: solid 1px;
-  font-size: 15px;
-}
-
-#function-pad td {
-
-}
-
-#function-pad #solve td {
-
 }
 
 
 /* How to Play */
-#how-to-play .container{
-  flex-wrap: wrap;
+#how-to-play {
+  margin: 30px;
 }
+
 #title, #instructions, #rules {
-  padding-top: 20px;
+  flex-wrap: wrap;
+  padding: 15px;
+}
+
+#how-to-play #rules {
+  padding-left: 30px;
 }
 
 #how-to-play h1 {
@@ -108,6 +110,8 @@ header {
 #how-to-play p, #how-to-play li {
   font-size: 13px;
 }
+
+
 
 
 /* Footer */
