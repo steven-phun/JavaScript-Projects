@@ -9,6 +9,7 @@ let row = undefined; // row index of the grid
 let col = undefined; // column index of the grid
 let val = undefined; // value of the square
 
+
 /** represents the board in array form */
 let array = [
   [empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty, 14, 13, empty, empty, 15],
@@ -35,7 +36,7 @@ function main() {
 
   window.addEventListener('keydown', writeToCell);
   drawGrid('#sudoku>table');
-  solve();
+  //solve();
 }
 
 

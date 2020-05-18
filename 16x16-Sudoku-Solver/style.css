@@ -4,7 +4,7 @@
   letter-spacing: 3px;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  background-color: #F4F4F4;
 }
 
 .container {
@@ -47,7 +47,7 @@ header {
 }
 
 .wrong-color {
-  color: #ec7063;
+  color: #EC7063;
 }
 
 /* How to Play */
