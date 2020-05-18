@@ -34,7 +34,7 @@ let array = [
 /** main */
 function main() {
 
-  window.addEventListener('keydown', writeToCell);
+  window.addEventListener("keydown", write);
   drawGrid('#sudoku>table');
 }
 
@@ -136,7 +136,7 @@ function checkSection(row, col, val) {
 
 
 /**
- * generates the table <tr> and <td> for the sudoku grid
+ * generates the table with <tr> and <td> for the sudoku grid
  *
  * @param tag    the parent HTML tag that the table will be inserted
  */
@@ -152,10 +152,9 @@ function drawGrid(tag) {
       tempCol.classList.add("col");
 
       if (array[row][col] !== empty) {
-        board.rows[row].cells[col].setAttribute('onclick', 'resetMouseClick()');
         board.rows[row].cells[col].innerHTML = array[row][col];
       } else {
-        board.rows[row].cells[col].setAttribute('onclick', 'getCell(' + row + ',' + col + ')');
+        board.rows[row].cells[col].setAttribute('onclick', 'getIndex(' + row + ',' + col + ')');
         board.rows[row].cells[col].innerHTML = empty;
       }
     }
@@ -169,7 +168,7 @@ function drawGrid(tag) {
  * @param rowIndex    the row being indexed
  * @param colIndex    the column being indexed
  */
-function getCell(rowIndex, colIndex) {
+function getIndex(rowIndex, colIndex) {
   row = rowIndex;
   col = colIndex;
 }
@@ -178,27 +177,24 @@ function getCell(rowIndex, colIndex) {
 /**
  * resets the mouse click position
  */
-function resetMouseClick() {
-  row = null;
-  col = null;
+function resetMouse() {
+  row = undefined;
+  col = undefined;
 }
 
 
 /**
  * allows the user to write a valid input on the sudoku board.
  * a valid input is a number 0-9 or letter A-F
- * @param event    user''s keyboard key input
+ * @param event    user's keyboard key input
  */
-function writeToCell(event) {
+function write(event) {
+
   if (row === undefined || col === undefined) return;
 
   if (!checkInput(event.keyCode)) return;
 
-  let key = event.key.toUpperCase();
-  val = key;
-
-  key = changeColor(key);
-  board.rows[row].cells[col].innerHTML = key;
+  board.rows[row].cells[col].innerHTML = changeColor(event.key.toString(), row, col, event.key);
 }
 
 
