@@ -37,6 +37,7 @@ function main() {
   window.addEventListener('keydown', writeToCell);
   drawGrid('#sudoku>table');
   //solve();
+
 }
 
 
