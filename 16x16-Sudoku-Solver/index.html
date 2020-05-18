@@ -17,7 +17,7 @@
 
   <section id="play-area">
     <div class="container">
-      <div id="content">
+      <div class="content">
         <div id="sudoku">
           <table></table> <!-- sudoku grid built in main.js-->
         </div>
@@ -51,12 +51,20 @@
             </table>
           </div>
           <div id="function-pad">
-            <div>
-              <button>Notes</button>
-              <button>Erase</button>
+            <div id="edit">
+              <table>
+                <tr>
+                  <td>Notes</td>
+                  <td>Erase</td>
+                </tr>
+              </table>
             </div>
-            <div>
-              <button>Find a Solution</button>
+            <div id="solve">
+              <table>
+                <tr>
+                  <td>Find a Solution</td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>
@@ -66,26 +74,28 @@
 
   <section id="how-to-play">
     <div class="container">
-      <div id="title">
-        <h1>How to play Sudoku</h1>
-      </div>
-      <div id="instructions">
-        <p>
-          The goal of Sudoku is to fill in the 16x16 grid with numbers and letters
-          so that each row, column, and 4x4 box contain the numbers between
-          '0' to '9' and letters 'A' to 'F'. At the start of the game, the 16x16 grid will have
-          some cells filled in, known as setters. You may not erase or modify any
-          of the setters. Your task is to completely fill the grid with missing
-          numbers and letters.
-          letters
-        </p>
-      </div>
-      <div id="rules">
-        <ul>
-          <li> Any row must contain a unique number and letter</li>
-          <li> Any column must contain a unique number and letter</li>
-          <li> Any 4x4 box must contain a unique number and letter</li>
-        </ul>
+      <div class="content">
+        <div id="title">
+          <h1>How to play Sudoku</h1>
+        </div>
+        <div id="instructions">
+          <p>
+            The goal of Sudoku is to fill in the 16x16 grid with numbers and letters
+            so that each row, column, and 4x4 box contain the numbers between
+            '0' to '9' and letters 'A' to 'F'. At the start of the game, the 16x16 grid will have
+            some cells filled in, known as setters. You may not erase or modify any
+            of the setters. Your task is to completely fill the grid with missing
+            numbers and letters.
+            letters
+          </p>
+        </div>
+        <div id="rules">
+          <ul>
+            <li> Any row must contain a unique number and letter</li>
+            <li> Any column must contain a unique number and letter</li>
+            <li> Any 4x4 box must contain a unique number and letter</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>

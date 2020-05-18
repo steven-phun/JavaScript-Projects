@@ -9,26 +9,33 @@
 }
 
 .container {
-  width: 50%;
+  width: 80%;
   margin: auto;
 }
 
 
 /* Header */
 header {
-  margin-top: 50px;
+  margin-top: 60px;
 }
 
 
 /* Play Area */
-#content {
+
+.content {
+  padding-left: 15%;
+  padding-right: 15%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: auto;
 }
 
-#content td:hover {
+.content table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  cursor: pointer;
+}
+.content td:hover {
   background: #FEF9E7;
 }
 
@@ -37,18 +44,14 @@ header {
 }
 
 #sudoku table {
-  border-collapse: collapse;
-  min-width: 600px;
   border: black solid 3px;
-  cursor: pointer;
 }
 
 #sudoku td {
-  width: 35px;
-  height: 35px;
   text-align: center;
   text-transform: uppercase;
   border: #707B7C solid 1px;
+  padding: 5px;
 }
 
 #sudoku tr:nth-child(4n) {
@@ -59,25 +62,39 @@ header {
   border-right: black solid 3px;
 }
 
-#keypad table {
-  border-collapse: collapse;
+#buttons {
+
 }
 
-
-#keypad td {
+#buttons td {
   border: solid 1px;
   text-align: center;
-  width: 50px;
-  height: 50px;
+  padding: 15px 20px;
   cursor: pointer;
 }
 
-.button-group button:not(:last-child) {
-  border-right: none;
+#function-pad {
+  display: flex;
+  flex-direction: column;
+}
+#function-pad td {
+  border: solid 1px;
+  font-size: 15px;
+}
+
+#function-pad td {
+
+}
+
+#function-pad #solve td {
+
 }
 
 
 /* How to Play */
+#how-to-play .container{
+  flex-wrap: wrap;
+}
 #title, #instructions, #rules {
   padding-top: 20px;
 }
