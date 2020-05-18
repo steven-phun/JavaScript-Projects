@@ -152,7 +152,7 @@ function drawGrid(tag) {
       tempCol.classList.add("col");
 
       if (array[row][col] !== empty) {
-        board.rows[row].cells[col].innerHTML = array[row][col];
+        board.rows[row].cells[col].innerHTML = toHex(array[row][col]);
       } else {
         board.rows[row].cells[col].setAttribute('onclick', 'getIndex(' + row + ',' + col + ')');
         board.rows[row].cells[col].innerHTML = empty;
@@ -231,13 +231,13 @@ function changeColor(text, row, col, val) {
 
 
 /**
- * converts double digits to single character
+ * converts Decimal to Hexadecimal
  *
  * @param num    the number to be converted to char
  * @return       number = 10 return 'A'
  *               number = 11 return 'B'
  */
-function convertToChar(num) {
+function toHex(num) {
   let doubleDigit = 10; // represents when a number hits double digits
   if (num >= doubleDigit) {
     num = String.fromCharCode(num - doubleDigit + 'A'.charCodeAt(0));
