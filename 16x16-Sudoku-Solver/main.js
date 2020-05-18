@@ -36,13 +36,11 @@ function main() {
 
   window.addEventListener('keydown', writeToCell);
   drawGrid('#sudoku>table');
-  //solve();
-
 }
 
 
 /**
- * fill the board with a solution if there is one
+ * fill array object with a solution
  *
  * @return true if program found a solution to the current board
  */
@@ -54,7 +52,6 @@ function solve() {
         for (let val = 0; val < size; val++) {
           if (validate(row, col, val)) {
             array[row][col] = val;
-            board.rows[row].cells[col].innerHTML = changeColor(val.toString(), row, col, val);
             // base case: if value leads to a solution
             if (solve()) {
               return true;
@@ -68,7 +65,23 @@ function solve() {
       }
     }
   }
+  displaySolution();
   return true;
+}
+
+
+/**
+ * @pre a solution to display
+ * @post display the solution on the sudoku grid
+ */
+function displaySolution() {
+  for (let row = 0; row < size; row++) {
+    for (let col = 0; col < size; col++) {
+      if (board.rows[row].cells[col].innerHTML === empty) {
+        board.rows[row].cells[col].innerHTML = changeColor(array[row][col], row, col, val);
+      }
+    }
+  }
 }
 
 

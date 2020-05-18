@@ -30,11 +30,17 @@ header {
   width: 100%;
 }
 
+#play-area td {
+  text-align: center;
+  cursor: pointer;
+  border: #707B7C solid 1px;
+}
+
 #play-area table {
   border-collapse: collapse;
   table-layout: fixed;
-  cursor: pointer;
 }
+
 #play-area td:hover {
   background: #FEF9E7;
 }
@@ -50,7 +56,6 @@ header {
 #sudoku td {
   text-align: center;
   text-transform: uppercase;
-  border: #707B7C solid 1px;
   padding: 5px;
 }
 
@@ -71,20 +76,15 @@ header {
   width: 100%;
 }
 
-#buttons td {
-  border: solid 1px;
-  text-align: center;
-  padding: 15px 20px;
-  cursor: pointer;
-}
-
 #function-pad {
   display: flex;
   flex-direction: column;
 }
-#function-pad td {
-  border: solid 1px;
+
+#function-pad #solve {
+  border-top: none;
 }
+
 
 
 /* How to Play */
