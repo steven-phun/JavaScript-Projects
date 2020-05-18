@@ -56,7 +56,8 @@ header {
 #sudoku td {
   text-align: center;
   text-transform: uppercase;
-  padding: 5px;
+  margin: 1px;
+  padding: 3px 6px;
 }
 
 #sudoku tr:nth-child(4n) {

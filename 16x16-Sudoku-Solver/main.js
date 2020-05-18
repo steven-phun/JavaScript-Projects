@@ -194,7 +194,7 @@ function write(event) {
 
   if (!checkInput(event.keyCode)) return;
 
-  board.rows[row].cells[col].innerHTML = changeColor(event.key, row, col, Number(event.key));
+  board.rows[row].cells[col].innerHTML = changeColor(event.key, row, col, Number(toDec(event.key)));
 }
 
 
@@ -233,17 +233,30 @@ function changeColor(text, row, col, val) {
 /**
  * converts Decimal to Hexadecimal
  *
- * @param num    the number to be converted to char
- * @return       number = 10 return 'A'
- *               number = 11 return 'B'
+ * @param num    the number to be converted to Hexadecimal
+ * @return       'A' if num = 10  , 'B' if num = 11 ... 'F' if num = 15
  */
 function toHex(num) {
-  let doubleDigit = 10; // represents when a number hits double digits
-  if (num >= doubleDigit) {
-    num = String.fromCharCode(num - doubleDigit + 'A'.charCodeAt(0));
+  let decimal = 10; // represents when a Decimal needs to convert to Hexadecimal
+  if (num >= decimal) {
+    num = String.fromCharCode(num - decimal + 'A'.charCodeAt(0));
   }
   return num;
 }
 
+/**
+ * converts Hexadecimal to Decimal
+ *
+ * @param char   the character to be converted to Decimal
+ * @return       10 if char = 'A'  ,  11 if char = 'B'  ...  15 if char = 'F'
+ */
+function toDec(char) {
+  let hexadecimal = 10; // represents when a Hexadecimal needs to convert to Decimal
+  char = char.toUpperCase().charCodeAt(0);
+  if (!char <= hexadecimal) {
+    char = char - 'A'.charCodeAt(0) + hexadecimal;
+  }
+  return char;
+}
 
 main();
