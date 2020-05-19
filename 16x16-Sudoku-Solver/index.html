@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,95 +7,91 @@
   <title>Document</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
   <div class="container">
-
     <header>
       <div class="container">
       </div>
     </header>
-
     <div class="content">
       <section id="play-area">
-            <div id="sudoku">
-              <table></table> <!-- sudoku grid built in main.js-->
+        <h1>Let's Play Sudoku!</h1>
+        <div id="sudoku">
+          <table></table> <!-- sudoku grid built in main.js-->
+        </div>
+        <div id="buttons">
+          <div id="keypad">
+            <table>
+              <tr class="button-group">
+                <td onclick="keypad(0)">0</td>
+                <td onclick="keypad(1)">1</td>
+                <td onclick="keypad(2)">2</td>
+                <td onclick="keypad(3)">3</td>
+                <td onclick="keypad(4)">4</td>
+                <td onclick="keypad(5)">5</td>
+                <td onclick="keypad(6)">6</td>
+                <td onclick="keypad(7)">7</td>
+              </tr>
+              <tr class="button-group">
+                <td onclick="keypad(8)">8</td>
+                <td onclick="keypad(9)">9</td>
+                <td onclick="keypad(10)">A</td>
+                <td onclick="keypad(11)">B</td>
+                <td onclick="keypad(12)">C</td>
+                <td onclick="keypad(13)">D</td>
+                <td onclick="keypad(14)">E</td>
+                <td onclick="keypad(15)">F</td>
+              </tr>
+            </table>
+          </div>
+          <div id="function-pad">
+            <div id="edit">
+              <table>
+                <tr>
+                  <td>Notes</td>
+                  <td>Erase</td>
+                </tr>
+              </table>
             </div>
-            <div id="buttons">
-              <div id="keypad">
-                <table>
-                  <tr class="button-group">
-                    <td onclick="">0</td>
-                    <td onclick="">1</td>
-                    <td onclick="">2</td>
-                    <td onclick="">3</td>
-                    <td onclick="">4</td>
-                    <td onclick="">5</td>
-                    <td onclick="">6</td>
-                    <td onclick="">7</td>
-                  </tr>
-                  <tr class="button-group">
-                    <td onclick="">8</td>
-                    <td onclick="">9</td>
-                    <td onclick="">A</td>
-                    <td onclick="">B</td>
-                    <td onclick="">C</td>
-                    <td onclick="">D</td>
-                    <td onclick="">E</td>
-                    <td onclick="">F</td>
-                  </tr>
-                </table>
-              </div>
-              <div id="function-pad">
-                <div id="edit">
-                  <table>
-                    <tr>
-                      <td>Notes</td>
-                      <td>Erase</td>
-                    </tr>
-                  </table>
-                </div>
-                <div id="solve">
-                  <table>
-                    <tr>
-                      <td onclick="solve()">Solve</td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-      </section>
 
+            <div id="solve">
+              <table>
+                <tr>
+                  <td onclick="getSolution()">Solve</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
       <section id="how-to-play">
-            <div id="title">
-              <h1>How to play Sudoku</h1>
-            </div>
-            <div id="instructions">
-              <p>
-                The goal of Sudoku is to fill in the 16x16 grid with numbers and letters
-                so that each row, column, and 4x4 box contain the numbers between
-                '0' to '9' and letters 'A' to 'F'. At the start of the game, the 16x16 grid will have
-                some cells filled in, known as setters. You may not erase or modify any
-                of the setters. Your task is to completely fill the grid with missing
-                numbers and letters.
-                letters
-              </p>
-            </div>
-            <div id="rules">
-              <ul>
-                <li> Any row must contain a unique number and letter</li>
-                <li> Any column must contain a unique number and letter</li>
-                <li> Any 4x4 box must contain a unique number and letter</li>
-              </ul>
-            </div>
+        <div id="title">
+          <h1>How to play Sudoku</h1>
+        </div>
+
+        <div id="instructions">
+          <p>
+            The goal of Sudoku is to fill in the 16x16 grid with numbers and letters
+            so that each row, column, and 4x4 box contain the numbers between
+            '0' to '9' and letters 'A' to 'F'. At the start of the game, the 16x16 grid will have
+            some cells filled in, known as setters. You may not erase or modify any
+            of the setters. Your task is to completely fill the grid with missing
+            numbers and letters.
+            letters
+          </p>
+        </div>
+        <div id="rules">
+          <ul>
+            <li> Any row must contain a unique number and letter</li>
+            <li> Any column must contain a unique number and letter</li>
+            <li> Any 4x4 box must contain a unique number and letter</li>
+          </ul>
+        </div>
       </section>
     </div>
-
     <footer>
     </footer>
-
     <script src="main.js"></script>
   </div>
 </body>
-
 </html>

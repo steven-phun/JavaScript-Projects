@@ -40,6 +40,34 @@ function main() {
 
 
 /**
+ * generates the table with <tr> and <td> for the sudoku grid
+ *
+ * @param tag    the parent HTML tag that the table will be inserted
+ */
+function drawGrid(tag) {
+  board = document.querySelector(tag);
+
+  for (let row = 0; row < size; row++) {
+    const tempRow = board.insertRow();
+    tempRow.classList.add("row");
+
+    for (let col = 0; col < size; col++) {
+      const tempCol = tempRow.insertCell();
+      tempCol.classList.add("col");
+
+      if (array[row][col] !== empty) {
+        board.rows[row].cells[col].setAttribute('onclick', 'getSetter()');
+        board.rows[row].cells[col].innerHTML = toHex(array[row][col]);
+      } else {
+        board.rows[row].cells[col].setAttribute('onclick', 'getCell(' + row + ',' + col + ')');
+        board.rows[row].cells[col].innerHTML = empty;
+      }
+    }
+  }
+}
+
+
+/**
  * fill array object with a solution
  *
  * @return true if program found a solution to the current board
@@ -78,10 +106,142 @@ function displaySolution() {
   for (let row = 0; row < size; row++) {
     for (let col = 0; col < size; col++) {
       if (board.rows[row].cells[col].innerHTML === empty) {
-        board.rows[row].cells[col].innerHTML = changeColor(array[row][col], row, col, val);
+        board.rows[row].cells[col].innerHTML = toHex(array[row][col]);
       }
     }
   }
+}
+
+
+/**
+ * writes a valid input on the sudoku board.
+ * a valid input is a number 0-9 or letter A-F
+ *
+ * @param event    user's keyboard key input
+ */
+function write(event) {
+
+  if (row === undefined || col === undefined) return;
+
+  if (!checkInput(event.keyCode)) return;
+
+  board.rows[row].cells[col].innerHTML = toColor(event.key, row, col, Number(toDec(event.key)));
+}
+
+
+/**
+ *  writes the value of the button clicked at given cell.
+ *
+ *  @pre cell is given
+ *  @pram value the value to be displayed
+ */
+function keypad(value) {
+  if (row !== undefined && col !== undefined) {
+    board.rows[row].cells[col].innerHTML = toHex(toColor(value, row, col, value));
+  }
+}
+
+
+/**
+ * @post prompts the user that the program is attempting to find a solution
+ */
+function getSolution() {
+  let tag = document.querySelector("#play-area h1");
+  tag.innerHTML = "Solving..."
+
+  setTimeout(_ => solution(tag), 0);
+}
+
+/**
+ * helper method for getSolution() to async solve()
+ *
+ * @param tag   the html tag that will display the text
+ */
+function solution(tag) {
+  if (solve()) {
+    tag.innerHTML = "Solution Found :)";
+  } else {
+    tag.innerHTML = "No Solution Found :(";
+  }
+}
+
+/**
+ * return the row and column index of a cell
+ *
+ * @param rowIndex    the row being indexed
+ * @param colIndex    the column being indexed
+ */
+function getCell(rowIndex, colIndex) {
+  row = rowIndex;
+  col = colIndex;
+}
+
+
+/**
+ * resets the mouse click position
+ */
+function getSetter() {
+  row = undefined;
+  col = undefined;
+}
+
+
+/**
+ * converts Decimal to Hexadecimal
+ *
+ * @param num    the number to be converted to Hexadecimal
+ * @return       'A' if num = 10  , 'B' if num = 11 ... 'F' if num = 15
+ */
+function toHex(num) {
+  let decimal = 10; // represents when a Decimal needs to convert to Hexadecimal
+  let hexadecimal = 'A'.charCodeAt(0)
+
+  if (num >= decimal) {
+    num = String.fromCharCode(num - decimal + hexadecimal);
+  }
+  return num;
+}
+
+
+/**
+ * converts Hexadecimal to Decimal
+ *
+ * @param char   the character to be converted to Decimal
+ * @return       10 if char = 'A'  ,  11 if char = 'B'  ...  15 if char = 'F'
+ */
+function toDec(char) {
+  let decimal = 10; // represents the Decimal form of a Hexadecimal
+  let hexadecimal = 'A'.charCodeAt(0);
+  let asiic = char.toUpperCase().charCodeAt(0);
+
+  if (Number(asiic) >= hexadecimal) {
+    char = asiic - 'A'.charCodeAt(0) + decimal;
+  }
+  return char;
+}
+
+
+/**
+ * change the color of given 'text'
+ *
+ * @pram text     the text to change color
+ * @return        the text with its corresponding color
+ */
+function toColor(text, row, col, val) {
+  // add the color class to its tag and change the color in CSS
+  const tag = board.rows[row].cells[col];
+  const correctColor = "correct-color";
+  const wrongColor = "wrong-color";
+
+  if (validate(row, col, val)) {
+    array[row][col] = val;
+    tag.classList.add(correctColor);
+    tag.classList.remove(wrongColor);
+  } else {
+    tag.classList.add(wrongColor);
+    tag.classList.remove(correctColor);
+  }
+  return text;
 }
 
 
@@ -135,69 +295,6 @@ function checkSection(row, col, val) {
 }
 
 
-/**
- * generates the table with <tr> and <td> for the sudoku grid
- *
- * @param tag    the parent HTML tag that the table will be inserted
- */
-function drawGrid(tag) {
-  board = document.querySelector(tag);
-
-  for (let row = 0; row < size; row++) {
-    const tempRow = board.insertRow();
-    tempRow.classList.add("row");
-
-    for (let col = 0; col < size; col++) {
-      const tempCol = tempRow.insertCell();
-      tempCol.classList.add("col");
-
-      if (array[row][col] !== empty) {
-        board.rows[row].cells[col].innerHTML = toHex(array[row][col]);
-      } else {
-        board.rows[row].cells[col].setAttribute('onclick', 'getIndex(' + row + ',' + col + ')');
-        board.rows[row].cells[col].innerHTML = empty;
-      }
-    }
-  }
-}
-
-
-/**
- * return the row and column index of a cell
- *
- * @param rowIndex    the row being indexed
- * @param colIndex    the column being indexed
- */
-function getIndex(rowIndex, colIndex) {
-  row = rowIndex;
-  col = colIndex;
-}
-
-
-/**
- * resets the mouse click position
- */
-function resetMouse() {
-  row = undefined;
-  col = undefined;
-}
-
-
-/**
- * allows the user to write a valid input on the sudoku board.
- * a valid input is a number 0-9 or letter A-F
- * @param event    user's keyboard key input
- */
-function write(event) {
-
-  if (row === undefined || col === undefined) return;
-
-  if (!checkInput(event.keyCode)) return;
-
-  board.rows[row].cells[col].innerHTML = changeColor(event.key, row, col, Number(toDec(event.key)));
-}
-
-
 /*
  * @return true if the keyboard key is a number 0-9 or letter A-F
  */
@@ -206,61 +303,5 @@ function checkInput(input) {
   return (input >= 48 && input <= 57) || (input >= 65 && input <= 70);
 }
 
-
-/**
- * change the color of given 'text'
- *
- * @pram text     the text to change color
- * @return        the text with its corresponding color
- */
-function changeColor(text, row, col, val) {
-  // add the color class to its tag and change the color in CSS
-  const tag = board.rows[row].cells[col];
-  const correctColor = "correct-color";
-  const wrongColor = "wrong-color";
-
-  if (validate(row, col, val)) {
-    tag.classList.add(correctColor);
-    tag.classList.remove(wrongColor);
-  } else {
-    tag.classList.add(wrongColor);
-    tag.classList.remove(correctColor);
-  }
-  return text;
-}
-
-
-/**
- * converts Decimal to Hexadecimal
- *
- * @param num    the number to be converted to Hexadecimal
- * @return       'A' if num = 10  , 'B' if num = 11 ... 'F' if num = 15
- */
-function toHex(num) {
-  let decimal = 10; // represents when a Decimal needs to convert to Hexadecimal
-  let hexadecimal = 'A'.charCodeAt(0)
-
-  if (num >= decimal) {
-    num = String.fromCharCode(num - decimal + hexadecimal);
-  }
-  return num;
-}
-
-/**
- * converts Hexadecimal to Decimal
- *
- * @param char   the character to be converted to Decimal
- * @return       10 if char = 'A'  ,  11 if char = 'B'  ...  15 if char = 'F'
- */
-function toDec(char) {
-  let decimal = 10; // represents the Decimal form of a Hexadecimal
-  let hexadecimal = 'A'.charCodeAt(0);
-  let asiic = char.toUpperCase().charCodeAt(0);
-
-  if (Number(asiic) >= hexadecimal) {
-    char = asiic - 'A'.charCodeAt(0) + decimal;
-  }
-  return char;
-}
 
 main();
