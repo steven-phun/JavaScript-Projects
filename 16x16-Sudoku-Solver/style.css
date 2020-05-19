@@ -1,4 +1,22 @@
-/* Global */
+
+/* table of contents
+
+  1. global
+
+  2. header
+
+  3. play area
+
+  4. how to play
+
+  5. footer
+
+  6. javascript
+
+ */
+
+
+/* 1. global */
 * {
   font: 20px/1.5 'Source Sans Pro', sans-serif;
   letter-spacing: 3px;
@@ -9,7 +27,7 @@
 }
 
 .container {
-  width: 80%;
+  width: 60%;
   margin: auto;
 }
 
@@ -19,13 +37,13 @@
   flex-direction: row;
 }
 
-/* Header */
+/* 2. header */
 header {
   margin-top: 25px;
 }
 
 
-/* Play Area */
+/* 3. play area */
 #play-area {
   width: 100%;
   text-align: center;
@@ -87,7 +105,7 @@ header {
 
 
 
-/* How to Play */
+/* 4. how to play */
 #how-to-play {
   margin: 30px;
 }
@@ -113,11 +131,10 @@ header {
 
 
 
+/* 5. footer */
 
-/* Footer */
 
-
-/* JavaScript Functions */
+/* 6. javascript */
 .correct-color {
   color: #5DADE2;
 }

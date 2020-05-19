@@ -2,19 +2,18 @@
 
 //TODO: notes: highlight the keyboard of values that got noted.
 //             when note is unchecked de-highlight them.
+//TODO: remove invalid when doing solve.
 
 /** global variables/instances */
 const size = 16; // represents the 16x16 grid size
 const empty = ""; // represents an empty cell
-let invalid = []; // represents invalid values from user
+let invalid = []; // holds all invalid values from user
 let board = undefined; // represents the sudoku gird
 let row = undefined; // row index of the grid
 let col = undefined; // column index of the grid
 let val = undefined; // value of the square
 
-
-
-/** represents the board in array form */
+/** represents the board using array */
 let array = [
   [empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty, 14, 13, empty, empty, 15],
   [14, 10, empty, empty, empty, 15, 13, empty, empty, empty, 11, empty, empty, 5, empty, empty],
@@ -35,11 +34,10 @@ let array = [
 ];
 
 
-/** script */
-function script() {
-
-  window.addEventListener("keydown", write);
+/** main */
+function main() {
   drawGrid('#sudoku>table');
+  window.addEventListener("keydown", write);
 }
 
 
@@ -396,4 +394,4 @@ function checkInvalid() {
 }
 
 
-script();
+main();
