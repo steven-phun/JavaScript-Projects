@@ -206,8 +206,8 @@ function getSetter() {
 
 
 /**
- * even index holds the cell where the user place an invalid input
- * odd index holds the cell of the setter responsible for the invalid input
+ * add the cell to array where the user place an invalid input and
+ * the cell of the setter responsible for the invalid input
  *
  * @param rowIndex is the row index being stored
  * @param colIndex is the col index begin stored
@@ -217,8 +217,7 @@ function getIndex(rowIndex, colIndex) {
   const tag = board.rows[rowIndex].cells[colIndex];
   tag.classList.add(invalidColor);
 
-  invalid.push({row: row, col: col});
-  invalid.push({row: rowIndex, col: colIndex});
+  invalid.push({row: row, col: col, rowDex: rowIndex, colDex: colIndex});
 }
 
 
@@ -369,12 +368,10 @@ function checkInput(input) {
  */
 function checkInvalid(row, col) {
   const invalidColor = "invalid-color";
-  const tag = board.rows[row].cells[col];
 
-  // even index holds the cell where the user place an invalid input
-  // odd index holds the cell of the setter responsible for the invalid input
-  for (let i = 0; i < invalid.length; i+2) {
-    if (row == invalid[i].row && col == invalid[i].col) {
+  for (let i = 0; i < invalid.length; i++) {
+    if (row === invalid[i].row && col === invalid[i].col) {
+      const tag = board.rows[invalid[i].rowDex].cells[invalid[i].colDex];
       tag.classList.remove(invalidColor);
     }
   }
