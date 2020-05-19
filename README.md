@@ -2,10 +2,18 @@
 
 ## [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
 
-Based on the classic game [*Sudoku*](https://en.wikipedia.org/wiki/Sudoku)
+Inspiration
 
-Inspired by my professor, allowing students to solve his Sudoku as they pass by his glass door
+- My professor would have unsolved 16x16 Sudoku on his glass door
 
-Developed in:
+Project Difficulties
 
-- Python
+- Learning a new language JS
+
+- Adjusting width relative to screen size in CSS
+
+Developed in
+
+- HTML/CSS/JavaScript
+
+- Also in Python using Pygame (main.py) 
