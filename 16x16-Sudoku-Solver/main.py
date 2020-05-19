@@ -44,7 +44,7 @@ grid layout in code
 """
 
 
-def script():
+def main():
     sudoku = Sudoku(16, 1000)
 
     sudoku.display_surface()

@@ -6,13 +6,13 @@
 //TODO: convert solve() to class and interactions as functions()
 
 /** global variables/instances */
-const size = 16; // represents the 16x16 grid size
-const empty = ""; // represents an empty cell
-let invalid = []; // holds all invalid values from user
-let board = undefined; // represents the sudoku gird
-let row = undefined; // row index of the grid
-let col = undefined; // column index of the grid
-let val = undefined; // value of the square
+// const size = 16; // represents the 16x16 grid size
+// const empty = ""; // represents an empty cell
+// let invalid = []; // holds all invalid values from user
+// let board = undefined; // represents the sudoku gird
+// let row = undefined; // row index of the grid
+// let col = undefined; // column index of the grid
+// let val = undefined; // value of the square
 
 /** represents the board using array */
 let array = [
@@ -36,23 +36,31 @@ let array = [
 
 
 /**
- * This class' task is to solve the sudoku board.
+ * This class will solve and display the solution for the given sudoku
  *
  * The program will solve and display the solution as fast as possible,
- * so it will not consider user's interactions that will delay the process.
+ * so it will not consider user's interactions that will delay the process
  */
 class Sudoku {
-  constructor(board) {
-    this.board = board;   // board this class is working with
-    this.size = 16;       // represents the 16x16 grid
-    this.empty = ""       // represents an empty cell
-    this.setter = false;  // true if the cell is a setter
-    this.row = null;      // int: row index of a cell
-    this.col = null;      // int: column index of a cell
-    this.val = null;      // int: the value of a cell
+  constructor(board, size=16) {
+    this.board = board;  // array: a copy of the board this class is working with
+    this.size = size;    // int:   represents the 16x16 grid
   }
 }
 
+
+/**
+ * This class will differentiate the different values of the cell
+ */
+class Cell {
+  constructor(data=null, setter=false, empty=true, pencil=false) {
+    this.data = data;        // int:  value of a cell
+    this.setter = setter;    // bool: true if this cell is a setter
+    this.pencil = pencil;    // bool: true if the user placed a value in this cell
+    this.empty = empty;      // bool: true if the cell is empty
+    this.notes = new Set();  // set:  for the user to keep track possible solution
+  }
+}
 
 
 
