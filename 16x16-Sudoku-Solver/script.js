@@ -11,45 +11,44 @@
  */
 
 
-
 //TODO: notes: highlight the keyboard of values that got noted.
 //             when note is unchecked de-highlight them.
 //TODO: remove invalid when doing solve.
 //TODO: convert solve() to class and interactions as functions()
 
-
-
-empty = -1; // represents and empty cell
-
+/** global variable/instance */
 /** represents the Sudoku to be solved */
-test = [[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty, 14, 13, empty, empty, 15],
-  [14, 10, empty, empty, empty, 15, 13, empty, empty, empty, 11, empty, empty, 5, empty, empty],
-  [12, empty, 8, 11, empty, empty, empty, empty, 2, 15, 13, empty, 14, 10, 9, empty],
-  [1, empty, 15, empty, 10, empty, 14, 9, 0, empty, empty, empty, empty, empty, empty, empty],
-  [empty, 14, 10, 9, empty, empty, 15, 1, 12, 7, 8, 11, empty, empty, empty, empty],
-  [11, 12, empty, empty, 3, 0, 4, 5, 1, 2, empty, empty, empty, empty, 10, 9],
-  [4, empty, 5, 0, 11, empty, 8, empty, 14, 10, 9, 6, 15, empty, empty, 2],
-  [empty, 1, empty, empty, empty, 9, empty, 10, 5, empty, 4, empty, empty, 12, empty, 8],
-  [9, 6, 14, 10, 15, empty, empty, empty, 11, 12, empty, empty, empty, empty, empty, 5],
-  [8, empty, empty, empty, empty, empty, 0, empty, empty, 1, empty, 15, 9, empty, empty, 10],
-  [0, empty, 3, 5, 8, 12, empty, empty, 6, empty, 10, empty, 2, 15, empty, empty],
-  [15, 13, empty, empty, 6, empty, 9, 14, 3, 5, 0, empty, empty, empty, 12, 7],
-  [10, 9, empty, 14, empty, empty, empty, 15, 8, 11, 12, empty, empty, 0, 4, 3],
-  [empty, empty, 11, empty, 0, 3, 5, empty, 15, empty, empty, empty, 10, 9, empty, empty],
-  [empty, empty, 4, empty, 7, 11, 12, empty, 9, empty, empty, 10, 1, empty, empty, 13],
-  [2, 15, empty, empty, 9, empty, empty, 6, empty, empty, 5, empty, empty, empty, 11, empty]];
+test = [[Sudoku.empty, 5, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, 7, 10, Sudoku.empty, Sudoku.empty, 14, 13, Sudoku.empty, Sudoku.empty, 15],
+  [14, 10, Sudoku.empty, Sudoku.empty, Sudoku.empty, 15, 13, Sudoku.empty, Sudoku.empty, Sudoku.empty, 11, Sudoku.empty, Sudoku.empty, 5, Sudoku.empty, Sudoku.empty],
+  [12, Sudoku.empty, 8, 11, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, 2, 15, 13, Sudoku.empty, 14, 10, 9, Sudoku.empty],
+  [1, Sudoku.empty, 15, Sudoku.empty, 10, Sudoku.empty, 14, 9, 0, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty],
+  [Sudoku.empty, 14, 10, 9, Sudoku.empty, Sudoku.empty, 15, 1, 12, 7, 8, 11, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty],
+  [11, 12, Sudoku.empty, Sudoku.empty, 3, 0, 4, 5, 1, 2, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, 10, 9],
+  [4, Sudoku.empty, 5, 0, 11, Sudoku.empty, 8, Sudoku.empty, 14, 10, 9, 6, 15, Sudoku.empty, Sudoku.empty, 2],
+  [Sudoku.empty, 1, Sudoku.empty, Sudoku.empty, Sudoku.empty, 9, Sudoku.empty, 10, 5, Sudoku.empty, 4, Sudoku.empty, Sudoku.empty, 12, Sudoku.empty, 8],
+  [9, 6, 14, 10, 15, Sudoku.empty, Sudoku.empty, Sudoku.empty, 11, 12, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, 5],
+  [8, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, 0, Sudoku.empty, Sudoku.empty, 1, Sudoku.empty, 15, 9, Sudoku.empty, Sudoku.empty, 10],
+  [0, Sudoku.empty, 3, 5, 8, 12, Sudoku.empty, Sudoku.empty, 6, Sudoku.empty, 10, Sudoku.empty, 2, 15, Sudoku.empty, Sudoku.empty],
+  [15, 13, Sudoku.empty, Sudoku.empty, 6, Sudoku.empty, 9, 14, 3, 5, 0, Sudoku.empty, Sudoku.empty, Sudoku.empty, 12, 7],
+  [10, 9, Sudoku.empty, 14, Sudoku.empty, Sudoku.empty, Sudoku.empty, 15, 8, 11, 12, Sudoku.empty, Sudoku.empty, 0, 4, 3],
+  [Sudoku.empty, Sudoku.empty, 11, Sudoku.empty, 0, 3, 5, Sudoku.empty, 15, Sudoku.empty, Sudoku.empty, Sudoku.empty, 10, 9, Sudoku.empty, Sudoku.empty],
+  [Sudoku.empty, Sudoku.empty, 4, Sudoku.empty, 7, 11, 12, Sudoku.empty, 9, Sudoku.empty, Sudoku.empty, 10, 1, Sudoku.empty, Sudoku.empty, 13],
+  [2, 15, Sudoku.empty, Sudoku.empty, 9, Sudoku.empty, Sudoku.empty, 6, Sudoku.empty, Sudoku.empty, 5, Sudoku.empty, Sudoku.empty, Sudoku.empty, 11, Sudoku.empty]];
 
 
-
+/**
+ * this class represents the Sudoku using an array to store its data
+ */
 class Sudoku {
   constructor(board) {
     this.board = board;  // array: a copy of the board this class is working with
     this.size = 16;      // int:   represents the 16x16 grid
+    this.empty = ""; // represents and empty cell
 
     // convert each cell to the object Cell
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
-        if (this.board[row][col] === empty) {
+        if (this.board[row][col] === this.empty) {
           this.board[row][col] = new Cell();
         } else {
           this.board[row][col] = new Cell(this.board[row][col], true);
@@ -59,16 +58,14 @@ class Sudoku {
   }
 
   /**
-   * this method will find a solution to do the Sudoku
-   *
-   * this program will solve the solution as fast as possible,
-   * so it will not consider user's interactions that will delay the process
+   * this method will find a solution to do the Sudoku as fast as possible,
+   * so it will not consider any user's interactions that will delay its process
    */
   solve() {
     // recursive backtracking
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
-        if (this.board[row][col].data === empty) {
+        if (this.board[row][col].data === this.empty) {
           for (let val = 0; val < this.size ; val++) {
             if (this.validate(row, col, val)) {
               this.board[row][col].data = val;
@@ -85,10 +82,8 @@ class Sudoku {
         }
       }
     }
-    console.log("pass!");
     return true;
   }
-
 
   /**
    * @return true if there does not exists the same 'val' in its row, column, and 4x4 section
@@ -101,7 +96,6 @@ class Sudoku {
     return this.checkRow(row, val) && this.checkCol(col, val) && this.checkSection(row, col, val);
   }
 
-
   /**
    * @return true if there does not exists the same element in this row
    */
@@ -112,7 +106,6 @@ class Sudoku {
     return true;
   }
 
-
   /**
    * @return true if there does not exists the same element in this col
    */
@@ -122,7 +115,6 @@ class Sudoku {
     }
     return true;
   }
-
 
   /**
    * @return true if there does not exists the same element in this 4x4 section
@@ -143,10 +135,72 @@ class Sudoku {
     }
     return true;
   }
+
+  /**
+   * generates the table with <tr> and <td> for the sudoku grid
+   *
+   * @param tag    the parent HTML tag that the table will be inserted to
+   */
+  drawGrid(tag) {
+    const getTag = document.querySelector(tag);
+
+    for (let row = 0; row < this.size; row++) {
+      const tempRow = getTag.insertRow();
+      tempRow.classList.add("row");
+
+      for (let col = 0; col < this.size; col++) {
+        const tempCol = tempRow.insertCell();
+        tempCol.classList.add("col");
+
+        if (this.board[row][col] !== this.empty) {
+          getTag.rows[row].cells[col].setAttribute('onclick', 'getSetter()');
+          getTag.rows[row].cells[col].innerHTML = toHex(array[row][col]);
+        } else {
+          getTag.rows[row].cells[col].setAttribute('onclick', 'getCell(' + row + ',' + col + ')');
+          getTag.rows[row].cells[col].innerHTML = this.empty;
+        }
+      }
+    }
+  }
+
+  // /**
+//  * converts Decimal to Hexadecimal
+//  *
+//  * @param num    the number to be converted to Hexadecimal
+//  * @return       'A' if num = 10  , 'B' if num = 11 ... 'F' if num = 15
+//  */
+// function toHex(num) {
+//   const decimal = 10; // represents when a Decimal needs to convert to Hexadecimal
+//   const hexadecimal = 'A'.charCodeAt(0)
+//
+//   if (num >= decimal) {
+//     num = String.fromCharCode(num - decimal + hexadecimal);
+//   }
+//   return num;
+// }
+//
+//
+// /**
+//  * converts Hexadecimal to Decimal
+//  *
+//  * @param char   the character to be converted to Decimal
+//  * @return       10 if char = 'A'  ,  11 if char = 'B'  ...  15 if char = 'F'
+//  */
+// function toDec(char) {
+//   const decimal = 10; // represents the Decimal form of a Hexadecimal
+//   const hexadecimal = 'A'.charCodeAt(0);
+//   const asiic = char.toUpperCase().charCodeAt(0);
+//
+//   if (Number(asiic) >= hexadecimal) {
+//     char = asiic - 'A'.charCodeAt(0) + decimal;
+//   }
+//   return char;
+// }
 }
 
+
 /**
- * This class will differentiate the different values of the cell
+ * this class represents each individual cells
  */
 class Cell {
   constructor(data=empty, setter=false, pencil=false) {
@@ -158,91 +212,19 @@ class Cell {
 }
 
 
+/** global variable/instance */
+const sudoku = new Sudoku(test); // the object that represents the Sudoku grid
+
+
 /** main */
 function main() {
+  sudoku.drawGrid(sudoku,'#sudoku>table');
+  window.addEventListener("keydown", write);
 }
 
 
 
-main();
 
-/* --------------------------------------------------------------------------------------- */
-
-
-/** global variables/instances */
-// const size = 16; // represents the 16x16 grid size
-// const empty = ""; // represents an empty cell
-// let invalid = []; // holds all invalid values from user
-// let board = undefined; // represents the sudoku gird
-// let row = undefined; // row index of the grid
-// let col = undefined; // column index of the grid
-// let val = undefined; // value of the square
-
-
-
-//
-//
-// drawGrid('#sudoku>table');
-// window.addEventListener("keydown", write);
-//
-//
-// /**
-//  * generates the table with <tr> and <td> for the sudoku grid
-//  *
-//  * @param tag    the parent HTML tag that the table will be inserted
-//  */
-// function drawGrid(tag) {
-//   board = document.querySelector(tag);
-//
-//   for (let row = 0; row < size; row++) {
-//     const tempRow = board.insertRow();
-//     tempRow.classList.add("row");
-//
-//     for (let col = 0; col < size; col++) {
-//       const tempCol = tempRow.insertCell();
-//       tempCol.classList.add("col");
-//
-//       if (array[row][col] !== empty) {
-//         board.rows[row].cells[col].setAttribute('onclick', 'getSetter()');
-//         board.rows[row].cells[col].innerHTML = toHex(array[row][col]);
-//       } else {
-//         board.rows[row].cells[col].setAttribute('onclick', 'getCell(' + row + ',' + col + ')');
-//         board.rows[row].cells[col].innerHTML = empty;
-//       }
-//     }
-//   }
-// }
-//
-//
-// /**
-//  * fill array object with a solution
-//  *
-//  * @return true if program found a solution to the current board
-//  */
-// function solve() {
-//   // backtracking recursion
-//   for (let row = 0; row < size; row++) {
-//     for (let col = 0; col < size; col++) {
-//       if (array[row][col] === empty) {
-//         for (let val = 0; val < size; val++) {
-//           if (validate(row, col, val)) {
-//             array[row][col] = val;
-//             // base case: if value leads to a solution
-//             if (solve()) {
-//               return true;
-//               // backtrack: if value does not lead to a solution
-//             } else {
-//               array[row][col] = empty;
-//             }
-//           }
-//         }
-//         return false;
-//       }
-//     }
-//   }
-//   display();
-//   return true;
-// }
 //
 //
 // /**
@@ -381,39 +363,7 @@ main();
 // }
 //
 //
-// /**
-//  * converts Decimal to Hexadecimal
-//  *
-//  * @param num    the number to be converted to Hexadecimal
-//  * @return       'A' if num = 10  , 'B' if num = 11 ... 'F' if num = 15
-//  */
-// function toHex(num) {
-//   const decimal = 10; // represents when a Decimal needs to convert to Hexadecimal
-//   const hexadecimal = 'A'.charCodeAt(0)
-//
-//   if (num >= decimal) {
-//     num = String.fromCharCode(num - decimal + hexadecimal);
-//   }
-//   return num;
-// }
-//
-//
-// /**
-//  * converts Hexadecimal to Decimal
-//  *
-//  * @param char   the character to be converted to Decimal
-//  * @return       10 if char = 'A'  ,  11 if char = 'B'  ...  15 if char = 'F'
-//  */
-// function toDec(char) {
-//   const decimal = 10; // represents the Decimal form of a Hexadecimal
-//   const hexadecimal = 'A'.charCodeAt(0);
-//   const asiic = char.toUpperCase().charCodeAt(0);
-//
-//   if (Number(asiic) >= hexadecimal) {
-//     char = asiic - 'A'.charCodeAt(0) + decimal;
-//   }
-//   return char;
-// }
+
 //
 //
 // /**
@@ -540,3 +490,5 @@ main();
 //
 //
 //
+
+main();
