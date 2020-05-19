@@ -8,6 +8,6 @@ Inspired by my professor, allowing students to solve his Sudoku as they pass by 
 
 Developed in:
 
-- HTML/CSS/JS
+- HTML/CSS/JavaScript
 
 - Also in Python using Pygame (main.py) 
