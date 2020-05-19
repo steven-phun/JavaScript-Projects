@@ -93,7 +93,7 @@ function solve() {
       }
     }
   }
-  displaySolution();
+  display();
   return true;
 }
 
@@ -102,7 +102,7 @@ function solve() {
  * @pre a solution to display
  * @post display the solution on the sudoku grid
  */
-function displaySolution() {
+function display() {
   for (let row = 0; row < size; row++) {
     for (let col = 0; col < size; col++) {
       if (board.rows[row].cells[col].innerHTML === empty) {
@@ -123,6 +123,8 @@ function write(event) {
 
   if (row === undefined || col === undefined) return;
 
+  if (event.key === "Backspace") remove();
+
   if (!checkInput(event.keyCode)) return;
 
   board.rows[row].cells[col].innerHTML = toColor(event.key, row, col, Number(toDec(event.key)));
@@ -130,9 +132,17 @@ function write(event) {
 
 
 /**
+ * @pre cell is non-null
+ */
+function remove() {
+  board.rows[row].cells[col].innerHTML = empty;
+  array[row][col] = empty;
+}
+
+/**
  *  writes the value of the button clicked at given cell.
  *
- *  @pre cell is given
+ *  @pre cell is non-null
  *  @pram value the value to be displayed
  */
 function keypad(value) {
