@@ -6,8 +6,6 @@ Inspired By: My professor, allowing students to solve his Sudoku as they pass by
 
 Project Difficulties: Learning a new language JS, and adjusting width relative to screen size in CSS
 
-Notable Features: Recursive backtracking algorithm 
-
 Developed in:
 
 - HTML/CSS/JavaScript
