@@ -2,9 +2,15 @@
 
 ## [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
 
-Inspiration: My professor would have unsolved 16x16 Sudoku on his glass door for any student to solve
+Inspiration
 
-Project Difficulties: Learning a new language JS, and adjusting width relative to screen size in CSS
+- My professor would have unsolved 16x16 Sudoku on his glass door
+
+Project Difficulties: 
+
+- Learning a new language JS
+
+- Adjusting width relative to screen size in CSS
 
 Developed in:
 
