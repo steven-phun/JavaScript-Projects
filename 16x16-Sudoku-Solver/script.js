@@ -3,6 +3,7 @@
 //TODO: notes: highlight the keyboard of values that got noted.
 //             when note is unchecked de-highlight them.
 //TODO: remove invalid when doing solve.
+//TODO: convert solve() to class and interactions as functions()
 
 /** global variables/instances */
 const size = 16; // represents the 16x16 grid size
@@ -32,6 +33,39 @@ let array = [
   [empty, empty, 4, empty, 7, 11, 12, empty, 9, empty, empty, 10, 1, empty, empty, 13],
   [2, 15, empty, empty, 9, empty, empty, 6, empty, empty, 5, empty, empty, empty, 11, empty]
 ];
+
+
+/**
+ * This class' task is to solve the sudoku board.
+ *
+ * The program will solve and display the solution as fast as possible,
+ * so it will not consider user's interactions that will delay the process.
+ */
+class Sudoku {
+  constructor(board) {
+    this.board = board;   // board this class is working with
+    this.size = 16;       // represents the 16x16 grid
+    this.empty = ""       // represents an empty cell
+    this.setter = false;  // true if the cell is a setter
+    this.row = null;      // int: row index of a cell
+    this.col = null;      // int: column index of a cell
+    this.val = null;      // int: the value of a cell
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /** main */
@@ -311,7 +345,7 @@ function validate(row, col, val) {
 function checkRow(row, val) {
   for (let col = 0; col < size; col++) {
     if (array[row][col] === val) {
-      setInvalid(row, col);
+      //setInvalid(row, col);
       return false;
     }
   }
@@ -325,7 +359,7 @@ function checkRow(row, val) {
 function checkColumn(col, val) {
   for (let row = 0; row < size; row++) {
     if (array[row][col] === val) {
-      setInvalid(row, col);
+      //setInvalid(row, col);
       return false;
     }
   }
@@ -346,7 +380,7 @@ function checkSection(row, col, val) {
   for (let i = rowSection; i < rowSection + sectionSize; i++) {
     for (let j = colSection; j < colSection + sectionSize; j++) {
       if (array[i][j] === val) {
-        setInvalid(i, j);
+        //setInvalid(i, j);
         return false;
       }
     }
