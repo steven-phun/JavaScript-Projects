@@ -206,7 +206,7 @@ function getSetter() {
  * set the background color of the selected cell
  */
 function setBackground() {
-  const tagClass = "highlight";
+  const tagClass = "selected-color";
   let list = document.querySelectorAll("#sudoku td");
 
   for (let i = 0; i < list.length; i++) {
