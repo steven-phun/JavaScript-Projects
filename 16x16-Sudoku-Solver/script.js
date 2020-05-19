@@ -1,5 +1,7 @@
 /*jshint esversion: 6 */
 
+//TODO: notes: highlight the keyboard of values that got noted.
+//             when note is unchecked de-highlight them.
 
 /** global variables/instances */
 const size = 16; // represents the 16x16 grid size
