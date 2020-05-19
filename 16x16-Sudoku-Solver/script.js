@@ -141,6 +141,7 @@ function write(event) {
 function remove() {
   board.rows[row].cells[col].innerHTML = empty;
   array[row][col] = empty;
+  delInvalid(row, col);
 }
 
 
