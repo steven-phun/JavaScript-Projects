@@ -125,3 +125,7 @@ header {
 .wrong-color {
   color: #EC7063;
 }
+
+.selected-color {
+  background: #FCF3CF;
+}

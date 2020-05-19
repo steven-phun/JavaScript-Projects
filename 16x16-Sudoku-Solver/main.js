@@ -132,12 +132,15 @@ function write(event) {
 
 
 /**
+ * removes the value in current cell
+ *
  * @pre cell is non-null
  */
 function remove() {
   board.rows[row].cells[col].innerHTML = empty;
   array[row][col] = empty;
 }
+
 
 /**
  *  writes the value of the button clicked at given cell.
@@ -162,6 +165,7 @@ function getSolution() {
   setTimeout(_ => solution(tag), 0);
 }
 
+
 /**
  * helper method for getSolution() to async solve()
  *
@@ -175,6 +179,7 @@ function solution(tag) {
   }
 }
 
+
 /**
  * return the row and column index of a cell
  *
@@ -184,6 +189,8 @@ function solution(tag) {
 function getCell(rowIndex, colIndex) {
   row = rowIndex;
   col = colIndex;
+
+  setBackground();
 }
 
 
@@ -193,6 +200,19 @@ function getCell(rowIndex, colIndex) {
 function getSetter() {
   row = undefined;
   col = undefined;
+}
+
+/**
+ * set the background color of the selected cell
+ */
+function setBackground() {
+  const tagClass = "highlight";
+  let list = document.querySelectorAll("#sudoku td");
+
+  for (let i = 0; i < list.length; i++) {
+    list[i].classList.remove(tagClass);
+  }
+  board.rows[row].cells[col].classList.add(tagClass);
 }
 
 
