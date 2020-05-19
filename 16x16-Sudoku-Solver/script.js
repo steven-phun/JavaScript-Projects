@@ -212,7 +212,7 @@ function getSetter() {
  * @param rowIndex is the row index being stored
  * @param colIndex is the col index begin stored
  */
-function getIndex(rowIndex, colIndex) {
+function setInvalid(rowIndex, colIndex) {
   const invalidColor = "invalid-color";
   const tag = board.rows[rowIndex].cells[colIndex];
   tag.classList.add(invalidColor);
@@ -282,7 +282,7 @@ function toColor(text, row, col, val) {
   const correctColor = "correct-color";
   const wrongColor = "wrong-color";
 
-  checkInvalid(row, col);
+  delInvalid(row, col);
 
   if (validate(row, col, val)) {
     tag.classList.add(correctColor);
@@ -310,7 +310,7 @@ function validate(row, col, val) {
 function checkRow(row, val) {
   for (let col = 0; col < size; col++) {
     if (array[row][col] === val) {
-      getIndex(row, col);
+      setInvalid(row, col);
       return false;
     }
   }
@@ -324,7 +324,7 @@ function checkRow(row, val) {
 function checkColumn(col, val) {
   for (let row = 0; row < size; row++) {
     if (array[row][col] === val) {
-      getIndex(row, col);
+      setInvalid(row, col);
       return false;
     }
   }
@@ -345,7 +345,7 @@ function checkSection(row, col, val) {
   for (let i = rowSection; i < rowSection + sectionSize; i++) {
     for (let j = colSection; j < colSection + sectionSize; j++) {
       if (array[i][j] === val) {
-        getIndex(i, j);
+        setInvalid(i, j);
         return false;
       }
     }
@@ -364,16 +364,31 @@ function checkInput(input) {
 
 
 /**
- * remove any invalid values that no long exists
+ * remove any invalid values that no longer exists
  */
-function checkInvalid(row, col) {
+function delInvalid(row, col) {
   const invalidColor = "invalid-color";
 
   for (let i = 0; i < invalid.length; i++) {
     if (row === invalid[i].row && col === invalid[i].col) {
       const tag = board.rows[invalid[i].rowDex].cells[invalid[i].colDex];
       tag.classList.remove(invalidColor);
+      invalid.splice(i, 1);
+      checkInvalid();
     }
+  }
+}
+
+
+/**
+ * checks and mark any invalid values
+ */
+function checkInvalid() {
+  const invalidColor= "invalid-color";
+
+  for(let i = 0; i < invalid.length; i++) {
+    const tag = board.rows[invalid[i].rowDex].cells[invalid[i].colDex];
+    tag.classList.add(invalidColor);
   }
 }
 
