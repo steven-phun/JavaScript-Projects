@@ -44,7 +44,7 @@ grid layout in code
 """
 
 
-def main():
+def script():
     sudoku = Sudoku(16, 1000)
 
     sudoku.display_surface()
@@ -460,4 +460,4 @@ class Square:
 
 
 if __name__ == "__main__":
-    main()
+    script()

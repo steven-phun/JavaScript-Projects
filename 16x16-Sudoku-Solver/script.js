@@ -4,10 +4,12 @@
 /** global variables/instances */
 const size = 16; // represents the 16x16 grid size
 const empty = ""; // represents an empty cell
+let invalid = []; // represents invalid values from user
 let board = undefined; // represents the sudoku gird
 let row = undefined; // row index of the grid
 let col = undefined; // column index of the grid
 let val = undefined; // value of the square
+
 
 
 /** represents the board in array form */
@@ -31,8 +33,8 @@ let array = [
 ];
 
 
-/** main */
-function main() {
+/** script */
+function script() {
 
   window.addEventListener("keydown", write);
   drawGrid('#sudoku>table');
@@ -159,7 +161,7 @@ function keypad(value) {
  * @post prompts the user that the program is attempting to find a solution
  */
 function getSolution() {
-  let tag = document.querySelector("#play-area h1");
+  const tag = document.querySelector("#play-area h1");
   tag.innerHTML = "Solving..."
 
   setTimeout(_ => solution(tag), 0);
@@ -202,12 +204,30 @@ function getSetter() {
   col = undefined;
 }
 
+
+/**
+ * even index holds the cell where the user place an invalid input
+ * odd index holds the cell of the setter responsible for the invalid input
+ *
+ * @param rowIndex is the row index being stored
+ * @param colIndex is the col index begin stored
+ */
+function getIndex(rowIndex, colIndex) {
+  const invalidColor = "invalid-color";
+  const tag = board.rows[rowIndex].cells[colIndex];
+  tag.classList.add(invalidColor);
+
+  invalid.push({row: row, col: col});
+  invalid.push({row: rowIndex, col: colIndex});
+}
+
+
 /**
  * set the background color of the selected cell
  */
 function setBackground() {
   const tagClass = "selected-color";
-  let list = document.querySelectorAll("#sudoku td");
+  const list = document.querySelectorAll("#sudoku td");
 
   for (let i = 0; i < list.length; i++) {
     list[i].classList.remove(tagClass);
@@ -223,8 +243,8 @@ function setBackground() {
  * @return       'A' if num = 10  , 'B' if num = 11 ... 'F' if num = 15
  */
 function toHex(num) {
-  let decimal = 10; // represents when a Decimal needs to convert to Hexadecimal
-  let hexadecimal = 'A'.charCodeAt(0)
+  const decimal = 10; // represents when a Decimal needs to convert to Hexadecimal
+  const hexadecimal = 'A'.charCodeAt(0)
 
   if (num >= decimal) {
     num = String.fromCharCode(num - decimal + hexadecimal);
@@ -240,9 +260,9 @@ function toHex(num) {
  * @return       10 if char = 'A'  ,  11 if char = 'B'  ...  15 if char = 'F'
  */
 function toDec(char) {
-  let decimal = 10; // represents the Decimal form of a Hexadecimal
-  let hexadecimal = 'A'.charCodeAt(0);
-  let asiic = char.toUpperCase().charCodeAt(0);
+  const decimal = 10; // represents the Decimal form of a Hexadecimal
+  const hexadecimal = 'A'.charCodeAt(0);
+  const asiic = char.toUpperCase().charCodeAt(0);
 
   if (Number(asiic) >= hexadecimal) {
     char = asiic - 'A'.charCodeAt(0) + decimal;
@@ -263,8 +283,9 @@ function toColor(text, row, col, val) {
   const correctColor = "correct-color";
   const wrongColor = "wrong-color";
 
+  checkInvalid(row, col);
+
   if (validate(row, col, val)) {
-    array[row][col] = val;
     tag.classList.add(correctColor);
     tag.classList.remove(wrongColor);
   } else {
@@ -289,7 +310,10 @@ function validate(row, col, val) {
  */
 function checkRow(row, val) {
   for (let col = 0; col < size; col++) {
-    if (array[row][col] === val) return false;
+    if (array[row][col] === val) {
+      getIndex(row, col);
+      return false;
+    }
   }
   return true;
 }
@@ -300,7 +324,10 @@ function checkRow(row, val) {
  */
 function checkColumn(col, val) {
   for (let row = 0; row < size; row++) {
-    if (array[row][col] === val) return false;
+    if (array[row][col] === val) {
+      getIndex(row, col);
+      return false;
+    }
   }
   return true;
 }
@@ -318,7 +345,10 @@ function checkSection(row, col, val) {
 
   for (let i = rowSection; i < rowSection + sectionSize; i++) {
     for (let j = colSection; j < colSection + sectionSize; j++) {
-      if (array[i][j] === val) return false;
+      if (array[i][j] === val) {
+        getIndex(i, j);
+        return false;
+      }
     }
   }
   return true;
@@ -334,4 +364,21 @@ function checkInput(input) {
 }
 
 
-main();
+/**
+ * remove any invalid values that no long exists
+ */
+function checkInvalid(row, col) {
+  const invalidColor = "invalid-color";
+  const tag = board.rows[row].cells[col];
+
+  // even index holds the cell where the user place an invalid input
+  // odd index holds the cell of the setter responsible for the invalid input
+  for (let i = 0; i < invalid.length; i+2) {
+    if (row == invalid[i].row && col == invalid[i].col) {
+      tag.classList.remove(invalidColor);
+    }
+  }
+}
+
+
+script();
