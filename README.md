@@ -6,13 +6,13 @@ Inspiration
 
 - My professor would have unsolved 16x16 Sudoku on his glass door
 
-Project Difficulties: 
+Project Difficulties
 
 - Learning a new language JS
 
 - Adjusting width relative to screen size in CSS
 
-Developed in:
+Developed in
 
 - HTML/CSS/JavaScript
 
