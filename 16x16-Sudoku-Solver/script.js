@@ -176,11 +176,23 @@ class Sudoku {
   /**
    * change the input text color to a different color
    * if user inputs a correct or wrong value in cell
+   *
+   * @param value {number} the number being colored
    */
-  setColor() {
+  setColor(value) {
+    const correctColor = "correct-color";
+    const wrongColor = "wrong-color";
 
+    if (getResults()) {
+      this.board[row][col].classList.remove(wrongColor);
+      this.board[row][col].classList.add(correctColor);
+    } else {
+      this.board[row][col].classList.remove(correctColor);
+      this.board[row][col].classList.add(wrongColor);
+    }
   }
 }
+
 
 
 /**
