@@ -6,8 +6,10 @@
   2. header
 
   3. play area
-
-  4. how to play
+    3.1 title group
+    3.2 sudoku
+    3.3 keypad
+    3.4 function pad
 
   5. footer
 
@@ -15,6 +17,7 @@
 
  */
 
+/* TODO convert flex for grid */
 
 /* 1. global */
 * {
@@ -64,7 +67,13 @@ header {
 #play-area td:hover {
   background: #C39BD3;
 }
+/* 3.1 title-group */
+#title-group {
+  display: flex;
+  justify-content: space-between;
+}
 
+/* 3.2 sudoku */
 #sudoku {
   margin-bottom: 10px;
 }
@@ -85,6 +94,7 @@ header {
   border-right: black solid 3px;
 }
 
+/* 3.3 buttons */
 #buttons {
   display: flex;
   flex-direction: row;
@@ -94,6 +104,7 @@ header {
   width: 100%;
 }
 
+/* 3.4 function pad */
 #function-pad {
   display: flex;
   flex-direction: column;
@@ -102,33 +113,6 @@ header {
 #function-pad #solve {
   border-top: none;
 }
-
-
-
-/* 4. how to play */
-#how-to-play {
-  margin: 30px;
-}
-
-#title, #instructions, #rules {
-  flex-wrap: wrap;
-  padding: 15px;
-}
-
-#how-to-play #rules {
-  padding-left: 30px;
-}
-
-#how-to-play h1 {
-  font-weight: bold;
-  letter-spacing: 4px;
-  color: #5DADE2;
-}
-
-#how-to-play p, #how-to-play li {
-  font-size: 13px;
-}
-
 
 
 /* 5. footer */
