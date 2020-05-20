@@ -154,7 +154,7 @@ class Sudoku {
 
     this.board[this.row][this.col].data = value;
     this.delInvalid(this.row, this.col);
-    this.board[this.row][this.col].data = this.setColor(this.toHex(value));
+    this.board[this.row][this.col].data = this.setColor(value);
     this.setInvalid();
     this.updateCells();
   }
