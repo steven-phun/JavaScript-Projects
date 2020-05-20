@@ -188,10 +188,27 @@ class Sudoku {
 
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
-        tag.rows[row].cells[col].innerHTML = this.board[row][col].data;
+        tag.rows[row].cells[col].innerHTML = this.toHex(this.board[row][col].data);
       }
     }
   }
+
+  /**
+    * converts Decimal to Hexadecimal
+    *
+    * @param num    {number} the number to be converted to Hexadecimal
+    * @return       'A' if num = 10  , 'B' if num = 11 ... 'F' if num = 15 {string}
+    */
+  toHex(num) {
+    const decimal = 10; // represents when a Decimal needs to convert to Hexadecimal
+    const hexadecimal = 'A'.charCodeAt(0)
+
+    if (num < decimal) return num;
+
+    return String.fromCharCode(num - decimal + hexadecimal);
+  }
+
+
 }
 
 
@@ -209,6 +226,26 @@ class Cell {
 
 
 
+// 
+//
+// /**
+//  * converts Hexadecimal to Decimal
+//  *
+//  * @param char   {string} the character to be converted to Decimal
+//  * @return       10 if char = 'A'  ,  11 if char = 'B'  ...  15 if char = 'F' {number}
+//  */
+// toDec(char) {
+//   const decimal = 10; // represents the Decimal form of a Hexadecimal
+//   const hexadecimal = 'A'.charCodeAt(0);
+//   const asiic = char.toUpperCase().charCodeAt(0);
+//
+//   if (Number(asiic) >= hexadecimal) {
+//     char = asiic - 'A'.charCodeAt(0) + decimal;
+//   }
+//   return char;
+// }
+//
+//
 
 
 
@@ -475,41 +512,6 @@ class Cell {
 //     tag.classList.add(invalidColor);
 //   }
 // }
-//
-// /**
-//  * converts Decimal to Hexadecimal
-//  *
-//  * @param num    {number} the number to be converted to Hexadecimal
-//  * @return       'A' if num = 10  , 'B' if num = 11 ... 'F' if num = 15 {}
-//  */
-// toHex(num) {
-//   const decimal = 10; // represents when a Decimal needs to convert to Hexadecimal
-//   const hexadecimal = 'A'.charCodeAt(0)
-//
-//   if (num >= decimal) {
-//     num = String.fromCharCode(num - decimal + hexadecimal);
-//   }
-//   return num;
-// }
-//
-//
-// /**
-//  * converts Hexadecimal to Decimal
-//  *
-//  * @param char   {string} the character to be converted to Decimal
-//  * @return       10 if char = 'A'  ,  11 if char = 'B'  ...  15 if char = 'F' {number}
-//  */
-// toDec(char) {
-//   const decimal = 10; // represents the Decimal form of a Hexadecimal
-//   const hexadecimal = 'A'.charCodeAt(0);
-//   const asiic = char.toUpperCase().charCodeAt(0);
-//
-//   if (Number(asiic) >= hexadecimal) {
-//     char = asiic - 'A'.charCodeAt(0) + decimal;
-//   }
-//   return char;
-// }
-//
 //
 
 
