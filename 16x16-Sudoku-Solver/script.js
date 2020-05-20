@@ -38,7 +38,7 @@ class Sudoku {
 
     // set up game
     this.drawGrid();
-    this.printCells();
+    this.updateCells();
   }
 
 
@@ -69,7 +69,7 @@ class Sudoku {
         }
       }
     }
-    this.printCells();
+    this.updateCells();
     return true;
   }
 
@@ -149,7 +149,7 @@ class Sudoku {
   /**
    * display each current innerhtml cell value onto the Sudoku grid
    */
-  printCells() {
+  updateCells() {
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
         this.tag.rows[row].cells[col].innerHTML = this.toHex(this.board[row][col].data);
@@ -239,10 +239,25 @@ function main() {
 
 
 /**
+ *  writes the value of the button clicked to given cell.
+ *
+ *  @pram value {number} the value of the button
+ */
+function buttonInput(value) {
+  if (row === null || col === null) return;
+
+  if (sudoku.board[row][col].setter === true) return;
+
+  sudoku.board[row][col].data = value;
+  sudoku.updateCells();
+}
+
+
+/**
  * update row and column index to the selected cell
  *
- * @param rowIndex    the row index of the cell
- * @param colIndex    the column index of the cell
+ * @param rowIndex    {number} the row index of the cell
+ * @param colIndex    {number} the column index of the cell
  */
 function getCell(rowIndex, colIndex) {
   row = rowIndex;
@@ -293,47 +308,8 @@ function setPrompt(tag) {
 
 
 
-// 
-//
-// /**
-//  * converts Hexadecimal to Decimal
-//  *
-//  * @param char   {string} the character to be converted to Decimal
-//  * @return       10 if char = 'A'  ,  11 if char = 'B'  ...  15 if char = 'F' {number}
-//  */
-// toDec(char) {
-//   const decimal = 10; // represents the Decimal form of a Hexadecimal
-//   const hexadecimal = 'A'.charCodeAt(0);
-//   const asiic = char.toUpperCase().charCodeAt(0);
-//
-//   if (Number(asiic) >= hexadecimal) {
-//     char = asiic - 'A'.charCodeAt(0) + decimal;
-//   }
-//   return char;
-// }
-//
 //
 
-
-
-
-//
-//
-// /**
-//  * @pre a solution to display
-//  * @post display the solution on the sudoku grid
-//  */
-// function display() {
-//   for (let row = 0; row < size; row++) {
-//     for (let col = 0; col < size; col++) {
-//       if (board.rows[row].cells[col].innerHTML === empty) {
-//         board.rows[row].cells[col].innerHTML = toHex(array[row][col]);
-//       }
-//     }
-//   }
-// }
-//
-//
 
 //
 //
@@ -349,32 +325,8 @@ function setPrompt(tag) {
 // }
 //
 //
-// /**
-//  *  writes the value of the button clicked at given cell.
-//  *
-//  *  @pre cell is non-null
-//  *  @pram value the value to be displayed
-//  */
-// function keypad(value) {
-//   if (row !== undefined && col !== undefined) {
-//     board.rows[row].cells[col].innerHTML = toHex(toColor(value, row, col, value));
-//   }
-// }
-//
-//
-//
-//
-
 
 //
-//
-// /**
-//  * resets the mouse click position
-//  */
-// function getSetter() {
-//   row = undefined;
-//   col = undefined;
-// }
 //
 //
 // /**
