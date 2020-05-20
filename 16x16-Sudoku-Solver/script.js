@@ -105,6 +105,9 @@ class Sudoku {
    * display each current innerhtml cell value onto the Sudoku grid
    */
   updateCells() {
+    const tag = document.querySelector("#play-area h1");
+    tag.innerHTML = "Let's Play Sudoku!";
+
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
         this.tag.rows[row].cells[col].innerHTML = this.toHex(this.board[row][col].data);
@@ -320,6 +323,9 @@ class Sudoku {
    */
   getSolution() {
     const tag = document.querySelector("#play-area h1");
+
+    if (this.invalid.length > 0) return tag.innerHTML = "Remove Invalid Values(Red)";
+
     tag.innerHTML = "Solving..."
     this.setSelected(false);
 
@@ -508,7 +514,6 @@ function write(event) {
   sudoku.write(event);
 }
 
-
 /**
  *  writes the button clicked input to given cell
  *
@@ -517,7 +522,6 @@ function write(event) {
 function buttonInput(value) {
   sudoku.buttonInput(value);
 }
-
 
 /**
  * update row and column index to the selected cell
@@ -532,14 +536,9 @@ function getCell(row, col) {
   sudoku.setSelected(true);
 }
 
-
 /**
  * program will attempt to find a solution
  */
 function getSolution() {
   sudoku.getSolution();
 }
-
-
-
-main();
