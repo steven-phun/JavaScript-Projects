@@ -313,7 +313,7 @@ class Sudoku {
     let zero = 48, nine = 57, A = 65, F = 70;
     let decimal = 10;
 
-    if (key >= zero && key <= 57) return key - zero;
+    if (key >= zero && key <= nine) return key - zero;
 
     if (key >= A && key <= F) return key - A + decimal;
   }
@@ -375,9 +375,6 @@ class Sudoku {
    * @return the original value to allow printing the value
    */
   setColor(value) {
-    const correctColor = "correct-color";
-    const wrongColor = "wrong-color";
-
     if (this.slowValidate(this.row, this.col, value)) {
       this.setCorrectColor(true, this.tag);
       this.setWrongColor(false, this.tag)
@@ -422,7 +419,7 @@ class Sudoku {
    * set the background of current cell and the other cell that is
    * causing the current to be non-unique in row, column, or 4x4 section
    */
-  setInvalid(row, col) {
+  setInvalid() {
     const invalidColor = "invalid-color";
     const tag = document.querySelectorAll("." + invalidColor);
 
@@ -492,9 +489,6 @@ let div = document.querySelector("#sudoku>table");
 const sudoku = new Sudoku(test, div);
 window.addEventListener("keydown", write);
 
-/** main */
-function main() {
-}
 
 /**
  * removes the color class of current cell
