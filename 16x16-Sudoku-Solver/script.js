@@ -20,10 +20,10 @@
  */
 class Sudoku {
   constructor(board, tag) {
-    this.board = board;  // {array}    a copy of the board this class is working with
-    this.tag = tag;      // {html tag} the parent HTML tag that the Sudoku grid will be inserted to
-    this.size = 16;      // {number}   represents the 16x16 grid
-    this.empty = "";     // {null}     an empty cell
+    this.board = board;  // {array}      a copy of the board this class is working with
+    this.tag = tag;      // {html board} the parent HTML board that the Sudoku grid will be inserted to
+    this.size = 16;      // {number}     represents the 16x16 grid
+    this.empty = "";     // {null}       an empty cell
 
     // convert each cell to the object Cell
     for (let row = 0; row < this.size; row++) {
@@ -124,6 +124,8 @@ class Sudoku {
    * generates the grid for the Sudoku
    */
   drawGrid() {
+    const tag = document.querySelector(this.tag + ">table");
+
     for (let row = 0; row < this.size; row++) {
       const tempRow = tag.insertRow();
       tempRow.classList.add("row");
@@ -131,11 +133,11 @@ class Sudoku {
         const tempCol = tempRow.insertCell();
         tempCol.classList.add("col");
 
-        this.tag.rows[row].cells[col].setAttribute('onclick', 'getCell(' + row + ',' + col + ')');
+        tag.rows[row].cells[col].setAttribute('onclick', 'getCell(' + row + ',' + col + ')');
         if (this.board[row][col].setter === true) {
-          this.tag.rows[row].cells[col].innerHTML = this.board[row][col].data;
+          tag.rows[row].cells[col].innerHTML = this.board[row][col].data;
         } else {
-          this.tag.rows[row].cells[col].innerHTML = this.empty;
+          tag.rows[row].cells[col].innerHTML = this.empty;
         }
       }
     }
@@ -182,17 +184,17 @@ class Cell {
 }
 
 
-// global variables/instance
-const tag = document.querySelector("#sudoku>table");
 
 // row and column index of clicked cell
 let row = null;
 let col = null;
 
 
-function getBoard() {
+/** main */
+function main() {
+  // test board
   const empty = "";
-  return [[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty, 14, 13, empty, empty, 15],
+  const test = [[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty, 14, 13, empty, empty, 15],
     [14, 10, empty, empty, empty, 15, 13, empty, empty, empty, 11, empty, empty, 5, empty, empty],
     [12, empty, 8, 11, empty, empty, empty, empty, 2, 15, 13, empty, 14, 10, 9, empty],
     [1, empty, 15, empty, 10, empty, 14, 9, 0, empty, empty, empty, empty, empty, empty, empty],
@@ -208,12 +210,8 @@ function getBoard() {
     [empty, empty, 11, empty, 0, 3, 5, empty, 15, empty, empty, empty, 10, 9, empty, empty],
     [empty, empty, 4, empty, 7, 11, 12, empty, 9, empty, empty, 10, 1, empty, empty, 13],
     [2, 15, empty, empty, 9, empty, empty, 6, empty, empty, 5, empty, empty, empty, 11, empty]]
-}
 
-
-/** main */
-function main() {
-  const sudoku = new Sudoku(getBoard(), tag);
+  const sudoku = new Sudoku(test, "#sudoku");
   sudoku.drawGrid();
   sudoku.printCells();
 
@@ -224,16 +222,28 @@ function main() {
 /**
  * update the global variable row and column index to this cell
  *
- * @param row    the row index of the cell
- * @param col    the column index of the cell
+ * @param rowIndex    the row index of the cell
+ * @param colIndex    the column index of the cell
  */
-function getCell(row, col) {
-  this.row = row;
-  this.col = col;
-  console.log(this.row);
-  console.log(this.col);
+function getCell(rowIndex, colIndex) {
+  row = rowIndex;
+  col = colIndex;
 
-  setBackground();
+  setSelected();
+}
+
+/**
+ * set the background color of the selected cell and
+ * remove the background of the previous selected cell
+ */
+function setSelected() {
+  const color = "selected-color";
+  const tempTag = document.querySelectorAll("." + color);
+
+  for (let i = 0; i < tempTag.length; i++) {
+    tempTag[i].classList.remove(color);
+  }
+  board.rows[row].cells[col].classList.add(color);
 }
 
 
@@ -254,19 +264,7 @@ function write(event) {
   board.rows[row].cells[col].innerHTML = toColor(event.key, row, col, Number(toDec(event.key)));
 }
 
-/**
- * set the background color of the selected cell and
- * remove the background of the previous selected cell
- */
-function setBackground() {
-  const color = "selected-color";
-  const tag = document.querySelectorAll("#sudoku td");
 
-  for (let i = 0; i < tag.length; i++) {
-    this.tag[i].classList.remove(color);
-  }
-  this.tag.rows[row].cells[col].classList.add(color);
-}
 
 
 
@@ -344,23 +342,23 @@ function setBackground() {
 //  * @post prompts the user that the program is attempting to find a solution
 //  */
 // function getSolution() {
-//   const tag = document.querySelector("#play-area h1");
-//   tag.innerHTML = "Solving..."
+//   const board = document.querySelector("#play-area h1");
+//   board.innerHTML = "Solving..."
 //
-//   setTimeout(_ => solution(tag), 0);
+//   setTimeout(_ => solution(board), 0);
 // }
 //
 //
 // /**
 //  * helper method for getSolution() to async solve()
 //  *
-//  * @param tag   the html tag that will display the text
+//  * @param board   the html board that will display the text
 //  */
-// function solution(tag) {
+// function solution(board) {
 //   if (solve()) {
-//     tag.innerHTML = "Solution Found :)";
+//     board.innerHTML = "Solution Found :)";
 //   } else {
-//     tag.innerHTML = "No Solution Found :(";
+//     board.innerHTML = "No Solution Found :(";
 //   }
 // }
 //
@@ -385,8 +383,8 @@ function setBackground() {
 //  */
 // function setInvalid(rowIndex, colIndex) {
 //   const invalidColor = "invalid-color";
-//   const tag = board.rows[rowIndex].cells[colIndex];
-//   tag.classList.add(invalidColor);
+//   const board = board.rows[rowIndex].cells[colIndex];
+//   board.classList.add(invalidColor);
 //
 //   invalid.push({row: row, col: col, rowDex: rowIndex, colDex: colIndex});
 // }
@@ -405,19 +403,19 @@ function setBackground() {
 //  * @return        the text with its corresponding color
 //  */
 // function toColor(text, row, col, val) {
-//   // add the color class to its tag and change the color in CSS
-//   const tag = board.rows[row].cells[col];
+//   // add the color class to its board and change the color in CSS
+//   const board = board.rows[row].cells[col];
 //   const correctColor = "correct-color";
 //   const wrongColor = "wrong-color";
 //
 //   delInvalid(row, col);
 //
 //   if (validate(row, col, val)) {
-//     tag.classList.add(correctColor);
-//     tag.classList.remove(wrongColor);
+//     board.classList.add(correctColor);
+//     board.classList.remove(wrongColor);
 //   } else {
-//     tag.classList.add(wrongColor);
-//     tag.classList.remove(correctColor);
+//     board.classList.add(wrongColor);
+//     board.classList.remove(correctColor);
 //   }
 //   return text;
 // }
@@ -499,8 +497,8 @@ function setBackground() {
 //
 //   for (let i = 0; i < invalid.length; i++) {
 //     if (row === invalid[i].row && col === invalid[i].col) {
-//       const tag = board.rows[invalid[i].rowDex].cells[invalid[i].colDex];
-//       tag.classList.remove(invalidColor);
+//       const board = board.rows[invalid[i].rowDex].cells[invalid[i].colDex];
+//       board.classList.remove(invalidColor);
 //       invalid.splice(i, 1);
 //       checkInvalid();
 //     }
@@ -515,8 +513,8 @@ function setBackground() {
 //   const invalidColor= "invalid-color";
 //
 //   for(let i = 0; i < invalid.length; i++) {
-//     const tag = board.rows[invalid[i].rowDex].cells[invalid[i].colDex];
-//     tag.classList.add(invalidColor);
+//     const board = board.rows[invalid[i].rowDex].cells[invalid[i].colDex];
+//     board.classList.add(invalidColor);
 //   }
 // }
 //
