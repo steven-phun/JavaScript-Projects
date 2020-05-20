@@ -116,6 +116,13 @@ class Sudoku {
   }
 
   /**
+   * displays notes for current cell
+   */
+  updateNotes() {
+
+  }
+
+  /**
    * writes user's keyboard input to given cell
    *
    * @param event is the user's keyboard key input
@@ -341,6 +348,13 @@ class Sudoku {
   }
 
   /**
+   * keeps track of the values user wants to add to notes
+   */
+  getNotes() {
+
+  }
+
+  /**
    * prompt the user if a solution is found or not
    *
    * @param tag   the html tag that will display the text
@@ -458,10 +472,9 @@ class Sudoku {
  * this class represents each individual cells
  */
 class Cell {
-  constructor(data, setter=false, pencil=false) {
+  constructor(data, setter=false) {
     this.data = data;        // {int}     value of a cell
     this.setter = setter;    // {boolean} true if this cell is a setter
-    this.pencil = pencil;    // {boolean} true if the user placed a value in this cell
     this.notes = new Set();  // {set}     for the user to keep track possible solution
   }
 }
@@ -542,7 +555,11 @@ function getSolution() {
 /**
  * reload users browser
  */
-function newGame() {
+function setNewGame() {
   location.reload();
   return false;
+}
+
+function getNotes(){
+  sudoku.getNotes();
 }

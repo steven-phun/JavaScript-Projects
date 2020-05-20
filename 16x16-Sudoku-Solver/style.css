@@ -108,10 +108,15 @@ header {
 #function-pad {
   display: flex;
   flex-direction: column;
+
 }
 
 #function-pad #solve {
-  border-top: none;
+}
+
+.function-pad-group {
+  display: flex;
+  flex-direction: row;
 }
 
 
