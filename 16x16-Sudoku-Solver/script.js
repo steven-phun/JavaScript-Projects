@@ -13,44 +13,6 @@
 
 //TODO: notes: highlight the keyboard of values that got noted.
 //             when note is unchecked de-highlight them.
-//TODO: remove invalid when doing solve.
-//TODO: convert solve() to class and interactions as functions()
-
-
-function getBoard() {
-  const empty = "";
-  return [[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty, 14, 13, empty, empty, 15],
-    [14, 10, empty, empty, empty, 15, 13, empty, empty, empty, 11, empty, empty, 5, empty, empty],
-    [12, empty, 8, 11, empty, empty, empty, empty, 2, 15, 13, empty, 14, 10, 9, empty],
-    [1, empty, 15, empty, 10, empty, 14, 9, 0, empty, empty, empty, empty, empty, empty, empty],
-    [empty, 14, 10, 9, empty, empty, 15, 1, 12, 7, 8, 11, empty, empty, empty, empty],
-    [11, 12, empty, empty, 3, 0, 4, 5, 1, 2, empty, empty, empty, empty, 10, 9],
-    [4, empty, 5, 0, 11, empty, 8, empty, 14, 10, 9, 6, 15, empty, empty, 2],
-    [empty, 1, empty, empty, empty, 9, empty, 10, 5, empty, 4, empty, empty, 12, empty, 8],
-    [9, 6, 14, 10, 15, empty, empty, empty, 11, 12, empty, empty, empty, empty, empty, 5],
-    [8, empty, empty, empty, empty, empty, 0, empty, empty, 1, empty, 15, 9, empty, empty, 10],
-    [0, empty, 3, 5, 8, 12, empty, empty, 6, empty, 10, empty, 2, 15, empty, empty],
-    [15, 13, empty, empty, 6, empty, 9, 14, 3, 5, 0, empty, empty, empty, 12, 7],
-    [10, 9, empty, 14, empty, empty, empty, 15, 8, 11, 12, empty, empty, 0, 4, 3],
-    [empty, empty, 11, empty, 0, 3, 5, empty, 15, empty, empty, empty, 10, 9, empty, empty],
-    [empty, empty, 4, empty, 7, 11, 12, empty, 9, empty, empty, 10, 1, empty, empty, 13],
-    [2, 15, empty, empty, 9, empty, empty, 6, empty, empty, 5, empty, empty, empty, 11, empty]]
-}
-
-
-/** main */
-function main() {
-  const sudoku = new Sudoku(getBoard(),'#sudoku>table' );
-
-  sudoku.drawGrid();
-  sudoku.print();
-
-  sudoku.solve();
-  sudoku.print();
-  console.log(sudoku.board);
-
-  //window.addEventListener("keydown", write);
-}
 
 
 /**
@@ -75,6 +37,7 @@ class Sudoku {
     }
   }
 
+
   /**
    * this method will find a solution to do the Sudoku as fast as possible,
    * so it will not consider any user's interactions that will delay its process
@@ -92,7 +55,7 @@ class Sudoku {
               // base case: if val leads to a solution
               if (this.solve()) {
                 return true;
-              // backtrack: if the val does not lead to a solution
+                // backtrack: if the val does not lead to a solution
               } else {
                 this.board[row][col] = new Cell(this.empty);
               }
@@ -102,7 +65,7 @@ class Sudoku {
         }
       }
     }
-    this.print();
+    this.printCells();
     return true;
   }
 
@@ -161,8 +124,6 @@ class Sudoku {
    * generates the grid for the Sudoku
    */
   drawGrid() {
-    const tag = document.querySelector(this.tag);
-
     for (let row = 0; row < this.size; row++) {
       const tempRow = tag.insertRow();
       tempRow.classList.add("row");
@@ -170,35 +131,33 @@ class Sudoku {
         const tempCol = tempRow.insertCell();
         tempCol.classList.add("col");
 
-        tag.rows[row].cells[col].setAttribute('onclick', 'getCell(' + row + ',' + col + ')');
+        this.tag.rows[row].cells[col].setAttribute('onclick', 'getCell(' + row + ',' + col + ')');
         if (this.board[row][col].setter === true) {
-          tag.rows[row].cells[col].innerHTML = this.board[row][col].data;
+          this.tag.rows[row].cells[col].innerHTML = this.board[row][col].data;
         } else {
-          tag.rows[row].cells[col].innerHTML = this.empty;
+          this.tag.rows[row].cells[col].innerHTML = this.empty;
         }
       }
     }
   }
 
   /**
-   * display each current innerhtml value for the Sudoku grid
+   * display each current innerhtml cell value onto the Sudoku grid
    */
-  print() {
-    const tag = document.querySelector(this.tag);
-
+  printCells() {
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
-        tag.rows[row].cells[col].innerHTML = this.toHex(this.board[row][col].data);
+        this.tag.rows[row].cells[col].innerHTML = this.toHex(this.board[row][col].data);
       }
     }
   }
 
   /**
-    * converts Decimal to Hexadecimal
-    *
-    * @param num    {number} the number to be converted to Hexadecimal
-    * @return       'A' if num = 10  , 'B' if num = 11 ... 'F' if num = 15 {string}
-    */
+   * converts Decimal to Hexadecimal
+   *
+   * @param num    {number} the number to be converted to Hexadecimal
+   * @return       'A' if num = 10  , 'B' if num = 11 ... 'F' if num = 15 {string}
+   */
   toHex(num) {
     const decimal = 10; // represents when a Decimal needs to convert to Hexadecimal
     const hexadecimal = 'A'.charCodeAt(0)
@@ -207,8 +166,6 @@ class Sudoku {
 
     return String.fromCharCode(num - decimal + hexadecimal);
   }
-
-
 }
 
 
@@ -223,6 +180,94 @@ class Cell {
     this.notes = new Set();  // {set}     for the user to keep track possible solution
   }
 }
+
+
+// global variables/instance
+const tag = document.querySelector("#sudoku>table");
+
+// row and column index of clicked cell
+let row = null;
+let col = null;
+
+
+function getBoard() {
+  const empty = "";
+  return [[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty, 14, 13, empty, empty, 15],
+    [14, 10, empty, empty, empty, 15, 13, empty, empty, empty, 11, empty, empty, 5, empty, empty],
+    [12, empty, 8, 11, empty, empty, empty, empty, 2, 15, 13, empty, 14, 10, 9, empty],
+    [1, empty, 15, empty, 10, empty, 14, 9, 0, empty, empty, empty, empty, empty, empty, empty],
+    [empty, 14, 10, 9, empty, empty, 15, 1, 12, 7, 8, 11, empty, empty, empty, empty],
+    [11, 12, empty, empty, 3, 0, 4, 5, 1, 2, empty, empty, empty, empty, 10, 9],
+    [4, empty, 5, 0, 11, empty, 8, empty, 14, 10, 9, 6, 15, empty, empty, 2],
+    [empty, 1, empty, empty, empty, 9, empty, 10, 5, empty, 4, empty, empty, 12, empty, 8],
+    [9, 6, 14, 10, 15, empty, empty, empty, 11, 12, empty, empty, empty, empty, empty, 5],
+    [8, empty, empty, empty, empty, empty, 0, empty, empty, 1, empty, 15, 9, empty, empty, 10],
+    [0, empty, 3, 5, 8, 12, empty, empty, 6, empty, 10, empty, 2, 15, empty, empty],
+    [15, 13, empty, empty, 6, empty, 9, 14, 3, 5, 0, empty, empty, empty, 12, 7],
+    [10, 9, empty, 14, empty, empty, empty, 15, 8, 11, 12, empty, empty, 0, 4, 3],
+    [empty, empty, 11, empty, 0, 3, 5, empty, 15, empty, empty, empty, 10, 9, empty, empty],
+    [empty, empty, 4, empty, 7, 11, 12, empty, 9, empty, empty, 10, 1, empty, empty, 13],
+    [2, 15, empty, empty, 9, empty, empty, 6, empty, empty, 5, empty, empty, empty, 11, empty]]
+}
+
+
+/** main */
+function main() {
+  const sudoku = new Sudoku(getBoard(), tag);
+  sudoku.drawGrid();
+  sudoku.printCells();
+
+  window.addEventListener("keydown", write);
+}
+
+
+/**
+ * update the global variable row and column index to this cell
+ *
+ * @param row    the row index of the cell
+ * @param col    the column index of the cell
+ */
+function getCell(row, col) {
+  this.row = row;
+  this.col = col;
+  console.log(this.row);
+  console.log(this.col);
+
+  setBackground();
+}
+
+
+/**
+ * writes user input on the sudoku board.
+ *
+ * @pre user's input is a valid input
+ * @param event    is the user's keyboard key input
+ */
+function write(event) {
+
+  if (row === undefined || col === undefined) return;
+
+  if (event.key === "Backspace") remove();
+
+  if (!checkInput(event.keyCode)) return;
+
+  board.rows[row].cells[col].innerHTML = toColor(event.key, row, col, Number(toDec(event.key)));
+}
+
+/**
+ * set the background color of the selected cell and
+ * remove the background of the previous selected cell
+ */
+function setBackground() {
+  const color = "selected-color";
+  const tag = document.querySelectorAll("#sudoku td");
+
+  for (let i = 0; i < tag.length; i++) {
+    this.tag[i].classList.remove(color);
+  }
+  this.tag.rows[row].cells[col].classList.add(color);
+}
+
 
 
 
@@ -267,22 +312,7 @@ class Cell {
 // }
 //
 //
-// /**
-//  * writes a valid input on the sudoku board.
-//  * a valid input is a number 0-9 or letter A-F
-//  *
-//  * @param event    user's keyboard key input
-//  */
-// function write(event) {
-//
-//   if (row === undefined || col === undefined) return;
-//
-//   if (event.key === "Backspace") remove();
-//
-//   if (!checkInput(event.keyCode)) return;
-//
-//   board.rows[row].cells[col].innerHTML = toColor(event.key, row, col, Number(toDec(event.key)));
-// }
+
 //
 //
 // /**
@@ -334,19 +364,7 @@ class Cell {
 //   }
 // }
 //
-//
-// /**
-//  * return the row and column index of a cell
-//  *
-//  * @param rowIndex    the row being indexed
-//  * @param colIndex    the column being indexed
-//  */
-// function getCell(rowIndex, colIndex) {
-//   row = rowIndex;
-//   col = colIndex;
-//
-//   setBackground();
-// }
+
 //
 //
 // /**
@@ -374,18 +392,7 @@ class Cell {
 // }
 //
 //
-// /**
-//  * set the background color of the selected cell
-//  */
-// function setBackground() {
-//   const tagClass = "selected-color";
-//   const list = document.querySelectorAll("#sudoku td");
-//
-//   for (let i = 0; i < list.length; i++) {
-//     list[i].classList.remove(tagClass);
-//   }
-//   board.rows[row].cells[col].classList.add(tagClass);
-// }
+
 //
 //
 
