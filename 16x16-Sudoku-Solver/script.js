@@ -253,6 +253,17 @@ function getCell(rowIndex, colIndex) {
 
 
 /**
+ * program will attempt to find a solution
+ */
+function getSolution() {
+  const tag = document.querySelector("#play-area h1");
+  tag.innerHTML = "Solving..."
+
+  setTimeout(_ => setPrompt(tag), 0);
+}
+
+
+/**
  * set the background color of the selected cell and
  * remove the background of the previous selected cell
  */
@@ -267,9 +278,18 @@ function setSelected() {
 }
 
 
-
-
-
+/**
+ * prompt the user if a solution is found or not
+ *
+ * @param tag   the html tag that will display the text
+ */
+function setPrompt(tag) {
+  if (sudoku.solve()) {
+    tag.innerHTML = "Solution Found :)";
+  } else {
+    tag.innerHTML = "No Solution Found :(";
+  }
+}
 
 
 
@@ -342,30 +362,9 @@ function setSelected() {
 // }
 //
 //
-// /**
-//  * @post prompts the user that the program is attempting to find a solution
-//  */
-// function getSolution() {
-//   const board = document.querySelector("#play-area h1");
-//   board.innerHTML = "Solving..."
-//
-//   setTimeout(_ => solution(board), 0);
-// }
 //
 //
-// /**
-//  * helper method for getSolution() to async solve()
-//  *
-//  * @param board   the html board that will display the text
-//  */
-// function solution(board) {
-//   if (solve()) {
-//     board.innerHTML = "Solution Found :)";
-//   } else {
-//     board.innerHTML = "No Solution Found :(";
-//   }
-// }
-//
+
 
 //
 //
