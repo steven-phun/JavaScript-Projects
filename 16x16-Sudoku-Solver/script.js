@@ -14,10 +14,6 @@
 /**      >>>>>>>>>>  todo-list <<<<<<<<<<
  * TODO: notes: highlight the keyboard of values that got noted.
  *       when note is unchecked de-highlight them.
- * TODO: setInvalid()
- * TODO: fix setColor
- *              to remove tag when deleting
- *              add color when using solve
  */
 
 
