@@ -16,8 +16,42 @@
 //TODO: remove invalid when doing solve.
 //TODO: convert solve() to class and interactions as functions()
 
-/** global variable/instance */
-const empty = "";
+
+function getBoard() {
+  const empty = "";
+  return [[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty, 14, 13, empty, empty, 15],
+    [14, 10, empty, empty, empty, 15, 13, empty, empty, empty, 11, empty, empty, 5, empty, empty],
+    [12, empty, 8, 11, empty, empty, empty, empty, 2, 15, 13, empty, 14, 10, 9, empty],
+    [1, empty, 15, empty, 10, empty, 14, 9, 0, empty, empty, empty, empty, empty, empty, empty],
+    [empty, 14, 10, 9, empty, empty, 15, 1, 12, 7, 8, 11, empty, empty, empty, empty],
+    [11, 12, empty, empty, 3, 0, 4, 5, 1, 2, empty, empty, empty, empty, 10, 9],
+    [4, empty, 5, 0, 11, empty, 8, empty, 14, 10, 9, 6, 15, empty, empty, 2],
+    [empty, 1, empty, empty, empty, 9, empty, 10, 5, empty, 4, empty, empty, 12, empty, 8],
+    [9, 6, 14, 10, 15, empty, empty, empty, 11, 12, empty, empty, empty, empty, empty, 5],
+    [8, empty, empty, empty, empty, empty, 0, empty, empty, 1, empty, 15, 9, empty, empty, 10],
+    [0, empty, 3, 5, 8, 12, empty, empty, 6, empty, 10, empty, 2, 15, empty, empty],
+    [15, 13, empty, empty, 6, empty, 9, 14, 3, 5, 0, empty, empty, empty, 12, 7],
+    [10, 9, empty, 14, empty, empty, empty, 15, 8, 11, 12, empty, empty, 0, 4, 3],
+    [empty, empty, 11, empty, 0, 3, 5, empty, 15, empty, empty, empty, 10, 9, empty, empty],
+    [empty, empty, 4, empty, 7, 11, 12, empty, 9, empty, empty, 10, 1, empty, empty, 13],
+    [2, 15, empty, empty, 9, empty, empty, 6, empty, empty, 5, empty, empty, empty, 11, empty]]
+}
+
+
+/** main */
+function main() {
+  const sudoku = new Sudoku(getBoard(),'#sudoku>table' );
+
+  sudoku.drawGrid();
+  sudoku.print();
+
+  sudoku.solve();
+  sudoku.print();
+  console.log(sudoku.board);
+
+  //window.addEventListener("keydown", write);
+}
+
 
 /**
  * this class represents the Sudoku using an array to store its data
@@ -27,13 +61,13 @@ class Sudoku {
     this.board = board;  // {array}    a copy of the board this class is working with
     this.tag = tag;      // {html tag} the parent HTML tag that the Sudoku grid will be inserted to
     this.size = 16;      // {number}   represents the 16x16 grid
-    this.empty = empty;     // {null}     an empty cell
+    this.empty = "";     // {null}     an empty cell
 
     // convert each cell to the object Cell
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
         if (this.board[row][col] === this.empty) {
-          this.board[row][col] = new Cell();
+          this.board[row][col] = new Cell(this.empty);
         } else {
           this.board[row][col] = new Cell(this.board[row][col], true);
         }
@@ -60,7 +94,7 @@ class Sudoku {
                 return true;
               // backtrack: if the val does not lead to a solution
               } else {
-                this.board[row][col] = new Cell();
+                this.board[row][col] = new Cell(this.empty);
               }
             }
           }
@@ -134,20 +168,8 @@ class Sudoku {
       for (let col = 0; col < this.size; col++) {
         const tempCol = tempRow.insertCell();
         tempCol.classList.add("col");
+
         tag.rows[row].cells[col].setAttribute('onclick', 'getCell(' + row + ',' + col + ')');
-      }
-    }
-  }
-
-
-  /**
-   * display each innerhtml value for the Sudoku grid
-   */
-  drawCells() {
-    const tag = document.querySelector(this.tag);
-
-    for (let row = 0; row < this.size; row++) {
-      for (let col = 0; col < this.size; col++) {
         if (this.board[row][col].setter === true) {
           tag.rows[row].cells[col].innerHTML = this.board[row][col].data;
         } else {
@@ -156,31 +178,37 @@ class Sudoku {
       }
     }
   }
+
+  /**
+   * display each current innerhtml value for the Sudoku grid
+   */
+  print() {
+    const tag = document.querySelector(this.tag);
+
+    for (let row = 0; row < this.size; row++) {
+      for (let col = 0; col < this.size; col++) {
+        tag.rows[row].cells[col].innerHTML = this.board[row][col].data;
+      }
+    }
+  }
+
 }
+
 
 /**
  * this class represents each individual cells
  */
 class Cell {
-  constructor(data=Sudoku.empty, setter=false, pencil=false) {
-    this.data = data;        // int:  value of a cell
-    this.setter = setter;    // bool: true if this cell is a setter
-    this.pencil = pencil;    // bool: true if the user placed a value in this cell
-    this.notes = new Set();  // set:  for the user to keep track possible solution
+  constructor(data, setter=false, pencil=false) {
+    this.data = data;        // {int}     value of a cell
+    this.setter = setter;    // {boolean} true if this cell is a setter
+    this.pencil = pencil;    // {boolean} true if the user placed a value in this cell
+    this.notes = new Set();  // {set}     for the user to keep track possible solution
   }
 }
 
 
-/** global variable/instance */
-const sudoku = new Sudoku(getBoard(),'#sudoku>table' ); // the object that represents the Sudoku grid
 
-
-/** main */
-function main() {
-  sudoku.drawGrid();
-  sudoku.drawCells();
-  //window.addEventListener("keydown", write);
-}
 
 
 
@@ -485,23 +513,6 @@ function main() {
 //
 
 
-function getBoard() {
-  return [[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty, 14, 13, empty, empty, 15],
-    [14, 10, empty, empty, empty, 15, 13, empty, empty, empty, 11, empty, empty, 5, empty, empty],
-    [12, empty, 8, 11, empty, empty, empty, empty, 2, 15, 13, empty, 14, 10, 9, empty],
-    [1, empty, 15, empty, 10, empty, 14, 9, 0, empty, empty, empty, empty, empty, empty, empty],
-    [empty, 14, 10, 9, empty, empty, 15, 1, 12, 7, 8, 11, empty, empty, empty, empty],
-    [11, 12, empty, empty, 3, 0, 4, 5, 1, 2, empty, empty, empty, empty, 10, 9],
-    [4, empty, 5, 0, 11, empty, 8, empty, 14, 10, 9, 6, 15, empty, empty, 2],
-    [empty, 1, empty, empty, empty, 9, empty, 10, 5, empty, 4, empty, empty, 12, empty, 8],
-    [9, 6, 14, 10, 15, empty, empty, empty, 11, 12, empty, empty, empty, empty, empty, 5],
-    [8, empty, empty, empty, empty, empty, 0, empty, empty, 1, empty, 15, 9, empty, empty, 10],
-    [0, empty, 3, 5, 8, 12, empty, empty, 6, empty, 10, empty, 2, 15, empty, empty],
-    [15, 13, empty, empty, 6, empty, 9, 14, 3, 5, 0, empty, empty, empty, 12, 7],
-    [10, 9, empty, 14, empty, empty, empty, 15, 8, 11, 12, empty, empty, 0, 4, 3],
-    [empty, empty, 11, empty, 0, 3, 5, empty, 15, empty, empty, empty, 10, 9, empty, empty],
-    [empty, empty, 4, empty, 7, 11, 12, empty, 9, empty, empty, 10, 1, empty, empty, 13],
-    [2, 15, empty, empty, 9, empty, empty, 6, empty, empty, 5, empty, empty, empty, 11, empty]]
-}
-        
+
+
 main();
