@@ -220,26 +220,25 @@ function main() {
   window.addEventListener("keydown", write);
 }
 
-// /**
-//  * writes user input on the sudoku board.
-//  *
-//  * @pre user's input is a valid input
-//  * @param event    is the user's keyboard key input
-//  */
-// function write(event) {
-//
-//   if (row === undefined || col === undefined) return;
-//
-//   if (event.key === "Backspace") remove();
-//
-//   if (!checkInput(event.keyCode)) return;
-//
-//   board.rows[row].cells[col].innerHTML = toColor(event.key, row, col, Number(toDec(event.key)));
-// }
+/**
+ * writes user's keyboard input to given cell
+ *
+ * @param event is the user's keyboard key input
+ */
+function write(event) {
+
+  if (row === null || col === null) return;
+
+  if (event.key === "Backspace") remove();
+
+  // if (!checkInput(event.keyCode)) return;
+  //
+  // board.rows[row].cells[col].innerHTML = toColor(event.key, row, col, Number(toDec(event.key)));
+}
 
 
 /**
- *  writes the value of the button clicked to given cell.
+ *  writes the button clicked input to given cell
  *
  *  @pram value {number} the value of the button
  */
@@ -250,6 +249,21 @@ function buttonInput(value) {
 
   sudoku.board[row][col].data = value;
   sudoku.updateCells();
+}
+
+
+
+/**
+ * removes the value in current cell
+ */
+function remove() {
+  if (row === null || col === null) return;
+
+  if (sudoku.board[row][col].setter === true) return;
+
+  sudoku.board[row][col].data = sudoku.empty;
+  sudoku.updateCells();
+  //delInvalid(row, col);
 }
 
 
@@ -311,18 +325,7 @@ function setPrompt(tag) {
 //
 
 
-//
-//
-// /**
-//  * removes the value in current cell
-//  *
-//  * @pre cell is non-null
-//  */
-// function remove() {
-//   board.rows[row].cells[col].innerHTML = empty;
-//   array[row][col] = empty;
-//   delInvalid(row, col);
-// }
+
 //
 //
 
