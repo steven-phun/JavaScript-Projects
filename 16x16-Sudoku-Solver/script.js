@@ -137,7 +137,7 @@ class Sudoku {
   }
 
   /**
-   *  writes the button clicked input to given cell
+   *  write the value of the button clicked to given cell
    *
    *  @pram value {number} the value of the button
    */
@@ -147,7 +147,8 @@ class Sudoku {
     if (this.board[this.row][this.col].setter === true) return;
 
     this.board[this.row][this.col].data = value;
-    this.board[this.row][this.col].data = this.setColor(this.toDecimal(event.keyCode));
+    this.delInvalid(this.row, this.col);
+    this.board[this.row][this.col].data = this.setColor(this.toHex(value));
     this.setInvalid();
     this.updateCells();
   }
