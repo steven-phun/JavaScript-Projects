@@ -171,6 +171,15 @@ class Sudoku {
 
     return String.fromCharCode(num - decimal + hexadecimal);
   }
+
+
+  /**
+   * change the input text color to a different color
+   * if user inputs a correct or wrong value in cell
+   */
+  setColor() {
+
+  }
 }
 
 
@@ -220,20 +229,23 @@ function main() {
   window.addEventListener("keydown", write);
 }
 
+
 /**
  * writes user's keyboard input to given cell
  *
  * @param event is the user's keyboard key input
  */
 function write(event) {
-
   if (row === null || col === null) return;
+
+  if (sudoku.board[row][col].setter === true) return;
 
   if (event.key === "Backspace") remove();
 
-  // if (!checkInput(event.keyCode)) return;
-  //
-  // board.rows[row].cells[col].innerHTML = toColor(event.key, row, col, Number(toDec(event.key)));
+  if (!checkInput(event.keyCode)) return;
+
+  sudoku.board[row][col].data = toDecimal(event.keyCode);
+  sudoku.updateCells();
 }
 
 
@@ -250,7 +262,6 @@ function buttonInput(value) {
   sudoku.board[row][col].data = value;
   sudoku.updateCells();
 }
-
 
 
 /**
@@ -321,8 +332,34 @@ function setPrompt(tag) {
 }
 
 
+/**
+ * @return true if the keyboard key is a number between 0-9 or letter A-F
+ */
+function checkInput(input) {
+  // their respective key codes
+  let zero = 48, nine = 57, A = 65, F = 70;
 
-//
+  return (input >= zero && input <= nine) || (input >= A && input <= F);
+}
+
+
+/**
+ * convert key code to a decimal number
+ * letters A-F will be converted to number 10-15
+ * note: Sudoku class method will convert decimal to hexadecimal
+ *
+ * @param key the key to convert
+ * @return a decimal number
+ */
+function toDecimal(key) {
+  // their respective key codes
+  let zero = 48, nine = 57, A = 65, F = 70;
+  let decimal = 10;
+
+  if (key >= zero && key <= 57) return key - zero;
+
+  if (key >= A && key <= F) return key - A + decimal;
+}
 
 
 
@@ -378,74 +415,10 @@ function setPrompt(tag) {
 //   return text;
 // }
 //
-//
-// /**
-//  * @return true if there does not exists the same element placed
-//  *                  in its row, column, and 4x4 section
-//  */
-// function validate(row, col, val) {
-//   return checkRow(row, val) && checkColumn(col, val) && checkSection(row, col, val);
-// }
+
 //
 //
-// /**
-//  * return true if there does not exists the same element in this row
-//  */
-// function checkRow(row, val) {
-//   for (let col = 0; col < size; col++) {
-//     if (array[row][col] === val) {
-//       //setInvalid(row, col);
-//       return false;
-//     }
-//   }
-//   return true;
-// }
-//
-//
-// /**
-//  * return true if there does not exists the same element in this column
-//  */
-// function checkColumn(col, val) {
-//   for (let row = 0; row < size; row++) {
-//     if (array[row][col] === val) {
-//       //setInvalid(row, col);
-//       return false;
-//     }
-//   }
-//   return true;
-// }
-//
-//
-// /**
-//  * return true if there does not exists the same element in this section
-//  */
-// function checkSection(row, col, val) {
-//   const sectionSize = Math.sqrt(size); // represents the 4x4 section
-//
-//   // formula for the first cell in given 4x4 section
-//   const rowSection = row - (row % sectionSize);
-//   const colSection = col - (col % sectionSize);
-//
-//   for (let i = rowSection; i < rowSection + sectionSize; i++) {
-//     for (let j = colSection; j < colSection + sectionSize; j++) {
-//       if (array[i][j] === val) {
-//         //setInvalid(i, j);
-//         return false;
-//       }
-//     }
-//   }
-//   return true;
-// }
-//
-//
-// /*
-//  * @return true if the keyboard key is a number 0-9 or letter A-F
-//  */
-// function checkInput(input) {
-//   // keyCode       48 -> 0        57 -> 9          65 -> A        70 -> F
-//   return (input >= 48 && input <= 57) || (input >= 65 && input <= 70);
-// }
-//
+
 //
 // /**
 //  * remove any invalid values that no longer exists
