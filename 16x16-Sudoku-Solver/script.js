@@ -17,33 +17,17 @@
 //TODO: convert solve() to class and interactions as functions()
 
 /** global variable/instance */
-/** represents the Sudoku to be solved */
-test = [[Sudoku.empty, 5, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, 7, 10, Sudoku.empty, Sudoku.empty, 14, 13, Sudoku.empty, Sudoku.empty, 15],
-  [14, 10, Sudoku.empty, Sudoku.empty, Sudoku.empty, 15, 13, Sudoku.empty, Sudoku.empty, Sudoku.empty, 11, Sudoku.empty, Sudoku.empty, 5, Sudoku.empty, Sudoku.empty],
-  [12, Sudoku.empty, 8, 11, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, 2, 15, 13, Sudoku.empty, 14, 10, 9, Sudoku.empty],
-  [1, Sudoku.empty, 15, Sudoku.empty, 10, Sudoku.empty, 14, 9, 0, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty],
-  [Sudoku.empty, 14, 10, 9, Sudoku.empty, Sudoku.empty, 15, 1, 12, 7, 8, 11, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty],
-  [11, 12, Sudoku.empty, Sudoku.empty, 3, 0, 4, 5, 1, 2, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, 10, 9],
-  [4, Sudoku.empty, 5, 0, 11, Sudoku.empty, 8, Sudoku.empty, 14, 10, 9, 6, 15, Sudoku.empty, Sudoku.empty, 2],
-  [Sudoku.empty, 1, Sudoku.empty, Sudoku.empty, Sudoku.empty, 9, Sudoku.empty, 10, 5, Sudoku.empty, 4, Sudoku.empty, Sudoku.empty, 12, Sudoku.empty, 8],
-  [9, 6, 14, 10, 15, Sudoku.empty, Sudoku.empty, Sudoku.empty, 11, 12, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, 5],
-  [8, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, Sudoku.empty, 0, Sudoku.empty, Sudoku.empty, 1, Sudoku.empty, 15, 9, Sudoku.empty, Sudoku.empty, 10],
-  [0, Sudoku.empty, 3, 5, 8, 12, Sudoku.empty, Sudoku.empty, 6, Sudoku.empty, 10, Sudoku.empty, 2, 15, Sudoku.empty, Sudoku.empty],
-  [15, 13, Sudoku.empty, Sudoku.empty, 6, Sudoku.empty, 9, 14, 3, 5, 0, Sudoku.empty, Sudoku.empty, Sudoku.empty, 12, 7],
-  [10, 9, Sudoku.empty, 14, Sudoku.empty, Sudoku.empty, Sudoku.empty, 15, 8, 11, 12, Sudoku.empty, Sudoku.empty, 0, 4, 3],
-  [Sudoku.empty, Sudoku.empty, 11, Sudoku.empty, 0, 3, 5, Sudoku.empty, 15, Sudoku.empty, Sudoku.empty, Sudoku.empty, 10, 9, Sudoku.empty, Sudoku.empty],
-  [Sudoku.empty, Sudoku.empty, 4, Sudoku.empty, 7, 11, 12, Sudoku.empty, 9, Sudoku.empty, Sudoku.empty, 10, 1, Sudoku.empty, Sudoku.empty, 13],
-  [2, 15, Sudoku.empty, Sudoku.empty, 9, Sudoku.empty, Sudoku.empty, 6, Sudoku.empty, Sudoku.empty, 5, Sudoku.empty, Sudoku.empty, Sudoku.empty, 11, Sudoku.empty]];
-
+const empty = "";
 
 /**
  * this class represents the Sudoku using an array to store its data
  */
 class Sudoku {
-  constructor(board) {
-    this.board = board;  // array: a copy of the board this class is working with
-    this.size = 16;      // int:   represents the 16x16 grid
-    this.empty = ""; // represents and empty cell
+  constructor(board, tag) {
+    this.board = board;  // {array}    a copy of the board this class is working with
+    this.tag = tag;      // {html tag} the parent HTML tag that the Sudoku grid will be inserted to
+    this.size = 16;      // {number}   represents the 16x16 grid
+    this.empty = empty;     // {null}     an empty cell
 
     // convert each cell to the object Cell
     for (let row = 0; row < this.size; row++) {
@@ -60,6 +44,8 @@ class Sudoku {
   /**
    * this method will find a solution to do the Sudoku as fast as possible,
    * so it will not consider any user's interactions that will delay its process
+   *
+   * @return true if there is a possible solution {boolean}
    */
   solve() {
     // recursive backtracking
@@ -86,18 +72,18 @@ class Sudoku {
   }
 
   /**
-   * @return true if there does not exists the same 'val' in its row, column, and 4x4 section
+   * @return true if there does not exists the same 'val' in its row, column, and 4x4 section {boolean}
    *
-   * @param row  int: row index of the cell
-   * @param col  int: col index of the cell
-   * @param val  int: val of the cell
+   * @param row  {number} row index of the cell
+   * @param col  {number} col index of the cell
+   * @param val  {number} val of the cell
    */
   validate(row, col, val) {
     return this.checkRow(row, val) && this.checkCol(col, val) && this.checkSection(row, col, val);
   }
 
   /**
-   * @return true if there does not exists the same element in this row
+   * @return true if there does not exists the same element in this row {boolean}
    */
   checkRow(row, val) {
     for (let col = 0; col < this.size; col++) {
@@ -107,7 +93,7 @@ class Sudoku {
   }
 
   /**
-   * @return true if there does not exists the same element in this col
+   * @return true if there does not exists the same element in this col {boolean}
    */
   checkCol(col, val) {
     for (let row = 0; row < this.size; row++) {
@@ -117,7 +103,7 @@ class Sudoku {
   }
 
   /**
-   * @return true if there does not exists the same element in this 4x4 section
+   * @return true if there does not exists the same element in this 4x4 section {boolean}
    */
   checkSection(row, col, val) {
     const size = Math.sqrt(this.size); // represents the 4x4 section
@@ -137,73 +123,46 @@ class Sudoku {
   }
 
   /**
-   * generates the table with <tr> and <td> for the sudoku grid
-   *
-   * @param tag    the parent HTML tag that the table will be inserted to
+   * generates the grid for the Sudoku
    */
-  drawGrid(tag) {
-    const getTag = document.querySelector(tag);
+  drawGrid() {
+    const tag = document.querySelector(this.tag);
 
     for (let row = 0; row < this.size; row++) {
-      const tempRow = getTag.insertRow();
+      const tempRow = tag.insertRow();
       tempRow.classList.add("row");
-
       for (let col = 0; col < this.size; col++) {
         const tempCol = tempRow.insertCell();
         tempCol.classList.add("col");
-
-        if (this.board[row][col] !== this.empty) {
-          getTag.rows[row].cells[col].setAttribute('onclick', 'getSetter()');
-          getTag.rows[row].cells[col].innerHTML = toHex(array[row][col]);
-        } else {
-          getTag.rows[row].cells[col].setAttribute('onclick', 'getCell(' + row + ',' + col + ')');
-          getTag.rows[row].cells[col].innerHTML = this.empty;
-        }
+        tag.rows[row].cells[col].setAttribute('onclick', 'getCell(' + row + ',' + col + ')');
       }
     }
   }
 
-  // /**
-//  * converts Decimal to Hexadecimal
-//  *
-//  * @param num    the number to be converted to Hexadecimal
-//  * @return       'A' if num = 10  , 'B' if num = 11 ... 'F' if num = 15
-//  */
-// function toHex(num) {
-//   const decimal = 10; // represents when a Decimal needs to convert to Hexadecimal
-//   const hexadecimal = 'A'.charCodeAt(0)
-//
-//   if (num >= decimal) {
-//     num = String.fromCharCode(num - decimal + hexadecimal);
-//   }
-//   return num;
-// }
-//
-//
-// /**
-//  * converts Hexadecimal to Decimal
-//  *
-//  * @param char   the character to be converted to Decimal
-//  * @return       10 if char = 'A'  ,  11 if char = 'B'  ...  15 if char = 'F'
-//  */
-// function toDec(char) {
-//   const decimal = 10; // represents the Decimal form of a Hexadecimal
-//   const hexadecimal = 'A'.charCodeAt(0);
-//   const asiic = char.toUpperCase().charCodeAt(0);
-//
-//   if (Number(asiic) >= hexadecimal) {
-//     char = asiic - 'A'.charCodeAt(0) + decimal;
-//   }
-//   return char;
-// }
-}
 
+  /**
+   * display each innerhtml value for the Sudoku grid
+   */
+  drawCells() {
+    const tag = document.querySelector(this.tag);
+
+    for (let row = 0; row < this.size; row++) {
+      for (let col = 0; col < this.size; col++) {
+        if (this.board[row][col].setter === true) {
+          tag.rows[row].cells[col].innerHTML = this.board[row][col].data;
+        } else {
+          tag.rows[row].cells[col].innerHTML = this.empty;
+        }
+      }
+    }
+  }
+}
 
 /**
  * this class represents each individual cells
  */
 class Cell {
-  constructor(data=empty, setter=false, pencil=false) {
+  constructor(data=Sudoku.empty, setter=false, pencil=false) {
     this.data = data;        // int:  value of a cell
     this.setter = setter;    // bool: true if this cell is a setter
     this.pencil = pencil;    // bool: true if the user placed a value in this cell
@@ -213,13 +172,14 @@ class Cell {
 
 
 /** global variable/instance */
-const sudoku = new Sudoku(test); // the object that represents the Sudoku grid
+const sudoku = new Sudoku(getBoard(),'#sudoku>table' ); // the object that represents the Sudoku grid
 
 
 /** main */
 function main() {
-  sudoku.drawGrid(sudoku,'#sudoku>table');
-  window.addEventListener("keydown", write);
+  sudoku.drawGrid();
+  sudoku.drawCells();
+  //window.addEventListener("keydown", write);
 }
 
 
@@ -488,7 +448,60 @@ function main() {
 //   }
 // }
 //
+// /**
+//  * converts Decimal to Hexadecimal
+//  *
+//  * @param num    {number} the number to be converted to Hexadecimal
+//  * @return       'A' if num = 10  , 'B' if num = 11 ... 'F' if num = 15 {}
+//  */
+// toHex(num) {
+//   const decimal = 10; // represents when a Decimal needs to convert to Hexadecimal
+//   const hexadecimal = 'A'.charCodeAt(0)
+//
+//   if (num >= decimal) {
+//     num = String.fromCharCode(num - decimal + hexadecimal);
+//   }
+//   return num;
+// }
+//
+//
+// /**
+//  * converts Hexadecimal to Decimal
+//  *
+//  * @param char   {string} the character to be converted to Decimal
+//  * @return       10 if char = 'A'  ,  11 if char = 'B'  ...  15 if char = 'F' {number}
+//  */
+// toDec(char) {
+//   const decimal = 10; // represents the Decimal form of a Hexadecimal
+//   const hexadecimal = 'A'.charCodeAt(0);
+//   const asiic = char.toUpperCase().charCodeAt(0);
+//
+//   if (Number(asiic) >= hexadecimal) {
+//     char = asiic - 'A'.charCodeAt(0) + decimal;
+//   }
+//   return char;
+// }
 //
 //
 
+
+function getBoard() {
+  return [[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty, 14, 13, empty, empty, 15],
+    [14, 10, empty, empty, empty, 15, 13, empty, empty, empty, 11, empty, empty, 5, empty, empty],
+    [12, empty, 8, 11, empty, empty, empty, empty, 2, 15, 13, empty, 14, 10, 9, empty],
+    [1, empty, 15, empty, 10, empty, 14, 9, 0, empty, empty, empty, empty, empty, empty, empty],
+    [empty, 14, 10, 9, empty, empty, 15, 1, 12, 7, 8, 11, empty, empty, empty, empty],
+    [11, 12, empty, empty, 3, 0, 4, 5, 1, 2, empty, empty, empty, empty, 10, 9],
+    [4, empty, 5, 0, 11, empty, 8, empty, 14, 10, 9, 6, 15, empty, empty, 2],
+    [empty, 1, empty, empty, empty, 9, empty, 10, 5, empty, 4, empty, empty, 12, empty, 8],
+    [9, 6, 14, 10, 15, empty, empty, empty, 11, 12, empty, empty, empty, empty, empty, 5],
+    [8, empty, empty, empty, empty, empty, 0, empty, empty, 1, empty, 15, 9, empty, empty, 10],
+    [0, empty, 3, 5, 8, 12, empty, empty, 6, empty, 10, empty, 2, 15, empty, empty],
+    [15, 13, empty, empty, 6, empty, 9, 14, 3, 5, 0, empty, empty, empty, 12, 7],
+    [10, 9, empty, 14, empty, empty, empty, 15, 8, 11, 12, empty, empty, 0, 4, 3],
+    [empty, empty, 11, empty, 0, 3, 5, empty, 15, empty, empty, empty, 10, 9, empty, empty],
+    [empty, empty, 4, empty, 7, 11, 12, empty, 9, empty, empty, 10, 1, empty, empty, 13],
+    [2, 15, empty, empty, 9, empty, empty, 6, empty, empty, 5, empty, empty, empty, 11, empty]]
+}
+        
 main();
