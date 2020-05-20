@@ -145,6 +145,7 @@ class Sudoku {
         this.tag.rows[row].cells[col].setAttribute('onclick', 'getCell(' + row + ',' + col + ')');
         if (this.board[row][col].setter === true) {
           this.tag.rows[row].cells[col].innerHTML = this.board[row][col].data;
+          this.tag.rows[row].cells[col].classList.add("setter-color");
         } else {
           this.tag.rows[row].cells[col].innerHTML = this.empty;
         }
@@ -191,13 +192,44 @@ class Sudoku {
     const wrongColor = "wrong-color";
 
     if (this.slowValidate(row, col, value)) {
-      this.tag.rows[row].cells[col].classList.remove(wrongColor);
-      this.tag.rows[row].cells[col].classList.add(correctColor);
+      this.addCorrectColor(true, this.tag);
+      this.addWrongColor(false, this.tag)
     } else {
-      this.tag.rows[row].cells[col].classList.remove(correctColor);
-      this.tag.rows[row].cells[col].classList.add(wrongColor);
+      this.addWrongColor(true, this.tag);
+      this.addCorrectColor(false, this.tag);
     }
     return value;
+  }
+
+  /**
+   * @return tag with added or removed correct color class to tag
+   *
+   * @param add    {boolean} if true add the color class
+   *                         if false remove the color class
+   * @param tag    {tag}     the tag the class is being added to
+   */
+  addCorrectColor(add, tag) {
+    const correctColor = "correct-color";
+
+    if (add) return this.tag.rows[row].cells[col].classList.add(correctColor);
+
+    return this.tag.rows[row].cells[col].classList.remove(correctColor)
+  }
+
+
+  /**
+   * @return tag with added or removed wrong color class to tag
+   *
+   * @param add    {boolean} if true add the color class
+   *                         if false remove the color class
+   * @param tag    {tag}     the tag the class is being added to
+   */
+  addWrongColor(add, tag) {
+    const wrongColor = "wrong-color";
+
+    if (add) return this.tag.rows[row].cells[col].classList.add(wrongColor);
+
+    return this.tag.rows[row].cells[col].classList.remove(wrongColor);
   }
 
 
@@ -380,16 +412,19 @@ function buttonInput(value) {
 
 
 /**
- * removes the value in current cell
+ * removes the color class of current cell
+ * and removes the value in current cell
  */
 function remove() {
   if (row === null || col === null) return;
 
   if (sudoku.board[row][col].setter === true) return;
 
+  sudoku.addCorrectColor(false, sudoku.tag);
+  sudoku.addWrongColor(false, sudoku.tag);
+
   sudoku.board[row][col].data = sudoku.empty;
   sudoku.updateCells();
-  //delInvalid(row, col);
 }
 
 
