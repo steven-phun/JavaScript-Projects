@@ -133,7 +133,7 @@ class Sudoku {
         const tempCol = tempRow.insertCell();
         tempCol.classList.add("col");
 
-        tag.rows[row].cells[col].setAttribute('onclick', 'getCell(' + row + ',' + col + ')');
+        tag.rows[row].cells[col].setAttribute('onclick', 'this.getCell(' + row + ',' + col + ')');
         if (this.board[row][col].setter === true) {
           tag.rows[row].cells[col].innerHTML = this.board[row][col].data;
         } else {
@@ -147,9 +147,11 @@ class Sudoku {
    * display each current innerhtml cell value onto the Sudoku grid
    */
   printCells() {
+    const tag = document.querySelector(this.tag + ">table");
+
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
-        this.tag.rows[row].cells[col].innerHTML = this.toHex(this.board[row][col].data);
+        tag.rows[row].cells[col].innerHTML = this.toHex(this.board[row][col].data);
       }
     }
   }
@@ -167,6 +169,19 @@ class Sudoku {
     if (num < decimal) return num;
 
     return String.fromCharCode(num - decimal + hexadecimal);
+  }
+
+  /**
+   * update row and column index to the selected cell
+   *
+   * @param row    the row index of the cell
+   * @param col    the column index of the cell
+   */
+  getCell(row, col) {
+    this.row = row;
+    this.col = col;
+    console.log(row);
+    //setSelected();
   }
 }
 
@@ -219,18 +234,7 @@ function main() {
 }
 
 
-/**
- * update the global variable row and column index to this cell
- *
- * @param rowIndex    the row index of the cell
- * @param colIndex    the column index of the cell
- */
-function getCell(rowIndex, colIndex) {
-  row = rowIndex;
-  col = colIndex;
 
-  setSelected();
-}
 
 /**
  * set the background color of the selected cell and
