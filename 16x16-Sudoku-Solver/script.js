@@ -102,6 +102,7 @@ class Sudoku {
         }
       }
     }
+    this.print();
     return true;
   }
 
@@ -191,7 +192,6 @@ class Sudoku {
       }
     }
   }
-
 }
 
 
