@@ -163,8 +163,9 @@ class Sudoku {
 
     this.board[this.row][this.col].data = this.empty;
 
-    this.invalid = [];
+
     this.tag.rows[this.row].cells[this.col].className = "";
+    this.delInvalid(this.row, this.col);
     this.setInvalid();
     this.updateCells();
   }
@@ -428,6 +429,7 @@ class Sudoku {
       tag[i].classList.remove(invalidColor);
     }
 
+    console.log(this.invalid.length);
     // add invalid color tag
     for (let i = 0; i < this.invalid.length; i++) {
       this.tag.rows[this.invalid[i].row].cells[this.invalid[i].col].classList.add(invalidColor);
@@ -535,4 +537,12 @@ function getCell(row, col) {
  */
 function getSolution() {
   sudoku.getSolution();
+}
+
+/**
+ * reload users browser
+ */
+function newGame() {
+  location.reload();
+  return false;
 }
