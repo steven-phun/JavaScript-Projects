@@ -13,6 +13,7 @@
 
 //TODO: notes: highlight the keyboard of values that got noted.
 //             when note is unchecked de-highlight them.
+//TODO: setInvalid()
 
 
 /**
@@ -178,21 +179,118 @@ class Sudoku {
    * if user inputs a correct or wrong value in cell
    *
    * @param value {number} the number being colored
+   * @return the original value to allow printing the value
    */
   setColor(value) {
     const correctColor = "correct-color";
     const wrongColor = "wrong-color";
 
-    if (getResults()) {
-      this.board[row][col].classList.remove(wrongColor);
-      this.board[row][col].classList.add(correctColor);
+    if (this.slowValidate(row, col, value)) {
+      this.tag.rows[row].cells[col].classList.remove(wrongColor);
+      this.tag.rows[row].cells[col].classList.add(correctColor);
     } else {
-      this.board[row][col].classList.remove(correctColor);
-      this.board[row][col].classList.add(wrongColor);
+      this.tag.rows[row].cells[col].classList.remove(correctColor);
+      this.tag.rows[row].cells[col].classList.add(wrongColor);
     }
+    return value;
+  }
+
+
+  /**
+   * this method's run time is slower because it is doing extra checks
+   * to add and remove classes from the html tag, this method is implemented
+   * to avoid slowing the other validate method when using solve()
+    *
+   * @return true if there does not exists a setter with the same 'val'
+   *              in its row, column, and 4x4 section {boolean}
+   */
+  slowValidate(row, col, val) {
+
+    const size = Math.sqrt(this.size); // represents the 4x4 section
+
+    // formula for the first cell in given 4x4 section
+    const rowSect = row - (row % size);
+    const colSect = col - (col % size);
+
+    // check row
+    for (let i = 0; i < this.size; i++) {
+      // only validate with setters and do not check itself
+      if (this.board[i][col].setter === true && row !== i) {
+        if (this.board[i][col].data === val) {
+          return false;
+        }
+      }
+    }
+
+    // check column
+    for (let j = 0; j < this.size; j++) {
+      // only validate with setters and do not check itself
+      if (this.board[row][j].setter === true && col !== j) {
+        if (this.board[row][j].data === val) {
+          return false;
+        }
+      }
+    }
+
+    // check section
+    for (let i = rowSect; i < rowSect + size; i++) {
+      for (let j = colSect; j < colSect + size; j++) {
+        // only validate with setters and do not check itself
+        if (this.board[i][j].setter === true && row !== i && col !== j) {
+          if (this.board[i][j].data === val) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
   }
 }
 
+
+// /**
+//  * add the cell to array where the user place an invalid input and
+//  * the cell of the setter responsible for the invalid input
+//  *
+//  * @param rowIndex is the row index being stored
+//  * @param colIndex is the col index begin stored
+//  */
+// function setInvalid(rowIndex, colIndex) {
+//   const invalidColor = "invalid-color";
+//   const board = board.rows[rowIndex].cells[colIndex];
+//   board.classList.add(invalidColor);
+//
+//   invalid.push({row: row, col: col, rowDex: rowIndex, colDex: colIndex});
+// }
+//
+// /**
+//  * remove any invalid values that no longer exists
+//  */
+// function delInvalid(row, col) {
+//   const invalidColor = "invalid-color";
+//
+//   for (let i = 0; i < invalid.length; i++) {
+//     if (row === invalid[i].row && col === invalid[i].col) {
+//       const board = board.rows[invalid[i].rowDex].cells[invalid[i].colDex];
+//       board.classList.remove(invalidColor);
+//       invalid.splice(i, 1);
+//       checkInvalid();
+//     }
+//   }
+// }
+//
+// /**
+//  * checks and mark any invalid values
+//  */
+// function checkInvalid() {
+//   const invalidColor= "invalid-color";
+//
+//   for(let i = 0; i < invalid.length; i++) {
+//     const board = board.rows[invalid[i].rowDex].cells[invalid[i].colDex];
+//     board.classList.add(invalidColor);
+//   }
+// }
+//
 
 
 /**
@@ -256,7 +354,7 @@ function write(event) {
 
   if (!checkInput(event.keyCode)) return;
 
-  sudoku.board[row][col].data = toDecimal(event.keyCode);
+  console.log(sudoku.board[row][col].data = sudoku.setColor(toDecimal(event.keyCode)));
   sudoku.updateCells();
 }
 
@@ -372,96 +470,6 @@ function toDecimal(key) {
 
   if (key >= A && key <= F) return key - A + decimal;
 }
-
-
-
-//
-//
-
-//
-//
-//
-// /**
-//  * add the cell to array where the user place an invalid input and
-//  * the cell of the setter responsible for the invalid input
-//  *
-//  * @param rowIndex is the row index being stored
-//  * @param colIndex is the col index begin stored
-//  */
-// function setInvalid(rowIndex, colIndex) {
-//   const invalidColor = "invalid-color";
-//   const board = board.rows[rowIndex].cells[colIndex];
-//   board.classList.add(invalidColor);
-//
-//   invalid.push({row: row, col: col, rowDex: rowIndex, colDex: colIndex});
-// }
-//
-//
-
-//
-//
-
-//
-//
-// /**
-//  * change the color of given 'text'
-//  *
-//  * @pram text     the text to change color
-//  * @return        the text with its corresponding color
-//  */
-// function toColor(text, row, col, val) {
-//   // add the color class to its board and change the color in CSS
-//   const board = board.rows[row].cells[col];
-//   const correctColor = "correct-color";
-//   const wrongColor = "wrong-color";
-//
-//   delInvalid(row, col);
-//
-//   if (validate(row, col, val)) {
-//     board.classList.add(correctColor);
-//     board.classList.remove(wrongColor);
-//   } else {
-//     board.classList.add(wrongColor);
-//     board.classList.remove(correctColor);
-//   }
-//   return text;
-// }
-//
-
-//
-//
-
-//
-// /**
-//  * remove any invalid values that no longer exists
-//  */
-// function delInvalid(row, col) {
-//   const invalidColor = "invalid-color";
-//
-//   for (let i = 0; i < invalid.length; i++) {
-//     if (row === invalid[i].row && col === invalid[i].col) {
-//       const board = board.rows[invalid[i].rowDex].cells[invalid[i].colDex];
-//       board.classList.remove(invalidColor);
-//       invalid.splice(i, 1);
-//       checkInvalid();
-//     }
-//   }
-// }
-//
-//
-// /**
-//  * checks and mark any invalid values
-//  */
-// function checkInvalid() {
-//   const invalidColor= "invalid-color";
-//
-//   for(let i = 0; i < invalid.length; i++) {
-//     const board = board.rows[invalid[i].rowDex].cells[invalid[i].colDex];
-//     board.classList.add(invalidColor);
-//   }
-// }
-//
-
 
 
 
