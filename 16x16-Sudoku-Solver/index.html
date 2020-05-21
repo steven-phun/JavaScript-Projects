@@ -17,42 +17,36 @@
       <section id="play-area">
         <div id="title-group">
           <h1>Let's Play Sudoku!</h1>
-          <div id="new-game">
-            <button onclick="setNewGame()">New Game</button>
-          </div>
+          <button onclick="setNewGame()">New Game</button>
         </div>
         <div id="sudoku">
           <table></table> <!-- sudoku grid built in script.js-->
         </div>
         <div id="buttons">
           <div id="keypad">
-            <div class="button-group">
-              <button onclick="buttonInput(0)">0</button>
-              <button onclick="buttonInput(1)">1</button>
-              <button onclick="buttonInput(2)">2</button>
-              <button onclick="buttonInput(3)">3</button>
-              <button onclick="buttonInput(4)">4</button>
-              <button onclick="buttonInput(5)">5</button>
-              <button onclick="buttonInput(6)">6</button>
-              <button onclick="buttonInput(7)">7</button>
-            </div>
-            <div class="button-group">
-              <button onclick="buttonInput(8)">8</button>
-              <button onclick="buttonInput(9)">9</button>
-              <button onclick="buttonInput(10)">A</button>
-              <button onclick="buttonInput(11)">B</button>
-              <button onclick="buttonInput(12)">C</button>
-              <button onclick="buttonInput(13)">D</button>
-              <button onclick="buttonInput(14)">E</button>
-              <button onclick="buttonInput(15)">F</button>
-            </div>
+            <button onclick="buttonInput(0)">0</button>
+            <button onclick="buttonInput(1)">1</button>
+            <button onclick="buttonInput(2)">2</button>
+            <button onclick="buttonInput(3)">3</button>
+            <button onclick="buttonInput(4)">4</button>
+            <button onclick="buttonInput(5)">5</button>
+            <button onclick="buttonInput(6)">6</button>
+            <button onclick="buttonInput(7)">7</button>
+            <button onclick="buttonInput(8)">8</button>
+            <button onclick="buttonInput(9)">9</button>
+            <button onclick="buttonInput(10)">A</button>
+            <button onclick="buttonInput(11)">B</button>
+            <button onclick="buttonInput(12)">C</button>
+            <button onclick="buttonInput(13)">D</button>
+            <button onclick="buttonInput(14)">E</button>
+            <button onclick="buttonInput(15)">F</button>
           </div>
-          <div id="function-pad">
-            <div class="function-pad-group">
-              <button class="note-button" onclick="getNotes()">Notes</button>
-              <button onclick="remove()">Erase</button>
+          <div id="note-erase-solve">
+            <div class="note-erase">
+                <button onclick="getNotes()">Notes</button>
+                <button onclick="remove()">Erase</button>
             </div>
-            <div>
+            <div class="solve">
               <button onclick="getSolution()">Solve</button>
             </div>
           </div>

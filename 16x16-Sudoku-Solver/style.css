@@ -8,8 +8,7 @@
   3. play area
     3.1 title group
     3.2 sudoku
-    3.3 keypad
-    3.4 function pad
+    3.3 buttons
 
   5. footer
 
@@ -29,27 +28,27 @@
 }
 
 .container {
-  width: 60%;
+  width: 600px;
   margin: auto;
   background: #F4F4F4;
 }
 
 .content {
-  padding: 0 15%;
+  padding: 5%;
 }
 
 /* 2. header */
-header {
-  margin-top: 25px;
-}
+
 
 
 /* 3. play area */
 #play-area {
-  width: 500px;
+  display: grid;
+  grid-template-rows: 1fr auto 2fr;
+  row-gap: 1%;
   text-align: center;
   background-color: #A3E4D7;
-  padding: 10px;
+  padding: 3%;
 }
 
 
@@ -59,7 +58,7 @@ header {
 }
 
 #play-area table {
-  width: 500px;
+  width: 100%;
 }
 
 #play-area td:hover {
@@ -67,19 +66,23 @@ header {
 }
 /* 3.1 title-group */
 #title-group {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 70% auto;
 }
+
+#title-group h1 {
+  display: inline-block;
+}
+
 
 /* 3.2 sudoku */
 #sudoku {
   color: #3498DB;
-  margin-bottom: 10px;
 }
 
 #sudoku table {
   border: #707B7C solid 3px;
-  table-layout: fixed;
+
   border-collapse: collapse;
 }
 
@@ -97,31 +100,39 @@ header {
 
 /* 3.3 buttons */
 #buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 70% auto;
+  column-gap: 2%;
 }
 
-#buttons button{
-  outline: none;
+#keypad {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(2, 2fr);
+  column-gap: 2%;
+  row-gap: 5%;
 }
 
-#function-pad {
+.note-erase {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
 
-/* 3.4 function pad */
-#function-pad {
-  display: flex;
-  flex-direction: column;
+#note-erase-solve {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.note-erase-group {
 
 }
 
-#function-pad #solve {
+.note-erase {
+
 }
 
-.function-pad-group {
-  display: flex;
-  flex-direction: row;
+.solve{
+  display: grid;
 }
 
 
