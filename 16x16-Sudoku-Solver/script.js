@@ -352,7 +352,7 @@ class Sudoku {
    * keeps track of the values user wants to add to notes
    */
   getNotes() {
-    const tag = document.querySelector(".note-button");
+    const tag = document.querySelector("#note-button");
     const classTag = "note-color"
 
     if (tag.classList.contains(classTag)) return tag.classList.remove(classTag);

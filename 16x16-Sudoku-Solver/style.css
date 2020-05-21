@@ -20,7 +20,7 @@
 
 /* 1. global */
 * {
-  font: 20px/1.5 'Source Sans Pro', sans-serif;
+  font: 12px/1.5 'Source Sans Pro', sans-serif;
   letter-spacing: 3px;
   margin: 0;
   padding: 0;
@@ -47,14 +47,13 @@
   grid-template-rows: 1fr auto 2fr;
   row-gap: 1%;
   text-align: center;
-  background-color: #A3E4D7;
-  padding: 3%;
 }
 
 
 #play-area td {
   cursor: pointer;
   border: #F4F4F4 solid 1px;
+  background-color: #A3E4D7;
 }
 
 #play-area table {
@@ -62,7 +61,7 @@
 }
 
 #play-area td:hover {
-  background: #C39BD3;
+  background: lightslategray;
 }
 /* 3.1 title-group */
 #title-group {
@@ -81,58 +80,34 @@
 }
 
 #sudoku table {
-  border: #707B7C solid 3px;
-
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 #sudoku td {
+  height: 30px;
+  font-size: 15px;
   text-transform: uppercase;
 }
 
-#sudoku tr:nth-child(4n) {
-  border-bottom: #707B7C solid 3px;
-}
-
-#sudoku td:nth-child(4n) {
-  border-right: #707B7C solid 3px;
-}
 
 /* 3.3 buttons */
 #buttons {
   display: grid;
   grid-template-columns: 70% auto;
-  column-gap: 2%;
+  gap: 0 2%;
 }
 
 #keypad {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(2, 2fr);
-  column-gap: 2%;
-  row-gap: 5%;
-}
-
-.note-erase {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  gap: 5% 2%;
 }
 
 #note-erase-solve {
   display: grid;
-  grid-template-rows: repeat(2, 1fr);
-}
-
-.note-erase-group {
-
-}
-
-.note-erase {
-
-}
-
-.solve{
-  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 
@@ -146,20 +121,22 @@
 }
 
 .correct-color {
-  color: #3498DB;
+  color: #707B7C;
 }
 
 .wrong-color {
   color: #E74C3C;
+  background: #F2D7D5 !important;
 
 }
 
 .selected-color {
-  background-color: #C39BD3;
+  color: #F4F4F4;
+  background-color: lightslategray !important;
 }
 
 .invalid-color {
-  background: #F2D7D5;
+  background: #F2D7D5 !important;
 }
 
 .note-color {

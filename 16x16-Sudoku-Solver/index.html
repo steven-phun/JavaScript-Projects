@@ -14,15 +14,15 @@
       </div>
     </header>
     <div class="content">
-      <section id="play-area">
-        <div id="title-group">
-          <h1>Let's Play Sudoku!</h1>
-          <button onclick="setNewGame()">New Game</button>
-        </div>
-        <div id="sudoku">
-          <table></table> <!-- sudoku grid built in script.js-->
-        </div>
-        <div id="buttons">
+      <div class="grid-lines">
+        <section id="play-area">
+          <div id="title-group">
+            <h1>Let's Play Sudoku!</h1>
+            <button onclick="setNewGame()">New Game</button>
+          </div>
+          <div id="sudoku">
+            <table></table> <!-- sudoku grid built in script.js-->
+          </div>
           <div id="keypad">
             <button onclick="buttonInput(0)">0</button>
             <button onclick="buttonInput(1)">1</button>
@@ -42,16 +42,12 @@
             <button onclick="buttonInput(15)">F</button>
           </div>
           <div id="note-erase-solve">
-            <div class="note-erase">
-                <button onclick="getNotes()">Notes</button>
-                <button onclick="remove()">Erase</button>
-            </div>
-            <div class="solve">
-              <button onclick="getSolution()">Solve</button>
-            </div>
+            <button id="note-button" onclick="getNotes()">Notes</button>
+            <button id="remove- button" onclick="remove()">Erase</button>
+            <button id="solve-button" onclick="getSolution()">Solve</button>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
     <footer>
     </footer>
