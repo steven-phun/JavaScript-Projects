@@ -25,13 +25,13 @@
   letter-spacing: 3px;
   margin: 0;
   padding: 0;
-  background-color: #F4F4F4;
   color: #707B7C;
 }
 
 .container {
   width: 60%;
   margin: auto;
+  background: #F4F4F4;
 }
 
 .content {
@@ -55,12 +55,10 @@ header {
 
 #play-area td {
   cursor: pointer;
-  border: #707B7C solid 1px;
+  border: #F4F4F4 solid 1px;
 }
 
 #play-area table {
-  border-collapse: collapse;
-  table-layout: fixed;
   width: 500px;
 }
 
@@ -75,11 +73,14 @@ header {
 
 /* 3.2 sudoku */
 #sudoku {
+  color: #3498DB;
   margin-bottom: 10px;
 }
 
 #sudoku table {
-  border: black solid 3px;
+  border: #707B7C solid 3px;
+  table-layout: fixed;
+  border-collapse: collapse;
 }
 
 #sudoku td {
@@ -87,11 +88,11 @@ header {
 }
 
 #sudoku tr:nth-child(4n) {
-  border-bottom: black solid 3px;
+  border-bottom: #707B7C solid 3px;
 }
 
 #sudoku td:nth-child(4n) {
-  border-right: black solid 3px;
+  border-right: #707B7C solid 3px;
 }
 
 /* 3.3 buttons */
@@ -101,8 +102,11 @@ header {
   justify-content: space-between;
 }
 
-#buttons table{
-  width: 100%;
+#buttons button{
+  outline: none;
+}
+
+#function-pad {
 }
 
 /* 3.4 function pad */
@@ -128,7 +132,6 @@ header {
 .setter-color {
   color: #F4F4F4;
   background-color: #A3E4D7;
-
 }
 
 .correct-color {
@@ -137,12 +140,18 @@ header {
 
 .wrong-color {
   color: #E74C3C;
+
 }
 
 .selected-color {
-  background: #C39BD3;
+  background-color: #C39BD3;
 }
 
 .invalid-color {
   background: #F2D7D5;
+}
+
+.note-color {
+  color: #F4F4F4;
+  background-color: #C39BD3;
 }

@@ -29,6 +29,7 @@ class Sudoku {
     this.empty = "";     // {null}       an empty cell
     this.row = null;     // {number}     the row index of the selected cell
     this.col = null;     // {number}     the column index of the selected cell
+    this.note = false;   // {bool}       true if the note button is on
 
 
     // convert each cell to the object Cell
@@ -351,7 +352,11 @@ class Sudoku {
    * keeps track of the values user wants to add to notes
    */
   getNotes() {
+    const tag = document.querySelector(".note-button");
+    const classTag = "note-color"
 
+    if (tag.classList.contains(classTag)) return tag.classList.remove(classTag);
+    tag.classList.add(classTag);
   }
 
   /**
@@ -443,7 +448,6 @@ class Sudoku {
       tag[i].classList.remove(invalidColor);
     }
 
-    console.log(this.invalid.length);
     // add invalid color tag
     for (let i = 0; i < this.invalid.length; i++) {
       this.tag.rows[this.invalid[i].row].cells[this.invalid[i].col].classList.add(invalidColor);
