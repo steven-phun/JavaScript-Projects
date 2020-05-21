@@ -479,6 +479,7 @@ class Cell {
   constructor(data, setter=false) {
     this.data = data;        // {int}     value of a cell
     this.setter = setter;    // {boolean} true if this cell is a setter
+    this.setter = setter;    // {boolean} true if this cell is a setter
     this.notes = new Set();  // {set}     for the user to keep track possible solution
   }
 }
