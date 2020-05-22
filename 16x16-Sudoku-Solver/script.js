@@ -48,20 +48,20 @@ class Sudoku {
    *
    * @return true if there is a possible solution {boolean}
    */
-  fastSolve(grid) {
+  fastSolve(board) {
     // recursive backtracking
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
-        if (grid[row][col].data === this.empty) {
+        if (board[row][col].data === this.empty) {
           for (let val = 0; val < this.size ; val++) {
-            if (this.validateCell(row, col, val)) {
-              grid[row][col].data = val;
+            if (this.validateCell(board, row, col, val)) {
+              board[row][col].data = val;
               // base case: if val leads to a solution
-              if (this.fastSolve(grid)) {
+              if (this.fastSolve(board)) {
                 return true;
                 // backtrack: if the val does not lead to a solution
               } else {
-                grid[row][col] = new Cell(this.empty);
+                board[row][col] = new Cell(this.empty);
               }
             }
           }
@@ -181,12 +181,13 @@ class Sudoku {
   /**
    * @return true if there does not exists the same 'val' in its row, column, and 4x4 section {boolean}
    *
-   * @param row  {number} row index of the cell
-   * @param col  {number} col index of the cell
-   * @param val  {number} val of the cell
+   * @param board {board}  the board that is being validated
+   * @param row   {number} row index of the cell
+   * @param col   {number} col index of the cell
+   * @param val   {number} val of the cell
    */
-  validateCell(row, col, val) {
-    return this.checkRow(row, val) && this.checkCol(col, val) && this.checkSection(row, col, val);
+  validateCell(board, row, col, val) {
+    return this.checkRow(board, row, val) && this.checkCol(board, col, val) && this.checkSection(board, row, col, val);
   }
 
   /**
@@ -247,9 +248,9 @@ class Sudoku {
   /**
    * @return true if there does not exists the same element in this row {boolean}
    */
-  checkRow(row, val) {
+  checkRow(board, row, val) {
     for (let col = 0; col < this.size; col++) {
-      if (this.board[row][col].data === val) return false;
+      if (board[row][col].data === val) return false;
     }
     return true;
   }
@@ -257,9 +258,9 @@ class Sudoku {
   /**
    * @return true if there does not exists the same element in this col {boolean}
    */
-  checkCol(col, val) {
+  checkCol(board, col, val) {
     for (let row = 0; row < this.size; row++) {
-      if (this.board[row][col].data === val) return false;
+      if (board[row][col].data === val) return false;
     }
     return true;
   }
@@ -267,7 +268,7 @@ class Sudoku {
   /**
    * @return true if there does not exists the same element in this 4x4 section {boolean}
    */
-  checkSection(row, col, val) {
+  checkSection(board, row, col, val) {
     const size = Math.sqrt(this.size); // represents the 4x4 section
 
     // formula for the first cell in given 4x4 section
@@ -276,7 +277,7 @@ class Sudoku {
 
     for (let i = rowSect; i < rowSect + size; i++) {
       for (let j = colSect; j < colSect + size; j++) {
-        if (this.board[i][j].data === val) {
+        if (board[i][j].data === val) {
           return false;
         }
       }
@@ -364,7 +365,9 @@ class Sudoku {
    */
   setPrompt(tag) {
     if (this.fastSolve(this.board)) {
+      this.updateDisplay();
       tag.innerHTML = "Solution Found!";
+
     } else {
       this.compareSolution();
       this.setInvalid();
@@ -472,6 +475,7 @@ class Sudoku {
     // get a solution of the original board
     this.copy = this.deepCopy(this.board);
     this.fastSolve(this.copy);
+    console.log(this.copy);
   }
 
   /**
@@ -504,8 +508,10 @@ class Sudoku {
   compareSolution() {
     for (let i = 0; i < this.size; i++) {
       for (let j = 0; j < this.size; j++) {
-        if (this.board[i][j].data !== this.copy[i][j].data) {
-          this.invalid.push({row:i, col:j, otherRow:i, otherCol:j});
+        if (this.board[i][j].data !== this.empty) {
+          if (this.board[i][j].data !== this.copy[i][j].data) {
+            this.invalid.push({row: i, col: j, otherRow: i, otherCol: j});
+          }
         }
       }
     }
