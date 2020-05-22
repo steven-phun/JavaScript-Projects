@@ -12,8 +12,9 @@
 
 
 /**      >>>>>>>>>>  todo-list <<<<<<<<<<
- * TODO: notes: highlight the keyboard of values that got noted.
- *       when note is unchecked de-highlight them.
+ * TODO: notes:
+ * TODO: get rid of invalid and have the program pre solve and highlight the wrong values
+ * TODO: prompt the user if they want to play a game or solve a sudoku
  */
 
 
@@ -326,7 +327,7 @@ class Sudoku {
   getSolution() {
     const tag = document.querySelector("h1");
 
-    if (this.invalid.length > 0) return tag.innerHTML = "Remove Invalid(Red) Values";
+    if (this.invalid.length > 0) return tag.innerHTML = "You Have Invalid(Red) Inputs";
 
     tag.innerHTML = "Solving..."
     this.setSelected(false);
@@ -361,7 +362,7 @@ class Sudoku {
     if (this.solve()) {
       tag.innerHTML = "Solution Found :)";
     } else {
-      tag.innerHTML = "No Solution Found :(";
+      tag.innerHTML = "Inputs Are Incorrect";
     }
   }
 
