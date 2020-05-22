@@ -53,7 +53,7 @@ class Sudoku {
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
         if (board[row][col].data === this.empty) {
-          for (let val = 0; val < this.size ; val++) {
+          for (let val = 0; val < this.size; val++) {
             if (this.validateCell(board, row, col, val)) {
               board[row][col].data = val;
               // base case: if val leads to a solution
@@ -86,6 +86,7 @@ class Sudoku {
       }
     }
   }
+
   /**
    * generates the grid for the Sudoku
    */
@@ -210,7 +211,7 @@ class Sudoku {
       // only validate with setters and do not check itself
       if (this.board[i][col].setter === true && row !== i) {
         if (this.board[i][col].data === val) {
-          this.invalid.push({row:this.row, col:this.col, otherRow:i, otherCol:col});
+          this.invalid.push({row: this.row, col: this.col, otherRow: i, otherCol: col});
           return false;
         }
       }
@@ -223,7 +224,7 @@ class Sudoku {
 
         if (this.board[row][j].data === val) {
           // store invalid pairs
-          this.invalid.push({row:this.row, col:this.col, otherRow:row, otherCol:j});
+          this.invalid.push({row: this.row, col: this.col, otherRow: row, otherCol: j});
           return false;
         }
       }
@@ -236,7 +237,7 @@ class Sudoku {
         if (this.board[i][j].setter === true && row !== i && col !== j) {
           if (this.board[i][j].data === val) {
             // store invalid pairs
-            this.invalid.push({row:this.row, col:this.col, otherRow:i, otherCol:j});
+            this.invalid.push({row: this.row, col: this.col, otherRow: i, otherCol: j});
             return false;
           }
         }
@@ -330,14 +331,46 @@ class Sudoku {
 
   /**
    * attempt to get a solution from the current board
+   *
+   * @param displaySolution {boolean} true, if the user wants to display the solution
    */
-  getSolution() {
+  getSolution(displaySolution) {
     const tag = document.querySelector("h1");
 
-    tag.innerHTML = "Solving..."
+    if (displaySolution) {
+      tag.innerHTML = "Solving..."
+    } else {
+      tag.innerHTML = "Validating..."
+    }
+
     this.setSelectedTag(false);
 
-    setTimeout(_ => this.setPrompt(tag), 0);
+    setTimeout(_ => this.setPrompt(displaySolution, tag), 0);
+  }
+
+  /**
+   * prompt the user if a solution is found or display the invalid inputs
+   *
+   * @param displaySolution {boolean} true, if the user wants to display a solution
+   * @param tag   the html tag that will display the text
+   */
+  setPrompt(displaySolution, tag) {
+
+    if (displaySolution) {
+      this.board = this.deepCopy(this.copy);
+      this.updateDisplay();
+      return;
+    }
+
+    if (this.fastSolve(this.board)) {
+      this.updateDisplay();
+      tag.innerHTML = "Solution Found!";
+    } else {
+      this.compareSolution();
+      this.setInvalid();
+      console.log(this.invalid);
+      tag.innerHTML = "Inputs Are Incorrect";
+    }
   }
 
   /**
@@ -356,24 +389,6 @@ class Sudoku {
 
     if (tag.classList.contains(classTag)) return tag.classList.remove(classTag);
     tag.classList.add(classTag);
-  }
-
-  /**
-   * prompt the user if a solution is found or display the invalid inputs
-   *
-   * @param tag   the html tag that will display the text
-   */
-  setPrompt(tag) {
-    if (this.fastSolve(this.board)) {
-      this.updateDisplay();
-      tag.innerHTML = "Solution Found!";
-
-    } else {
-      this.compareSolution();
-      this.setInvalid();
-      console.log(this.invalid);
-      tag.innerHTML = "Inputs Are Incorrect";
-    }
   }
 
   /**
@@ -488,7 +503,7 @@ class Sudoku {
     // remove the invalid tag from this cell
     for (let i = 0; i < this.invalid.length; i++) {
       if (this.invalid[i].row === row && this.invalid[i].col === col) {
-        this.invalid.splice(i,1);
+        this.invalid.splice(i, 1);
       }
     }
   }
@@ -517,7 +532,6 @@ class Sudoku {
     }
   }
 }
-
 
 /**
  * this class represents each individual cells
@@ -599,9 +613,11 @@ function getCell(row, col) {
 
 /**
  * program will attempt to find a solution
+ *
+ * @param displaySolution true, if user wants to display solution
  */
-function getSolution() {
-  sudoku.getSolution();
+function getSolution(displaySolution) {
+  sudoku.getSolution(displaySolution);
 }
 
 /**

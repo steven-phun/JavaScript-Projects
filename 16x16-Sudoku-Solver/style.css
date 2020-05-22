@@ -115,7 +115,7 @@ header h1 {
 
 #restart-solve-notes-erase {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 }
 
 #restart-solve-notes-erase button {
