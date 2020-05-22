@@ -35,10 +35,10 @@
 
 .content {
   padding: 5%;
+  background: #A3E4D7;
 }
 
 /* 2. header */
-
 
 
 /* 3. play area */
@@ -49,30 +49,37 @@
   text-align: center;
 }
 
-
-#play-area td {
+#play-area td:hover, button:hover {
+  background: lightslategray !important;
+  color: #F4F4F4;
   cursor: pointer;
-  border: #F4F4F4 solid 1px;
-  background-color: #A3E4D7;
 }
 
 #play-area table {
   width: 100%;
 }
-
-#play-area td:hover {
-  background: lightslategray;
+#play-area td {
+  border: #F4F4F4 dashed 1px;
+  background-color: #A3E4D7;
 }
+
 /* 3.1 title-group */
 #title-group h1 {
 }
 
 
 /* 3.2 sudoku */
-#sudoku {
-  display: grid;
-  grid-template-rows: repeat(4, 1fr);
-  grid-template-columns: repeat(4, 1fr);
+#sudoku tbody {
+  border-bottom: #707B7C solid medium;
+}
+
+#sudoku colgroup{
+  border-right: #707B7C solid medium;
+}
+
+
+#sudoku tbody:first-child, #sudoku tbody:last-child {
+  border: none;
 }
 
 #sudoku table {
@@ -92,11 +99,19 @@
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(2, 2fr);
-  gap: 5% 2%;
+  gap: 5% 0;
+  justify-self: center;
 }
 
 #keypad button {
-  font-size: 9px;
+  font-size: 25px;
+  font-weight: bold;
+  width: 45px;
+  height: 45px;
+  border: #707B7C solid 1px;
+  border-radius: 50%;
+  background: #A3E4D7;
+  outline: none;
 }
 
 #restart-solve-notes-erase {
