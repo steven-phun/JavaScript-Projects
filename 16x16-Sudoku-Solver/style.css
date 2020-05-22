@@ -20,7 +20,7 @@
 
 /* 1. global */
 * {
-  font: 12px/1.5 'Source Sans Pro', sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   letter-spacing: 3px;
   margin: 0;
   padding: 0;
@@ -30,21 +30,24 @@
 .container {
   width: 600px;
   margin: auto;
-  background: #F4F4F4;
-}
-
-.content {
-  padding: 5%;
   background: #A3E4D7;
 }
 
-/* 2. header */
+.content {
+  padding: 0 5%;
+}
 
+/* 2. header */
+header h1 {
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+}
 
 /* 3. play area */
 #play-area {
   display: grid;
-  grid-template-rows: 1fr auto 2fr;
+  grid-template-rows: auto 3fr 1fr;
   row-gap: 1%;
   text-align: center;
 }
@@ -60,11 +63,7 @@
 }
 #play-area td {
   border: #F4F4F4 dashed 1px;
-  background-color: #A3E4D7;
-}
-
-/* 3.1 title-group */
-#title-group h1 {
+  background-color: #76D7C4;
 }
 
 
@@ -121,6 +120,17 @@
 
 #restart-solve-notes-erase button {
   font-size: 9px;
+  background: #A3E4D7 !important;
+  outline: none;
+  border: none;
+}
+
+#restart-solve-notes-erase i {
+  font-size: 14px;
+}
+
+#restart-solve-notes-erase i:hover {
+  font-size: 20px;
 }
 
 
@@ -129,8 +139,7 @@
 
 /* 6. javascript */
 .setter-color {
-  color: #F4F4F4;
-  background-color: #A3E4D7;
+  color: ghostwhite;
 }
 
 .correct-color {
@@ -140,11 +149,10 @@
 .wrong-color {
   color: #E74C3C;
   background: #F2D7D5 !important;
-
 }
 
 .selected-color {
-  color: #F4F4F4;
+  color: ghostwhite;
   background-color: lightslategray !important;
 }
 
@@ -153,6 +161,6 @@
 }
 
 .note-color {
-  color: #F4F4F4;
+  color: ghostwhite;
   background-color: #C39BD3;
 }

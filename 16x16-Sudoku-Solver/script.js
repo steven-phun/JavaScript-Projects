@@ -99,7 +99,7 @@ class Sudoku {
    * display each current innerhtml cell value onto the Sudoku grid
    */
   updateCells() {
-    const tag = document.querySelector("#play-area h1");
+    const tag = document.querySelector("h1");
     tag.innerHTML = "Let's Play Sudoku!";
 
     for (let row = 0; row < this.size; row++) {
