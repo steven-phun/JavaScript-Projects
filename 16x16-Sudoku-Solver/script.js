@@ -36,10 +36,10 @@ class Sudoku {
     // convert each array data to Cell Object
     this.toObject();
     // get the solution to the original board
-    this.getASolution();
+    this.getOriginalSolution();
     // setup display for the game
     this.drawGrid();
-    this.updateCells();
+    this.updateDisplay();
   }
 
   /**
@@ -54,7 +54,7 @@ class Sudoku {
       for (let col = 0; col < this.size; col++) {
         if (grid[row][col].data === this.empty) {
           for (let val = 0; val < this.size ; val++) {
-            if (this.validate(row, col, val)) {
+            if (this.validateCell(row, col, val)) {
               grid[row][col].data = val;
               // base case: if val leads to a solution
               if (this.fastSolve(grid)) {
@@ -69,7 +69,6 @@ class Sudoku {
         }
       }
     }
-    this.updateCells();
     return true;
   }
 
@@ -106,7 +105,7 @@ class Sudoku {
   /**
    * display each current innerhtml cell value onto the Sudoku grid
    */
-  updateCells() {
+  updateDisplay() {
     const tag = document.querySelector("h1");
     tag.innerHTML = "Let's Play Sudoku!";
 
@@ -129,7 +128,7 @@ class Sudoku {
    *
    * @param event is the user's keyboard key input
    */
-  write(event) {
+  getKeyboardInput(event) {
     if (this.row === null || this.col === null) return;
 
     if (this.board[this.row][this.col].setter === true) return;
@@ -138,10 +137,10 @@ class Sudoku {
 
     if (!this.checkInput(event.keyCode)) return;
 
-    this.delInvalid(this.row, this.col);
-    this.board[this.row][this.col].data = this.setColor(this.toDecimal(event.keyCode));
+    this.removeInvalid(this.row, this.col);
+    this.board[this.row][this.col].data = this.toColor(this.toDecimal(event.keyCode));
     this.setInvalid();
-    this.updateCells();
+    this.updateDisplay();
   }
 
   /**
@@ -149,23 +148,23 @@ class Sudoku {
    *
    *  @pram value {number} the value of the button
    */
-  buttonInput(value) {
+  getButtonInput(value) {
     if (this.row === null || this.col === null) return;
 
     if (this.board[this.row][this.col].setter === true) return;
 
     this.board[this.row][this.col].data = value;
-    this.delInvalid(this.row, this.col);
-    this.board[this.row][this.col].data = this.setColor(value);
+    this.removeInvalid(this.row, this.col);
+    this.board[this.row][this.col].data = this.toColor(value);
     this.setInvalid();
-    this.updateCells();
+    this.updateDisplay();
   }
 
   /**
    * removes the color class of current cell
    * and removes the value in current cell
    */
-  remove() {
+  removeColorTag() {
     if (this.row === null || this.col === null) return;
 
     if (this.board[this.row][this.col].setter === true) return;
@@ -174,9 +173,9 @@ class Sudoku {
 
 
     this.tag.rows[this.row].cells[this.col].className = "";
-    this.delInvalid(this.row, this.col);
+    this.removeInvalid(this.row, this.col);
     this.setInvalid();
-    this.updateCells();
+    this.updateDisplay();
   }
 
   /**
@@ -186,7 +185,7 @@ class Sudoku {
    * @param col  {number} col index of the cell
    * @param val  {number} val of the cell
    */
-  validate(row, col, val) {
+  validateCell(row, col, val) {
     return this.checkRow(row, val) && this.checkCol(col, val) && this.checkSection(row, col, val);
   }
 
@@ -331,13 +330,11 @@ class Sudoku {
   /**
    * attempt to get a solution from the current board
    */
-  slowSolve() {
+  getSolution() {
     const tag = document.querySelector("h1");
 
-    if (this.invalid.length > 0) return tag.innerHTML = "You Have Invalid(Red) Inputs";
-
     tag.innerHTML = "Solving..."
-    this.setSelected(false);
+    this.setSelectedTag(false);
 
     setTimeout(_ => this.setPrompt(tag), 0);
   }
@@ -361,7 +358,7 @@ class Sudoku {
   }
 
   /**
-   * prompt the user if a solution is found or not
+   * prompt the user if a solution is found or display the invalid inputs
    *
    * @param tag   the html tag that will display the text
    */
@@ -369,7 +366,9 @@ class Sudoku {
     if (this.fastSolve(this.board)) {
       tag.innerHTML = "Solution Found!";
     } else {
-      this.getASolution();
+      this.compareSolution();
+      this.setInvalid();
+      console.log(this.invalid);
       tag.innerHTML = "Inputs Are Incorrect";
     }
   }
@@ -379,7 +378,7 @@ class Sudoku {
    *
    * @param bool {boolean} if true, add a background color on selected cell
    */
-  setSelected(bool) {
+  setSelectedTag(bool) {
     const color = "selected-color";
 
     const tag = this.getClassTag(color);
@@ -396,7 +395,7 @@ class Sudoku {
    * @param value {number} the number being colored
    * @return the original value to allow printing the value
    */
-  setColor(value) {
+  toColor(value) {
     if (this.slowValidate(this.row, this.col, value)) {
       this.setCorrectColor(true, this.tag);
       this.setWrongColor(false, this.tag)
@@ -469,19 +468,19 @@ class Sudoku {
   /**
    * get the solution for the original board
    */
-  getASolution() {
+  getOriginalSolution() {
     // get a solution of the original board
     this.copy = this.deepCopy(this.board);
     this.fastSolve(this.copy);
   }
 
   /**
-   * del the invalid tag from this cell
+   * remove the invalid tag from this cell
    *
    * @param row
    * @param col
    */
-  delInvalid(row, col) {
+  removeInvalid(row, col) {
     // remove the invalid tag from this cell
     for (let i = 0; i < this.invalid.length; i++) {
       if (this.invalid[i].row === row && this.invalid[i].col === col) {
@@ -505,8 +504,8 @@ class Sudoku {
   compareSolution() {
     for (let i = 0; i < this.size; i++) {
       for (let j = 0; j < this.size; j++) {
-        if (this.board[i][j] !== this.copy[i][j]) {
-          // add the invalid color class
+        if (this.board[i][j].data !== this.copy[i][j].data) {
+          this.invalid.push({row:i, col:j, otherRow:i, otherCol:j});
         }
       }
     }
@@ -557,7 +556,7 @@ window.addEventListener("keydown", write);
  * and removes the value in current cell
  */
 function remove() {
-  sudoku.remove();
+  sudoku.removeColorTag();
 }
 
 
@@ -567,7 +566,7 @@ function remove() {
  * @param event is the user's keyboard key input
  */
 function write(event) {
-  sudoku.write(event);
+  sudoku.getKeyboardInput(event);
 }
 
 /**
@@ -576,7 +575,7 @@ function write(event) {
  *  @pram value {number} the value of the button
  */
 function buttonInput(value) {
-  sudoku.buttonInput(value);
+  sudoku.getButtonInput(value);
 }
 
 /**
@@ -589,14 +588,14 @@ function getCell(row, col) {
   sudoku.row = row;
   sudoku.col = col;
 
-  sudoku.setSelected(true);
+  sudoku.setSelectedTag(true);
 }
 
 /**
  * program will attempt to find a solution
  */
 function getSolution() {
-  sudoku.slowSolve();
+  sudoku.getSolution();
 }
 
 /**
