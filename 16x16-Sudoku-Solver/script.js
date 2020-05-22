@@ -83,15 +83,8 @@ class Sudoku {
    * generates the grid for the Sudoku
    */
   drawGrid() {
-
     for (let row = 0; row < this.size; row++) {
-      const tempRow = this.tag.insertRow();
-      tempRow.classList.add("row");
       for (let col = 0; col < this.size; col++) {
-        const tempCol = tempRow.insertCell();
-        tempCol.classList.add("col");
-
-        this.tag.rows[row].cells[col].setAttribute('onclick', 'getCell(' + row + ',' + col + ')');
         if (this.board[row][col].setter === true) {
           this.tag.rows[row].cells[col].innerHTML = this.board[row][col].data;
           this.tag.rows[row].cells[col].classList.add("setter-color");

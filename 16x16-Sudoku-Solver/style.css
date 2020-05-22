@@ -70,7 +70,9 @@
 
 /* 3.2 sudoku */
 #sudoku {
-  color: #3498DB;
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 
 #sudoku table {
@@ -93,9 +95,17 @@
   gap: 5% 2%;
 }
 
+#keypad button {
+  font-size: 9px;
+}
+
 #restart-solve-notes-erase {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+}
+
+#restart-solve-notes-erase button {
+  font-size: 9px;
 }
 
 
