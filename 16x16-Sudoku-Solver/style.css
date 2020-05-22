@@ -152,7 +152,7 @@ header h1 {
 }
 
 .selected-color {
-  color: ghostwhite;
+  color: ghostwhite !important;
   background-color: lightslategray !important;
 }
 

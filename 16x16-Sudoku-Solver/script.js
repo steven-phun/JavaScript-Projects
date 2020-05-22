@@ -31,20 +31,13 @@ class Sudoku {
     this.row = null;     // {number}     the row index of the selected cell
     this.col = null;     // {number}     the column index of the selected cell
     this.note = false;   // {bool}       true if the note button is on
+    this.copy = null;    // {array}      deep copy of the original board
 
-
-    // convert each cell to the object Cell
-    for (let row = 0; row < this.size; row++) {
-      for (let col = 0; col < this.size; col++) {
-        if (this.board[row][col] === this.empty) {
-          this.board[row][col] = new Cell(this.empty);
-        } else {
-          this.board[row][col] = new Cell(this.board[row][col], true);
-        }
-      }
-    }
-
-    // set up game
+    // convert each array data to Cell Object
+    this.toObject();
+    // get the solution to the original board
+    this.getASolution();
+    // setup display for the game
     this.drawGrid();
     this.updateCells();
   }
@@ -55,20 +48,20 @@ class Sudoku {
    *
    * @return true if there is a possible solution {boolean}
    */
-  solve() {
+  fastSolve(grid) {
     // recursive backtracking
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
-        if (this.board[row][col].data === this.empty) {
+        if (grid[row][col].data === this.empty) {
           for (let val = 0; val < this.size ; val++) {
             if (this.validate(row, col, val)) {
-              this.board[row][col].data = val;
+              grid[row][col].data = val;
               // base case: if val leads to a solution
-              if (this.solve()) {
+              if (this.fastSolve(grid)) {
                 return true;
                 // backtrack: if the val does not lead to a solution
               } else {
-                this.board[row][col] = new Cell(this.empty);
+                grid[row][col] = new Cell(this.empty);
               }
             }
           }
@@ -80,6 +73,20 @@ class Sudoku {
     return true;
   }
 
+  /**
+   * convert the board cells into Cell Objects
+   */
+  toObject() {
+    for (let row = 0; row < this.size; row++) {
+      for (let col = 0; col < this.size; col++) {
+        if (this.board[row][col] === this.empty) {
+          this.board[row][col] = new Cell(this.empty);
+        } else {
+          this.board[row][col] = new Cell(this.board[row][col], true);
+        }
+      }
+    }
+  }
   /**
    * generates the grid for the Sudoku
    */
@@ -322,9 +329,9 @@ class Sudoku {
   }
 
   /**
-   * program will attempt to find a solution
+   * attempt to get a solution from the current board
    */
-  getSolution() {
+  slowSolve() {
     const tag = document.querySelector("h1");
 
     if (this.invalid.length > 0) return tag.innerHTML = "You Have Invalid(Red) Inputs";
@@ -359,9 +366,10 @@ class Sudoku {
    * @param tag   the html tag that will display the text
    */
   setPrompt(tag) {
-    if (this.solve()) {
-      tag.innerHTML = "Solution Found :)";
+    if (this.fastSolve(this.board)) {
+      tag.innerHTML = "Solution Found!";
     } else {
+      this.getASolution();
       tag.innerHTML = "Inputs Are Incorrect";
     }
   }
@@ -431,22 +439,40 @@ class Sudoku {
 
   /**
    * set the background of current cell and the other cell that is
-   * causing the current to be non-unique in row, column, or 4x4 section
+   * causing the current cell to be non-unique in row, column, or 4x4 section
    */
   setInvalid() {
     const invalidColor = "invalid-color";
-    const tag = document.querySelectorAll("." + invalidColor);
 
-    // remove all invalid color tag
-    for (let i = 0; i < tag.length; i++) {
-      tag[i].classList.remove(invalidColor);
-    }
+    this.clearInvalidTag(invalidColor);
 
-    // add invalid color tag
+    // add invalid color tags to objects in array
     for (let i = 0; i < this.invalid.length; i++) {
       this.tag.rows[this.invalid[i].row].cells[this.invalid[i].col].classList.add(invalidColor);
       this.tag.rows[this.invalid[i].otherRow].cells[this.invalid[i].otherCol].classList.add(invalidColor);
     }
+  }
+
+  /**
+   * clear every cell of the invalid tag
+   *
+   * @param invalidColor {class tag} the class name for the invalid color
+   */
+  clearInvalidTag(invalidColor) {
+    const tag = document.querySelectorAll("." + invalidColor);
+
+    for (let i = 0; i < tag.length; i++) {
+      tag[i].classList.remove(invalidColor);
+    }
+  }
+
+  /**
+   * get the solution for the original board
+   */
+  getASolution() {
+    // get a solution of the original board
+    this.copy = this.deepCopy(this.board);
+    this.fastSolve(this.copy);
   }
 
   /**
@@ -460,6 +486,28 @@ class Sudoku {
     for (let i = 0; i < this.invalid.length; i++) {
       if (this.invalid[i].row === row && this.invalid[i].col === col) {
         this.invalid.splice(i,1);
+      }
+    }
+  }
+
+  /**
+   * deep copies an object
+   *
+   * @param object {object} the object to be deep copied
+   */
+  deepCopy(object) {
+    return JSON.parse(JSON.stringify(object));
+  }
+
+  /**
+   * compares the current board with the solution board
+   */
+  compareSolution() {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
+        if (this.board[i][j] !== this.copy[i][j]) {
+          // add the invalid color class
+        }
       }
     }
   }
@@ -548,7 +596,7 @@ function getCell(row, col) {
  * program will attempt to find a solution
  */
 function getSolution() {
-  sudoku.getSolution();
+  sudoku.slowSolve();
 }
 
 /**
