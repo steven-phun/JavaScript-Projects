@@ -61,19 +61,18 @@ header h1 {
 #play-area table {
   width: 100%;
 }
+
 #play-area td {
-  border: #F4F4F4 dashed 1px;
   background-color: #76D7C4;
 }
 
-
 /* 3.2 sudoku */
 #sudoku tbody {
-  border-bottom: #707B7C solid medium;
+  border-bottom: #707B7C solid 2px;
 }
 
 #sudoku colgroup{
-  border-right: #707B7C solid medium;
+  border-right: #707B7C solid 2px;
 }
 
 
@@ -90,6 +89,7 @@ header h1 {
   text-transform: uppercase;
   font-size: 15px;
   height: 33px;
+  border-radius: 50%;
 }
 
 

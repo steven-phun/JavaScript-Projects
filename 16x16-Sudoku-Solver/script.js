@@ -324,7 +324,7 @@ class Sudoku {
    * program will attempt to find a solution
    */
   getSolution() {
-    const tag = document.querySelector("#play-area h1");
+    const tag = document.querySelector("h1");
 
     if (this.invalid.length > 0) return tag.innerHTML = "Remove Invalid(Red) Values";
 
