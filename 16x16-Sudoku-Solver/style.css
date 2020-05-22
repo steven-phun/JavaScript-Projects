@@ -64,13 +64,7 @@
   background: lightslategray;
 }
 /* 3.1 title-group */
-#title-group {
-  display: grid;
-  grid-template-columns: 70% auto;
-}
-
 #title-group h1 {
-  display: inline-block;
 }
 
 
@@ -85,19 +79,13 @@
 }
 
 #sudoku td {
-  height: 30px;
-  font-size: 15px;
   text-transform: uppercase;
+  font-size: 15px;
+  height: 33px;
 }
 
 
 /* 3.3 buttons */
-#buttons {
-  display: grid;
-  grid-template-columns: 70% auto;
-  gap: 0 2%;
-}
-
 #keypad {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -105,9 +93,9 @@
   gap: 5% 2%;
 }
 
-#note-erase-solve {
+#restart-solve-notes-erase {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 
 

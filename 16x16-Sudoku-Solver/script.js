@@ -333,7 +333,7 @@ class Sudoku {
   getSolution() {
     const tag = document.querySelector("#play-area h1");
 
-    if (this.invalid.length > 0) return tag.innerHTML = "Remove Invalid Values(Red)";
+    if (this.invalid.length > 0) return tag.innerHTML = "Remove Invalid(Red) Values";
 
     tag.innerHTML = "Solving..."
     this.setSelected(false);
@@ -560,7 +560,7 @@ function getSolution() {
 /**
  * reload users browser
  */
-function setNewGame() {
+function restartGame() {
   location.reload();
   return false;
 }
