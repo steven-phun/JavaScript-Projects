@@ -336,7 +336,6 @@ class Sudoku {
     const tag = document.querySelector("h1");
 
     this.compareSolution();
-    this.removeColorTag();
 
     if (displaySolution) {
       this.clearInvalidTag();
