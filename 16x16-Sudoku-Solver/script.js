@@ -12,8 +12,7 @@
 
 
 /**      >>>>>>>>>>  todo-list <<<<<<<<<<
- * TODO: notes:
- * TODO: get rid of invalid and have the program pre solve and highlight the wrong values
+ * TODO: add notes function
  * TODO: prompt the user if they want to play a game or solve a sudoku
  */
 
