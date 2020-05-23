@@ -337,41 +337,47 @@ class Sudoku {
   getSolution(displaySolution) {
     const tag = document.querySelector("h1");
 
-    if (displaySolution) {
-      tag.innerHTML = "Solving..."
-    } else {
-      tag.innerHTML = "Validating..."
-    }
-
-    this.setSelectedTag(false);
-
-    setTimeout(_ => this.setPrompt(displaySolution, tag), 0);
-  }
-
-  /**
-   * prompt the user if a solution is found or display the invalid inputs
-   *
-   * @param displaySolution {boolean} true, if the user wants to display a solution
-   * @param tag   the html tag that will display the text
-   */
-  setPrompt(displaySolution, tag) {
+    this.compareSolution();
 
     if (displaySolution) {
+      this.clearInvalidTag();
       this.board = this.deepCopy(this.copy);
       this.updateDisplay();
-      return;
-    }
-
-    if (this.fastSolve(this.board)) {
-      this.updateDisplay();
-      tag.innerHTML = "Solution Found!";
+      tag.innerHTML = "The Solution!"
     } else {
-      this.compareSolution();
-      this.setInvalid();
-      console.log(this.invalid);
-      tag.innerHTML = "Inputs Are Incorrect";
+      if (this.isInvalidEmpty()) {
+        tag.innerHTML = "All Good Keep Going!";
+      } else {
+        tag.innerHTML = "Fix These Inputs";
+      }
     }
   }
+
+  // /**
+  //  * prompt the user if a solution is found or display the invalid inputs
+  //  *
+  //  * @param displaySolution {boolean} true, if the user wants to display a solution
+  //  * @param tag   the html tag that will display the text
+  //  */
+  // setPrompt(displaySolution, tag) {
+  //
+  //   if (displaySolution) {
+  //     this.board = this.deepCopy(this.copy);
+  //     this.updateDisplay();
+  //     tag.innerHTML = "The Solution!"
+  //     return;
+  //   }
+  //
+  //   if (this.fastSolve(this.board)) {
+  //     this.updateDisplay();
+  //     tag.innerHTML = "All Inputs Are Correct!";
+  //   } else {
+  //     this.compareSolution();
+  //     this.setInvalid();
+  //     console.log(this.invalid);
+  //     tag.innerHTML = "Inputs Are Incorrect";
+  //   }
+  // }
 
   /**
    * @return the tag from given a class tag
@@ -461,7 +467,7 @@ class Sudoku {
   setInvalid() {
     const invalidColor = "invalid-color";
 
-    this.clearInvalidTag(invalidColor);
+    this.clearInvalidTag();
 
     // add invalid color tags to objects in array
     for (let i = 0; i < this.invalid.length; i++) {
@@ -471,11 +477,10 @@ class Sudoku {
   }
 
   /**
-   * clear every cell of the invalid tag
-   *
-   * @param invalidColor {class tag} the class name for the invalid color
+   * removes every cell of the invalid tag
    */
-  clearInvalidTag(invalidColor) {
+  clearInvalidTag() {
+    const invalidColor = "invalid-color";
     const tag = document.querySelectorAll("." + invalidColor);
 
     for (let i = 0; i < tag.length; i++) {
@@ -530,6 +535,15 @@ class Sudoku {
         }
       }
     }
+    this.setInvalid();
+  }
+
+
+  /**
+   * @return {boolean} true if the there are no invalid inputs on the board
+   */
+  isInvalidEmpty() {
+    return this.invalid.length === 0;
   }
 }
 
