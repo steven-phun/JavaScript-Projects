@@ -162,8 +162,7 @@ class Sudoku {
   }
 
   /**
-   * removes the color class of current cell
-   * and removes the value in current cell
+   * removes the color class and value of current cell
    */
   removeColorTag() {
     if (this.row === null || this.col === null) return;
@@ -338,9 +337,11 @@ class Sudoku {
     const tag = document.querySelector("h1");
 
     this.compareSolution();
+    this.removeColorTag();
 
     if (displaySolution) {
       this.clearInvalidTag();
+      this.removeAllColorTag();
       this.board = this.deepCopy(this.copy);
       this.updateDisplay();
       tag.innerHTML = "The Solution!"
@@ -538,12 +539,20 @@ class Sudoku {
     this.setInvalid();
   }
 
-
   /**
    * @return {boolean} true if the there are no invalid inputs on the board
    */
   isInvalidEmpty() {
     return this.invalid.length === 0;
+  }
+
+  removeAllColorTag() {
+    const tag = "wrong-color"
+    const list = document.querySelectorAll("." + tag);
+
+    for (let i = 0; i < list.length; i++) {
+      list[i].classList.remove(tag);
+    }
   }
 }
 
