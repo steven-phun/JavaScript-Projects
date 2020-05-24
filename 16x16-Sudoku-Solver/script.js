@@ -607,18 +607,18 @@ let getCell = (row, col) => {
  *
  * @param displaySolution true, if user wants to display solution
  */
-function getSolution(displaySolution) {
+let getSolution = (displaySolution) => {
   sudoku.getSolution(displaySolution);
 }
 
 /**
  * reload users browser
  */
-function restartGame() {
+let restartGame = () => {
   location.reload();
   return false;
 }
 
-function getNotes(){
+let getNotes = () => {
   sudoku.getNotes();
 }
