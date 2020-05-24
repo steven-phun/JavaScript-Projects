@@ -563,8 +563,6 @@ const test = [[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty,
 // instantiate sudoku object
 let div = document.querySelector("#sudoku>table");
 const sudoku = new Sudoku(test, div);
-window.addEventListener("keydown", write);
-
 
 /**
  * removes the color class of current cell
@@ -619,3 +617,5 @@ let restartGame = () => {
 }
 
 let getNotes = () => sudoku.getNotes();
+
+window.addEventListener("keydown", write);
