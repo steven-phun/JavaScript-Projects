@@ -607,9 +607,8 @@ let getCell = (row, col) => {
  *
  * @param displaySolution true, if user wants to display solution
  */
-let getSolution = (displaySolution) => {
-  sudoku.getSolution(displaySolution);
-}
+let getSolution = (displaySolution) => sudoku.getSolution(displaySolution);
+
 
 /**
  * reload users browser
@@ -619,6 +618,4 @@ let restartGame = () => {
   return false;
 }
 
-let getNotes = () => {
-  sudoku.getNotes();
-}
+let getNotes = () => sudoku.getNotes();
