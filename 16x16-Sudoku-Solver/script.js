@@ -570,9 +570,7 @@ window.addEventListener("keydown", write);
  * removes the color class of current cell
  * and removes the value in current cell
  */
-function remove() {
-  sudoku.removeColorTag();
-}
+let remove =() => sudoku.removeColorTag()
 
 
 /**
