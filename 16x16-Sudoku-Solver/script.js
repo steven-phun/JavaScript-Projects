@@ -578,9 +578,8 @@ let remove =() => sudoku.removeColorTag()
  *
  * @param event is the user's keyboard key input
  */
-function write(event) {
-  sudoku.getKeyboardInput(event);
-}
+let write = (event) => sudoku.getKeyboardInput(event)
+
 
 /**
  *  writes the button clicked input to given cell
