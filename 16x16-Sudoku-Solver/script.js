@@ -570,7 +570,7 @@ window.addEventListener("keydown", write);
  * removes the color class of current cell
  * and removes the value in current cell
  */
-let remove =() => sudoku.removeColorTag()
+let remove =() => sudoku.removeColorTag();
 
 
 /**
@@ -578,7 +578,7 @@ let remove =() => sudoku.removeColorTag()
  *
  * @param event is the user's keyboard key input
  */
-let write = (event) => sudoku.getKeyboardInput(event)
+let write = (event) => sudoku.getKeyboardInput(event);
 
 
 /**
@@ -586,9 +586,8 @@ let write = (event) => sudoku.getKeyboardInput(event)
  *
  *  @pram value {number} the value of the button
  */
-function buttonInput(value) {
-  sudoku.getButtonInput(value);
-}
+let buttonInput = (value) => sudoku.getButtonInput(value);
+
 
 /**
  * update row and column index to the selected cell
@@ -596,7 +595,7 @@ function buttonInput(value) {
  * @param row    {number} the row index of the cell
  * @param col    {number} the column index of the cell
  */
-function getCell(row, col) {
+let getCell = (row, col) => {
   sudoku.row = row;
   sudoku.col = col;
 
