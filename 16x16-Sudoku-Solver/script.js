@@ -352,32 +352,6 @@ class Sudoku {
     }
   }
 
-  // /**
-  //  * prompt the user if a solution is found or display the invalid inputs
-  //  *
-  //  * @param displaySolution {boolean} true, if the user wants to display a solution
-  //  * @param tag   the html tag that will display the text
-  //  */
-  // setPrompt(displaySolution, tag) {
-  //
-  //   if (displaySolution) {
-  //     this.board = this.deepCopy(this.copy);
-  //     this.updateDisplay();
-  //     tag.innerHTML = "The Solution!"
-  //     return;
-  //   }
-  //
-  //   if (this.fastSolve(this.board)) {
-  //     this.updateDisplay();
-  //     tag.innerHTML = "All Inputs Are Correct!";
-  //   } else {
-  //     this.compareSolution();
-  //     this.setInvalid();
-  //     console.log(this.invalid);
-  //     tag.innerHTML = "Inputs Are Incorrect";
-  //   }
-  // }
-
   /**
    * @return the tag from given a class tag
    */
