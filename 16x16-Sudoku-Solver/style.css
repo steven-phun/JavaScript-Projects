@@ -157,6 +157,7 @@ header h1 {
 }
 
 .invalid-color {
+  color: ghostwhite;
   background: #F2D7D5 !important;
 }
 

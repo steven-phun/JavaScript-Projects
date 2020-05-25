@@ -360,6 +360,8 @@ class Sudoku {
         tag.innerHTML = "Fix These Inputs";
       }
     }
+
+    this.deselect();
   }
 
   /**
@@ -440,7 +442,7 @@ class Sudoku {
     // add invalid color tags to objects in array
     for (let i = 0; i < this.invalid.length; i++) {
       this.tag.rows[this.invalid[i].row].cells[this.invalid[i].col].classList.add(this.invalidColor);
-      this.tag.rows[this.invalid[i].otherRow].cells[this.invalid[i].otherCol].classList.add(this.invalid);
+      this.tag.rows[this.invalid[i].otherRow].cells[this.invalid[i].otherCol].classList.add(this.invalidColor);
     }
   }
 
@@ -451,7 +453,7 @@ class Sudoku {
     const tag = document.querySelectorAll("." + this.invalidColor);
 
     for (let i = 0; i < tag.length; i++) {
-      tag[i].classList.remove(this.invalid);
+      tag[i].classList.remove(this.invalidColor);
     }
   }
 
@@ -525,7 +527,8 @@ class Sudoku {
    * removes selected background from current cell
    */
   deselect() {
-    this.board.rows[this.row].cells[this.col].classList.remove()
+    this.tag.rows[this.row].cells[this.col].classList.remove(this.selectedColor);
+    this.updateDisplay();
   }
 }
 
