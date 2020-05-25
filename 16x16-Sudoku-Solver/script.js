@@ -14,6 +14,9 @@
 /**      >>>>>>>>>>  todo-list <<<<<<<<<<
  * TODO: add notes function
  * TODO: prompt the user if they want to play a game or solve a sudoku
+ * TODO: fix validate button
+ *              to correct display cell color
+ *              to display to user they completed the sudoku
  */
 
 
