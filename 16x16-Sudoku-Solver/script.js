@@ -477,7 +477,7 @@ class Sudoku {
     // remove the invalid tag from this cell
     const size = this.invalid.length;
 
-    for (let i = 0; i < size; i++) {
+    for (let i = size - 1; i >= 0; i--) {
       if (this.invalid[i].row === row && this.invalid[i].col === col) {
         this.invalid.splice(i, 1);
       }
