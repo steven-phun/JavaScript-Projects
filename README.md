@@ -2,7 +2,7 @@
 
 ## [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
 
-Projet Inspiration 
+Project Inspiration 
 
 - My professor would have unsolved 16x16 Sudoku on his glass door
 
