@@ -2,7 +2,7 @@
 
 ## [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
 
-Inspiration
+Projet Inspiration 
 
 - My professor would have unsolved 16x16 Sudoku on his glass door
 
@@ -14,6 +14,8 @@ Project Difficulties
 
 Developed in
 
-- HTML/CSS/JavaScript
+- HTML
+- CSS
+- JavaScript
 
-- Also in Python using Pygame (main.py) 
+
