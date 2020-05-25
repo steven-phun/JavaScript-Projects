@@ -32,6 +32,16 @@ class Sudoku {
     this.note = false;   // {bool}       true if the note button is on
     this.copy = null;    // {array}      deep copy of the original board
 
+    // CSS color class variables
+    this.setterColor = "setter-color";
+    this.correctColor = "correct-color";
+    this.wrongColor = "wrong-color";
+    this.selectedColor = "selected-color";
+    this.invalidColor = "invalid-color";
+    this.noteColor = "note-color";
+
+
+
     // convert each array data to Cell Object
     this.toObject();
     // get the solution to the original board
@@ -94,7 +104,7 @@ class Sudoku {
       for (let col = 0; col < this.size; col++) {
         if (this.board[row][col].setter === true) {
           this.tag.rows[row].cells[col].innerHTML = this.board[row][col].data;
-          this.tag.rows[row].cells[col].classList.add("setter-color");
+          this.tag.rows[row].cells[col].classList.add(this.setterColor);
         } else {
           this.tag.rows[row].cells[col].innerHTML = this.empty;
         }
@@ -171,7 +181,7 @@ class Sudoku {
     this.board[this.row][this.col].data = this.empty;
 
 
-    this.tag.rows[this.row].cells[this.col].className = "";
+    this.tag.rows[this.row].cells[this.col].className = this.empty;
     this.removeInvalid(this.row, this.col);
     this.setInvalid();
     this.updateDisplay();
@@ -353,21 +363,13 @@ class Sudoku {
   }
 
   /**
-   * @return the tag from given a class tag
-   */
-  getClassTag(classTag) {
-    return document.querySelector("." + classTag);
-  }
-
-  /**
    * keeps track of the values user wants to add to notes
    */
   getNotes() {
     const tag = document.querySelector("#note-button");
-    const classTag = "note-color"
 
-    if (tag.classList.contains(classTag)) return tag.classList.remove(classTag);
-    tag.classList.add(classTag);
+    if (tag.classList.contains(this.noteColor)) return tag.classList.remove(this.noteColor);
+    tag.classList.add(this.noteColor);
   }
 
   /**
@@ -376,13 +378,12 @@ class Sudoku {
    * @param bool {boolean} if true, add a background color on selected cell
    */
   setSelectedTag(bool) {
-    const color = "selected-color";
 
-    const tag = this.getClassTag(color);
+    const tag = document.querySelector("." + this.selectedColor);
 
-    if (tag !== null) tag.classList.remove(color);
+    if (tag !== null) tag.classList.remove(this.selectedColor);
 
-    if (bool) this.tag.rows[this.row].cells[this.col].classList.add(color);
+    if (bool) this.tag.rows[this.row].cells[this.col].classList.add(this.selectedColor);
   }
 
   /**
@@ -411,11 +412,9 @@ class Sudoku {
    * @param tag    {tag}     the tag the class is being added to
    */
   setCorrectColor(add, tag) {
-    const correctColor = "correct-color";
+    if (add) return this.tag.rows[this.row].cells[this.col].classList.add(this.correctColor);
 
-    if (add) return this.tag.rows[this.row].cells[this.col].classList.add(correctColor);
-
-    return this.tag.rows[this.row].cells[this.col].classList.remove(correctColor)
+    return this.tag.rows[this.row].cells[this.col].classList.remove(this.correctColor)
   }
 
   /**
@@ -426,11 +425,9 @@ class Sudoku {
    * @param tag    {tag}     the tag the class is being added to
    */
   setWrongColor(add, tag) {
-    const wrongColor = "wrong-color";
+    if (add) return this.tag.rows[this.row].cells[this.col].classList.add(this.wrongColor);
 
-    if (add) return this.tag.rows[this.row].cells[this.col].classList.add(wrongColor);
-
-    return this.tag.rows[this.row].cells[this.col].classList.remove(wrongColor);
+    return this.tag.rows[this.row].cells[this.col].classList.remove(this.wrongColor);
   }
 
   /**
@@ -438,14 +435,12 @@ class Sudoku {
    * causing the current cell to be non-unique in row, column, or 4x4 section
    */
   setInvalid() {
-    const invalidColor = "invalid-color";
-
     this.clearInvalidTag();
 
     // add invalid color tags to objects in array
     for (let i = 0; i < this.invalid.length; i++) {
-      this.tag.rows[this.invalid[i].row].cells[this.invalid[i].col].classList.add(invalidColor);
-      this.tag.rows[this.invalid[i].otherRow].cells[this.invalid[i].otherCol].classList.add(invalidColor);
+      this.tag.rows[this.invalid[i].row].cells[this.invalid[i].col].classList.add(this.invalidColor);
+      this.tag.rows[this.invalid[i].otherRow].cells[this.invalid[i].otherCol].classList.add(this.invalid);
     }
   }
 
@@ -453,11 +448,10 @@ class Sudoku {
    * removes every cell of the invalid tag
    */
   clearInvalidTag() {
-    const invalidColor = "invalid-color";
-    const tag = document.querySelectorAll("." + invalidColor);
+    const tag = document.querySelectorAll("." + this.invalidColor);
 
     for (let i = 0; i < tag.length; i++) {
-      tag[i].classList.remove(invalidColor);
+      tag[i].classList.remove(this.invalid);
     }
   }
 
@@ -519,14 +513,23 @@ class Sudoku {
   }
 
   removeAllColorTag() {
-    const tag = "wrong-color"
-    const list = document.querySelectorAll("." + tag);
+    const list = document.querySelectorAll("." + this.wrongColor);
 
     for (let i = 0; i < list.length; i++) {
-      list[i].classList.remove(tag);
+      list[i].classList.remove(this.wrongColor);
     }
   }
+
+
+  /**
+   * removes selected background from current cell
+   */
+  deselect() {
+    this.board.rows[this.row].cells[this.col].classList.remove()
+  }
 }
+
+
 
 /**
  * this class represents each individual cells
