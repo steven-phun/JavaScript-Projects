@@ -104,7 +104,7 @@ class Sudoku {
       for (let col = 0; col < this.size; col++) {
         if (this.board[row][col].setter === true) {
           this.tag.rows[row].cells[col].innerHTML = this.board[row][col].data;
-          this.tag.rows[row].cells[col].classList.add(this.setterColor);
+          if (this.board[row][col].setter) this.tag.rows[row].cells[col].classList.add(this.setterColor);
         } else {
           this.tag.rows[row].cells[col].innerHTML = this.empty;
         }
@@ -346,6 +346,7 @@ class Sudoku {
     const tag = document.querySelector("h1");
 
     this.compareSolution();
+    this.deselect();
 
     if (displaySolution) {
       this.clearInvalidTag();
@@ -361,7 +362,7 @@ class Sudoku {
       }
     }
 
-    this.deselect();
+
   }
 
   /**
@@ -464,7 +465,6 @@ class Sudoku {
     // get a solution of the original board
     this.copy = this.deepCopy(this.board);
     this.fastSolve(this.copy);
-    console.log(this.copy);
   }
 
   /**

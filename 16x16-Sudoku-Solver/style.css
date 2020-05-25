@@ -61,10 +61,6 @@ header h1 {
   width: 100%;
 }
 
-#play-area td {
-  background-color: #76D7C4;
-}
-
 /* 3.2 sudoku */
 #sudoku tbody {
   border-bottom: #707B7C solid 2px;
@@ -89,6 +85,7 @@ header h1 {
   font-size: 15px;
   height: 33px;
   border: #707B7C solid 1px;
+  background: #76D7C4;
 
 }
 
@@ -140,6 +137,7 @@ header h1 {
 /* 6. javascript */
 .setter-color {
   color: ghostwhite;
+  background: #76D7C4;
 }
 
 .correct-color {
