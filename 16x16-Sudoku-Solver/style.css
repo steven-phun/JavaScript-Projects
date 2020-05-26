@@ -3,15 +3,12 @@
 
   1. global
 
-  2. header
+  2. play area
+    2.1 sudoku
+    2.2 keypad
+    2.3 icons
 
-  3. play area
-    3.1 title group
-    3.2 sudoku
-    3.4 buttons
-    3.5 icons
-
-  4. javascript
+  3. javascript
 
  */
 
@@ -35,14 +32,7 @@
   padding: 0 5%;
 }
 
-/* 2. header */
-header h1 {
-  padding: 10px;
-  font-size: 16px;
-  text-align: center;
-}
-
-/* 3. play area */
+/* 2. play area */
 #play-area {
   display: grid;
   grid-template-rows: auto 3fr 1fr;
@@ -60,7 +50,7 @@ header h1 {
   width: 100%;
 }
 
-/* 3.2 sudoku */
+/* 2.1 sudoku */
 #sudoku tbody {
   border-bottom: #707B7C solid 2px;
 }
@@ -87,7 +77,7 @@ header h1 {
 }
 
 
-/* 3.4 keypad */
+/* 2.2 keypad */
 #keypad {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -107,7 +97,7 @@ header h1 {
   outline: none;
 }
 
-/* 3.5 icons */
+/* 2.3 icons */
 #options {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -118,7 +108,7 @@ header h1 {
   font-size: 9px;
   background: #A3E4D7 !important;
   outline: none;
-  border: solid 1px;
+  border: #707B7C solid 1px;
   border-radius: 15px;
 }
 
@@ -127,7 +117,7 @@ header h1 {
   background: #76D7C4 !important;
 }
 
-/* 6. javascript */
+/* 3. javascript */
 .setter-color {
   color: ghostwhite;
   background: #76D7C4;

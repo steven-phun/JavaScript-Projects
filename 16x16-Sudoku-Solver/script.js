@@ -117,9 +117,6 @@ class Sudoku {
    * display each current innerhtml cell value onto the Sudoku grid
    */
   updateDisplay() {
-    const tag = document.querySelector("h1");
-    tag.innerHTML = "Let's Play Sudoku!";
-
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
         this.tag.rows[row].cells[col].innerHTML = this.toHex(this.board[row][col].data);
@@ -344,8 +341,6 @@ class Sudoku {
    * @param displaySolution {boolean} true, if the user wants to display the solution
    */
   getSolution(displaySolution) {
-    const tag = document.querySelector("h1");
-
     this.compareSolution();
     this.deselect();
 
@@ -354,16 +349,7 @@ class Sudoku {
       this.clearWrongColorTags();
       this.board = this.deepCopy(this.copy);
       this.updateDisplay();
-      tag.innerHTML = "The Solution!"
-    } else {
-      if (this.isInvalidEmpty()) {
-        tag.innerHTML = "All Good Keep Going!";
-      } else {
-        tag.innerHTML = "Fix These Inputs";
-      }
     }
-
-
   }
 
   /**
