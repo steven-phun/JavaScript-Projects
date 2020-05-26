@@ -532,6 +532,9 @@ class Sudoku {
    * removes selected background from current cell
    */
   deselect() {
+
+    if (this.row === null || this.col === null) return;
+
     this.tag.rows[this.row].cells[this.col].classList.remove(this.selectedColor);
     this.updateDisplay();
   }
