@@ -121,7 +121,9 @@ header h1 {
   display: block;
 }
 
-
+#options button:hover {
+  font-size: 16px;
+}
 
 /* 6. javascript */
 .setter-color {
