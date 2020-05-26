@@ -553,38 +553,29 @@ class Cell {
   }
 }
 
-date = new Date();
-console.log(date.getTime());
-
-// test board
-const empty = "";
-const test = [[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty, 14, 13, empty, empty, 15],
-  [14, 10, empty, empty, empty, 15, 13, empty, empty, empty, 11, empty, empty, 5, empty, empty],
-  [12, empty, 8, 11, empty, empty, empty, empty, 2, 15, 13, empty, 14, 10, 9, empty],
-  [1, empty, 15, empty, 10, empty, 14, 9, 0, empty, empty, empty, empty, empty, empty, empty],
-  [empty, 14, 10, 9, empty, empty, 15, 1, 12, 7, 8, 11, empty, empty, empty, empty],
-  [11, 12, empty, empty, 3, 0, 4, 5, 1, 2, empty, empty, empty, empty, 10, 9],
-  [4, empty, 5, 0, 11, empty, 8, empty, 14, 10, 9, 6, 15, empty, empty, 2],
-  [empty, 1, empty, empty, empty, 9, empty, 10, 5, empty, 4, empty, empty, 12, empty, 8],
-  [9, 6, 14, 10, 15, empty, empty, empty, 11, 12, empty, empty, empty, empty, empty, 5],
-  [8, empty, empty, empty, empty, empty, 0, empty, empty, 1, empty, 15, 9, empty, empty, 10],
-  [0, empty, 3, 5, 8, 12, empty, empty, 6, empty, 10, empty, 2, 15, empty, empty],
-  [15, 13, empty, empty, 6, empty, 9, 14, 3, 5, 0, empty, empty, empty, 12, 7],
-  [10, 9, empty, 14, empty, empty, empty, 15, 8, 11, 12, empty, empty, 0, 4, 3],
-  [empty, empty, 11, empty, 0, 3, 5, empty, 15, empty, empty, empty, 10, 9, empty, empty],
-  [empty, empty, 4, empty, 7, 11, 12, empty, 9, empty, empty, 10, 1, empty, empty, 13],
-  [2, 15, empty, empty, 9, empty, empty, 6, empty, empty, 5, empty, empty, empty, 11, empty]]
-
-// instantiate sudoku object
-let div = document.querySelector("#sudoku>table");
-const sudoku = new Sudoku(test, div);
 
 /**
  * keeps track of how long the user has been playing this game
  */
-let stopwatch = (time) => {
+let stopwatch = () => {
   const tag = document.querySelector("#stopwatch p");
-  tag.innerHTML = (Math.trunc((new Date().getTime() - time) / 1000) + "S").toString();
+  seconds++;
+
+  if (seconds === 60) {
+    seconds = 0;
+    minutes++;
+  }
+
+  if (minutes === 60) {
+    minutes = 0;
+    hours++;
+  }
+
+  if (hours !== 0) return tag.innerHTML = `${hours}H ${minutes}M ${seconds}S`;
+
+  if (minutes !== 0) return tag.innerHTML = `${minutes}M ${seconds}S`;
+
+  tag.innerHTML = seconds + "S";
 }
 
 
@@ -644,7 +635,35 @@ let getNotes = () => sudoku.getNotes();
 
 
 /* window listener functions */
-const time = new Date().getTime();
-window.setInterval(stopwatch, 1000, time);
-
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+window.setInterval(stopwatch, 1000);
 window.addEventListener("keydown", write);
+
+
+/* global variables/isntance */
+
+// test board
+const empty = "";
+const test = [[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty, 14, 13, empty, empty, 15],
+  [14, 10, empty, empty, empty, 15, 13, empty, empty, empty, 11, empty, empty, 5, empty, empty],
+  [12, empty, 8, 11, empty, empty, empty, empty, 2, 15, 13, empty, 14, 10, 9, empty],
+  [1, empty, 15, empty, 10, empty, 14, 9, 0, empty, empty, empty, empty, empty, empty, empty],
+  [empty, 14, 10, 9, empty, empty, 15, 1, 12, 7, 8, 11, empty, empty, empty, empty],
+  [11, 12, empty, empty, 3, 0, 4, 5, 1, 2, empty, empty, empty, empty, 10, 9],
+  [4, empty, 5, 0, 11, empty, 8, empty, 14, 10, 9, 6, 15, empty, empty, 2],
+  [empty, 1, empty, empty, empty, 9, empty, 10, 5, empty, 4, empty, empty, 12, empty, 8],
+  [9, 6, 14, 10, 15, empty, empty, empty, 11, 12, empty, empty, empty, empty, empty, 5],
+  [8, empty, empty, empty, empty, empty, 0, empty, empty, 1, empty, 15, 9, empty, empty, 10],
+  [0, empty, 3, 5, 8, 12, empty, empty, 6, empty, 10, empty, 2, 15, empty, empty],
+  [15, 13, empty, empty, 6, empty, 9, 14, 3, 5, 0, empty, empty, empty, 12, 7],
+  [10, 9, empty, 14, empty, empty, empty, 15, 8, 11, 12, empty, empty, 0, 4, 3],
+  [empty, empty, 11, empty, 0, 3, 5, empty, 15, empty, empty, empty, 10, 9, empty, empty],
+  [empty, empty, 4, empty, 7, 11, 12, empty, 9, empty, empty, 10, 1, empty, empty, 13],
+  [2, 15, empty, empty, 9, empty, empty, 6, empty, empty, 5, empty, empty, empty, 11, empty]]
+
+// instantiate sudoku object
+let div = document.querySelector("#sudoku>table");
+const sudoku = new Sudoku(test, div);
+
