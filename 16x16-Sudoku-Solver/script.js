@@ -16,7 +16,6 @@
  * TODO: make a drop down menu with
  *          - new game
  *          - make your own
- * TODO: add a stopwatch
  */
 
 
