@@ -46,7 +46,7 @@ header h1 {
 #play-area {
   display: grid;
   grid-template-rows: auto 3fr 1fr;
-  row-gap: 1%;
+  row-gap: 2%;
   text-align: center;
 }
 
@@ -111,18 +111,20 @@ header h1 {
 #options {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  gap: 0 2%;
 }
 
 #options button {
   font-size: 9px;
   background: #A3E4D7 !important;
   outline: none;
-  border: none;
-  display: block;
+  border: solid 1px;
+  border-radius: 15px;
 }
 
 #options button:hover {
-  font-size: 16px;
+  font-size: 12px;
+  background: #76D7C4 !important;
 }
 
 /* 6. javascript */
