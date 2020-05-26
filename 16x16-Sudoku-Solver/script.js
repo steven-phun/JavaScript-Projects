@@ -552,29 +552,51 @@ class Cell {
   }
 }
 
+/**
+ * this class represents how long the user has been playing
+ */
+class Stopwatch {
+  constructor() {
+    this.tag = document.querySelector("#stopwatch p");
+    this.seconds = 0;
+    this.minutes = 0;
+    this.hours = 0;
+  }
+
+  /**
+   * converts seconds to hours and minutes
+   */
+  getTime() {
+    if (this.seconds === 60) {
+      this.seconds = 0;
+      this.minutes++;
+    }
+
+    if (this.minutes === 60) {
+      this.minutes = 0;
+      this.hours++;
+    }
+  }
+
+  /**
+   * @returns {string} the time in hours, minutes, and seconds
+   */
+  printTime() {
+    if (this.hours !== 0) return this.tag.innerHTML = `${this.hours}H ${this.minutes}M ${this.seconds}S`;
+
+    if (this.minutes !== 0) return this.tag.innerHTML = `${this.minutes}M ${this.seconds}S`;
+
+    this.tag.innerHTML = this.seconds + "S";
+  }
+}
 
 /**
  * keeps track of how long the user has been playing this game
  */
-let stopwatch = () => {
-  const tag = document.querySelector("#stopwatch p");
-  seconds++;
-
-  if (seconds === 60) {
-    seconds = 0;
-    minutes++;
-  }
-
-  if (minutes === 60) {
-    minutes = 0;
-    hours++;
-  }
-
-  if (hours !== 0) return tag.innerHTML = `${hours}H ${minutes}M ${seconds}S`;
-
-  if (minutes !== 0) return tag.innerHTML = `${minutes}M ${seconds}S`;
-
-  tag.innerHTML = seconds + "S";
+const stopwatch = () => {
+  timer.seconds++;
+  timer.getTime();
+  timer.printTime();
 }
 
 
@@ -582,7 +604,7 @@ let stopwatch = () => {
  * removes the color class of current cell
  * and removes the value in current cell
  */
-let remove =() => sudoku.removeColorTag();
+const remove =() => sudoku.removeColorTag();
 
 
 /**
@@ -590,7 +612,7 @@ let remove =() => sudoku.removeColorTag();
  *
  * @param event is the user's keyboard key input
  */
-let write = (event) => sudoku.getKeyboardInput(event);
+const write = (event) => sudoku.getKeyboardInput(event);
 
 
 /**
@@ -598,7 +620,7 @@ let write = (event) => sudoku.getKeyboardInput(event);
  *
  *  @pram value {number} the value of the button
  */
-let buttonInput = (value) => sudoku.getButtonInput(value);
+const buttonInput = (value) => sudoku.getButtonInput(value);
 
 
 /**
@@ -607,7 +629,7 @@ let buttonInput = (value) => sudoku.getButtonInput(value);
  * @param row    {number} the row index of the cell
  * @param col    {number} the column index of the cell
  */
-let getCell = (row, col) => {
+const getCell = (row, col) => {
   sudoku.row = row;
   sudoku.col = col;
 
@@ -619,24 +641,21 @@ let getCell = (row, col) => {
  *
  * @param displaySolution true, if user wants to display solution
  */
-let getSolution = (displaySolution) => sudoku.getSolution(displaySolution);
+const getSolution = (displaySolution) => sudoku.getSolution(displaySolution);
 
 
 /**
  * reload users browser
  */
-let restartGame = () => {
+const restartGame = () => {
   location.reload();
   return false;
 }
 
-let getNotes = () => sudoku.getNotes();
+const getNotes = () => sudoku.getNotes();
 
 
 /* window listener functions */
-let seconds = 0;
-let minutes = 0;
-let hours = 0;
 window.setInterval(stopwatch, 1000);
 window.addEventListener("keydown", write);
 
@@ -663,6 +682,7 @@ const test = [[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty,
   [2, 15, empty, empty, 9, empty, empty, 6, empty, empty, 5, empty, empty, empty, 11, empty]]
 
 // instantiate sudoku object
-let div = document.querySelector("#sudoku>table");
+const div = document.querySelector("#sudoku>table");
 const sudoku = new Sudoku(test, div);
+const timer = new Stopwatch();
 
