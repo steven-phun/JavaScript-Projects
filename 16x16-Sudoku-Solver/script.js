@@ -352,8 +352,8 @@ class Sudoku {
     this.deselect();
 
     if (displaySolution) {
-      this.clearInvalidTag();
-      this.removeAllColorTag();
+      this.clearInvalid();
+      this.clearWrongColorTags();
       this.board = this.deepCopy(this.copy);
       this.updateDisplay();
       tag.innerHTML = "The Solution!"
@@ -441,7 +441,7 @@ class Sudoku {
    * causing the current cell to be non-unique in row, column, or 4x4 section
    */
   setInvalid() {
-    this.clearInvalidTag();
+    this.removeInvalidTag();
 
     // add invalid color tags to objects in array
     for (let i = 0; i < this.invalid.length; i++) {
@@ -452,13 +452,23 @@ class Sudoku {
 
   /**
    * removes every cell of the invalid tag
+   * without removing them from the array
    */
-  clearInvalidTag() {
+  removeInvalidTag() {
     const tag = document.querySelectorAll("." + this.invalidColor);
 
     for (let i = 0; i < tag.length; i++) {
       tag[i].classList.remove(this.invalidColor);
     }
+  }
+
+  /**
+   * remove every invalid value from array and its invalid color tag
+   */
+  clearInvalid() {
+    this.invalid = [];
+
+    this.removeInvalidTag();
   }
 
   /**
@@ -519,7 +529,10 @@ class Sudoku {
     return this.invalid.length === 0;
   }
 
-  removeAllColorTag() {
+  /**
+   * remove all wrong color tags from all cells
+   */
+  clearWrongColorTags() {
     const list = document.querySelectorAll("." + this.wrongColor);
 
     for (let i = 0; i < list.length; i++) {
@@ -529,7 +542,7 @@ class Sudoku {
 
 
   /**
-   * removes selected background from current cell
+   * removes selected background color from current cell
    */
   deselect() {
 
