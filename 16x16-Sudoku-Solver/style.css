@@ -32,6 +32,11 @@
   padding: 5%;
 }
 
+/* header */
+header {
+  text-align: center;
+}
+
 /* 2. play area */
 #play-area {
   display: grid;

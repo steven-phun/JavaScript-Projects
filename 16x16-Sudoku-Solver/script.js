@@ -553,6 +553,8 @@ class Cell {
   }
 }
 
+date = new Date();
+console.log(date.getTime());
 
 // test board
 const empty = "";
@@ -576,6 +578,15 @@ const test = [[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty,
 // instantiate sudoku object
 let div = document.querySelector("#sudoku>table");
 const sudoku = new Sudoku(test, div);
+
+/**
+ * keeps track of how long the user has been playing this game
+ */
+let stopwatch = (time) => {
+  const tag = document.querySelector("#stopwatch p");
+  tag.innerHTML = (Math.trunc((new Date().getTime() - time) / 1000) + "S").toString();
+}
+
 
 /**
  * removes the color class of current cell
@@ -630,5 +641,10 @@ let restartGame = () => {
 }
 
 let getNotes = () => sudoku.getNotes();
+
+
+/* window listener functions */
+const time = new Date().getTime();
+window.setInterval(stopwatch, 1000, time);
 
 window.addEventListener("keydown", write);
