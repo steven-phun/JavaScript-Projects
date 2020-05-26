@@ -336,16 +336,12 @@
           <button onclick="buttonInput(14)">E</button>
           <button onclick="buttonInput(15)">F</button>
         </div>
-        <div id="icons">
-          <button id="restart" onclick="restartGame()"><i class="fas fa-redo-alt"></i></button>
-
-          <button id="validate"  onclick="getSolution(false)">
-            <i class="fas fa-check tooltip">
-            <span class="tooltiptext">Validate</span></i>
-          </button>
-          <button id="note-button" onclick="getNotes()"><i class="fas fa-edit"></i></button>
-          <button id="solve" onclick="getSolution(true)"><i class="fas fa-search"></i></button>
-          <button id="remove- button" onclick="remove()"><i class="fas fa-eraser"></i></button>
+        <div id="options">
+          <button onclick="restartGame()">restart</button>
+          <button onclick="getSolution(false)">validate</button>
+          <button onclick="getNotes()">notes</button>
+          <button onclick="getSolution(true)">solve/button></button>
+          <button onclick="remove()">erase</button>
         </div>
       </section>
     </div>

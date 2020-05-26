@@ -108,25 +108,19 @@ header h1 {
 }
 
 /* 3.5 icons */
-#icons {
+#options {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
 }
 
-#icons button {
+#options button {
   font-size: 9px;
   background: #A3E4D7 !important;
   outline: none;
   border: none;
+  display: block;
 }
 
-#icons i {
-  font-size: 14px;
-}
-
-#icons i:hover {
-  font-size: 20px;
-}
 
 
 /* 6. javascript */
