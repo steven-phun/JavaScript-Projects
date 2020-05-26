@@ -13,7 +13,10 @@
 
 /**      >>>>>>>>>>  todo-list <<<<<<<<<<
  * TODO: add notes function
- * TODO: make a create button or "+" icon to show they add their own
+ * TODO: make a drop down menu with
+ *          - new game
+ *          - make your own
+ * TODO: add a stopwatch
  */
 
 

@@ -128,7 +128,7 @@
 }
 
 .wrong-color {
-  color: #E74C3C;
+  color: #E74C3C !important;
   background: #F2D7D5 !important;
 }
 
