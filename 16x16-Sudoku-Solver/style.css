@@ -8,11 +8,10 @@
   3. play area
     3.1 title group
     3.2 sudoku
-    3.3 buttons
+    3.4 buttons
+    3.5 icons
 
-  5. footer
-
-  6. javascript
+  4. javascript
 
  */
 
@@ -88,7 +87,7 @@ header h1 {
 }
 
 
-/* 3.3 buttons */
+/* 3.4 keypad */
 #keypad {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -108,28 +107,26 @@ header h1 {
   outline: none;
 }
 
-#restart-solve-notes-erase {
+/* 3.5 icons */
+#icons {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
 }
 
-#restart-solve-notes-erase button {
+#icons button {
   font-size: 9px;
   background: #A3E4D7 !important;
   outline: none;
   border: none;
 }
 
-#restart-solve-notes-erase i {
+#icons i {
   font-size: 14px;
 }
 
-#restart-solve-notes-erase i:hover {
+#icons i:hover {
   font-size: 20px;
 }
-
-
-/* 5. footer */
 
 
 /* 6. javascript */
