@@ -29,7 +29,10 @@
 }
 
 .content {
-  padding: 5%;
+  display: grid;
+  grid-template-rows: 1fr 15fr;
+  row-gap: 1%;
+  padding: 3%;
 }
 
 /* header */
@@ -37,20 +40,31 @@
 header{
   display: grid;
   grid-template-rows: repeat(2, 1fr);
+  grid-gap: 8px;
+}
+
+
+header #menu-bar {
+  display: flex;
+  justify-content: space-between;
 }
 
 #menu-bar button {
-  display: inline-block;
-  padding: 10px;
+  font-size: 7px;
+  background: #A3E4D7 !important;
+  outline: none;
+  border: #707B7C solid 1px;
+  border-radius: 15px;
+  padding: 8px;
 }
 
-header #menu-bar {
-  justify-self: end;
+#menu-bar button:hover {
+  background: #76D7C4 !important;
 }
+
 
 header #stopwatch{
   text-align: center;
-  padding: 5px;
 }
 
 
@@ -127,7 +141,7 @@ header #stopwatch{
   gap: 0 2%;
 }
 
-#options button, #menu-bar button {
+#options button {
   font-size: 9px;
   background: #A3E4D7 !important;
   outline: none;
@@ -135,7 +149,7 @@ header #stopwatch{
   border-radius: 15px;
 }
 
-#options button:hover, #menu-bar button:hover{
+#options button:hover {
   font-size: 11px;
   background: #76D7C4 !important;
 }
