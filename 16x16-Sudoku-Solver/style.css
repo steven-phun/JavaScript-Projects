@@ -41,6 +41,7 @@ header{
 
 #menu-bar button {
   display: inline-block;
+  padding: 10px;
 }
 
 header #menu-bar {
@@ -120,13 +121,13 @@ header #stopwatch{
 }
 
 /* 2.3 icons */
-#options {
+#options{
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 0 2%;
 }
 
-#options button {
+#options button, #menu-bar button {
   font-size: 9px;
   background: #A3E4D7 !important;
   outline: none;
@@ -134,7 +135,7 @@ header #stopwatch{
   border-radius: 15px;
 }
 
-#options button:hover {
+#options button:hover, #menu-bar button:hover{
   font-size: 11px;
   background: #76D7C4 !important;
 }
