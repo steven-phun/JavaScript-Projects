@@ -13,9 +13,6 @@
 
 /**      >>>>>>>>>>  todo-list <<<<<<<<<<
  * TODO: add notes function
- * TODO: make a drop down menu with
- *          - new game
- *          - make your own
  */
 
 
