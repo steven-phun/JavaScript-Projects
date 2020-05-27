@@ -12,6 +12,7 @@
 
 
 /**      >>>>>>>>>>  todo-list <<<<<<<<<<
+ * TODO: add custom and new game functions
  * TODO: add notes function
  */
 
