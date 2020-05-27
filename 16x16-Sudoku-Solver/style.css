@@ -33,8 +33,23 @@
 }
 
 /* header */
+
+header{
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+}
+
+#menu-bar button {
+  display: inline-block;
+}
+
+header #menu-bar {
+  justify-self: end;
+}
+
 header #stopwatch{
   text-align: center;
+  padding: 5px;
 }
 
 
