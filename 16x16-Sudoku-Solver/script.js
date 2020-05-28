@@ -652,11 +652,6 @@ const restartGame = () => {
 
 const getNotes = () => sudoku.getNotes();
 
-const createGame = (board=board0, div=div) => {
-  const sudoku = new Sudoku(board, div);
-}
-
-
 
 /* window listener functions */
 window.setInterval(stopwatch, 1000);
@@ -706,6 +701,13 @@ const board2 = [];
 
 // instantiate sudoku object
 const div = document.querySelector("#sudoku>table");
-const sudoku = createGame(board1, div);
+let sudoku = new Sudoku(board1, div);
 const timer = new Stopwatch();
 
+/**
+ * @param board {array} the Sudoku board to load
+ * @param div   {Element}   the element to play the html codes for the board
+ */
+const createGame = (board=board0, div=div) => {
+  sudoku = new Sudoku(board, div);
+}
