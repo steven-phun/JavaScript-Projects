@@ -646,6 +646,7 @@ const getSolution = (displaySolution) => sudoku.getSolution(displaySolution);
  * reload users browser
  */
 const restartGame = () => {
+  sudoku = new Sudoku(currentBoard, div)
   location.reload();
   return false;
 }
@@ -701,6 +702,7 @@ const board2 = [];
 
 // instantiate sudoku object
 const div = document.querySelector("#sudoku>table");
+let currentBoard = board1;
 let sudoku = new Sudoku(board1, div);
 const timer = new Stopwatch();
 
