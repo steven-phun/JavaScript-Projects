@@ -706,8 +706,7 @@ const timer = new Stopwatch();
 
 /**
  * @param board {array} the Sudoku board to load
- * @param div   {Element}   the element to play the html codes for the board
  */
-const createGame = (board=board0, div=div) => {
+const createGame = (board=board0) => {
   sudoku = new Sudoku(board, div);
 }
