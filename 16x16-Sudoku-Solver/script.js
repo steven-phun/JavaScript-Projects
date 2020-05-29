@@ -643,10 +643,9 @@ const getSolution = (displaySolution) => sudoku.getSolution(displaySolution);
 
 
 /**
- * reload users browser
+ * reset current board to its original state
  */
 const restartGame = () => {
-  sudoku = new Sudoku(currentBoard, div)
   location.reload();
   return false;
 }
@@ -698,17 +697,34 @@ const board1 = [[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empt
   [empty, empty, 4, empty, 7, 11, 12, empty, 9, empty, empty, 10, 1, empty, empty, 13],
   [2, 15, empty, empty, 9, empty, empty, 6, empty, empty, 5, empty, empty, empty, 11, empty]];
 
-const board2 = [];
+const board2 = [[empty, 3, empty, empty, 7, empty, 15, empty, 10, empty, 0, empty, empty, 5, empty, 13],
+  [2, empty, empty, 8, empty, 14, empty, 3, 9, 6, empty, 12, empty, empty, 11, empty],
+  [empty, 5, empty, empty, 1, 10, empty, empty, 7, empty, empty, empty, 2, empty, empty, empty],
+  [14, empty, empty, empty, empty, empty, empty, 12, empty, empty, 13, empty, empty, 1, empty, 3],
+  [empty, empty, empty, 7, empty, 2, empty, empty, 6, empty, empty, empty, 4, empty, empty, empty],
+  [empty, empty, empty, empty, empty, empty, 13, empty, empty, empty, empty, 9, empty, 15, empty, 12],
+  [empty, empty, 8, 1, 4, empty, empty, empty, empty, 7, empty, empty, 10, empty, empty, empty],
+  [11, empty, 0, empty, empty, empty, empty, 15, empty, empty, 12, empty, empty, empty, 2, empty],
+  [empty, empty, empty, 11, 14, empty, empty, empty, empty, 5, empty, empty, 12, empty, 3, 6],
+  [15, 0, 12, empty, 9, empty, empty, 2, empty, empty, 6, empty, empty, 8, empty, empty],
+  [5, empty, empty, empty, empty, empty, 10, empty, 3, empty, empty, 8, empty, empty, 1, 9],
+  [empty, 2, empty, empty, empty, 15, empty, empty, empty, 13, 7, empty, empty, 10, empty, empty],
+  [4, 10, 2, 9, empty, empty, empty, 7, empty, empty, 11, 3, empty, empty, empty, 0],
+  [empty, 13, empty, empty, 10, 9, empty, empty, empty, 12, 14, empty, 3, empty, 4, empty],
+  [12, empty, 3, empty, 5, empty, empty, empty, empty, empty, empty, 1, empty, 11, empty, 8],
+  [empty, 11, empty, 15, empty, 12, empty, empty, empty, 0, empty, empty, 5, empty, 14, empty]];
+
+
 
 // instantiate sudoku object
 const div = document.querySelector("#sudoku>table");
-let currentBoard = board1;
-let sudoku = new Sudoku(board1, div);
+//let currentBoard = board1;
+let sudoku = new Sudoku(board2, div);
 const timer = new Stopwatch();
 
-/**
- * @param board {array} the Sudoku board to load
- */
-const createGame = (board=board0) => {
-  sudoku = new Sudoku(board, div);
-}
+// /**
+//  * @param board {array} the Sudoku board to load
+//  */
+// const createGame = (board=board0) => {
+//   sudoku = new Sudoku(board, div);
+// }
