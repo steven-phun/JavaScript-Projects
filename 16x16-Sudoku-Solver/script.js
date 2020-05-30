@@ -45,7 +45,7 @@ class Sudoku {
     // convert each array data to Cell Object
     this.toObject();
     // get the solution to the original board
-    this.getOriginalSolution();
+    //this.getOriginalSolution();
     // setup display for the game
     this.drawGrid();
     this.updateDisplay();
@@ -710,7 +710,7 @@ const board2 = [[empty, 3, empty, empty, 7, empty, 15, empty, 10, empty, 0, empt
   [5, empty, empty, empty, empty, empty, 10, empty, 3, empty, empty, 8, empty, empty, 1, 9],
   [empty, 2, empty, empty, empty, 15, empty, empty, empty, 13, 7, empty, empty, 10, empty, empty],
   [4, 10, 2, 9, empty, empty, empty, 7, empty, empty, 11, 3, empty, empty, empty, 0],
-  [empty, 13, empty, empty, 10, 9, empty, empty, empty, 12, 14, empty, 3, empty, 4, empty],
+  [empty, 13, empty, empty, 10, 8, empty, empty, empty, 12, 14, empty, 3, empty, 4, empty],
   [12, empty, 3, empty, 5, empty, empty, empty, empty, empty, empty, 1, empty, 11, empty, 8],
   [empty, 11, empty, 15, empty, 12, empty, empty, empty, 0, empty, empty, 5, empty, 14, empty]];
 
