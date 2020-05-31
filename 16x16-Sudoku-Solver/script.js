@@ -103,6 +103,7 @@ class Sudoku {
   drawGrid() {
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
+        this.tag.rows[row].cells[col].className = "";
         if (this.board[row][col].setter === true) {
           this.tag.rows[row].cells[col].innerHTML = this.board[row][col].data;
           if (this.board[row][col].setter) this.tag.rows[row].cells[col].classList.add(this.setterColor);
@@ -656,7 +657,7 @@ const getNotes = () => sudoku.getNotes();
 
 
 /* window listener functions */
-window.setInterval(stopwatch, 1000);
+//window.setInterval(stopwatch, 1000);
 window.addEventListener("keydown", write);
 
 
