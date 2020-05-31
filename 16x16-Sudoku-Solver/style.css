@@ -88,11 +88,11 @@ header #stopwatch{
 
 /* 2.1 sudoku */
 #sudoku tbody {
-  border-bottom: #707B7C solid 2px;
+  border-bottom: #707B7C solid 3px;
 }
 
 #sudoku colgroup{
-  border-right: #707B7C solid 2px;
+  border-right: #707B7C solid 3px;
 }
 
 

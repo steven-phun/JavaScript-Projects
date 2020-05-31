@@ -106,6 +106,7 @@ class Sudoku {
           this.tag.rows[row].cells[col].innerHTML = this.board[row][col].data;
           if (this.board[row][col].setter) this.tag.rows[row].cells[col].classList.add(this.setterColor);
         } else {
+          this.tag.rows[row].cells[col].classList.remove(this.setterColor);
           this.tag.rows[row].cells[col].innerHTML = this.empty;
         }
       }
@@ -719,12 +720,14 @@ const board2 = [[empty, empty, 4, empty, 3, 7, empty, empty, empty, empty, 12, 1
 // instantiate sudoku object
 const div = document.querySelector("#sudoku>table");
 //let currentBoard = board1;
-let sudoku = new Sudoku(board2, div);
-const timer = new Stopwatch();
+let sudoku = new Sudoku(board1, div);
+let timer = new Stopwatch();
 
-// /**
-//  * @param board {array} the Sudoku board to load
-//  */
-// const createGame = (board=board0) => {
-//   sudoku = new Sudoku(board, div);
-// }
+/**
+ * @param board {array} the Sudoku board to load
+ */
+const createGame = (board) => {
+  sudoku = new Sudoku(board, div);
+  timer = new Stopwatch();
+  sudoku.updateDisplay();
+}
