@@ -47,6 +47,7 @@ class Sudoku {
     // get the solution to the original board
     this.getOriginalSolution();
     // setup display for the game
+    this.stopwatch = new Stopwatch()
     this.drawGrid();
     this.updateDisplay();
   }
@@ -593,9 +594,9 @@ class Stopwatch {
  * keeps track of how long the user has been playing this game
  */
 const stopwatch = () => {
-  timer.seconds++;
-  timer.getTime();
-  timer.printTime();
+  sudoku.stopwatch.seconds++;
+  sudoku.stopwatch.getTime();
+  sudoku.stopwatch.printTime();
 }
 
 
@@ -721,12 +722,10 @@ const board2 = [[empty, empty, 4, empty, 3, 7, empty, empty, empty, empty, 12, 1
 const div = document.querySelector("#sudoku>table");
 //let currentBoard = board1;
 let sudoku = new Sudoku(board1, div);
-let timer = new Stopwatch();
 
 /**
  * @param board {array} the Sudoku board to load
  */
 const createGame = (board) => {
-  timer = new Stopwatch();
   sudoku = new Sudoku(board, div);
 }
