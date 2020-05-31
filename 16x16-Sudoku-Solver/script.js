@@ -45,7 +45,7 @@ class Sudoku {
     // convert each array data to Cell Object
     this.toObject();
     // get the solution to the original board
-    //this.getOriginalSolution();
+    this.getOriginalSolution();
     // setup display for the game
     this.drawGrid();
     this.updateDisplay();
@@ -697,22 +697,23 @@ const board1 = [[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empt
   [empty, empty, 4, empty, 7, 11, 12, empty, 9, empty, empty, 10, 1, empty, empty, 13],
   [2, 15, empty, empty, 9, empty, empty, 6, empty, empty, 5, empty, empty, empty, 11, empty]];
 
-const board2 = [[empty, 3, empty, empty, 7, empty, 15, empty, 10, empty, 0, empty, empty, 5, empty, 13],
-  [2, empty, empty, 8, empty, 14, empty, 3, 9, 6, empty, 12, empty, empty, 11, empty],
-  [empty, 5, empty, empty, 1, 10, empty, empty, 7, empty, empty, empty, 2, empty, empty, empty],
-  [14, empty, empty, empty, empty, empty, empty, 12, empty, empty, 13, empty, empty, 1, empty, 3],
-  [empty, empty, empty, 7, empty, 2, empty, empty, 6, empty, empty, empty, 4, empty, empty, empty],
-  [empty, empty, empty, empty, empty, empty, 13, empty, empty, empty, empty, 9, empty, 15, empty, 12],
-  [empty, empty, 8, 1, 4, empty, empty, empty, empty, 7, empty, empty, 10, empty, empty, empty],
-  [11, empty, 0, empty, empty, empty, empty, 15, empty, empty, 12, empty, empty, empty, 2, empty],
-  [empty, empty, empty, 11, 14, empty, empty, empty, empty, 5, empty, empty, 12, empty, 3, 6],
-  [15, 0, 12, empty, 9, empty, empty, 2, empty, empty, 6, empty, empty, 8, empty, empty],
-  [5, empty, empty, empty, empty, empty, 10, empty, 3, empty, empty, 8, empty, empty, 1, 9],
-  [empty, 2, empty, empty, empty, 15, empty, empty, empty, 13, 7, empty, empty, 10, empty, empty],
-  [4, 10, 2, 9, empty, empty, empty, 7, empty, empty, 11, 3, empty, empty, empty, 0],
-  [empty, 13, empty, empty, 10, 8, empty, empty, empty, 12, 14, empty, 3, empty, 4, empty],
-  [12, empty, 3, empty, 5, empty, empty, empty, empty, empty, empty, 1, empty, 11, empty, 8],
-  [empty, 11, empty, 15, empty, 12, empty, empty, empty, 0, empty, empty, 5, empty, 14, empty]];
+const board2 = [[empty, empty, 4, empty, 3, 7, empty, empty, empty, empty, 12, 11, 0, 1, empty, empty],
+  [empty, empty, 11, empty, 2, 4, 14, 13, 10, 1, 9, 0, empty, 5, empty, empty],
+  [0, 10, 3, 5, empty, empty, empty, empty, empty, empty, empty, empty, 7, 6, empty, 9],
+  [13, empty, 1, 2, 15, 9, empty, empty, empty, empty, 4, empty, 10, 14, empty, empty],
+  [1, 11, empty, empty, empty, empty, 5, 10, 9, 14, empty, empty, empty, empty, 3, 15],
+  [5, 2, empty, 13, empty, empty, empty, empty, empty, empty, empty, empty, 8, empty, 9, 6],
+  [empty, 9, empty, empty, 8, empty, 1, 7, 2, 0, empty, 6, empty, empty, 11, empty],
+  [empty, 3, 0, 12, 9, empty, 2, empty , empty, 15, empty, 5, empty, empty, 7, empty],
+  [empty, 4, empty, empty, 5, empty, 0, empty, empty, 10, empty, 14, empty, empty, 15, empty],
+  [empty, 5, empty, empty, 11, empty, 7, 15, 4, 3, empty, 8, empty, empty, 1, empty],
+  [15, 8, empty, 1, empty, 3, empty, empty, empty, empty, empty, empty, 12, empty, 10, 13],
+  [9, 14, empty, empty, empty, empty, 13, 2, 15, 12, empty, empty, empty, empty, 0, 5],
+  [empty, empty, 5, 6, empty, 2, empty, empty, empty, empty, 10, empty, 13, 7, empty, empty],
+  [11, empty, 2, 15, empty, empty, empty, empty, empty, empty, empty, empty, 1, 3, empty, 4],
+  [empty, empty, empty, empty, 13, 14, 12, 11, 7, 6, 8, 2, empty, empty, empty, empty],
+  [empty, empty, 9, empty, 7, 5, empty, empty, empty, empty, 0, 3, empty, 12, empty, empty]];
+
 
 
 
