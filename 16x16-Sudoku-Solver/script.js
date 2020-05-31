@@ -557,7 +557,7 @@ class Cell {
 class Stopwatch {
   constructor() {
     this.tag = document.querySelector("#stopwatch p");
-    this.seconds = 0;
+    this.seconds = -1; // start at -1 in order to display start time at 0 seconds instead of 1 seconds
     this.minutes = 0;
     this.hours = 0;
   }
@@ -727,7 +727,6 @@ let timer = new Stopwatch();
  * @param board {array} the Sudoku board to load
  */
 const createGame = (board) => {
-  sudoku = new Sudoku(board, div);
   timer = new Stopwatch();
-  sudoku.updateDisplay();
+  sudoku = new Sudoku(board, div);
 }
