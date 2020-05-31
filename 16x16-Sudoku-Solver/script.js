@@ -716,7 +716,6 @@ const board2 = [[empty, empty, 4, empty, 3, 7, empty, empty, empty, empty, 12, 1
 
 
 
-
 // instantiate sudoku object
 const div = document.querySelector("#sudoku>table");
 //let currentBoard = board1;
