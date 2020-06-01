@@ -22,14 +22,14 @@
  */
 class Sudoku {
   constructor(board) {
-    this.board = board;  // {array}      a copy of the board this class is working with
-    this.invalid = []    // {array}      stores the coordinates of invalid pairs
-    this.size = 16;      // {number}     represents the 16x16 grid
-    this.empty = "";     // {null}       an empty cell
-    this.row = null;     // {number}     the row index of the selected cell
-    this.col = null;     // {number}     the column index of the selected cell
-    this.note = false;   // {bool}       true if the note button is on
-    this.copy = null;    // {array}      deep copy of the original board
+    this.board = this.deepCopy(board);  // {array}   a copy of the board this class is working with
+    this.invalid = []                   // {array}   stores the coordinates of invalid pairs
+    this.size = 16;                     // {number}  represents the 16x16 grid
+    this.empty = "";                    // {null}    an empty cell
+    this.row = null;                    // {number}  the row index of the selected cell
+    this.col = null;                    // {number}  the column index of the selected cell
+    this.note = false;                  // {bool}    true if the note button is on
+    this.copy = null;                   // {array}   deep copy of the original board
 
     // {element} the parent HTML board that the Sudoku grid will be inserted to
     this.tag = document.querySelector("#sudoku>table");
@@ -89,10 +89,10 @@ class Sudoku {
   toObject() {
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
-        if (this.board[row][col] === this.empty) {
-          this.board[row][col] = new Cell(this.empty);
-        } else {
+        if (this.board[row][col] !== this.empty) {
           this.board[row][col] = new Cell(this.board[row][col], true);
+        } else {
+          this.board[row][col] = new Cell(this.empty);
         }
       }
     }
