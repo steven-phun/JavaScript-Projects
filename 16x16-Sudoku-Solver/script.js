@@ -122,7 +122,7 @@ class Sudoku {
   updateDisplay() {
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
-        this.tag.rows[row].cells[col].innerHTML = this.toHex(this.board[row][col].data);
+        this.tag.rows[row].cells[col].innerHTML = (this.board[row][col].data);
       }
     }
   }
@@ -658,10 +658,8 @@ const restartGame = () => {
  * generate a new board every time user asks for a new game
  */
 const newGame = () => {
-  let index = currentBoard % board.length;
-  console.log(index);
-  sudoku = new Sudoku(board[currentBoard % board.length]);
   currentBoard++;
+  sudoku = new Sudoku(board[currentBoard % board.length]);
 }
 
 const getNotes = () => sudoku.getNotes();
@@ -710,12 +708,12 @@ const board = [
 
   // start of a new board
   [[empty, empty, 4, empty, 3, 7, empty, empty, empty, empty, 12, 11, 0, 1, empty, empty],
-  [empty, empty, 11, empty, 2, 4, 14, 13, 10, 1, 9, 0, empty, 5, empty, empty],
+  [empty, empty, 11, empty, 2, 4, empty, empty, 10, 1, 9, 0, empty, 5, empty, empty],
   [0, 10, 3, 5, empty, empty, empty, empty, empty, empty, empty, empty, 7, 6, empty, 9],
   [13, empty, 1, 2, 15, 9, empty, empty, empty, empty, 4, empty, 10, 14, empty, empty],
   [1, 11, empty, empty, empty, empty, 5, 10, 9, 14, empty, empty, empty, empty, 3, 15],
-  [5, 2, empty, 13, empty, empty, empty, empty, empty, empty, empty, empty, 8, empty, 9, 6],
-  [empty, 9, empty, empty, 8, empty, 1, 7, 2, 0, empty, 6, empty, empty, 11, empty],
+  [5, 2, empty, 13, 14, empty, empty, empty, empty, empty, empty, empty, 8, empty, 9, 6],
+  [empty, 9, empty, empty, 8, 15, 1, 7, 2, 0, empty, 6, empty, empty, 11, empty],
   [empty, 3, 0, 12, 9, empty, 2, empty , empty, 15, empty, 5, empty, empty, 7, empty],
   [empty, 4, empty, empty, 5, empty, 0, empty, empty, 10, empty, 14, empty, empty, 15, empty],
   [empty, 5, empty, empty, 11, empty, 7, 15, 4, 3, empty, 8, empty, empty, 1, empty],
