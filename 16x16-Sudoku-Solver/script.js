@@ -655,10 +655,29 @@ const restartGame = () => {
 
 const getNotes = () => sudoku.getNotes();
 
+/**
+ * load a specific board depending on user's input
+ * example: restart  -> load current board
+ *          new game -> load the next board in array
+ *
+ * @param board {array} the Sudoku board to load
+ */
+const getBoard = (board) => {
+  sudoku = new Sudoku(board, div);
+}
 
-/* window listener functions */
-//window.setInterval(stopwatch, 1000);
-window.addEventListener("keydown", write);
+const makeEmptyBoard = () => {
+  let tempBoard = [];
+
+  for (let i = 0; i < sudoku.size; i++) {
+    tempBoard.push([]);
+    for (let j = 0; j < sudoku.size; j++) {
+      tempBoard[i].push(sudoku.empty);
+    }
+  }
+
+  console.log(tempBoard);
+}
 
 
 /* global variables/isntance */
@@ -682,6 +701,8 @@ const board0 = [[empty, empty, empty, empty, empty, empty, empty, empty, empty, 
   [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
   [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
   [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty]];
+
+console.log(board0);
 
 const board1 = [[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty, 14, 13, empty, empty, 15],
   [14, 10, empty, empty, empty, 15, 13, empty, empty, empty, 11, empty, empty, 5, empty, empty],
@@ -724,9 +745,7 @@ const div = document.querySelector("#sudoku>table");
 //let currentBoard = board1;
 let sudoku = new Sudoku(board1, div);
 
-/**
- * @param board {array} the Sudoku board to load
- */
-const createGame = (board) => {
-  sudoku = new Sudoku(board, div);
-}
+
+/* window listener functions */
+window.setInterval(stopwatch, 1000);
+window.addEventListener("keydown", write);
