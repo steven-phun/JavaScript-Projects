@@ -653,6 +653,17 @@ const restartGame = () => {
   sudoku = new Sudoku(board[currentBoard]);
 }
 
+
+/**
+ * generate a new board every time user asks for a new game
+ */
+const newGame = () => {
+  let index = currentBoard % board.length;
+  console.log(index);
+  sudoku = new Sudoku(board[currentBoard % board.length]);
+  currentBoard++;
+}
+
 const getNotes = () => sudoku.getNotes();
 
 
