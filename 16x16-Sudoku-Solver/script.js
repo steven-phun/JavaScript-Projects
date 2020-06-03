@@ -14,8 +14,12 @@
 /**      >>>>>>>>>>  todo-list <<<<<<<<<<
  * TODO: add -> custom and new game functions
  * TODO: add -> notes function
+ * TODO: add -> stop timer and user cannot edit
+ *              -> after solve()
+ *              -> upon completing the sudoku stop timer
+ *                 -> code: add a size counter)
  * TODO: fix solve() -> after solve is called inputs still register to last selected cell
- *                   -> set selected cell to null after solve()
+ *                   -> code: set selected cell to null after solve()
  */
 
 
