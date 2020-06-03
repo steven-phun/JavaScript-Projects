@@ -20,6 +20,8 @@
  *                 -> code: add a size counter)
  * TODO: fix solve() -> after solve is called inputs still register to last selected cell
  *                   -> code: set selected cell to null after solve()
+ * TODO: add custom()
+ * TODO: fix restart()
  */
 
 
