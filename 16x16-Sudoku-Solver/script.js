@@ -12,8 +12,10 @@
 
 
 /**      >>>>>>>>>>  todo-list <<<<<<<<<<
- * TODO: add custom and new game functions
- * TODO: add notes function
+ * TODO: add -> custom and new game functions
+ * TODO: add -> notes function
+ * TODO: fix solve() -> after solve is called inputs still register to last selected cell
+ *                   -> set selected cell to null after solve()
  */
 
 
