@@ -658,7 +658,7 @@ const getSolution = (displaySolution) => sudoku.getSolution(displaySolution);
  * reset current board to its original state
  */
 const restartGame = () => {
-  sudoku = new Sudoku(board[currentBoard]);
+  sudoku = new Sudoku(board[currentBoard % board.length]);
 }
 
 
@@ -731,7 +731,6 @@ const board = [
   [11, empty, 2, 15, empty, empty, empty, empty, empty, empty, empty, empty, 1, 3, empty, 4],
   [empty, empty, empty, empty, 13, 14, 12, 11, 7, 6, 8, 2, empty, empty, empty, empty],
   [empty, empty, 9, empty, 7, 5, empty, empty, empty, empty, 0, 3, empty, 12, empty, empty]]
-
   ]
 
 
