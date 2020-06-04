@@ -12,15 +12,7 @@
 
 
 /**      >>>>>>>>>>  todo-list <<<<<<<<<<
- * TODO: add -> custom and new game functions
  * TODO: add -> notes function
- * TODO: add -> stop timer and user cannot edit
- *              -> after solve()
- *              -> upon completing the sudoku stop timer
- *                 -> code: add a size counter)
- * TODO: fix solve() -> after solve is called inputs still register to last selected cell
- *                   -> code: set selected cell to null after solve()
- * TODO: add custom()
  */
 
 
@@ -59,7 +51,7 @@ class Sudoku {
       this.fastSolve(this.copy)
     }
 
-    this.stopwatch = new Stopwatch()         // {clock}  to keep track of how long the user has been playing
+    this.stopwatch = new Stopwatch()       // {clock}  to keep track of how long the user has been playing
 
     // setup game
     this.drawGrid();
@@ -136,7 +128,7 @@ class Sudoku {
   updateDisplay() {
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
-        this.tag.rows[row].cells[col].innerHTML = (this.board[row][col].data);
+        this.tag.rows[row].cells[col].innerHTML = this.toHex(this.board[row][col].data);
       }
     }
   }
@@ -163,7 +155,13 @@ class Sudoku {
     if (!this.checkInput(event.keyCode)) return;
 
     this.removeInvalid(this.row, this.col);
+
+    if (this.custom) {
+      this.tag.rows[this.row].cells[this.col].classList.add(this.setterColor);
+    }
+
     this.board[this.row][this.col].data = this.toColor(this.toDecimal(event.keyCode));
+
     this.setInvalid();
     this.updateDisplay();
   }
@@ -199,6 +197,24 @@ class Sudoku {
     this.tag.rows[this.row].cells[this.col].className = this.empty;
     this.removeInvalid(this.row, this.col);
     this.setInvalid();
+    this.updateDisplay();
+  }
+
+  /**
+   * display the current board's solution to user
+   */
+  solve() {
+    this.deselect();
+
+    if (this.custom) {
+      this.fastSolve(this.board);
+    } else {
+      this.clearInvalid();
+      this.clearWrongColorTags();
+      this.board = this.copy;
+    }
+
+    window.clearInterval();
     this.updateDisplay();
   }
 
@@ -638,6 +654,15 @@ const validate = () => {
 
 
 /**
+ * display the solution to user
+ */
+const solve = () => {
+  sudoku.solve();
+  clearInterval(time);
+}
+
+
+/**
  * reset current board to its original state
  */
 const restartGame = () => {
@@ -729,5 +754,5 @@ let currentBoard = 1;  // keeps track of current board's index **start at a non 
 let sudoku = new Sudoku(board[currentBoard]);
 
 /* window listener functions */
-window.setInterval(stopwatch, 1000);
+const time = setInterval(stopwatch, 1000);
 window.addEventListener("keydown", write);
