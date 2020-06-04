@@ -15,7 +15,7 @@
 
       <header>
         <div id="menu-bar">
-          <button onclick="makeEmptyBoard()"><i class="fas fa-plus"></i> CUSTOM </button>
+          <button onclick="makeCustomBoard()"><i class="fas fa-plus"></i> CUSTOM </button>
           <button onclick="newGame()">NEW GAME <i class="fas fa-redo-alt"></i></button>
         </div>
         <div id="stopwatch">
@@ -343,10 +343,10 @@
         </div>
         <div id="options">
           <button onclick="restartGame()"><i class="fas fa-undo-alt"></i> RESTART</button>
-          <button onclick="getSolution(false)"><i class="fas fa-check"></i> VALIDATE</button>
+          <button onclick="validate()"><i class="fas fa-check"></i> VALIDATE</button>
           <button onclick="getNotes()"><i class="fas fa-pencil-alt"></i> NOTES</button>
-          <button onclick="getSolution(true)"><i class="fas fa-search"></i> SOLVE</button>
-          <button onclick="remove()"><i class="fas fa-eraser"></i> ERASE</button>
+          <button onclick="validate()"><i class="fas fa-search"></i> SOLVE</button>
+          <button onclick="erase()"><i class="fas fa-eraser"></i> ERASE</button>
         </div>
       </section>
     </div>

@@ -28,8 +28,9 @@
  * this class represents the Sudoku using an array to store its data
  */
 class Sudoku {
-  constructor(board) {
+  constructor(board, custom=false) {
     this.board = this.deepCopy(board);  // {array}   a deep copy of the board to modify
+    this.custom = custom;               // {boolean} true if the user wants to customize this board
     this.invalid = []                   // {array}   stores the coordinates of invalid pairs
     this.size = 16;                     // {number}  represents the 16x16 grid
     this.empty = "";                    // {string}  represents an empty cell
@@ -53,8 +54,10 @@ class Sudoku {
     this.toCell();
 
     // {array}  the solution of the board in its original state
-    this.copy = this.deepCopy(this.board);
-    this.fastSolve(this.copy)
+    if (!this.custom) {
+      this.copy = this.deepCopy(this.board);
+      this.fastSolve(this.copy)
+    }
 
     this.stopwatch = new Stopwatch()         // {clock}  to keep track of how long the user has been playing
 
@@ -155,7 +158,7 @@ class Sudoku {
 
     if (this.board[this.row][this.col].setter === true) return;
 
-    if (event.key === "Backspace") remove();
+    if (event.key === "Backspace") erase();
 
     if (!this.checkInput(event.keyCode)) return;
 
@@ -183,9 +186,9 @@ class Sudoku {
   }
 
   /**
-   * removes the color class and value of current cell
+   * removes the value of a non-setter selected cell
    */
-  removeColorTag() {
+  erase() {
     if (this.row === null || this.col === null) return;
 
     if (this.board[this.row][this.col].setter === true) return;
@@ -350,23 +353,6 @@ class Sudoku {
   }
 
   /**
-   * attempt to get a solution from the current board
-   *
-   * @param displaySolution {boolean} true, if the user wants to display the solution
-   */
-  getSolution(displaySolution) {
-    this.compareSolution();
-    this.deselect();
-
-    if (displaySolution) {
-      this.clearInvalid();
-      this.clearWrongColorTags();
-      this.board = this.copy;
-      this.updateDisplay();
-    }
-  }
-
-  /**
    * keeps track of the values user wants to add to notes
    */
   getNotes() {
@@ -497,9 +483,9 @@ class Sudoku {
   }
 
   /**
-   * set any cell differences between current and the solution board to invalid color
+   * display to the user the cells that are incorrect
    */
-  compareSolution() {
+  validate() {
     for (let i = 0; i < this.size; i++) {
       for (let j = 0; j < this.size; j++) {
         if (this.board[i][j].data !== this.empty) {
@@ -510,6 +496,7 @@ class Sudoku {
       }
     }
     this.setInvalid();
+    this.deselect();
   }
 
   /**
@@ -542,7 +529,6 @@ class Sudoku {
     this.updateDisplay();
   }
 }
-
 
 
 /**
@@ -606,10 +592,9 @@ const stopwatch = () => {
 
 
 /**
- * removes the color class of current cell
- * and removes the value in current cell
+ * removes the value of a non-setter selected cell
  */
-const remove =() => sudoku.removeColorTag();
+const erase =() => sudoku.erase();
 
 
 /**
@@ -643,18 +628,20 @@ const getCell = (row, col) => {
 
 
 /**
- * program will attempt to find a solution
- *
- * @param displaySolution {boolean} true, if user wants to display solution
+ * prompt the user of the cells that are incorrect
  */
-const getSolution = (displaySolution) => sudoku.getSolution(displaySolution);
+const validate = () => {
+  if (sudoku.custom) return;
+
+  sudoku.validate();
+}
 
 
 /**
  * reset current board to its original state
  */
 const restartGame = () => {
-  sudoku = new Sudoku(board[currentBoard % board.length]);
+  sudoku = new Sudoku(board[currentBoard]);
 }
 
 
@@ -662,77 +649,86 @@ const restartGame = () => {
  * generate a new board every time user asks for a new game
  */
 const newGame = () => {
-  currentBoard++;
-  sudoku = new Sudoku(board[currentBoard % board.length]);
+  console.log(board.length);
+  currentBoard = (currentBoard + 1) % board.length;
+
+  // skip board[0] because it is an empty board
+  if (currentBoard === 0) {
+    currentBoard = (currentBoard + 1) % board.length;
+  }
+
+  console.log(currentBoard);
+  sudoku = new Sudoku(board[currentBoard]);
 }
 
 const getNotes = () => sudoku.getNotes();
 
 
 /**
- * generate an empty Sudoku board
+ * generate a blank Sudoku board for the user to fill in
  */
-const makeEmptyBoard = () => {
-  let tempBoard = [];
-
-  for (let i = 0; i < sudoku.size; i++) {
-    tempBoard.push([]);
-    for (let j = 0; j < sudoku.size; j++) {
-      tempBoard[i].push(sudoku.empty);
-    }
-  }
-
-  sudoku = new Sudoku(tempBoard);
+const makeCustomBoard = () => {
+  currentBoard = 0; // index 0 is an empty board
+  sudoku = new Sudoku(board[currentBoard], true);
 }
 
 
+const generateBoards = () => {
+  let size = 16;
+  let empty = "";
+  let emptyBoard = [];
+
+  // index 0 will represent an empty board
+  for (let i = 0; i < size; i++) {
+    emptyBoard.push([]);
+    for (let j = 0; j < size; j++) {
+      emptyBoard[i].push(empty);
+    }
+  }
+  board.push(emptyBoard);
+
+  board.push([[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty, 14, 13, empty, empty, 15],
+    [14, 10, empty, empty, empty, 15, 13, empty, empty, empty, 11, empty, empty, 5, empty, empty],
+    [12, empty, 8, 11, empty, empty, empty, empty, 2, 15, 13, empty, 14, 10, 9, empty],
+    [1, empty, 15, empty, 10, empty, 14, 9, 0, empty, empty, empty, empty, empty, empty, empty],
+    [empty, 14, 10, 9, empty, empty, 15, 1, 12, 7, 8, 11, empty, empty, empty, empty],
+    [11, 12, empty, empty, 3, 0, 4, 5, 1, 2, empty, empty, empty, empty, 10, 9],
+    [4, empty, 5, 0, 11, empty, 8, empty, 14, 10, 9, 6, 15, empty, empty, 2],
+    [empty, 1, empty, empty, empty, 9, empty, 10, 5, empty, 4, empty, empty, 12, empty, 8],
+    [9, 6, 14, 10, 15, empty, empty, empty, 11, 12, empty, empty, empty, empty, empty, 5],
+    [8, empty, empty, empty, empty, empty, 0, empty, empty, 1, empty, 15, 9, empty, empty, 10],
+    [0, empty, 3, 5, 8, 12, empty, empty, 6, empty, 10, empty, 2, 15, empty, empty],
+    [15, 13, empty, empty, 6, empty, 9, 14, 3, 5, 0, empty, empty, empty, 12, 7],
+    [10, 9, empty, 14, empty, empty, empty, 15, 8, 11, 12, empty, empty, 0, 4, 3],
+    [empty, empty, 11, empty, 0, 3, 5, empty, 15, empty, empty, empty, 10, 9, empty, empty],
+    [empty, empty, 4, empty, 7, 11, 12, empty, 9, empty, empty, 10, 1, empty, empty, 13],
+    [2, 15, empty, empty, 9, empty, empty, 6, empty, empty, 5, empty, empty, empty, 11, empty]]);
+
+  board.push(  [[empty, empty, 4, empty, 3, 7, empty, empty, empty, empty, 12, 11, 0, 1, empty, empty],
+    [empty, empty, 11, empty, 2, 4, empty, empty, 10, 1, 9, 0, empty, 5, empty, empty],
+    [0, 10, 3, 5, empty, empty, empty, empty, empty, empty, empty, empty, 7, 6, empty, 9],
+    [13, empty, 1, 2, 15, 9, empty, empty, empty, empty, 4, empty, 10, 14, empty, empty],
+    [1, 11, empty, empty, empty, empty, 5, 10, 9, 14, empty, empty, empty, empty, 3, 15],
+    [5, 2, empty, 13, 14, empty, empty, empty, empty, empty, empty, empty, 8, empty, 9, 6],
+    [empty, 9, empty, empty, 8, 15, 1, 7, 2, 0, empty, 6, empty, empty, 11, empty],
+    [empty, 3, 0, 12, 9, empty, 2, empty , empty, 15, empty, 5, empty, empty, 7, empty],
+    [empty, 4, empty, empty, 5, empty, 0, empty, empty, 10, empty, 14, empty, empty, 15, empty],
+    [empty, 5, empty, empty, 11, empty, 7, 15, 4, 3, empty, 8, empty, empty, 1, empty],
+    [15, 8, empty, 1, empty, 3, empty, empty, empty, empty, empty, empty, 12, empty, 10, 13],
+    [9, 14, empty, empty, empty, empty, 13, 2, 15, 12, empty, empty, empty, empty, 0, 5],
+    [empty, empty, 5, 6, empty, 2, empty, empty, empty, empty, 10, empty, 13, 7, empty, empty],
+    [11, empty, 2, 15, empty, empty, empty, empty, empty, empty, empty, empty, 1, 3, empty, 4],
+    [empty, empty, empty, empty, 13, 14, 12, 11, 7, 6, 8, 2, empty, empty, empty, empty],
+    [empty, empty, 9, empty, 7, 5, empty, empty, empty, empty, 0, 3, empty, 12, empty, empty]]);
+}
+
 /* global variables/isntance */
+const board = [];      // array represents the different playing boards
+generateBoards();
 
-// different playing board
-let empty = "";
+let currentBoard = 1;  // keeps track of current board's index **start at a non empty board
 
-const board = [
-  // start of a new board
-  [[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty, 14, 13, empty, empty, 15],
-  [14, 10, empty, empty, empty, 15, 13, empty, empty, empty, 11, empty, empty, 5, empty, empty],
-  [12, empty, 8, 11, empty, empty, empty, empty, 2, 15, 13, empty, 14, 10, 9, empty],
-  [1, empty, 15, empty, 10, empty, 14, 9, 0, empty, empty, empty, empty, empty, empty, empty],
-  [empty, 14, 10, 9, empty, empty, 15, 1, 12, 7, 8, 11, empty, empty, empty, empty],
-  [11, 12, empty, empty, 3, 0, 4, 5, 1, 2, empty, empty, empty, empty, 10, 9],
-  [4, empty, 5, 0, 11, empty, 8, empty, 14, 10, 9, 6, 15, empty, empty, 2],
-  [empty, 1, empty, empty, empty, 9, empty, 10, 5, empty, 4, empty, empty, 12, empty, 8],
-  [9, 6, 14, 10, 15, empty, empty, empty, 11, 12, empty, empty, empty, empty, empty, 5],
-  [8, empty, empty, empty, empty, empty, 0, empty, empty, 1, empty, 15, 9, empty, empty, 10],
-  [0, empty, 3, 5, 8, 12, empty, empty, 6, empty, 10, empty, 2, 15, empty, empty],
-  [15, 13, empty, empty, 6, empty, 9, 14, 3, 5, 0, empty, empty, empty, 12, 7],
-  [10, 9, empty, 14, empty, empty, empty, 15, 8, 11, 12, empty, empty, 0, 4, 3],
-  [empty, empty, 11, empty, 0, 3, 5, empty, 15, empty, empty, empty, 10, 9, empty, empty],
-  [empty, empty, 4, empty, 7, 11, 12, empty, 9, empty, empty, 10, 1, empty, empty, 13],
-  [2, 15, empty, empty, 9, empty, empty, 6, empty, empty, 5, empty, empty, empty, 11, empty]],
-
-  // start of a new board
-  [[empty, empty, 4, empty, 3, 7, empty, empty, empty, empty, 12, 11, 0, 1, empty, empty],
-  [empty, empty, 11, empty, 2, 4, empty, empty, 10, 1, 9, 0, empty, 5, empty, empty],
-  [0, 10, 3, 5, empty, empty, empty, empty, empty, empty, empty, empty, 7, 6, empty, 9],
-  [13, empty, 1, 2, 15, 9, empty, empty, empty, empty, 4, empty, 10, 14, empty, empty],
-  [1, 11, empty, empty, empty, empty, 5, 10, 9, 14, empty, empty, empty, empty, 3, 15],
-  [5, 2, empty, 13, 14, empty, empty, empty, empty, empty, empty, empty, 8, empty, 9, 6],
-  [empty, 9, empty, empty, 8, 15, 1, 7, 2, 0, empty, 6, empty, empty, 11, empty],
-  [empty, 3, 0, 12, 9, empty, 2, empty , empty, 15, empty, 5, empty, empty, 7, empty],
-  [empty, 4, empty, empty, 5, empty, 0, empty, empty, 10, empty, 14, empty, empty, 15, empty],
-  [empty, 5, empty, empty, 11, empty, 7, 15, 4, 3, empty, 8, empty, empty, 1, empty],
-  [15, 8, empty, 1, empty, 3, empty, empty, empty, empty, empty, empty, 12, empty, 10, 13],
-  [9, 14, empty, empty, empty, empty, 13, 2, 15, 12, empty, empty, empty, empty, 0, 5],
-  [empty, empty, 5, 6, empty, 2, empty, empty, empty, empty, 10, empty, 13, 7, empty, empty],
-  [11, empty, 2, 15, empty, empty, empty, empty, empty, empty, empty, empty, 1, 3, empty, 4],
-  [empty, empty, empty, empty, 13, 14, 12, 11, 7, 6, 8, 2, empty, empty, empty, empty],
-  [empty, empty, 9, empty, 7, 5, empty, empty, empty, empty, 0, 3, empty, 12, empty, empty]]
-  ]
-
-
-let sudoku = new Sudoku(board[0]);
-let currentBoard = 0; // keeps track of current board's index
-
+let sudoku = new Sudoku(board[currentBoard]);
 
 /* window listener functions */
 window.setInterval(stopwatch, 1000);
