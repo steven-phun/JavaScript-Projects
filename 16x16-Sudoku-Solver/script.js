@@ -12,7 +12,7 @@
 
 
 /**      >>>>>>>>>>  todo-list <<<<<<<<<<
- * TODO: add -> notes function
+ * TODO: have at least 5 boards
  */
 
 
@@ -28,8 +28,6 @@ class Sudoku {
     this.empty = "";                    // {string}  represents an empty cell
     this.row = null;                    // {number}  the row index of the selected cell
     this.col = null;                    // {number}  the column index of the selected cell
-    this.note = false;                  // {bool}    true if the note button is on
-
 
     // {element} the parent HTML board that the Sudoku grid will be inserted to
     this.tag = document.querySelector("#sudoku>table");
@@ -133,12 +131,6 @@ class Sudoku {
     }
   }
 
-  /**
-   * displays notes for current cell
-   */
-  updateNotes() {
-
-  }
 
   /**
    * writes user's keyboard input to given cell
@@ -369,13 +361,20 @@ class Sudoku {
   }
 
   /**
-   * keeps track of the values user wants to add to notes
+   * if note is off then enter note mode
+   * if note is on then exit note mode
    */
-  getNotes() {
-    const tag = document.querySelector("#note-button");
+  noteMode() {
+    const tag = document.querySelector("#note");
 
-    if (tag.classList.contains(this.noteColor)) return tag.classList.remove(this.noteColor);
+    if (tag.classList.contains(this.noteColor)) {
+      tag.classList.remove(this.noteColor);
+      this.note = false;
+      return
+    }
+
     tag.classList.add(this.noteColor);
+    this.note = true;
   }
 
   /**
@@ -554,8 +553,6 @@ class Cell {
   constructor(data, setter=false) {
     this.data = data;        // {int}     value of a cell
     this.setter = setter;    // {boolean} true if this cell is a setter
-    this.setter = setter;    // {boolean} true if this cell is a setter
-    this.notes = new Set();  // {set}     for the user to keep track possible solution
   }
 }
 
@@ -684,7 +681,7 @@ const newGame = () => {
   sudoku = new Sudoku(board[currentBoard]);
 }
 
-const getNotes = () => sudoku.getNotes();
+const note = () => sudoku.noteMode();
 
 
 /**
