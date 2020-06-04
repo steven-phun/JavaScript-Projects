@@ -29,14 +29,14 @@
  */
 class Sudoku {
   constructor(board) {
-    this.board = this.deepCopy(board);  // {array}   a copy of the board this class is working with
+    this.board = this.deepCopy(board);  // {array}   a deep copy of the board to modify
     this.invalid = []                   // {array}   stores the coordinates of invalid pairs
     this.size = 16;                     // {number}  represents the 16x16 grid
-    this.empty = "";                    // {null}    an empty cell
+    this.empty = "";                    // {string}  represents an empty cell
     this.row = null;                    // {number}  the row index of the selected cell
     this.col = null;                    // {number}  the column index of the selected cell
     this.note = false;                  // {bool}    true if the note button is on
-    this.copy = null;                   // {array}   deep copy of the original board
+
 
     // {element} the parent HTML board that the Sudoku grid will be inserted to
     this.tag = document.querySelector("#sudoku>table");
@@ -49,13 +49,16 @@ class Sudoku {
     this.invalidColor = "invalid-color";
     this.noteColor = "note-color";
 
+    // convert the board array to Cell Object
+    this.toCell();
 
-    // convert each array data to Cell Object
-    this.toObject();
-    // get the solution to the original board
-    this.getOriginalSolution();
-    // setup display for the game
-    this.stopwatch = new Stopwatch()
+    // {array}  the solution of the board in its original state
+    this.copy = this.deepCopy(this.board);
+    this.fastSolve(this.copy)
+
+    this.stopwatch = new Stopwatch()         // {clock}  to keep track of how long the user has been playing
+
+    // setup game
     this.drawGrid();
     this.updateDisplay();
   }
@@ -64,6 +67,7 @@ class Sudoku {
    * this method will find a solution to do the Sudoku as fast as possible,
    * so it will not consider any user's interactions that will delay its process
    *
+   * @param board the board to be solved
    * @return true if there is a possible solution {boolean}
    */
   fastSolve(board) {
@@ -91,9 +95,9 @@ class Sudoku {
   }
 
   /**
-   * convert the board cells into Cell Objects
+   * convert each object in board array into Cell Objects
    */
-  toObject() {
+  toCell() {
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
         if (this.board[row][col] !== this.empty) {
@@ -124,7 +128,7 @@ class Sudoku {
   }
 
   /**
-   * display each current innerhtml cell value onto the Sudoku grid
+   * update each current innerhtml cell value with the
    */
   updateDisplay() {
     for (let row = 0; row < this.size; row++) {
@@ -357,7 +361,7 @@ class Sudoku {
     if (displaySolution) {
       this.clearInvalid();
       this.clearWrongColorTags();
-      this.board = this.deepCopy(this.copy);
+      this.board = this.copy;
       this.updateDisplay();
     }
   }
@@ -465,14 +469,6 @@ class Sudoku {
     this.removeInvalidTag();
   }
 
-  /**
-   * get the solution for the original board
-   */
-  getOriginalSolution() {
-    // get a solution of the original board
-    this.copy = this.deepCopy(this.board);
-    this.fastSolve(this.copy);
-  }
 
   /**
    * remove the invalid tag from this cell
@@ -501,7 +497,7 @@ class Sudoku {
   }
 
   /**
-   * compares the current board with the solution board
+   * set any cell differences between current and the solution board to invalid color
    */
   compareSolution() {
     for (let i = 0; i < this.size; i++) {
@@ -645,10 +641,11 @@ const getCell = (row, col) => {
   sudoku.setSelectedTag(true);
 }
 
+
 /**
  * program will attempt to find a solution
  *
- * @param displaySolution true, if user wants to display solution
+ * @param displaySolution {boolean} true, if user wants to display solution
  */
 const getSolution = (displaySolution) => sudoku.getSolution(displaySolution);
 
