@@ -649,7 +649,6 @@ const restartGame = () => {
  * generate a new board every time user asks for a new game
  */
 const newGame = () => {
-  console.log(board.length);
   currentBoard = (currentBoard + 1) % board.length;
 
   // skip board[0] because it is an empty board
@@ -657,7 +656,6 @@ const newGame = () => {
     currentBoard = (currentBoard + 1) % board.length;
   }
 
-  console.log(currentBoard);
   sudoku = new Sudoku(board[currentBoard]);
 }
 
