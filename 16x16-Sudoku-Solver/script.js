@@ -196,7 +196,6 @@ class Sudoku {
     this.deselect();
 
     if (this.custom) {
-      this.stopwatch.tag.innerHTML = "Solving...";
       this.fastSolve(this.board);
     } else {
       this.clearInvalid();
@@ -656,8 +655,11 @@ const solve = () => sudoku.solve();
  * reset current board to its original state
  */
 const restartGame = () => {
+  let custom = false;
+  if (currentBoard === 0) custom = true;
+
   clearInterval(sudoku.stopwatch.time);
-  sudoku = new Sudoku(getBoard()[currentBoard]);
+  sudoku = new Sudoku(getBoard()[currentBoard], custom);
 }
 
 /**
@@ -796,4 +798,4 @@ const getBoard = (index) => {
 /* global variable/window listener functions  */
 let currentBoard = 1; // keeps track of what board to initialize the game with
 let sudoku = new Sudoku(getBoard()[currentBoard]);
-const input = window.addEventListener("keydown", write);
+window.addEventListener("keydown", write);
