@@ -11,10 +11,6 @@
  */
 
 
-/**      >>>>>>>>>>  todo-list <<<<<<<<<<
- *
- */
-
 
 /**
  * this class represents the Sudoku using an array to store its data
