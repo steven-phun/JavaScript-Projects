@@ -658,21 +658,21 @@ const solve = () => sudoku.solve();
  * reset current board to its original state
  */
 const restartGame = () => {
-  sudoku = new Sudoku(board[currentBoard]);
+  sudoku = new Sudoku(getBoard()[currentBoard]);
 }
 
 /**
  * generate a new board every time user asks for a new game
  */
 const newGame = () => {
-  currentBoard = (currentBoard + 1) % board.length;
+  currentBoard = (currentBoard + 1) % getBoard().length;
 
   // skip board[0] because it is an empty board
   if (currentBoard === 0) {
-    currentBoard = (currentBoard + 1) % board.length;
+    currentBoard = (currentBoard + 1) % getBoard().length;
   }
 
-  sudoku = new Sudoku(board[currentBoard]);
+  sudoku = new Sudoku(getBoard()[currentBoard]);
 }
 
 /**
@@ -680,23 +680,28 @@ const newGame = () => {
  */
 const makeCustomBoard = () => {
   currentBoard = 0; // index 0 is an empty board
-  sudoku = new Sudoku(board[currentBoard], true);
+  sudoku = new Sudoku(getBoard()[currentBoard], true);
 }
 
-
-const generateBoards = () => {
-  let size = 16;
-  let empty = "";
-  let emptyBoard = [];
+/**
+ * generate different sudoku boards
+ *
+ * @return one sudoku board to initialize the game with
+ */
+const getBoard = (index) => {
+  let board = []       // array that will hold the sudoku boards
+  let size = 16;       // represents the 16x16 grid
+  let empty = "";      // represents and empty cell
 
   // index 0 will represent an empty board
+  let tempBoard = [];
   for (let i = 0; i < size; i++) {
-    emptyBoard.push([]);
+    tempBoard.push([]);
     for (let j = 0; j < size; j++) {
-      emptyBoard[i].push(empty);
+      tempBoard[i].push(empty);
     }
   }
-  board.push(emptyBoard);
+  board.push(tempBoard);
 
   board.push([[empty, 5, empty, empty, empty, empty, empty, 7, 10, empty, empty, 14, 13, empty, empty, 15],
     [14, 10, empty, empty, empty, 15, 13, empty, empty, empty, 11, empty, empty, 5, empty, empty],
@@ -782,16 +787,12 @@ const generateBoards = () => {
     [empty, 15, empty, 11, empty, 13, empty, 2, empty, 14, empty, empty, 12, empty, empty, 10],
     [4, 9, empty, empty, 5, empty, 10, empty, empty, empty, 13, empty, empty, 6, empty, empty],
     [14, empty, 0, empty, empty, 7, empty, 1, empty, 5, empty, 4, empty, 13, empty, 11]]);
+
+  return board;
 }
 
-/* global variables/isntance */
-const board = [];      // array represents the different playing boards
-generateBoards();
 
-let currentBoard = 5;  // keeps track of current board's index **start at a non empty board
-
-let sudoku = new Sudoku(board[currentBoard]);
-
-/* window listener functions */
-
+/* global variable/window listener functions  */
+let currentBoard = 1; // keeps track of what board to initialize the game with
+let sudoku = new Sudoku(getBoard()[currentBoard]);
 window.addEventListener("keydown", write);
