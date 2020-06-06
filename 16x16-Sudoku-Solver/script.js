@@ -28,6 +28,7 @@ class Sudoku {
     this.empty = "";                    // {string}  represents an empty cell
     this.row = null;                    // {number}  the row index of the selected cell
     this.col = null;                    // {number}  the column index of the selected cell
+    this.stopwatch = new Stopwatch()    // {clock}  to keep track of how long the user has been playing
 
     // {element} the parent HTML board that the Sudoku grid will be inserted to
     this.tag = document.querySelector("#sudoku>table");
@@ -43,10 +44,8 @@ class Sudoku {
     // convert the board array to Cell Object
     this.toCell();
 
-    this.stopwatch = new Stopwatch()      // {clock}  to keep track of how long the user has been playing
-
-    if (!this.custom) {                   // {array}  the solution of the board in its original state
-      this.copy = this.deepCopy(this.board);
+    if (!this.custom) {
+      this.copy = this.deepCopy(this.board);  // {array}  the solution of the board in its original state
       this.fastSolve(this.copy);
     }
 
@@ -130,7 +129,6 @@ class Sudoku {
     }
   }
 
-
   /**
    * writes user's keyboard input to given cell
    *
@@ -205,9 +203,8 @@ class Sudoku {
       this.board = this.copy;
     }
 
-    window.clearInterval();
     this.updateDisplay();
-    this.stopwatch.time = clearInterval(this.stopwatch.time);
+    clearInterval(time);
   }
 
   /**
@@ -565,13 +562,12 @@ class Stopwatch {
     this.seconds = -1; // start at -1 in order to display start time at 0 seconds instead of 1 seconds
     this.minutes = 0;
     this.hours = 0;
-    this.time = setInterval(this.stopwatch, 1000);
   }
 
   /**
    * converts seconds to hours and minutes
    */
-  getTime() {
+  convertSeconds() {
     if (this.seconds === 60) {
       this.seconds = 0;
       this.minutes++;
@@ -597,9 +593,9 @@ class Stopwatch {
   /**
    * keeps track of how long the user has been playing this game
    */
-  stopwatch() {
+  getTime() {
     sudoku.stopwatch.seconds++;
-    sudoku.stopwatch.getTime();
+    sudoku.stopwatch.convertSeconds();
     sudoku.stopwatch.printTime();
   }
 }
@@ -657,9 +653,7 @@ const solve = () => sudoku.solve();
 /**
  * reset current board to its original state
  */
-const restartGame = () => {
-  sudoku = new Sudoku(getBoard()[currentBoard]);
-}
+const restartGame = () => sudoku = new Sudoku(getBoard()[currentBoard]);
 
 /**
  * generate a new board every time user asks for a new game
@@ -795,4 +789,5 @@ const getBoard = (index) => {
 /* global variable/window listener functions  */
 let currentBoard = 1; // keeps track of what board to initialize the game with
 let sudoku = new Sudoku(getBoard()[currentBoard]);
-window.addEventListener("keydown", write);
+const time = setInterval(sudoku.stopwatch.getTime, 1000);
+const input = window.addEventListener("keydown", write);
