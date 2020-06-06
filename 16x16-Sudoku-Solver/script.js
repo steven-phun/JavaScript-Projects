@@ -775,23 +775,24 @@ const generateBoards = () => {
     [empty, 6, empty, empty, 7, empty, 13, empty, empty, empty, 14, empty, empty, empty, empty, empty],
     [13, empty, 2, empty, empty, 6, empty, empty, empty, empty, 12, 1, empty, 3, empty, 15]]);
 
-  board.push([[empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
-    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
-    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
-    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
-    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
-    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
-    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
-    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
-    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
-    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
-    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
-    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
-    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
-    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
-    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
-    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty]]);
+  board.push([[empty, empty, empty, 10, empty, empty, 8, empty, 14, empty, 3, empty, 0, empty, empty, 12],
+    [empty, empty, empty, empty, empty, 14, empty, 11, empty, 0, empty, empty, empty, empty, 6, empty],
+    [empty, empty, 15, empty, empty, empty, empty, empty, 11, empty, 9, empty, 7, 10, empty, 13],
+    [7, empty, empty, empty, 6, empty, 12, empty, empty, 2, empty, 1, empty, empty, 3, empty],
+    [empty, empty, empty, 6, 1, empty, empty, empty, empty, 9, empty, empty, 3, empty, empty, 7],
+    [empty, empty, empty, empty, empty, 10, empty, 15, 8, empty, empty, 11, empty, 0, empty, empty],
+    [5, empty, 7, empty, 8, empty, 9, empty, 0, empty, 2, empty, 13, empty, empty, empty],
+    [empty, 13, empty, 2, 3, 7, empty, empty, empty, empty, empty, 6, empty, 8, empty, empty],
+    [empty, empty, 8, 4, 9, empty, 7, 1, empty, 15, empty, empty, 14, empty, empty, empty],
+    [1, empty, empty, 3, empty, 5, 10, empty, 7, empty, 13, empty, empty, 11, empty, empty],
+    [empty, empty, empty, empty, 15, empty, empty, 14, empty, 4, empty, empty, 5, empty, empty, 3],
+    [13, 10, empty, empty, empty, 6, empty, empty, 1, empty, empty, 9, empty, 12, empty, empty],
+    [empty, 15, empty, empty, 7, empty, empty, 4, empty, 14, empty, empty, empty, empty, 11, empty],
+    [2, empty, 14, empty, empty, 9, 1, empty, 12, empty, 0, empty, empty, empty, empty, empty],
+    [empty, 8, empty, 9, empty, 12, empty, 0, empty, 5, empty, 7, empty, 13, empty, empty],
+    [empty, empty, empty, empty, 11, empty, 3, empty, empty, empty, empty, 2, 8, empty, empty, empty]]);
 }
+
 
 /* global variables/isntance */
 const board = [];      // array represents the different playing boards
