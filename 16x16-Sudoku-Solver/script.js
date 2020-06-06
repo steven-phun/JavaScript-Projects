@@ -4,7 +4,7 @@
 /**
  * created by Steven Phun on May 13, 2020
  *
- * this JavaScript program allows the user to play or have this program solve a 16x16 Sudoku
+ * this JavaScript program allows the user to play or have the program solve a 16x16 Sudoku
  *
  * the game is based on the classic 9x9 Sudoku where the basic rules is the similar
  * place the numbers 0-9 and letters A-F into each row, column and 4x4 section once
@@ -196,6 +196,7 @@ class Sudoku {
     this.deselect();
 
     if (this.custom) {
+      this.stopwatch.tag.innerHTML = "Solving...";
       this.fastSolve(this.board);
     } else {
       this.clearInvalid();
@@ -204,7 +205,7 @@ class Sudoku {
     }
 
     this.updateDisplay();
-    clearInterval(time);
+    clearInterval(this.stopwatch.time);
   }
 
   /**
@@ -562,6 +563,7 @@ class Stopwatch {
     this.seconds = -1; // start at -1 in order to display start time at 0 seconds instead of 1 seconds
     this.minutes = 0;
     this.hours = 0;
+    this.time = setInterval(this.getTime, 1000);
   }
 
   /**
@@ -653,7 +655,10 @@ const solve = () => sudoku.solve();
 /**
  * reset current board to its original state
  */
-const restartGame = () => sudoku = new Sudoku(getBoard()[currentBoard]);
+const restartGame = () => {
+  clearInterval(sudoku.stopwatch.time);
+  sudoku = new Sudoku(getBoard()[currentBoard]);
+}
 
 /**
  * generate a new board every time user asks for a new game
@@ -666,6 +671,7 @@ const newGame = () => {
     currentBoard = (currentBoard + 1) % getBoard().length;
   }
 
+  clearInterval(sudoku.stopwatch.time);
   sudoku = new Sudoku(getBoard()[currentBoard]);
 }
 
@@ -674,6 +680,7 @@ const newGame = () => {
  */
 const makeCustomBoard = () => {
   currentBoard = 0; // index 0 is an empty board
+  clearInterval(sudoku.stopwatch.time);
   sudoku = new Sudoku(getBoard()[currentBoard], true);
 }
 
@@ -789,5 +796,4 @@ const getBoard = (index) => {
 /* global variable/window listener functions  */
 let currentBoard = 1; // keeps track of what board to initialize the game with
 let sudoku = new Sudoku(getBoard()[currentBoard]);
-const time = setInterval(sudoku.stopwatch.getTime, 1000);
 const input = window.addEventListener("keydown", write);
