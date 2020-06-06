@@ -12,7 +12,7 @@
 
 
 /**      >>>>>>>>>>  todo-list <<<<<<<<<<
- * TODO: have at least 5 boards
+ *
  */
 
 
@@ -46,7 +46,7 @@ class Sudoku {
     // {array}  the solution of the board in its original state
     if (!this.custom) {
       this.copy = this.deepCopy(this.board);
-      console.log(this.fastSolve(this.copy)); // TODO delete c.log
+      this.fastSolve(this.copy);
     }
 
     this.stopwatch = new Stopwatch()       // {clock}  to keep track of how long the user has been playing
@@ -126,7 +126,7 @@ class Sudoku {
   updateDisplay() {
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
-        this.tag.rows[row].cells[col].innerHTML = (this.board[row][col].data); //TODO this.tohex
+        this.tag.rows[row].cells[col].innerHTML = this.toHex(this.board[row][col].data);
       }
     }
   }
