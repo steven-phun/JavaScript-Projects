@@ -46,7 +46,7 @@ class Sudoku {
     // {array}  the solution of the board in its original state
     if (!this.custom) {
       this.copy = this.deepCopy(this.board);
-      this.fastSolve(this.copy)
+      console.log(this.fastSolve(this.copy)); // TODO delete c.log
     }
 
     this.stopwatch = new Stopwatch()       // {clock}  to keep track of how long the user has been playing
@@ -126,7 +126,7 @@ class Sudoku {
   updateDisplay() {
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
-        this.tag.rows[row].cells[col].innerHTML = this.toHex(this.board[row][col].data);
+        this.tag.rows[row].cells[col].innerHTML = (this.board[row][col].data); //TODO this.tohex
       }
     }
   }
@@ -758,47 +758,46 @@ const generateBoards = () => {
     [empty, 8, 0, 5, empty, 13, empty, 10, empty, empty, 1, empty, empty, empty, 9, 7],
     [empty, 13, empty, empty, empty, 12, 8, empty, 3, 11, 10, 7, empty, empty, 1, empty]]);
 
-  board.push([[empty, 1, empty, empty, 0, 15, 3, empty, empty, 9, empty, empty, empty, empty, 11, empty],
-    [9, empty, empty, 10, empty, 5, empty, empty, 1, empty, empty, empty, empty, 13, empty, empty],
-    [empty, 11, empty, empty, empty, empty, empty, 7, empty, empty, 2, empty, 1, empty, empty, 9],
-    [empty, empty, empty, 14, empty, empty, 4, empty, 0, empty, empty, empty, empty, empty, 3, empty],
-    [10, empty, 11, empty, empty, 13, empty, 5, empty, 0, empty, 2, empty, 9, empty, 3],
-    [empty, 12, empty, 6, 9, empty, 2, empty, empty, empty, empty, 15, empty, empty, 4, empty],
-    [15, empty, 14, empty, 11, empty, empty, empty, 7, empty, empty, empty, 8, empty, empty, 1],
-    [empty, empty, empty, 8, empty, 10, empty, empty, empty, empty, empty, 14, empty, 2, empty, empty],
-    [empty, 7, 3, empty, 10, empty, 11, 1, empty, 4, empty, empty, 13, empty, 8, empty],
-    [6, empty, 9, empty, empty, empty, empty, empty, 2, empty, empty, 8, empty, 14, empty, 10],
-    [empty, 5, empty, empty, 14, empty, empty, 15, empty, empty, 9, empty, 11, empty, 12, empty],
-    [empty, empty, empty, 11, empty, 0, empty, empty, empty, 15, empty, 12, empty, 5, empty, 6],
-    [empty, empty, empty, empty, empty, empty, empty, empty, 10, empty, 4, empty, empty, empty, empty, empty],
-    [empty, empty, empty, 9, 12, 8, empty, 4, empty, 11, empty, empty, 14, empty, 7, empty],
-    [empty, 6, empty, empty, 7, empty, 13, empty, empty, empty, 14, empty, empty, empty, empty, empty],
-    [13, empty, 2, empty, empty, 6, empty, empty, empty, empty, 12, 1, empty, 3, empty, 15]]);
+  board.push([[empty, 0, 8, 11, empty, 4, empty, empty, 5, empty, empty, empty, empty, 2, 12, empty],
+    [empty, 12, 2, empty, 0, 11, empty, empty, 8, 15, empty, 4, empty, 3, empty, empty],
+    [6, 5, empty, 9, empty, empty, empty, empty, empty, 0, 7, empty, 13, empty, 1, empty],
+    [15, 14, empty, empty, 10, empty, 3, 7, empty, 12, empty, empty, empty, empty, empty, 11],
+    [empty, 9, 7, 10, empty, 2, empty, empty, empty, empty, 6, 12, empty, 8, 13, 5],
+    [empty, 11, 14, empty, empty, 9, 7, empty, empty, empty, empty, empty, 15, 1, 4, empty],
+    [13, 1, empty, 2, 8, 12, 6, empty, empty, 9, empty, 0, empty, 7, empty, empty],
+    [empty, empty, empty, 15, empty, 14, empty, 5, 7, empty, empty, 13, empty, empty, empty, empty],
+    [1, empty, empty, 7, 4, empty, empty, 14, 12, empty, 8, empty, 6, empty, empty, empty],
+    [12, empty, 0, empty, 2, empty, 13, empty, empty, 1, 4, 9, 10, empty, 15, empty],
+    [empty, 13, 10, 14, empty, empty, empty, empty, empty, 6, 2, empty, empty, 12, 3, empty],
+    [4, 8, 15, empty, 12, 1, empty, empty, empty, empty, 0, empty, 7, 14, 2, empty],
+    [14, empty, empty, empty, empty, empty, empty, empty, 2, 13, empty, 1, empty, empty, 6, 7],
+    [empty, 15, empty, 4, empty, 5, 2, empty, empty, empty, empty, empty, 1, empty, 11, 3],
+    [empty, empty, 13, empty, 7, empty, 1, 12, empty, empty, 14, 6, empty, 4, empty, empty],
+    [empty, 7, 1, empty, empty, empty, empty, 13, empty, empty, 10, empty, 0, 9, 5, empty]]);
 
-  board.push([[empty, empty, empty, 10, empty, empty, 8, empty, 14, empty, 3, empty, 0, empty, empty, 12],
-    [empty, empty, empty, empty, empty, 14, empty, 11, empty, 0, empty, empty, empty, empty, 6, empty],
-    [empty, empty, 15, empty, empty, empty, empty, empty, 11, empty, 9, empty, 7, 10, empty, 13],
-    [7, empty, empty, empty, 6, empty, 12, empty, empty, 2, empty, 1, empty, empty, 3, empty],
-    [empty, empty, empty, 6, 1, empty, empty, empty, empty, 9, empty, empty, 3, empty, empty, 7],
-    [empty, empty, empty, empty, empty, 10, empty, 15, 8, empty, empty, 11, empty, 0, empty, empty],
-    [5, empty, 7, empty, 8, empty, 9, empty, 0, empty, 2, empty, 13, empty, empty, empty],
-    [empty, 13, empty, 2, 3, 7, empty, empty, empty, empty, empty, 6, empty, 8, empty, empty],
-    [empty, empty, 8, 4, 9, empty, 7, 1, empty, 15, empty, empty, 14, empty, empty, empty],
-    [1, empty, empty, 3, empty, 5, 10, empty, 7, empty, 13, empty, empty, 11, empty, empty],
-    [empty, empty, empty, empty, 15, empty, empty, 14, empty, 4, empty, empty, 5, empty, empty, 3],
-    [13, 10, empty, empty, empty, 6, empty, empty, 1, empty, empty, 9, empty, 12, empty, empty],
-    [empty, 15, empty, empty, 7, empty, empty, 4, empty, 14, empty, empty, empty, empty, 11, empty],
-    [2, empty, 14, empty, empty, 9, 1, empty, 12, empty, 0, empty, empty, empty, empty, empty],
-    [empty, 8, empty, 9, empty, 12, empty, 0, empty, 5, empty, 7, empty, 13, empty, empty],
-    [empty, empty, empty, empty, 11, empty, 3, empty, empty, empty, empty, 2, 8, empty, empty, empty]]);
+  board.push([[empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty]]);
 }
-
 
 /* global variables/isntance */
 const board = [];      // array represents the different playing boards
 generateBoards();
 
-let currentBoard = 1;  // keeps track of current board's index **start at a non empty board
+let currentBoard = 4;  // keeps track of current board's index **start at a non empty board
 
 let sudoku = new Sudoku(board[currentBoard]);
 
