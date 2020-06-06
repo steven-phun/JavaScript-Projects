@@ -724,7 +724,7 @@ const generateBoards = () => {
     [empty, empty, 4, empty, 7, 11, 12, empty, 9, empty, empty, 10, 1, empty, empty, 13],
     [2, 15, empty, empty, 9, empty, empty, 6, empty, empty, 5, empty, empty, empty, 11, empty]]);
 
-  board.push(  [[empty, empty, 4, empty, 3, 7, empty, empty, empty, empty, 12, 11, 0, 1, empty, empty],
+  board.push([[empty, empty, 4, empty, 3, 7, empty, empty, empty, empty, 12, 11, 0, 1, empty, empty],
     [empty, empty, 11, empty, 2, 4, empty, empty, 10, 1, 9, 0, empty, 5, empty, empty],
     [0, 10, 3, 5, empty, empty, empty, empty, empty, empty, empty, empty, 7, 6, empty, 9],
     [13, empty, 1, 2, 15, 9, empty, empty, empty, empty, 4, empty, 10, 14, empty, empty],
@@ -740,6 +740,57 @@ const generateBoards = () => {
     [11, empty, 2, 15, empty, empty, empty, empty, empty, empty, empty, empty, 1, 3, empty, 4],
     [empty, empty, empty, empty, 13, 14, 12, 11, 7, 6, 8, 2, empty, empty, empty, empty],
     [empty, empty, 9, empty, 7, 5, empty, empty, empty, empty, 0, 3, empty, 12, empty, empty]]);
+
+  board.push([[empty, 14, empty, 0, empty, 1, 9, 13, 11, empty, empty, empty, 15, empty, 3, empty],
+    [empty, 5, 2, 15, 11, empty, 7, 3, 13, 14, 0, empty, 1, empty, empty, empty],
+    [13, empty, 8, 6, 10, 2, 14, empty, empty, empty, 15, empty, empty, 9, empty, empty],
+    [3, 12, 1, 11, empty, empty, empty, empty, 5, empty, empty, empty, empty, 14, empty, empty],
+    [empty, empty, 5, empty, 13, 0, 10, 6, 2, 4, 9, empty, empty, 7, empty, 11],
+    [2, 15, empty, empty, 1, 3, empty, empty, empty, 13, 6, 12, empty, empty, 4, 14],
+    [10, empty, 4, empty, empty, empty, empty, empty, empty, 8, 3, empty, empty, 5, empty, empty],
+    [empty, empty, empty, empty, 12, empty, 15, 4, 14, empty, empty, 11, empty, empty, empty, empty],
+    [empty, empty, 15, empty, 8, empty, 0, 11, empty, 7, 2, 9, 10, empty, 14, empty],
+    [1, 11, empty, 10, empty, empty, 13, 2, 4, 3, empty, empty, empty, empty, 8, empty],
+    [5, 2, empty, 3, empty, empty, 12, empty, empty, 10, 8, 0, empty, 11, 15, 1],
+    [empty, empty, 9, 8, empty, empty, empty, empty, empty, empty, 11, empty, 7, empty, 5, 6],
+    [11, 7, empty, empty, 15, empty, empty, 9, empty, 12, empty, empty, empty, 4, empty, empty],
+    [4, empty, empty, empty, 2, empty, 3, 5, empty, 0, 14, empty, empty, empty, empty, empty],
+    [empty, 8, 0, 5, empty, 13, empty, 10, empty, empty, 1, empty, empty, empty, 9, 7],
+    [empty, 13, empty, empty, empty, 12, 8, empty, 3, 11, 10, 7, empty, empty, 1, empty]]);
+
+  board.push([[empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty]]);
+
+  board.push([[empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
+    [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty]]);
 }
 
 /* global variables/isntance */
