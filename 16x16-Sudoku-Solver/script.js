@@ -11,6 +11,8 @@
  */
 
 
+/*** JavaScript Classes ***/
+
 /**
  * this class represents the Sudoku grid
  */
@@ -565,6 +567,7 @@ class Stopwatch {
   }
 }
 
+/*** JavaScript Functions ***/
 
 /**
  * this function updates the row and column index each time the user clicks a cell
@@ -754,7 +757,7 @@ const getBoard = () => {
 }
 
 
-/* global variable/window listener functions  */
+//*** global variable/window listener functions  ***/
 let currentBoard = 1; // keeps track of what board to initialize the game with
 let sudoku = new Sudoku(getBoard()[currentBoard]);
 window.addEventListener("keydown", keyboardInput);

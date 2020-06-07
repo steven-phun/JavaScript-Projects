@@ -1,19 +1,15 @@
-/** table of contents
+/*** table of contents ***/
 
-  1. global
-
-  2. header
-
-  3. play area
-    3.1 sudoku
-    3.2 keypad
-    3.3 options
-
-  4. color class
- */
+/** 1. global
+ *  2. header
+ *  3. play area
+ *   3.1 sudoku
+ *   3.2 keypad
+ *   3.3 options
+ *  4. javascript color index */
 
 
-/** 1. global */
+/*** 1. global ***/
 * {
   font-family: 'Source Sans Pro', sans-serif;
   letter-spacing: 3px;
@@ -35,7 +31,7 @@
 }
 
 
-/** 2. header */
+/*** 2. header ***/
 
 header{
   display: grid;
@@ -68,7 +64,7 @@ header #stopwatch{
 }
 
 
-/** 3. play area */
+/*** 3. play area ***/
 #play-area {
   display: grid;
   grid-template-rows: auto 3fr 1fr;
@@ -86,7 +82,7 @@ header #stopwatch{
   width: 100%;
 }
 
-/** 3.1 sudoku */
+/*** 3.1 sudoku ***/
 #sudoku tbody {
   border-bottom: #707B7C solid 3px;
 }
@@ -113,7 +109,7 @@ header #stopwatch{
 }
 
 
-/** 3.2 keypad */
+/*** 3.2 keypad ***/
 #keypad {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -133,7 +129,7 @@ header #stopwatch{
   outline: none;
 }
 
-/** 3.3 options */
+/*** 3.3 options ***/
 #options{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -154,7 +150,7 @@ header #stopwatch{
 }
 
 
-/** 4. color class */
+/*** 4. javascript color index ***/
 .setter-color {
   color: ghostwhite;
   background: #76D7C4;
