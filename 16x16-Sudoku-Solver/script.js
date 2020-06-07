@@ -15,36 +15,30 @@
  * this class represents the Sudoku grid
  */
 class Sudoku {
-  constructor(board, custom=false) {
-    this.board = this.deepCopy(board);  // {array}   a deep copy of the board to modify
-    this.custom = custom;               // {boolean} true if this is a custom user's board
+  constructor(board, custom = false) {
+    this.board = this.deepCopy(board);  // {array}   a deep copy of the playing board
+    this.stopwatch = new Stopwatch()    // {clock}   keeps track of how long the user has been playing
+    this.custom = custom;               // {boolean} true if this is a blank grid for user to edit
     this.invalid = []                   // {array}   stores the coordinates of invalid pairs
     this.size = 16;                     // {number}  represents the 16x16 grid
     this.empty = "";                    // {string}  represents an empty cell
     this.row = null;                    // {number}  the row index of the selected cell
     this.col = null;                    // {number}  the column index of the selected cell
-    this.stopwatch = new Stopwatch()    // {clock}  to keep track of how long the user has been playing
+
 
     // {element} the parent HTML board that the Sudoku grid will be inserted to
     this.tag = document.querySelector("#sudoku>table");
 
-    // CSS color class variables
+    // for CSS color index
     this.setterColor = "setter-color";
     this.correctColor = "correct-color";
     this.wrongColor = "wrong-color";
     this.selectedColor = "selected-color";
     this.invalidColor = "invalid-color";
-    this.noteColor = "note-color";
-
-    // convert the board array to Cell Object
-    this.toCell();
-
-    if (!this.custom) {
-      this.copy = this.deepCopy(this.board);  // {array}  the solution of the board in its original state
-      this.fastSolve(this.copy);
-    }
 
     // setup game
+    this.toCell();        // convert each object in array to Cell Object
+    this.saveSolution();  // keep a solution of the board in its original state
     this.drawGrid();
     this.updateDisplay();
   }
@@ -53,7 +47,7 @@ class Sudoku {
    * this method will find a solution to do the Sudoku as fast as possible,
    * so it will not consider any user's interactions that will delay its process
    *
-   * @param board the board to be solved
+   * @param board {array} the board to be solved
    * @return true if there is a possible solution {boolean}
    */
   fastSolve(board) {
@@ -81,7 +75,7 @@ class Sudoku {
   }
 
   /**
-   * convert each object in board array into Cell Objects
+   * this method convert each object in board array into Cell Objects
    */
   toCell() {
     for (let row = 0; row < this.size; row++) {
@@ -96,7 +90,7 @@ class Sudoku {
   }
 
   /**
-   * generates the grid for the Sudoku
+   * this method generates the grid for the Sudoku
    */
   drawGrid() {
     for (let row = 0; row < this.size; row++) {
@@ -114,7 +108,7 @@ class Sudoku {
   }
 
   /**
-   * update each current innerhtml cell value with the
+   * this method displays the DOM with the updated values in each cell
    */
   updateDisplay() {
     for (let row = 0; row < this.size; row++) {
@@ -125,7 +119,7 @@ class Sudoku {
   }
 
   /**
-   * writes user's keyboard input to given cell
+   * this method writes the user's keyboard input to the selected cell
    *
    * @param event is the user's keyboard key input
    */
@@ -151,9 +145,9 @@ class Sudoku {
   }
 
   /**
-   *  write the value of the button clicked to given cell
+   * this method writes the value of the button clicked to given cell
    *
-   *  @pram value {number} the value of the button
+   * @pram value {number} the value of the button
    */
   getButtonInput(value) {
     if (this.row === null || this.col === null) return;
@@ -168,7 +162,7 @@ class Sudoku {
   }
 
   /**
-   * removes the value of a non-setter selected cell
+   * this method removes the value of a non-setter cell
    */
   erase() {
     if (this.row === null || this.col === null) return;
@@ -185,7 +179,7 @@ class Sudoku {
   }
 
   /**
-   * display the current board's solution to user
+   * this method displays the solution
    */
   solve() {
     this.deselect();
@@ -203,21 +197,60 @@ class Sudoku {
   }
 
   /**
-   * @return true if there does not exists the same 'val' in its row, column, and 4x4 section {boolean}
-   *
-   * @param board {board}  the board that is being validated
+   * @param board {array}  the board that is being validated
    * @param row   {number} row index of the cell
    * @param col   {number} col index of the cell
    * @param val   {number} val of the cell
+   *
+   * @return {boolean} true, if there does not exists the same 'val' in its row, column, and 4x4 section
    */
   validateCell(board, row, col, val) {
     return this.checkRow(board, row, val) && this.checkCol(board, col, val) && this.checkSection(board, row, col, val);
   }
 
   /**
-   * this method's run time is slower because it is doing extra checks
-   * to add and remove classes from the html tag, this method is implemented
-   * to avoid slowing the other validate method when using solve()
+   * @return {boolean} true if there does not exists the same element in this row
+   */
+  checkRow(board, row, val) {
+    for (let col = 0; col < this.size; col++) {
+      if (board[row][col].data === val) return false;
+    }
+    return true;
+  }
+
+  /**
+   * @return {boolean} true if there does not exists the same element in this col
+   */
+  checkCol(board, col, val) {
+    for (let row = 0; row < this.size; row++) {
+      if (board[row][col].data === val) return false;
+    }
+    return true;
+  }
+
+  /**
+   * @return {boolean} true if there does not exists the same element in this 4x4 section
+   */
+  checkSection(board, row, col, val) {
+    const size = Math.sqrt(this.size); // represents the 4x4 section
+
+    // formula for the first cell in given 4x4 section
+    const rowSect = row - (row % size);
+    const colSect = col - (col % size);
+
+    for (let i = rowSect; i < rowSect + size; i++) {
+      for (let j = colSect; j < colSect + size; j++) {
+        if (board[i][j].data === val) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  /**
+   * this method's run time is slower because it is doing extra checks and actions
+   * checks for any invalid pairs and add or remove element tags
    *
    * @return true if there does not exists a setter with the same 'val'
    *              in its row, column, and 4x4 section {boolean}
@@ -270,47 +303,7 @@ class Sudoku {
   }
 
   /**
-   * @return true if there does not exists the same element in this row {boolean}
-   */
-  checkRow(board, row, val) {
-    for (let col = 0; col < this.size; col++) {
-      if (board[row][col].data === val) return false;
-    }
-    return true;
-  }
-
-  /**
-   * @return true if there does not exists the same element in this col {boolean}
-   */
-  checkCol(board, col, val) {
-    for (let row = 0; row < this.size; row++) {
-      if (board[row][col].data === val) return false;
-    }
-    return true;
-  }
-
-  /**
-   * @return true if there does not exists the same element in this 4x4 section {boolean}
-   */
-  checkSection(board, row, col, val) {
-    const size = Math.sqrt(this.size); // represents the 4x4 section
-
-    // formula for the first cell in given 4x4 section
-    const rowSect = row - (row % size);
-    const colSect = col - (col % size);
-
-    for (let i = rowSect; i < rowSect + size; i++) {
-      for (let j = colSect; j < colSect + size; j++) {
-        if (board[i][j].data === val) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
-  /**
-   * @return true if the keyboard key is a number between 0-9 or letter A-F
+   * @return {boolean} true if the keyboard key input is a number between 0-9 or letter A-F
    */
   checkInput(input) {
     // their respective key codes
@@ -320,26 +313,25 @@ class Sudoku {
   }
 
   /**
-   * converts Decimal to Hexadecimal
+   * this method converts a Decimal to Hexadecimal
    *
    * @param num    {number} the number to be converted to Hexadecimal
-   * @return       'A' if num = 10  , 'B' if num = 11 ... 'F' if num = 15 {string}
+   * @return       {string} 'A' if num = 10  , 'B' if num = 11 ... 'F' if num = 15
    */
   toHex(num) {
     const decimal = 10; // represents when a Decimal needs to convert to Hexadecimal
     const hexadecimal = 'A'.charCodeAt(0)
 
-    if (num < decimal) return num;
+    if (num < decimal) return num.toString();
 
     return String.fromCharCode(num - decimal + hexadecimal);
   }
 
   /**
-   * convert key code to a decimal number
-   * letters A-F will be converted to number 10-15
-   * note: Sudoku class method will convert decimal to hexadecimal
+   * this method converts a key code to a decimal number
+   * letters A-F will be converted to number 10-15 respectively
    *
-   * @param key the key to convert
+   * @param key the key code to be converted
    * @return a decimal number
    */
   toDecimal(key) {
@@ -353,88 +345,65 @@ class Sudoku {
   }
 
   /**
-   * if note is off then enter note mode
-   * if note is on then exit note mode
-   */
-  noteMode() {
-    const tag = document.querySelector("#note");
-
-    if (tag.classList.contains(this.noteColor)) {
-      tag.classList.remove(this.noteColor);
-      this.note = false;
-      return
-    }
-
-    tag.classList.add(this.noteColor);
-    this.note = true;
-  }
-
-  /**
-   * clear the background of the previous selected cell
+   * set the background color of the current selected cell
    *
-   * @param bool {boolean} if true, add a background color on selected cell
+   * @param selected {boolean} if true, add a background color on this cell
    */
-  setSelectedTag(bool) {
-
+  setSelected(selected) {
     const tag = document.querySelector("." + this.selectedColor);
 
-    if (tag !== null) tag.classList.remove(this.selectedColor);
-
-    if (bool) this.tag.rows[this.row].cells[this.col].classList.add(this.selectedColor);
+    if (tag !== null) tag.classList.remove(this.selectedColor); // clear previously selected tag
+    if (selected) this.tag.rows[this.row].cells[this.col].classList.add(this.selectedColor);
   }
 
   /**
-   * change the input text color to a different color
-   * if user inputs a correct or wrong value in cell
+   * this method changes the keyboard input text color
    *
-   * @param value {number} the number being colored
-   * @return the original value to allow printing the value
+   * @param value {number} the value that will change color
+   *
+   * @return 'value' with the added CSS color tag class
+   *          depending if the value is valid or invalid
    */
   toColor(value) {
     if (this.slowValidate(this.row, this.col, value)) {
-      this.setCorrectColor(true, this.tag);
-      this.setWrongColor(false, this.tag)
+      this.setColorTag(this.correctColor);
+      this.removeColorTag(this.wrongColor)
     } else {
-      this.setWrongColor(true, this.tag);
-      this.setCorrectColor(false, this.tag);
+      this.removeColorTag(this.wrongColor);
+      this.setColorTag(this.correctColor);
     }
     return value;
   }
 
   /**
-   * @return tag with added or removed correct color class to tag
+   * this helper method sets the value to the given CSS color class
    *
-   * @param add    {boolean} if true add the color class
-   *                         if false remove the color class
-   * @param tag    {tag}     the tag the class is being added to
+   * @param colorTag  {string} the CSS color tag to be added
+   *
+   * @return 'tag' with the color class added
    */
-  setCorrectColor(add, tag) {
-    if (add) return this.tag.rows[this.row].cells[this.col].classList.add(this.correctColor);
-
-    return this.tag.rows[this.row].cells[this.col].classList.remove(this.correctColor)
+  setColorTag(colorTag) {
+    return this.tag.rows[this.row].cells[this.col].classList.add(colorTag);
   }
 
   /**
-   * @return tag with added or removed wrong color class to tag
+   * this helper method removes the CSS color class from an element
    *
-   * @param add    {boolean} if true add the color class
-   *                         if false remove the color class
-   * @param tag    {tag}     the tag the class is being added to
+   * @param colorTag    {string} the CSS color tag to be removed
+   *
+   * @return 'tag' with the color class removed
    */
-  setWrongColor(add, tag) {
-    if (add) return this.tag.rows[this.row].cells[this.col].classList.add(this.wrongColor);
-
-    return this.tag.rows[this.row].cells[this.col].classList.remove(this.wrongColor);
+  removeColorTag(colorTag) {
+    return this.tag.rows[this.row].cells[this.col].classList.remove(colorTag)
   }
 
+
   /**
-   * set the background of current cell and the other cell that is
-   * causing the current cell to be non-unique in row, column, or 4x4 section
+   * this method sets the background color of all invalid pair cells
    */
   setInvalid() {
-    this.removeInvalidTag();
+    this.removeAllInvalid();
 
-    // add invalid color tags to objects in array
     for (let i = 0; i < this.invalid.length; i++) {
       this.tag.rows[this.invalid[i].row].cells[this.invalid[i].col].classList.add(this.invalidColor);
       this.tag.rows[this.invalid[i].otherRow].cells[this.invalid[i].otherCol].classList.add(this.invalidColor);
@@ -442,10 +411,9 @@ class Sudoku {
   }
 
   /**
-   * removes every cell of the invalid tag
-   * without removing them from the array
+   * this method removes CSS invalid color class from every cell
    */
-  removeInvalidTag() {
+  removeAllInvalid() {
     const tag = document.querySelectorAll("." + this.invalidColor);
 
     for (let i = 0; i < tag.length; i++) {
@@ -454,23 +422,21 @@ class Sudoku {
   }
 
   /**
-   * remove every invalid value from array and its invalid color tag
+   * this method removes every invalid value from the array
    */
   clearInvalid() {
     this.invalid = [];
-
-    this.removeInvalidTag();
+    this.removeAllInvalid();
   }
 
 
   /**
-   * remove the invalid tag from this cell
+   * this method removes the invalid tag from current cell
    *
-   * @param row
-   * @param col
+   * @param row {number} index of selected row
+   * @param col {number} index of selected column
    */
   removeInvalid(row, col) {
-    // remove the invalid tag from this cell
     const size = this.invalid.length;
 
     for (let i = size - 1; i >= 0; i--) {
@@ -481,7 +447,7 @@ class Sudoku {
   }
 
   /**
-   * deep copies an object
+   * this method performs a deep copy of the given object
    *
    * @param object {object} the object to be deep copied
    */
@@ -490,7 +456,7 @@ class Sudoku {
   }
 
   /**
-   * display to the user the cells that are incorrect
+   * this method displays every cell that is incorrect
    */
   validate() {
     for (let i = 0; i < this.size; i++) {
@@ -507,14 +473,7 @@ class Sudoku {
   }
 
   /**
-   * @return {boolean} true if the there are no invalid inputs on the board
-   */
-  isInvalidEmpty() {
-    return this.invalid.length === 0;
-  }
-
-  /**
-   * remove all wrong color tags from all cells
+   * this method removes all CSS wrong color class from every cell
    */
   clearWrongColorTags() {
     const list = document.querySelectorAll("." + this.wrongColor);
@@ -526,7 +485,7 @@ class Sudoku {
 
 
   /**
-   * removes selected background color from current cell
+   * this method removes the CSS selected background color class from current cell
    */
   deselect() {
 
@@ -534,6 +493,14 @@ class Sudoku {
 
     this.tag.rows[this.row].cells[this.col].classList.remove(this.selectedColor);
     this.updateDisplay();
+  }
+
+  // this method gets the solution of the board in its original state
+  saveSolution() {
+    if (!this.custom) {
+      this.copy = this.deepCopy(this.board);
+      this.fastSolve(this.copy);
+    }
   }
 }
 
@@ -543,13 +510,13 @@ class Sudoku {
  */
 class Cell {
   constructor(data, setter=false) {
-    this.data = data;        // {int}     value of a cell
-    this.setter = setter;    // {boolean} true if this cell is a setter
+    this.data = data;        // {int}     value of the cell
+    this.setter = setter;    // {boolean} true if this cell is a setter cell
   }
 }
 
 /**
- * this class represents the stopwatch keeping how long the user has been playing
+ * this class represents how long the user has been playing
  */
 class Stopwatch {
   constructor() {
@@ -561,7 +528,7 @@ class Stopwatch {
   }
 
   /**
-   * converts seconds to hours and minutes
+   * converts seconds hours and minutes
    */
   convertSeconds() {
     if (this.seconds === 60) {
@@ -576,7 +543,7 @@ class Stopwatch {
   }
 
   /**
-   * @returns {string} the time in hours, minutes, and seconds
+   * @returns {string} Hours:Minutes:Seconds format
    */
   printTime() {
     if (this.hours !== 0) return this.tag.innerHTML = `${this.hours}H ${this.minutes}M ${this.seconds}S`;
@@ -587,7 +554,7 @@ class Stopwatch {
   }
 
   /**
-   * keeps track of how long the user has been playing this game
+   * this method helps add one second to clock for every second that passes
    */
   getTime() {
     sudoku.stopwatch.seconds++;
@@ -598,13 +565,13 @@ class Stopwatch {
 
 
 /**
- * removes the value of a non-setter selected cell
+ * this function removes the value of a non-setter selected cell
  */
 const erase =() => sudoku.erase();
 
 
 /**
- * writes user's keyboard input to given cell
+ * this function writes user's keyboard input to given cell
  *
  * @param event is the user's keyboard key input
  */
@@ -612,15 +579,15 @@ const write = (event) => sudoku.getKeyboardInput(event);
 
 
 /**
- *  writes the button clicked input to given cell
+ * this function writes the button clicked input to given cell
  *
- *  @pram value {number} the value of the button
+ * @pram value {number} the value of the button
  */
 const buttonInput = (value) => sudoku.getButtonInput(value);
 
 
 /**
- * update row and column index to the selected cell
+ * this function updates the row and column index each time the user clicks a cell
  *
  * @param row    {number} the row index of the cell
  * @param col    {number} the column index of the cell
@@ -629,11 +596,11 @@ const getCell = (row, col) => {
   sudoku.row = row;
   sudoku.col = col;
 
-  sudoku.setSelectedTag(true);
+  sudoku.setSelected(true);
 }
 
 /**
- * prompt the user of the cells that are incorrect
+ * this function prompts the user for any cells that are incorrect
  */
 const validate = () => {
   if (sudoku.custom) return;
@@ -642,12 +609,12 @@ const validate = () => {
 }
 
 /**
- * display the solution to user
+ * this function display the solution to the user
  */
 const solve = () => sudoku.solve();
 
 /**
- * reset current board to its original state
+ * this function reset the current board to its original state
  */
 const restartGame = () => {
   let custom = false;
@@ -658,7 +625,7 @@ const restartGame = () => {
 }
 
 /**
- * generate a new board every time user asks for a new game
+ * this function generate a game with a new board
  */
 const newGame = () => {
   currentBoard = (currentBoard + 1) % getBoard().length;
@@ -673,7 +640,7 @@ const newGame = () => {
 }
 
 /**
- * generate a blank Sudoku board for the user to fill in
+ * this function generate a blank Sudoku board
  */
 const makeCustomBoard = () => {
   currentBoard = 0; // index 0 is an empty board
@@ -682,11 +649,9 @@ const makeCustomBoard = () => {
 }
 
 /**
- * generate different sudoku boards
- *
- * @return one sudoku board to initialize the game with
+ * @return one array that represents the sudoku board to initialize the game with
  */
-const getBoard = (index) => {
+const getBoard = () => {
   let board = []       // array that will hold the sudoku boards
   let size = 16;       // represents the 16x16 grid
   let empty = "";      // represents and empty cell

@@ -3,12 +3,14 @@
 
   1. global
 
-  2. play area
-    2.1 sudoku
-    2.2 keypad
-    2.3 icons
+  2. header
 
-  3. javascript
+  3. play area
+    3.1 sudoku
+    3.2 keypad
+    3.3 options
+
+  4. color index
 
  */
 
@@ -34,7 +36,7 @@
   padding: 3%;
 }
 
-/* header */
+/* 2. header */
 
 header{
   display: grid;
@@ -67,7 +69,7 @@ header #stopwatch{
 }
 
 
-/* 2. play area */
+/* 3. play area */
 #play-area {
   display: grid;
   grid-template-rows: auto 3fr 1fr;
@@ -85,7 +87,7 @@ header #stopwatch{
   width: 100%;
 }
 
-/* 2.1 sudoku */
+/* 3.1 sudoku */
 #sudoku tbody {
   border-bottom: #707B7C solid 3px;
 }
@@ -112,7 +114,7 @@ header #stopwatch{
 }
 
 
-/* 2.2 keypad */
+/* 3.2 keypad */
 #keypad {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -132,7 +134,7 @@ header #stopwatch{
   outline: none;
 }
 
-/* 2.3 icons */
+/* 3.3 options */
 #options{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -152,7 +154,7 @@ header #stopwatch{
   color: #707B7C;
 }
 
-/* 3. javascript */
+/* 4. color tags */
 .setter-color {
   color: ghostwhite;
   background: #76D7C4;
