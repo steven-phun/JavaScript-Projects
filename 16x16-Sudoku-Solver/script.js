@@ -11,9 +11,8 @@
  */
 
 
-
 /**
- * this class represents the Sudoku using an array to store its data
+ * this class represents the Sudoku grid
  */
 class Sudoku {
   constructor(board, custom=false) {
@@ -550,7 +549,7 @@ class Cell {
 }
 
 /**
- * this class represents how long the user has been playing
+ * this class represents the stopwatch keeping how long the user has been playing
  */
 class Stopwatch {
   constructor() {
