@@ -29,7 +29,7 @@ class Sudoku {
     // {element} the parent HTML board that the Sudoku grid will be inserted to
     this.tag = document.querySelector("#sudoku>table");
 
-    // for CSS color index
+    // for CSS color class
     this.setterColor = "setter-color";
     this.correctColor = "correct-color";
     this.wrongColor = "wrong-color";
