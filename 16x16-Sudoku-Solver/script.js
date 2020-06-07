@@ -25,7 +25,6 @@ class Sudoku {
     this.row = null;                    // {number}  the row index of the selected cell
     this.col = null;                    // {number}  the column index of the selected cell
 
-
     // {element} the parent HTML board that the Sudoku grid will be inserted to
     this.tag = document.querySelector("#sudoku>table");
 
@@ -130,7 +129,7 @@ class Sudoku {
 
     if (event.key === "Backspace") erase();
 
-    if (!this.checkInput(event.keyCode)) return;
+    if (!this.checkKeyboardInput(event.keyCode)) return;
 
     this.removeInvalid(this.row, this.col);
 
@@ -182,18 +181,17 @@ class Sudoku {
    * this method displays the solution
    */
   solve() {
-    this.deselect();
-
     if (this.custom) {
       this.fastSolve(this.board);
     } else {
       this.clearInvalid();
       this.clearWrongColorTags();
-      this.board = this.copy;
+      this.board = this.deepCopy(this.copy);
     }
 
     this.updateDisplay();
     clearInterval(this.stopwatch.time);
+    this.deselect();
   }
 
   /**
@@ -305,7 +303,7 @@ class Sudoku {
   /**
    * @return {boolean} true if the keyboard key input is a number between 0-9 or letter A-F
    */
-  checkInput(input) {
+  checkKeyboardInput(input) {
     // their respective key codes
     let zero = 48, nine = 57, A = 65, F = 70;
 
@@ -366,12 +364,13 @@ class Sudoku {
    */
   toColor(value) {
     if (this.slowValidate(this.row, this.col, value)) {
-      this.setColorTag(this.correctColor);
       this.removeColorTag(this.wrongColor)
-    } else {
-      this.removeColorTag(this.wrongColor);
       this.setColorTag(this.correctColor);
+    } else {
+      this.removeColorTag(this.correctColor);
+      this.setColorTag(this.wrongColor);
     }
+
     return value;
   }
 
@@ -492,6 +491,9 @@ class Sudoku {
     if (this.row === null || this.col === null) return;
 
     this.tag.rows[this.row].cells[this.col].classList.remove(this.selectedColor);
+
+    this.row = null;
+    this.col = null;
     this.updateDisplay();
   }
 
@@ -521,7 +523,7 @@ class Cell {
 class Stopwatch {
   constructor() {
     this.tag = document.querySelector("#stopwatch p");
-    this.seconds = -1; // start at -1 in order to display start time at 0 seconds instead of 1 seconds
+    this.seconds = 0;
     this.minutes = 0;
     this.hours = 0;
     this.time = setInterval(this.getTime, 1000);
