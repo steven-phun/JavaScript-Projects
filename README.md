@@ -1,14 +1,12 @@
 ### Table of Projects
 
-## [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
+## [16x16 Sudoku Solver and ](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
 
 Project Inspiration 
 
-- My professor would have unsolved 16x16 Sudoku on his glass door
+- My professor frequenetly has unsolved Sudokus on his door 
 
 Project Difficulties
-
-- First Web Project 
 
 - Learning a new language, JavaScript
 
@@ -19,5 +17,3 @@ Developed in
 - HTML
 - CSS
 - JavaScript
-
-
