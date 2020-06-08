@@ -18,7 +18,7 @@ Developed in
 - CSS
 - JavaScript
 
-## [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper) *Still working on this project 
+## [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper) *not yet completed.
 
 Project Inspiration 
 
