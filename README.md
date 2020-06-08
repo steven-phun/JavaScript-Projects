@@ -4,13 +4,13 @@
 
 Project Inspiration 
 
-- My professor would have unsolved 16x16 Sudoku on his glass door
+- My professor had Sudoku puzzles on his door for anyone to solve
 
 Project Difficulties
 
-- Learning a new language JS
+- Learning a new language, JavaScript
 
-- Adjusting width relative to screen size in CSS
+- Little experience with CSS prior 
 
 Developed in
 
@@ -18,4 +18,18 @@ Developed in
 - CSS
 - JavaScript
 
+## [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper)
 
+Project Inspiration 
+
+- First video game I spent countless hours on
+
+Project Difficulties
+
+- none
+
+Developed in
+
+- HTML
+- CSS
+- JavaScript
