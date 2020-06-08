@@ -17,3 +17,19 @@ Developed in
 - HTML
 - CSS
 - JavaScript
+
+## [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper)
+
+Project Inspiration 
+
+- First video game I spent countless hours on
+
+Project Difficulties
+
+- none
+
+Developed in
+
+- HTML
+- CSS
+- JavaScript
