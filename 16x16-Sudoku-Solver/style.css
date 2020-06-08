@@ -27,13 +27,16 @@ html {
 
 .container {
   width: 600px;
-  background: #A3E4D7;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 6px #ccc;
 }
 
 .content {
   display: grid;
   grid-template-rows: 1fr 12fr;
   padding: 3%;
+  border-radius: 5px;
+  background: #A3E4D7;
 }
 
 
