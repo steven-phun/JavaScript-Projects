@@ -21,16 +21,16 @@ class Sudoku {
     // {element} the parent HTML board that the Sudoku grid will be inserted to
     this.tag = document.querySelector("#sudoku>table");
 
-    this.board = this.deepCopy(this.toCell(board));  // {array} a deep copy of the playing board
-    this.copy = this.deepCopy(this.board);           // {array} a deep copy of the board in its original state
-    this.stopwatch = new Stopwatch()                 // {clock}   keeps track of how long the user has been playing
-
     this.blank = blank;  // {boolean} true if this is a blank grid
     this.invalid = []    // {array}   stores the coordinates of invalid pairs
     this.size = 16;      // {number}  represents the 16x16 grid
     this.empty = "";     // {string}  represents an empty cell
     this.row = null;     // {number}  the row index of the selected cell
     this.col = null;     // {number}  the column index of the selected cell
+
+    this.board = this.toCell(this.deepCopy(board));  // {array} a deep copy of the playing board
+    this.copy = this.deepCopy(this.board);           // {array} a solution to the board in its original state
+    this.stopwatch = new Stopwatch()                 // {clock} keeps track of user's playing time
 
     // CSS color class instance
     this.setterColor = "setter-color";
@@ -40,8 +40,7 @@ class Sudoku {
     this.invalidColor = "invalid-color";
 
     // setup game
-    this.toCell();        // convert each object in array to Cell Object
-    this.saveSolution();  // keep a solution of the board in its original state
+    this.fastSolve(this.copy);
     this.drawGrid();
     this.updateDisplay();
   }
@@ -315,14 +314,6 @@ class Sudoku {
     return JSON.parse(JSON.stringify(object));
   }
 
-  // this method gets the solution of the board in its original state
-  saveSolution() {
-    if (!this.blank) {
-      this.copy = this.deepCopy(this.board);
-      this.fastSolve(this.copy);
-    }
-  }
-
   /**
    * this method updates the DOM with the recent changes to each cell
    */
@@ -444,16 +435,17 @@ class Sudoku {
   /**
    * this method convert each object in board array into Cell Objects
    */
-  toCell() {
+  toCell(array) {
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
-        if (this.board[row][col] !== this.empty) {
-          this.board[row][col] = new Cell(this.board[row][col], true);
+        if (array[row][col] !== this.empty) {
+          array[row][col] = new Cell(array[row][col], true);
         } else {
-          this.board[row][col] = new Cell(this.empty);
+          array[row][col] = new Cell(this.empty);
         }
       }
     }
+    return array;
   }
 
   /**
