@@ -4,7 +4,7 @@
 
 Project Inspiration 
 
-- My professor, he had Sudoku puuzzles on his door for anyone to solve
+- My professor had Sudoku puzzles on his door for anyone to solve
 
 Project Difficulties
 
