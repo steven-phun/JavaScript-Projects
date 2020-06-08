@@ -14,8 +14,8 @@ Project Difficulties
 
 Developed in
 
-- HTML5
-- CSS3
+- HTML
+- CSS
 - JavaScript
 
 ## [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper) *not yet completed.
@@ -30,6 +30,6 @@ Project Difficulties
 
 Developed in
 
-- HTML5
-- CSS3
+- HTML
+- CSS
 - JavaScript
