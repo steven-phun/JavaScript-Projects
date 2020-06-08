@@ -26,7 +26,7 @@ Project Inspiration
 
 Project Difficulties
 
-- none
+- *Still Working On This Project
 
 Developed in
 
