@@ -4,7 +4,7 @@
 
 Project Inspiration 
 
-- My professor frequenetly has unsolved Sudokus on his door 
+- My professor frequenetly has unsolved Sudokus on his door for anyone to solve
 
 Project Difficulties
 
