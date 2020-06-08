@@ -1,10 +1,10 @@
 ### Table of Projects
 
-## [16x16 Sudoku Solver and ](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
+## [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
 
 Project Inspiration 
 
-- My professor always had Sudoku puuzzles on his door for anyone to solve
+- My professor had Sudoku puuzzles on his door for anyone to solve
 
 Project Difficulties
 
