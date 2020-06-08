@@ -8,9 +8,11 @@ Project Inspiration
 
 Project Difficulties
 
-- Learning a new language JS
+- First Web Project 
 
-- Adjusting width relative to screen size in CSS
+- Learning a new language, JavaScript
+
+- Little experience with CSS prior 
 
 Developed in
 
