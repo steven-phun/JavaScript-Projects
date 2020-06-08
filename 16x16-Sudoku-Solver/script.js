@@ -578,6 +578,7 @@ class Stopwatch {
   }
 }
 
+
 /*** JavaScript Functions ***/
 
 /**
