@@ -273,11 +273,13 @@ class Sudoku {
   }
 
   /**
-   * @function solves and displays the solution.
+   * @function solves and displays the solution to user.
    */
   solve() {
+    this.stopwatch.tag.innerHTML = "Solving...";
+
     if (this.blank) {
-      this.fastSolve(this.board);
+      setTimeout(this.fastSolve(this.board), 0);
     } else {
       this.resetInvalid();
       this.removeAllColorTags(this.wrongColor);
@@ -286,6 +288,7 @@ class Sudoku {
 
     clearInterval(this.stopwatch.time);
     this.deselect();
+    this.stopwatch.tag.innerHTML = "Solution";
     this.updateDisplay();
   }
 
