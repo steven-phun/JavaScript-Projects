@@ -35,10 +35,12 @@ class Minesweeper {
         this.size = this.setMineSize(level);            // {number} the number of mines in the game.
         this.row = this.setRowSize(level);              // {number} the number of rows for the game board.
         this.col = this.setColumnSize(level);           // {number} the number of columns for the game board.
-        this.mine = -1;                                 // {number} represents a mine
+        this.mine = -1;                                 // {number} represents a mine.
+        this.mineLocation = [];                         // {array}  coordinate for the location of each mine.
         this.board = this.setMines(this.buildBoard());  // {array}  represents each square on the game board.
 
         this.drawGameBoard(this.row, this.col);
+        this.setNumber();
     }
 
     /**
@@ -47,19 +49,37 @@ class Minesweeper {
     buildBoard(){
         let gameBoard = [];
 
-        for (let i = 0; i < this.row; i++) {
+        for (let row = 0; row < this.row; row++) {
             gameBoard.push([]);
-            for (let j = 0; j < this.col; j++) {
-                gameBoard[i].push(new Square());
+            for (let col = 0; col < this.col; col++) {
+                gameBoard[row].push(new Square());
             }
         }
         return gameBoard;
     }
 
     /**
-     * @function add the appropriate number of mines to the game board
+     * @function set the number for each square.
+     */
+    setNumber() {
+        // get adjacent cell index for each mine.
+        for (let index = 0; index < this.mineLocation.length; index++) {
+            let rowIndex = this.mineLocation[index].row;
+            let colIndex = this.mineLocation[index].col;
+            let section = 3; // one section is 3x3.
+
+            for (let row = rowIndex; row < rowIndex + section; row++) {
+                for (let col = colIndex; col < colIndex + section; col++) {
+                    this.board[row][col].number = this.board[row][col].number + 1;
+                }
+            }
+        }
+    }
+
+    /**
+     * @function add the appropriate number of mines to the game board.
      *
-     * @param gameBoard {array} the array the mines are added
+     * @param gameBoard {array} the array the mines are added.
      */
     setMines(gameBoard) {
         let numberOfMines = this.size;
@@ -68,8 +88,12 @@ class Minesweeper {
             let row = Math.floor(Math.random() * this.row);
             let col = Math.floor(Math.random() * this.col);
 
-            if (gameBoard[row][col].data !== gameBoard[row][col].mine) numberOfMines--;
-            gameBoard[row][col].data = this.mine;
+            // avoid placing 2 mines on the same square.
+            if (gameBoard[row][col].number !== gameBoard[row][col].mine) {
+                gameBoard[row][col].number = this.mine;
+                this.mineLocation.push({row: row, col: col})
+                numberOfMines--;
+            }
         }
         return gameBoard;
     }
@@ -124,7 +148,7 @@ class Minesweeper {
             let row = this.table.insertRow(); // insert <tr>
             for (let j = 0; j < col; j++) {
                 let cell = row.insertCell(); // insert <tr>
-                this.table.rows[i].cells[j].innerHTML = this.board[i][j].data;
+                this.table.rows[i].cells[j].innerHTML = this.board[i][j].number;
             }
         }
     }
@@ -135,7 +159,7 @@ class Minesweeper {
  */
 class Square {
     constructor() {
-        this.data = 0;  // {number} represents the value that will be displayed.
+        this.number = 0;  // {number} represents how many mines are adjacent to this object.
     }
 }
 
