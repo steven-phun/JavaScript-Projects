@@ -6,7 +6,7 @@
 
 /*** 1. global ***/
 * {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Work Sans', sans-serif;
     letter-spacing: 3px;
     margin: 0;
     padding: 0;
@@ -18,4 +18,19 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
+
+}
+
+.wrapper {
+    max-width: 600px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 6px #ccc;
+}
+
+.content {
+    display: grid;
+    grid-template-rows: 1fr 12fr;
+    padding: 3%;
+    border-radius: 5px;
+    background-image: linear-gradient(-45deg, #5499C7, #7FB3D5, #A9CCE3);
 }
