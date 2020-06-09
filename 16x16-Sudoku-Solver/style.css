@@ -19,7 +19,7 @@
 }
 
 html {
-  height: 100%;
+  min-height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,15 +27,11 @@ html {
 
 .container {
   max-width: 600px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px 6px #ccc;
-}
-
-.content {
   display: grid;
   grid-template-rows: 1fr 12fr;
   padding: 3%;
   border-radius: 5px;
+  box-shadow: 0 0 10px 6px #ccc;
   background-image: linear-gradient(45deg, #76D7C4, #A3E4D7, #D1F2EB);
 }
 
