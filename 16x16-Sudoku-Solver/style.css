@@ -152,7 +152,7 @@ header #stopwatch{
   outline: none;
   border: none;
   border-radius: 15px;
-  padding: 15px;
+  padding: 10px;
 }
 
 #options button:hover {
