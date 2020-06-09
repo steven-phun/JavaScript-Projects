@@ -36,7 +36,7 @@ html {
   grid-template-rows: 1fr 12fr;
   padding: 3%;
   border-radius: 5px;
-  background: #A3E4D7;
+  background-image: linear-gradient(45deg, #76D7C4, #A3E4D7, #D1F2EB);
 }
 
 
