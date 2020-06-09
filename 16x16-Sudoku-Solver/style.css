@@ -44,14 +44,14 @@ html {
 
 header{
   display: grid;
-  grid-template-rows: repeat(2, 1fr);
-  grid-gap: 8px;
+  grid-template-rows: repeat(2, auto);
 }
 
 
 header #menu-bar {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 8px;
 }
 
 #menu-bar button {
@@ -76,8 +76,7 @@ header #stopwatch{
 /*** 3. play area ***/
 #play-area {
   display: grid;
-  grid-template-rows: auto 3fr 1fr;
-  row-gap: 2%;
+  grid-template-rows: auto auto auto;
   text-align: center;
 }
 
@@ -92,6 +91,9 @@ header #stopwatch{
 }
 
 /*** 3.1 sudoku ***/
+#sudoku {
+  padding-bottom: 10px;
+}
 #sudoku tbody {
   border-bottom: #707B7C solid 3px;
 }
@@ -122,8 +124,8 @@ header #stopwatch{
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(2, 2fr);
-  gap: 5% 0;
   justify-self: center;
+  padding-bottom: 10px;
 }
 
 #keypad button {
@@ -150,11 +152,11 @@ header #stopwatch{
   outline: none;
   border: none;
   border-radius: 15px;
+  padding: 15px;
 }
 
 #options button:hover {
-  font-size: 12px;
-  color: #707B7C;
+  background: #76D7C4 !important;
 }
 
 
