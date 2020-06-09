@@ -32,13 +32,11 @@ class Minesweeper {
     constructor(level) {
         // {element} the HTML table tag the game board will be inserted to.
         this.table = document.querySelector("#minesweeper>table");
-        console.log(this.table);
-
         this.size = this.setMineSize(level);            // {number} the number of mines in the game.
         this.row = this.setRowSize(level);              // {number} the number of rows for the game board.
         this.col = this.setColumnSize(level);           // {number} the number of columns for the game board.
-        this.mine = -1;                                 // {number} the value that represents a mine
-        this.board = this.getMines(this.buildBoard());  // {array}  represents each square on the game board.
+        this.mine = -1;                                 // {number} represents a mine
+        this.board = this.setMines(this.buildBoard());  // {array}  represents each square on the game board.
 
         this.drawGameBoard(this.row, this.col);
     }
@@ -61,19 +59,19 @@ class Minesweeper {
     /**
      * @function add the appropriate number of mines to the game board
      *
-     * @param array {array} the array the mines are added
+     * @param gameBoard {array} the array the mines are added
      */
-    getMines(array) {
+    setMines(gameBoard) {
         let numberOfMines = this.size;
 
         while(numberOfMines >= 0) {
             let row = Math.floor(Math.random() * this.row);
             let col = Math.floor(Math.random() * this.col);
 
-            if (array[row][col].data !== array[row][col].mine) numberOfMines--;
-            array[row][col].data = this.mine;
+            if (gameBoard[row][col].data !== gameBoard[row][col].mine) numberOfMines--;
+            gameBoard[row][col].data = this.mine;
         }
-        return array;
+        return gameBoard;
     }
 
     /**
