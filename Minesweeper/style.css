@@ -1,7 +1,9 @@
 /*** table of contents ***/
 
 /** 1. global
- *
+ *  2. top-bar
+ *  3. minesweeper
+ *  4. bot-bar
  */
 
 /*** 1. global ***/
@@ -22,15 +24,26 @@ html {
 }
 
 .wrapper {
-    max-width: 600px;
+    max-width: 1000px;
     border-radius: 5px;
     box-shadow: 0 0 10px 6px #ccc;
 }
 
 .content {
     display: grid;
-    grid-template-rows: 1fr 12fr;
+    grid-template-rows: 1fr auto 1fr;
     padding: 3%;
     border-radius: 5px;
     background-image: linear-gradient(-45deg, #5499C7, #7FB3D5, #A9CCE3);
+}
+
+/*** 2. top-bar ***/
+
+/*** 3. minesweeper ***/
+
+/*** 4. bot-bar ***/
+.bot-bar {
+    display: inline-grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0 2%;
 }
