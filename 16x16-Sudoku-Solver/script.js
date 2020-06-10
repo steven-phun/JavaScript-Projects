@@ -277,15 +277,13 @@ class Sudoku {
    * @function solves and displays the solution to user.
    */
   solve() {
-    this.stopwatch.tag.innerHTML = "Solving...";
-
     if (this.blank) {
+      this.stopwatch.tag.innerHTML = "Solving...";
       window.setTimeout(this.delaySolveFunction, 0);
     } else {
       this.resetInvalid();
       this.removeAllColorTags(this.wrongColor);
       this.board = this.deepCopy(this.copy);
-      this.stopwatch.tag.innerHTML = "Solution";
     }
 
     clearInterval(this.stopwatch.time);
