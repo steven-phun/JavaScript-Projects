@@ -558,6 +558,8 @@ class Stopwatch {
     this.minutes = 0;
     this.hours = 0;
     this.time = setInterval(this.getTime, 1000);
+
+    this.printTime();
   }
 
   /**
