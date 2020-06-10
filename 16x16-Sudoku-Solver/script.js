@@ -216,9 +216,7 @@ class Sudoku {
 
     this.removeCurrentInvalid(this.row, this.col);
 
-    if (this.blank) {
-      this.tag.rows[this.row].cells[this.col].classList.add(this.setterColor);
-    }
+    if (this.blank) this.tag.rows[this.row].cells[this.col].classList.add(this.setterColor);
 
     this.board[this.row][this.col].data = this.toColor(this.toDecimal(event.keyCode));
 
@@ -247,6 +245,9 @@ class Sudoku {
     if (this.row === null || this.col === null) return;
 
     if (this.board[this.row][this.col].setter === true) return;
+
+    if (this.blank) this.tag.rows[this.row].cells[this.col].classList.add(this.setterColor);
+
 
     this.board[this.row][this.col].data = value;
     this.removeCurrentInvalid(this.row, this.col);
