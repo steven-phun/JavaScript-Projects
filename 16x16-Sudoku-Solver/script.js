@@ -34,7 +34,7 @@ class Sudoku {
 
     this.board = this.toCell(this.deepCopy(board));  // {array} a deep copy of the playing board.
     this.copy = this.deepCopy(this.board);           // {array} a solution to the board in its original state.
-    this.stopwatch = new Stopwatch()                 // {clock} keeps track of user's playing time.
+    this.stopwatch = new Stopwatch();                // {clock} keeps track of user's playing time.
 
     // CSS color class instance
     this.setterColor = "setter-color";
@@ -286,7 +286,7 @@ class Sudoku {
       this.board = this.deepCopy(this.copy);
     }
 
-    clearInterval(this.stopwatch.time);
+    window.clearInterval(this.stopwatch.time);
     this.deselect();
     this.updateDisplay();
   }
@@ -557,7 +557,7 @@ class Stopwatch {
     this.seconds = 0;
     this.minutes = 0;
     this.hours = 0;
-    this.time = setInterval(this.getTime, 1000);
+    this.time = window.setInterval(this.getTime, 1000);
 
     this.printTime();
   }
@@ -634,7 +634,7 @@ const restartGame = () => {
   let custom = false;
   if (currentBoard === 0) custom = true;
 
-  clearInterval(sudoku.stopwatch.time);
+  window.clearInterval(sudoku.stopwatch.time);
   sudoku = new Sudoku(getBoard()[currentBoard], custom);
 }
 
@@ -663,7 +663,8 @@ const erase =() => sudoku.erase();
  */
 const makeCustomBoard = () => {
   currentBoard = 0; // index 0 is an empty board.
-  clearInterval(sudoku.stopwatch.time);
+
+  window.clearInterval(sudoku.stopwatch.time);
   sudoku = new Sudoku(getBoard()[currentBoard], true);
 }
 
@@ -678,7 +679,7 @@ const newGame = () => {
     currentBoard = (currentBoard + 1) % getBoard().length;
   }
 
-  clearInterval(sudoku.stopwatch.time);
+  window.clearInterval(sudoku.stopwatch.time);
   sudoku = new Sudoku(getBoard()[currentBoard]);
 }
 
