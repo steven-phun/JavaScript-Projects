@@ -279,17 +279,32 @@ class Sudoku {
     this.stopwatch.tag.innerHTML = "Solving...";
 
     if (this.blank) {
-      setTimeout(this.fastSolve(this.board), 0);
+      window.setTimeout(this.delaySolveFunction, 0);
     } else {
       this.resetInvalid();
       this.removeAllColorTags(this.wrongColor);
       this.board = this.deepCopy(this.copy);
+      this.stopwatch.tag.innerHTML = "Solution";
     }
 
     clearInterval(this.stopwatch.time);
     this.deselect();
-    this.stopwatch.tag.innerHTML = "Solution";
     this.updateDisplay();
+  }
+
+  /**
+   * @function helps prompt the user before doing a time heavy task.
+   */
+  delaySolveFunction() {
+    const check = sudoku.fastSolve(sudoku.board);
+
+    if (check) {
+      sudoku.stopwatch.tag.innerHTML = "Solution";
+    } else {
+      sudoku.stopwatch.tag.innerHTML = "No Solution Found";
+    }
+
+    sudoku.updateDisplay();
   }
 
   /**
@@ -635,6 +650,7 @@ const validate = () => {
  * @function display the solution to the user.
  */
 const solve = () => sudoku.solve();
+
 
 /**
  * @function removes the value of a non-setter selected cell.
