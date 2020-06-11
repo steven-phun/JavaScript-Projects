@@ -37,11 +37,11 @@ class Sudoku {
     this.stopwatch = new Stopwatch();                // {clock} keeps track of user's playing time.
 
     // CSS color class instance
-    this.setterColor = "setter-color";
-    this.correctColor = "correct-color";
-    this.wrongColor = "wrong-color";
-    this.selectedColor = "selected-color";
-    this.invalidColor = "invalid-color";
+    this.colorSetter = "setter-color";
+    this.colorCorrect = "correct-color";
+    this.colorWrong = "wrong-color";
+    this.colorSelected = "selected-color";
+    this.colorInvalid = "invalid-color";
 
     // setup game
     this.fastSolve(this.copy);
@@ -216,7 +216,7 @@ class Sudoku {
 
     this.removeCurrentInvalid(this.row, this.col);
 
-    if (this.blank) this.tag.rows[this.row].cells[this.col].classList.add(this.setterColor);
+    if (this.blank) this.tag.rows[this.row].cells[this.col].classList.add(this.colorSetter);
 
     this.board[this.row][this.col].data = this.toColor(this.toDecimal(event.keyCode));
 
@@ -246,7 +246,7 @@ class Sudoku {
 
     if (this.board[this.row][this.col].setter === true) return;
 
-    if (this.blank) this.tag.rows[this.row].cells[this.col].classList.add(this.setterColor);
+    if (this.blank) this.tag.rows[this.row].cells[this.col].classList.add(this.colorSetter);
 
 
     this.board[this.row][this.col].data = value;
@@ -282,7 +282,7 @@ class Sudoku {
       window.setTimeout(this.delaySolveFunction, 0);
     } else {
       this.resetInvalid();
-      this.removeAllColorTags(this.wrongColor);
+      this.removeAllColorTags(this.colorWrong);
       this.board = this.deepCopy(this.copy);
     }
 
@@ -332,9 +332,9 @@ class Sudoku {
         this.tag.rows[row].cells[col].className = "";
         if (this.board[row][col].setter === true) {
           this.tag.rows[row].cells[col].innerHTML = this.board[row][col].data;
-          if (this.board[row][col].setter) this.tag.rows[row].cells[col].classList.add(this.setterColor);
+          if (this.board[row][col].setter) this.tag.rows[row].cells[col].classList.add(this.colorSetter);
         } else {
-          this.tag.rows[row].cells[col].classList.remove(this.setterColor);
+          this.tag.rows[row].cells[col].classList.remove(this.colorSetter);
           this.tag.rows[row].cells[col].innerHTML = this.empty;
         }
       }
@@ -367,10 +367,10 @@ class Sudoku {
    * @param selected {boolean} if true, add a background color on this cell.
    */
   setSelected(selected) {
-    const tag = document.querySelector("." + this.selectedColor);
+    const tag = document.querySelector("." + this.colorSelected);
 
-    if (tag !== null) tag.classList.remove(this.selectedColor); // clear previously selected tag.
-    if (selected) this.tag.rows[this.row].cells[this.col].classList.add(this.selectedColor);
+    if (tag !== null) tag.classList.remove(this.colorSelected); // clear previously selected tag.
+    if (selected) this.tag.rows[this.row].cells[this.col].classList.add(this.colorSelected);
   }
 
   /**
@@ -379,7 +379,7 @@ class Sudoku {
   deselect() {
     if (this.row === null || this.col === null) return;
 
-    this.tag.rows[this.row].cells[this.col].classList.remove(this.selectedColor);
+    this.tag.rows[this.row].cells[this.col].classList.remove(this.colorSelected);
 
     this.row = null;
     this.col = null;
@@ -441,10 +441,10 @@ class Sudoku {
    * @function removes all CSS invalid color class from every cell.
    */
   removeAllInvalidTag() {
-    const tag = document.querySelectorAll("." + this.invalidColor);
+    const tag = document.querySelectorAll("." + this.colorInvalid);
 
     for (let i = 0; i < tag.length; i++) {
-      tag[i].classList.remove(this.invalidColor);
+      tag[i].classList.remove(this.colorInvalid);
     }
   }
 
@@ -455,8 +455,8 @@ class Sudoku {
     this.removeAllInvalidTag();
 
     for (let i = 0; i < this.invalid.length; i++) {
-      this.tag.rows[this.invalid[i].row].cells[this.invalid[i].col].classList.add(this.invalidColor);
-      this.tag.rows[this.invalid[i].otherRow].cells[this.invalid[i].otherCol].classList.add(this.invalidColor);
+      this.tag.rows[this.invalid[i].row].cells[this.invalid[i].col].classList.add(this.colorInvalid);
+      this.tag.rows[this.invalid[i].otherRow].cells[this.invalid[i].otherCol].classList.add(this.colorInvalid);
     }
   }
 
@@ -494,11 +494,11 @@ class Sudoku {
    */
   toColor(value) {
     if (this.slowValidate(this.row, this.col, value)) {
-      this.removeColorTag(this.wrongColor)
-      this.setColorTag(this.correctColor);
+      this.removeColorTag(this.colorWrong)
+      this.setColorTag(this.colorCorrect);
     } else {
-      this.removeColorTag(this.correctColor);
-      this.setColorTag(this.wrongColor);
+      this.removeColorTag(this.colorCorrect);
+      this.setColorTag(this.colorWrong);
     }
 
     return value;
