@@ -32,10 +32,12 @@ class Minesweeper {
     constructor(level) {
         // {element}  the HTML table that will contain the game board.
         this.table = document.querySelector("#minesweeper>table");
+        // {element}  the HTML tag that contains the amount of mines left.
+        this.minesLeft = document.querySelector("#mines-left")
         this.size = this.setMineSize(level);            // {number}  the number of mines in the game.
         this.row = this.setRowSize(level);              // {number}  the number of rows for the game board.
         this.col = this.setColumnSize(level);           // {number}  the number of columns for the game board.
-        this.mineLocation = [];                         // {array}   coordinate for the location of each mine.
+        this.minesLocation = [];                         // {array}   coordinate for the location of each mine.
         this.board = this.setMines(this.buildBoard());  // {array}   represents each square on the game board.
 
         this.drawGameBoard();
@@ -63,9 +65,9 @@ class Minesweeper {
      */
     setNumber() {
         // get adjacent cell index for each mine.
-        for (let index = 0; index < this.mineLocation.length; index++) {
-            let rowIndex = this.mineLocation[index].row;
-            let colIndex = this.mineLocation[index].col;
+        for (let index = 0; index < this.minesLocation.length; index++) {
+            let rowIndex = this.minesLocation[index].row;
+            let colIndex = this.minesLocation[index].col;
             let section = 3; // one section is 3x3.
 
             for (let row = rowIndex; row < rowIndex + section; row++) {
@@ -94,7 +96,7 @@ class Minesweeper {
             if (!gameBoard[row][col].mine) {
                 gameBoard[row][col].number = "<i class=\"fas fa-bomb\"></i>";
                 gameBoard[row][col].mine = true;
-                this.mineLocation.push({row: row, col: col})
+                this.minesLocation.push({row: row, col: col})
                 numberOfMines--;
             }
         }
@@ -165,6 +167,10 @@ class Minesweeper {
      * @function updates the DOM with the recent changes to each cell.
      */
     updateDisplay() {
+        // update mines left.
+        this.minesLeft.innerHTML = this.size.toString();
+
+        // update cells.
         for (let row = 0; row < this.row; row++) {
             for (let col = 0; col < this.col; col++) {
                 this.table.rows[row].cells[col].innerHTML = this.board[row][col].number;
