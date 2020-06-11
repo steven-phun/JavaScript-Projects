@@ -84,7 +84,7 @@ class Minesweeper {
     setMines(gameBoard) {
         let numberOfMines = this.size;
 
-        while(numberOfMines >= 0) {
+        while(numberOfMines > 0) {
             let row = Math.floor(Math.random() * this.row);
             let col = Math.floor(Math.random() * this.col);
 
