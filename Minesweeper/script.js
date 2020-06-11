@@ -27,9 +27,11 @@
 
 /**
  * @classdesc represents the game board.
+ *
+ * @param level {number} level of difficulty.
  */
 class Minesweeper {
-    constructor(level) {
+    constructor(level=3) {
         // {element}  the HTML table that will contain the game board.
         this.table = document.querySelector("#minesweeper>table");
         // {element}  the HTML tag that contains the amount of mines left.
@@ -175,7 +177,9 @@ class Minesweeper {
         // update cells.
         for (let row = 0; row < this.row; row++) {
             for (let col = 0; col < this.col; col++) {
-                this.table.rows[row].cells[col].innerHTML = this.board[row][col].number;
+                if (this.board[row][col].number !== 0) {
+                    this.table.rows[row].cells[col].innerHTML = this.board[row][col].number;
+                }
             }
         }
     }
@@ -213,4 +217,4 @@ class Timer {
 const setLevel = (level) => minesweeper = new Minesweeper(level);
 
 
-let minesweeper = new Minesweeper(1);
+let minesweeper = new Minesweeper();
