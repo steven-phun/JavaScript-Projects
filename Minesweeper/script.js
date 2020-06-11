@@ -41,7 +41,7 @@ class Minesweeper {
         this.board = this.setMines(this.buildBoard());  // {array}   represents each square on the game board.
 
         this.drawGameBoard();
-        //this.setNumber();
+        this.setNumber();
         this.updateDisplay();
     }
 
@@ -61,18 +61,20 @@ class Minesweeper {
     }
 
     /**
-     * @function set the number for each square.
+     * @function set the number of adjacent mines for each cell.
      */
     setNumber() {
         // get adjacent cell index for each mine.
         for (let index = 0; index < this.minesLocation.length; index++) {
-            let rowIndex = this.minesLocation[index].row;
-            let colIndex = this.minesLocation[index].col;
+            let rowIndex = this.minesLocation[index].row - 1;
+            let colIndex = this.minesLocation[index].col - 1;
             let section = 3; // one section is 3x3.
 
             for (let row = rowIndex; row < rowIndex + section; row++) {
                 for (let col = colIndex; col < colIndex + section; col++) {
-                    this.board[row][col].number = this.board[row][col].number + 1;
+                    if (row >= 0 && col >= 0 && row < this.row && col < this.col && !this.board[row][col].mine) {
+                        this.board[row][col].number = this.board[row][col].number + 1;
+                    }
                 }
             }
         }
@@ -211,4 +213,4 @@ class Timer {
 const setLevel = (level) => minesweeper = new Minesweeper(level);
 
 
-let minesweeper = new Minesweeper(2);
+let minesweeper = new Minesweeper(1);
