@@ -30,7 +30,7 @@
  */
 class Minesweeper {
     constructor(level) {
-        // {element} the HTML table tag the game board will be inserted to.
+        // {element}  the HTML table that will contain the game board.
         this.table = document.querySelector("#minesweeper>table");
         this.size = this.setMineSize(level);            // {number}  the number of mines in the game.
         this.row = this.setRowSize(level);              // {number}  the number of rows for the game board.
@@ -92,6 +92,7 @@ class Minesweeper {
 
             // avoid placing 2 mines on the same square.
             if (!gameBoard[row][col].mine) {
+                gameBoard[row][col].number = "<i class=\"fas fa-bomb\"></i>";
                 gameBoard[row][col].mine = true;
                 this.mineLocation.push({row: row, col: col})
                 numberOfMines--;
@@ -143,12 +144,21 @@ class Minesweeper {
      * @function generates html tags for a table that represents the game board.
      */
     drawGameBoard() {
+        this.getEmptyTable();
+
         for (let i = 0; i < this.row; i++) {
             let row = this.table.insertRow(); // insert <tr>.
             for (let j = 0; j < this.col; j++) {
                 let cell = row.insertCell(); // insert <tr>.
             }
         }
+    }
+
+    /**
+     * @function reset table to prevent future tables from stacking on top of each other.
+     */
+    getEmptyTable() {
+        this.table.innerHTML = '';
     }
 
     /**
@@ -162,7 +172,6 @@ class Minesweeper {
         }
     }
 }
-
 
 
 /**
@@ -188,4 +197,12 @@ class Timer {
 
 /*** JavaScript Functions ***/
 
-let minesweeper = new Minesweeper(1);
+/**
+ * @function initial a new game with given level.
+ *
+ * @param level {number} the level of difficulty.
+ */
+const setLevel = (level) => minesweeper = new Minesweeper(level);
+
+
+let minesweeper = new Minesweeper(2);
