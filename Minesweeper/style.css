@@ -56,7 +56,7 @@ html {
 
 #minesweeper table {
     max-width: 1200px;
-
+    margin: auto;
     border-collapse: collapse;
     table-layout: fixed;
     align-content: center;
@@ -66,8 +66,8 @@ html {
     border: #707B7C solid 1px;
     text-align: center;
     font-size: 25px;
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
 }
 
 
