@@ -31,7 +31,7 @@
  * @param level {number} level of difficulty.
  */
 class Minesweeper {
-    constructor(level=3) {
+    constructor(level=1) {
         // {element}  the HTML table that will contain the game board.
         this.table = document.querySelector("#minesweeper>table");
         // {element}  the HTML tag that contains the amount of mines left.
