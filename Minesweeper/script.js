@@ -42,6 +42,17 @@ class Minesweeper {
         this.minesLocation = [];                         // {array}   coordinate for the location of each mine.
         this.board = this.setMines(this.buildBoard());  // {array}   represents each square on the game board.
 
+        // CSS color class instances
+        this.colorMine = "mine-color";
+        this.color1    = "color-1";
+        this.color2    = "color-2";
+        this.color3    = "color-3";
+        this.color4    = "color-4";
+        this.color5    = "color-5";
+        this.color6    = "color-6";
+        this.color7    = "color-7";
+        this.color8    = "color-8";
+
         this.drawGameBoard();
         this.setNumber();
         this.updateDisplay();
@@ -80,6 +91,30 @@ class Minesweeper {
                 }
             }
         }
+    }
+
+    /**
+     * @function add the CSS color class for each cell.
+     *
+     * @param row  {number} the row index of cell.
+     * @param col  {number} the cell index of cell.
+     * @param text {number} the number to add the color class.
+     */
+    updateCellColor(row, col, text) {
+        let color = "";
+
+        if (text === 1) color = this.color1;
+        if (text === 2) color = this.color2;
+        if (text === 3) color = this.color3;
+        if (text === 4) color = this.color4;
+        if (text === 5) color = this.color5;
+        if (text === 6) color = this.color6;
+        if (text === 7) color = this.color7;
+        if (text === 8) color = this.color8;
+
+        if (color === "") return;
+
+        this.table.rows[row].cells[col].classList.add(color);
     }
 
     /**
@@ -178,6 +213,7 @@ class Minesweeper {
         for (let row = 0; row < this.row; row++) {
             for (let col = 0; col < this.col; col++) {
                 if (this.board[row][col].number !== 0) {
+                    this.updateCellColor(row, col, this.board[row][col].number);
                     this.table.rows[row].cells[col].innerHTML = this.board[row][col].number;
                 }
             }

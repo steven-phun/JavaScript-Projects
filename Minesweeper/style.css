@@ -4,6 +4,7 @@
  *  2. top-bar
  *  3. minesweeper
  *  4. bot-bar
+ *  5. color-index
  */
 
 
@@ -24,7 +25,7 @@ html {
 }
 
 .wrapper {
-    max-width: 800px;
+    max-width: 1200px;
     display: grid;
     grid-template-rows: 1fr auto 1fr;
     padding: 3%;
@@ -58,11 +59,15 @@ html {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
+    align-content: center;
 }
 
 #minesweeper td {
     border: #707B7C solid 1px;
     text-align: center;
+    font-size: 25px;
+    width: 35px;
+    height: 35px;
 }
 
 
@@ -72,3 +77,39 @@ html {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 0 2%;
 }
+
+/*** 5. color-index ***/
+
+.color-1 {
+    color: blue;
+}
+
+.color-2 {
+    color: green;
+}
+
+.color-3 {
+    color: red;
+}
+
+.color-4 {
+    color: purple;
+}
+
+.color-5 {
+    color: black;
+}
+
+.color-6 {
+    color: maroon;
+}
+
+.color-7 {
+    color: gray;
+}
+
+.color-8 {
+    color: turquoise;
+}
+
+
