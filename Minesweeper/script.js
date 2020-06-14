@@ -36,10 +36,12 @@ class Minesweeper {
         this.table = document.querySelector("#minesweeper>table");
         // {element}  the HTML tag that contains the amount of mines left.
         this.minesLeft = document.querySelector("#mines-left")
+        this.row = null;                                // {number}  the row number of selected cell.
+        this.col = null;                                // {number}  the column number of selected cell.
         this.size = this.setMineSize(level);            // {number}  the number of mines in the game.
-        this.row = this.setRowSize(level);              // {number}  the number of rows for the game board.
-        this.col = this.setColumnSize(level);           // {number}  the number of columns for the game board.
-        this.minesLocation = [];                         // {array}   coordinate for the location of each mine.
+        this.width = this.setBoardWidth(level);         // {number}  the number of rows for the game board.
+        this.length = this.setBoardLength(level);       // {number}  the number of columns for the game board.
+        this.minesLocation = [];                        // {array}   coordinate for the location of each mine.
         this.board = this.setMines(this.buildBoard());  // {array}   represents each square on the game board.
 
         // CSS color class instances
@@ -64,9 +66,9 @@ class Minesweeper {
     buildBoard(){
         let gameBoard = [];
 
-        for (let row = 0; row < this.row; row++) {
+        for (let row = 0; row < this.width; row++) {
             gameBoard.push([]);
-            for (let col = 0; col < this.col; col++) {
+            for (let col = 0; col < this.length; col++) {
                 gameBoard[row].push(new Square());
             }
         }
@@ -85,7 +87,7 @@ class Minesweeper {
 
             for (let row = rowIndex; row < rowIndex + section; row++) {
                 for (let col = colIndex; col < colIndex + section; col++) {
-                    if (row >= 0 && col >= 0 && row < this.row && col < this.col && !this.board[row][col].mine) {
+                    if (row >= 0 && col >= 0 && row < this.width && col < this.length && !this.board[row][col].mine) {
                         this.board[row][col].number = this.board[row][col].number + 1;
                     }
                 }
@@ -128,8 +130,8 @@ class Minesweeper {
         let numberOfMines = this.size;
 
         while(numberOfMines > 0) {
-            let row = Math.floor(Math.random() * this.row);
-            let col = Math.floor(Math.random() * this.col);
+            let row = Math.floor(Math.random() * this.width);
+            let col = Math.floor(Math.random() * this.length);
 
             // avoid placing 2 mines on the same square.
             if (!gameBoard[row][col].mine) {
@@ -162,7 +164,7 @@ class Minesweeper {
      *
      * @return {number} represents the number of columns.
      */
-    setColumnSize(level) {
+    setBoardLength(level) {
         if (level === 1) return 10;
         if (level === 2) return 16;
         if (level === 3) return 30;
@@ -175,7 +177,7 @@ class Minesweeper {
      *
      * @return {number} represents the number of rows.
      */
-    setRowSize(difficulty) {
+    setBoardWidth(difficulty) {
         if (difficulty === 1) return 10;
 
         return 16; // rest of the level(2 and 3) row size is 16.
@@ -187,9 +189,9 @@ class Minesweeper {
     drawGameBoard() {
         this.getEmptyTable();
 
-        for (let i = 0; i < this.row; i++) {
+        for (let i = 0; i < this.width; i++) {
             let row = this.table.insertRow(); // insert <tr>.
-            for (let j = 0; j < this.col; j++) {
+            for (let j = 0; j < this.length; j++) {
                 let cell = row.insertCell(); // insert <tr>.
             }
         }
@@ -210,8 +212,8 @@ class Minesweeper {
         this.minesLeft.innerHTML = this.size.toString();
 
         // update cells.
-        for (let row = 0; row < this.row; row++) {
-            for (let col = 0; col < this.col; col++) {
+        for (let row = 0; row < this.width; row++) {
+            for (let col = 0; col < this.length; col++) {
                 if (this.board[row][col].number !== 0) {
                     this.updateCellColor(row, col, this.board[row][col].number);
                     this.table.rows[row].cells[col].innerHTML = this.board[row][col].number;
