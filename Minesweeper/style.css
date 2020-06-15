@@ -24,6 +24,10 @@ html {
     justify-content: center;
 }
 
+button {
+    cursor: pointer;
+}
+
 .wrapper {
     display: grid;
     grid-template-rows: 1fr auto 1fr;
@@ -41,16 +45,22 @@ html {
     padding-bottom: 10px;
 }
 
+#top-bar button:hover,
+#top-bar i:hover {
+    color: ghostwhite;
+}
+
 #top-bar label {
     text-align: center;
 }
 
-#top-bar #flag-mine {
+#top-bar #flag-question {
     text-align: end;
 }
 
 /*** 3. minesweeper ***/
 #minesweeper {
+    cursor: pointer;
     padding-bottom: 10px;
 }
 
