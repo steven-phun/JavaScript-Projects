@@ -26,7 +26,10 @@ html {
 }
 
 button {
-    cursor: pointer;
+    border-radius: 5px;
+    border: solid 1px;
+    padding: 5px;
+    outline: none;
 }
 
 .wrapper {
@@ -46,13 +49,15 @@ button {
     padding-bottom: 10px;
 }
 
-#top-bar button:hover,
-#top-bar i:hover {
-    color: ghostwhite;
-}
-
 #top-bar label {
     text-align: center;
+}
+
+#top-bar #flag-question button:hover,
+#top-bar #flag-question i:hover{
+    color: ghostwhite;
+    cursor: pointer;
+    background-color: #7FB3D5;
 }
 
 #top-bar #flag-question {
@@ -88,6 +93,16 @@ button {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 0 2%;
 }
+
+#bot-bar button {
+    cursor: pointer;
+}
+
+#bot-bar button:hover {
+    color: ghostwhite;
+    background-color: #7FB3D5;
+}
+
 
 /*** 5. color-index ***/
 
