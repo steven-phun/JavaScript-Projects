@@ -49,9 +49,11 @@ button {
     padding-bottom: 10px;
 }
 
-#top-bar label {
+#top-bar #countdown {
     text-align: center;
+    padding: 5px;
 }
+
 
 #top-bar #flag-question button:hover,
 #top-bar #flag-question i:hover{
@@ -63,6 +65,7 @@ button {
 #top-bar #flag-question {
     text-align: end;
 }
+
 
 /*** 3. minesweeper ***/
 #minesweeper {
