@@ -248,6 +248,17 @@ class Timer {
 /*** JavaScript Functions ***/
 
 /**
+ * @function returns the row and column index of the selected game board cell.
+ *
+ * @param row {number} the row index of selected cell.
+ * @param col {number} the column index of selected cell.
+ */
+const getCellIndex = (row, col) => {
+    minesweeper.row = row;
+    minesweeper.col = col;
+}
+
+/**
  * @function initial a new game with given level.
  *
  * @param level {number} the level of difficulty.
