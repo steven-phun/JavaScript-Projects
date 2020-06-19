@@ -135,7 +135,7 @@ class Minesweeper {
 
             // avoid placing 2 mines on the same square.
             if (!gameBoard[row][col].mine) {
-                gameBoard[row][col].number = "<i class=\"fas fa-bomb\"></i>";
+                gameBoard[row][col].number = '<i class="fas fa-bomb"></i>';
                 gameBoard[row][col].mine = true;
                 this.minesLocation.push({row: row, col: col})
                 numberOfMines--;
@@ -193,6 +193,7 @@ class Minesweeper {
             let row = this.table.insertRow(); // insert <tr>.
             for (let j = 0; j < this.length; j++) {
                 let cell = row.insertCell(); // insert <tr>.
+                cell.setAttribute('onclick', `getCellIndex(${i},${j})`);
             }
         }
     }
@@ -208,7 +209,7 @@ class Minesweeper {
      * @function updates the DOM with the recent changes to each cell.
      */
     updateDisplay() {
-        // update mines left.
+        // update mines left count.
         this.minesLeft.innerHTML = this.size.toString();
 
         // update cells.
@@ -265,5 +266,5 @@ const getCellIndex = (row, col) => {
  */
 const setLevel = (level) => minesweeper = new Minesweeper(level);
 
-
+// global and window listener instance
 let minesweeper = new Minesweeper();
