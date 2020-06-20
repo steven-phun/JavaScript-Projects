@@ -45,16 +45,17 @@ class Minesweeper {
         this.board = this.setMines(this.buildBoard());  // {array}   represents each square on the game board.
 
         // CSS color class instances
-        this.colorMine = "mine-color";
-        this.color1    = "color-1";
-        this.color2    = "color-2";
-        this.color3    = "color-3";
-        this.color4    = "color-4";
-        this.color5    = "color-5";
-        this.color6    = "color-6";
-        this.color7    = "color-7";
-        this.color8    = "color-8";
+        this.selected = "selected-color" // the background color of selected cell.
+        this.color1   = "color-1";       // style tag for the number 1.
+        this.color2   = "color-2";       // style tag for the number 2.
+        this.color3   = "color-3";       // style tag for the number 3.
+        this.color4   = "color-4";       // style tag for the number 4.
+        this.color5   = "color-5";       // style tag for the number 5.
+        this.color6   = "color-6";       // style tag for the number 6.
+        this.color7   = "color-7";       // style tag for the number 7.
+        this.color8   = "color-8";       // style tag for the number 8.
 
+        // setting up the game board.
         this.drawGameBoard();
         this.setNumber();
         this.updateDisplay();
@@ -222,6 +223,25 @@ class Minesweeper {
             }
         }
     }
+
+    /**
+     * @function remove previous selected cell background color.
+     */
+    removeSelectedColor() {
+        const selectedCell = document.querySelector("." + this.selected);
+
+        if (selectedCell !== null) selectedCell.classList.remove(this.selected)
+    }
+
+    /**
+     * @function set the selected cell's background color.
+     */
+    setSelectedColor() {
+        if (this.row === null || this.col === null) return;
+
+        this.removeSelectedColor();
+        this.table.rows[this.row].cells[this.col].classList.add(this.selected);
+    }
 }
 
 
@@ -257,6 +277,9 @@ class Timer {
 const getCellIndex = (row, col) => {
     minesweeper.row = row;
     minesweeper.col = col;
+
+    minesweeper.setSelectedColor();
+    minesweeper.updateDisplay();
 }
 
 /**
