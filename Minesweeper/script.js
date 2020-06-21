@@ -246,6 +246,17 @@ class Minesweeper {
         this.removeSelectedColor();
         this.table.rows[this.row].cells[this.col].classList.add(this.selected);
     }
+
+    /**
+     * @function set the selected cell to the icon clicked.
+     *
+     * @param tag {string} the HTML icon clicked.
+     */
+    toIcon(tag) {
+        if (this.row === null || this.col === null) return;
+
+        this.board[this.row][this.col].number = tag;
+    }
 }
 
 
