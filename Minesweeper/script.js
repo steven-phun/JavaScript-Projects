@@ -33,7 +33,7 @@
 class Minesweeper {
     constructor(level= 1) {
         // HTML icon tags
-        this.iconMine = "<i class='fas fa-bomb'></i>";
+        this.iconMine         = '<i class="fas fa-bomb"></i>';
 
         // CSS color class instances
         this.selected = "selected-color" // the background color of selected cell.
@@ -283,6 +283,16 @@ const getCellIndex = (row, col) => {
     minesweeper.col = col;
 
     minesweeper.setSelectedColor();
+    minesweeper.updateDisplay();
+}
+
+/**
+ * @function return the HTML icon tag clicked.
+ *
+ * @param tag {<i>} the HTML icon tag clicked.
+ */
+const getIcon = (tag) => {
+    minesweeper.toIcon(tag.toString());
     minesweeper.updateDisplay();
 }
 
