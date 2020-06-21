@@ -31,18 +31,9 @@
  * @param level {number} level of difficulty.
  */
 class Minesweeper {
-    constructor(level=1) {
-        // {element}  the HTML table that will contain the game board.
-        this.table = document.querySelector("#minesweeper>table");
-        // {element}  the HTML tag that contains the amount of mines left.
-        this.minesLeft = document.querySelector("#mines-left")
-        this.row = null;                                // {number}  the row number of selected cell.
-        this.col = null;                                // {number}  the column number of selected cell.
-        this.size = this.setMineSize(level);            // {number}  the number of mines in the game.
-        this.width = this.setBoardWidth(level);         // {number}  the number of rows for the game board.
-        this.length = this.setBoardLength(level);       // {number}  the number of columns for the game board.
-        this.minesLocation = [];                        // {array}   coordinate for the location of each mine.
-        this.board = this.setMines(this.buildBoard());  // {array}   represents each square on the game board.
+    constructor(level= 1) {
+        // HTML icon tags
+        this.iconMine = "<i class='fas fa-bomb'></i>";
 
         // CSS color class instances
         this.selected = "selected-color" // the background color of selected cell.
@@ -54,6 +45,19 @@ class Minesweeper {
         this.color6   = "color-6";       // style tag for the number 6.
         this.color7   = "color-7";       // style tag for the number 7.
         this.color8   = "color-8";       // style tag for the number 8.
+
+        // minesweeper instances.
+        // {element}  the HTML table that will contain the game board.
+        this.table = document.querySelector("#minesweeper>table");
+        // {element}  the HTML tag that contains the amount of mines left.
+        this.minesLeft = document.querySelector("#mines-left")
+        this.row = null;                                // {number}  the row number of selected cell.
+        this.col = null;                                // {number}  the column number of selected cell.
+        this.size = this.setMineSize(level);            // {number}  the number of mines in the game.
+        this.width = this.setBoardWidth(level);         // {number}  the number of rows for the game board.
+        this.length = this.setBoardLength(level);       // {number}  the number of columns for the game board.
+        this.minesLocation = [];                        // {array}   coordinate for the location of each mine.
+        this.board = this.setMines(this.buildBoard());  // {array}   represents each square on the game board.
 
         // setting up the game board.
         this.drawGameBoard();
@@ -136,7 +140,7 @@ class Minesweeper {
 
             // avoid placing 2 mines on the same square.
             if (!gameBoard[row][col].mine) {
-                gameBoard[row][col].number = '<i class="fas fa-bomb"></i>';
+                gameBoard[row][col].number = this.iconMine;
                 gameBoard[row][col].mine = true;
                 this.minesLocation.push({row: row, col: col})
                 numberOfMines--;
@@ -230,7 +234,7 @@ class Minesweeper {
     removeSelectedColor() {
         const selectedCell = document.querySelector("." + this.selected);
 
-        if (selectedCell !== null) selectedCell.classList.remove(this.selected)
+        if (selectedCell !== null) selectedCell.classList.remove(this.selected);
     }
 
     /**
@@ -251,7 +255,7 @@ class Minesweeper {
 class Square {
     constructor() {
         this.number = 0;  // {number}  represents how many mines are adjacent to this object.
-        this.mine = false // {boolean} true if the cell represents a mine.
+        this.mine = false; // {boolean} true if the cell represents a mine.
     }
 }
 
