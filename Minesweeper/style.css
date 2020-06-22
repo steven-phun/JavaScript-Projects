@@ -117,6 +117,10 @@ button {
     background-color: #A3E4D7;
     color: ghostwhite !important;
 }
+.unhide-cell {
+    background-color: #1F618D !important;
+}
+
 
 .color-1 {
     color: #D4F0F0;
