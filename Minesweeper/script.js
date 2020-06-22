@@ -37,7 +37,7 @@ class Minesweeper {
 
         // CSS color class instances
         this.selected = "selected-color";  // the background color of selected cell.
-        this.hide     = "hide-cell";       // represents a cell that hides its innerhtml from the user.
+        this.unhide     = "unhide-cell";       // represents a cell that hides its innerhtml from the user.
         this.color1   = "color-1";         // style tag for the number 1.
         this.color2   = "color-2";         // style tag for the number 2.
         this.color3   = "color-3";         // style tag for the number 3.
@@ -219,17 +219,16 @@ class Minesweeper {
         this.minesLeft.innerHTML = this.size.toString();
 
         // update cells.
+        if (this.row === null || this.col === null) return;
+
         for (let row = 0; row < this.width; row++) {
             for (let col = 0; col < this.length; col++) {
-                if (this.row !== null || this.col !== null) {
-                    if (this.board[this.row][this.col].hide) {
-                        if (this.board[row][col].number !== 0) {
-                            this.toCellColor(row, col, this.board[row][col].number);
-                            this.table.rows[row].cells[col].innerHTML = this.board[row][col].number;
-                        }
+                if (this.board[row][col].unhide) {
+                    if (this.board[row][col].number !== 0) {
+                        this.toCellColor(row, col, this.board[row][col].number);
+                        this.table.rows[row].cells[col].innerHTML = this.board[row][col].number;
+                        this.table.rows[row].cells[col].classList.add(this.unhide);
                     }
-                } else {
-                    this.table.rows[row].cells[col].classList.add(this.hide);
                 }
             }
         }
@@ -269,7 +268,7 @@ class Minesweeper {
      * @function reveals the innerHTML of clicked cell to user.
      */
     unhideCell() {
-        this.board[this.row][this.col].hide = false;
+        this.board[this.row][this.col].unhide = true;
     }
 }
 
@@ -281,7 +280,7 @@ class Square {
     constructor() {
         this.number = 0;    // {number}  represents how many mines are adjacent to this object.
         this.mine = false;  // {boolean} true if the cell represents a mine.
-        this.hide = true;  // {boolean} true if the square will hide its innerHTML from user.
+        this.unhide = false;  // {boolean} true if the square will its innerHTML to user.
     }
 }
 
