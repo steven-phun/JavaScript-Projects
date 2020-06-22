@@ -227,7 +227,6 @@ class Minesweeper {
                     if (this.board[row][col].number !== 0) {
                         this.toCellColor(row, col, this.board[row][col].number);
                         this.table.rows[row].cells[col].innerHTML = this.board[row][col].number;
-                        this.table.rows[row].cells[col].classList.add(this.unhide);
                     }
                 }
             }
@@ -265,10 +264,11 @@ class Minesweeper {
     }
 
     /**
-     * @function reveals the innerHTML of clicked cell to user.
+     * @function reveals the innerHTML of selected cell.
      */
     unhideCell() {
         this.board[this.row][this.col].unhide = true;
+        this.table.rows[this.row].cells[this.col].classList.add(this.unhide);
     }
 }
 
@@ -278,9 +278,9 @@ class Minesweeper {
  */
 class Square {
     constructor() {
-        this.number = 0;    // {number}  represents how many mines are adjacent to this object.
-        this.mine = false;  // {boolean} true if the cell represents a mine.
-        this.unhide = false;  // {boolean} true if the square will its innerHTML to user.
+        this.number = 0;      // {number}  represents how many mines are adjacent to this object.
+        this.mine = false;    // {boolean} true if the cell represents a mine.
+        this.unhide = false;  // {boolean} true if the square will display its innerHTML to user.
     }
 }
 
