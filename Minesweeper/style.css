@@ -113,14 +113,10 @@ button {
 
 
 /*** 5. color-index ***/
-.selected-color {
-    background-color: #A3E4D7 !important;
-    color: ghostwhite !important;
-}
+
 .unhide-cell {
     background-color: #5499C7;
 }
-
 
 .color-1 {
     color: #D4F0F0;

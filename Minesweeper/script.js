@@ -36,8 +36,7 @@ class Minesweeper {
         this.iconMine = '<i class="fas fa-bomb"></i>';
 
         // CSS color class instances
-        this.selected = "selected-color";  // the background color of selected cell.
-        this.unhide     = "unhide-cell";       // represents a cell that hides its innerhtml from the user.
+        this.unhide   = "unhide-cell";       // represents a cell that hides its innerhtml from the user.
         this.color1   = "color-1";         // style tag for the number 1.
         this.color2   = "color-2";         // style tag for the number 2.
         this.color3   = "color-3";         // style tag for the number 3.
@@ -234,25 +233,6 @@ class Minesweeper {
     }
 
     /**
-     * @function remove previous selected cell background color.
-     */
-    removeSelectedColor() {
-        const selectedCell = document.querySelector("." + this.selected);
-
-        if (selectedCell !== null) selectedCell.classList.remove(this.selected);
-    }
-
-    /**
-     * @function set the selected cell's background color.
-     */
-    setSelectedColor() {
-        if (this.row === null || this.col === null) return;
-
-        this.removeSelectedColor();
-        this.table.rows[this.row].cells[this.col].classList.add(this.selected);
-    }
-
-    /**
      * @function set the selected cell to the icon clicked.
      *
      * @param tag {string} the HTML icon clicked.
@@ -307,7 +287,6 @@ const getCellIndex = (row, col) => {
     minesweeper.row = row;
     minesweeper.col = col;
 
-    minesweeper.setSelectedColor();
     minesweeper.unhideCell();
     minesweeper.updateDisplay();
 }
