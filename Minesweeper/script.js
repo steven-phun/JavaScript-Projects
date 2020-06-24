@@ -250,6 +250,16 @@ class Minesweeper {
         this.board[this.row][this.col].unhide = true;
         this.table.rows[this.row].cells[this.col].classList.add(this.unhide);
     }
+
+
+    /**
+     * @function checks if the selected cell contains a mine.
+     */
+    checkForMine() {
+        if (this.board[this.row][this.col].mine) {
+            console.log("game over"); //TODO delete line at post production.
+        }
+    }
 }
 
 
@@ -288,6 +298,7 @@ const getCellIndex = (row, col) => {
     minesweeper.col = col;
 
     minesweeper.unhideCell();
+    minesweeper.checkForMine();
     minesweeper.updateDisplay();
 }
 
