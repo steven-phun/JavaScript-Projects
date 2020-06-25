@@ -309,6 +309,29 @@ class Minesweeper {
     getEmptyCell() {
         return this.table.rows[this.row].cells[this.col].innerHTML === this.empty;
     }
+
+    /**
+     * @function captures users left and right mouse clicks.
+     *
+     * @param mouseCode {number} 0 represents left click, 2 represents right click.
+     */
+    getMouseEvent(mouseCode) {
+        // event.button mouse click code.
+        const leftClick = 0;
+        const rightClick = 2;
+
+        if (mouseCode === leftClick) {
+            if (this.getEmptyCell()) {
+                this.revealCell();
+                this.checkGameOver();
+                this.updateDisplay();
+            } else {
+                this.setIcon();
+            }
+        }
+
+        if (mouseCode === rightClick) this.setIcon();
+    }
 }
 
 
@@ -349,22 +372,7 @@ const getCellIndex = (row, col) => {
     minesweeper.row = row;
     minesweeper.col = col;
 
-
-    // event.button mouse click code.
-    const leftClick = 0;
-    const rightClick = 2;
-
-    if (event.button === leftClick) {
-        if (minesweeper.getEmptyCell()) {
-            minesweeper.revealCell();
-            minesweeper.checkGameOver();
-            minesweeper.updateDisplay();
-        } else {
-            minesweeper.setIcon();
-        }
-    }
-
-    if (event.button === rightClick) minesweeper.setIcon();
+    minesweeper.getMouseEvent(event.button);
 }
 
 
