@@ -119,8 +119,8 @@ button {
     background-color: #5499C7;
 }
 
-.gameOver-cell {
-    background-color: indianred !important;
+.boom-cell {
+    background-color: #F5B7B1 !important;
 }
 
 .color-1 {

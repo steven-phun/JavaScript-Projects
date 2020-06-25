@@ -32,28 +32,27 @@
  */
 class Minesweeper {
     constructor(level= 1) {
-        // HTML tags
+        /** HTML tags */
         this.iconMine = '<i class="fas fa-bomb"></i>';
         this.countdown = document.querySelector("#countdown");
-
-        // CSS color class instances
-        this.reveal   = "reveal-cell";       // represents a cell that hides its innerHTML from the user.
-        this.color1   = "color-1";         // style tag for the number 1.
-        this.color2   = "color-2";         // style tag for the number 2.
-        this.color3   = "color-3";         // style tag for the number 3.
-        this.color4   = "color-4";         // style tag for the number 4.
-        this.color5   = "color-5";         // style tag for the number 5.
-        this.color6   = "color-6";         // style tag for the number 6.
-        this.color7   = "color-7";         // style tag for the number 7.
-        this.color8   = "color-8";         // style tag for the number 8.
-
-        // minesweeper instances.
-
         // {element}  the HTML table that will contain the game board.
         this.table = document.querySelector("#minesweeper>table");
         // {element}  the HTML tag that contains the amount of mines left.
         this.minesLeft = document.querySelector("#mines-left");
 
+        /** CSS color class instances */
+        this.reveal   = "reveal-cell";  // represents a cell that hides its innerHTML from the user.
+        this.boom     = "boom-cell"     // represents the cell that cause the game over.
+        this.color1   = "color-1";      // style tag for the number 1.
+        this.color2   = "color-2";      // style tag for the number 2.
+        this.color3   = "color-3";      // style tag for the number 3.
+        this.color4   = "color-4";      // style tag for the number 4.
+        this.color5   = "color-5";      // style tag for the number 5.
+        this.color6   = "color-6";      // style tag for the number 6.
+        this.color7   = "color-7";      // style tag for the number 7.
+        this.color8   = "color-8";      // style tag for the number 8.
+
+        /** minesweeper instances. */
         this.row = null;                          // {number}  the row number of selected cell.
         this.col = null;                          // {number}  the column number of selected cell.
         this.size = this.setMineSize(level);      // {number}  the number of mines in the game.
@@ -262,9 +261,10 @@ class Minesweeper {
     /**
      * @function checks if the selected cell contains a mine.
      */
-    checkForMine() {
+    checkGameOver() {
         if (this.board[this.row][this.col].mine) {
             this.displayAllMines();
+            this.table.rows[this.row].cells[this.col].classList.add(this.boom);
             this.countdown.innerHTML = "game over";
             this.gameOver = true;
         }
@@ -315,7 +315,7 @@ const getCellIndex = (row, col) => {
 
     if (!minesweeper.gameOver) {
         minesweeper.revealCell();
-        minesweeper.checkForMine();
+        minesweeper.checkGameOver();
         minesweeper.updateDisplay();
     }
 }
