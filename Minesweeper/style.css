@@ -45,12 +45,13 @@ button {
 /*** 2. top-bar ***/
 #top-bar {
     display: inline-grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     padding-bottom: 10px;
 }
 
 #top-bar #countdown {
-    text-align: center;
+    color: ghostwhite;
+    text-align: end;
     padding: 5px;
 }
 

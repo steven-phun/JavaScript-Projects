@@ -66,6 +66,7 @@ class Minesweeper {
         this.board = this.setMines(this.toSquareObject());
 
         // set up the game board.
+        this.countdown.innerHTML = "00:00";
         this.drawGameBoard();
         this.setNumber();
         this.updateDisplay();
