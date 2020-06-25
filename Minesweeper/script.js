@@ -60,7 +60,7 @@ class Minesweeper {
         this.width = this.setBoardWidth(level);   // {number}  the number of rows for the game board.
         this.length = this.setBoardLength(level); // {number}  the number of columns for the game board.
         this.minesLocation = [];                  // {array}   coordinate for the location of each mine.
-        this.gameover = false;                    // {boolean} true if game is considered over.
+        this.gameover = false;                    // {boolean} true after user selected a cell that contains a mine.
 
         // {array}   represents each square on the game board.
         this.board = this.setMines(this.toSquareObject());
@@ -263,6 +263,7 @@ class Minesweeper {
      */
     checkForMine() {
         if (this.board[this.row][this.col].mine) {
+            this.displayAllMines();
             this.countdown.innerHTML = "game over";
             this.gameover = true;
         }
@@ -271,8 +272,8 @@ class Minesweeper {
     /**
      * @function display the location of every mine.
      */
-    displayMine() {
-        // TODO: finish coding. 
+    displayAllMines() {
+        this.minesLocation.forEach(location => this.board[location.row][location.col].reveal = true);
     }
 }
 
