@@ -59,8 +59,8 @@ class Minesweeper {
         this.size = this.setMineSize(level);      // {number}  the number of mines in the game.
         this.width = this.setBoardWidth(level);   // {number}  the number of rows for the game board.
         this.length = this.setBoardLength(level); // {number}  the number of columns for the game board.
-        this.minesLocation = [];                  // {array}   coordinate for the location of each mine.
-        this.gameover = false;                    // {boolean} true after user selected a cell that contains a mine.
+        this.mineLocations = [];                  // {array}   coordinate for the location of each mine.
+        this.gameOver = false;                    // {boolean} true after user selected a cell that contains a mine.
 
         // {array}   represents each square on the game board.
         this.board = this.setMines(this.toSquareObject());
@@ -92,9 +92,9 @@ class Minesweeper {
      */
     setNumber() {
         // get adjacent cell index for each mine.
-        for (let index = 0; index < this.minesLocation.length; index++) {
-            let rowIndex = this.minesLocation[index].row - 1;
-            let colIndex = this.minesLocation[index].col - 1;
+        for (let index = 0; index < this.mineLocations.length; index++) {
+            let rowIndex = this.mineLocations[index].row - 1;
+            let colIndex = this.mineLocations[index].col - 1;
             let section = 3; // one section is 3x3.
 
             for (let row = rowIndex; row < rowIndex + section; row++) {
@@ -149,7 +149,7 @@ class Minesweeper {
             if (!gameBoard[row][col].mine) {
                 gameBoard[row][col].number = this.iconMine;
                 gameBoard[row][col].mine = true;
-                this.minesLocation.push({row: row, col: col})
+                this.mineLocations.push({row: row, col: col})
                 numberOfMines--;
             }
         }
@@ -266,7 +266,7 @@ class Minesweeper {
         if (this.board[this.row][this.col].mine) {
             this.displayAllMines();
             this.countdown.innerHTML = "game over";
-            this.gameover = true;
+            this.gameOver = true;
         }
     }
 
@@ -274,7 +274,7 @@ class Minesweeper {
      * @function display the location of every mine.
      */
     displayAllMines() {
-        this.minesLocation.forEach(location => this.board[location.row][location.col].reveal = true);
+        this.mineLocations.forEach(location => this.board[location.row][location.col].reveal = true);
     }
 }
 
@@ -313,7 +313,7 @@ const getCellIndex = (row, col) => {
     minesweeper.row = row;
     minesweeper.col = col;
 
-    if (!minesweeper.gameover) {
+    if (!minesweeper.gameOver) {
         minesweeper.revealCell();
         minesweeper.checkForMine();
         minesweeper.updateDisplay();
