@@ -65,6 +65,7 @@ class Minesweeper {
         this.length = this.setBoardLength(level); // {number}  the number of columns for the game board.
         this.mineLocations = [];                  // {array}   coordinate for the location of each mine.
         this.gameOver = false;                    // {boolean} true after user selected a cell that contains a mine.
+        this.empty = "";                          // {string}  represents an empty cell.
 
         // {array}   represents each square on the game board.
         this.board = this.setMines(this.toSquareObject());
@@ -119,7 +120,7 @@ class Minesweeper {
      * @param text {number} the number to add the color class.
      */
     toCellColor(row, col, text) {
-        let color = "";
+        let color = null;
 
         if (text === 1) color = this.color1;
         if (text === 2) color = this.color2;
@@ -130,7 +131,7 @@ class Minesweeper {
         if (text === 7) color = this.color7;
         if (text === 8) color = this.color8;
 
-        if (color === "") return;
+        if (color === this.empty) return;
 
         this.table.rows[row].cells[col].classList.add(color);
     }
@@ -283,20 +284,30 @@ class Minesweeper {
     }
 
     /**
-     * @function display a flag or question mark icon in the selected cell.
+     * @function display a flag, question, or blank icon on selected cell.
      */
     setIcon() {
         let tag = this.table.rows[this.row].cells[this.col];
 
+        // Rotation cycle for icon to display: blank -> flag -> question -> (repeat).
+        if (tag.innerHTML === this.iconQuestion) return tag.innerHTML = this.empty;
+
         if(tag.innerHTML === this.iconFlag) {
-            this.minesLeft.innerHTML = (++this.size).toString();
+            this.minesLeft.innerHTML = (++this.size).toString(); // restore count when user removes a flag icon.
             return tag.innerHTML = this.iconQuestion;
         }
 
-        if (tag.innerHTML === this.iconQuestion) return tag.innerHTML = "";
-
+        this.minesLeft.innerHTML = (--this.size).toString(); // decrement count for each flag icon on game board.
         tag.innerHTML = this.iconFlag;
-        this.minesLeft.innerHTML = (--this.size).toString();
+    }
+
+    /**
+     * @function checks if the selected cell is empty.
+     *
+     * @return {boolean} true if the selected cell is empty.
+     */
+    getEmptyCell() {
+        return this.table.rows[this.row].cells[this.col].innerHTML === this.empty;
     }
 }
 
@@ -332,17 +343,25 @@ class Timer {
  * @param col {number} the column index of selected cell.
  */
 const getCellIndex = (row, col) => {
+    if (minesweeper.gameOver) return;
+    if (minesweeper.board[row][col].reveal) return;
+
     minesweeper.row = row;
     minesweeper.col = col;
+
 
     // event.button mouse click code.
     const leftClick = 0;
     const rightClick = 2;
 
-    if (event.button === leftClick && !minesweeper.gameOver) {
-        minesweeper.revealCell();
-        minesweeper.checkGameOver();
-        minesweeper.updateDisplay();
+    if (event.button === leftClick) {
+        if (minesweeper.getEmptyCell()) {
+            minesweeper.revealCell();
+            minesweeper.checkGameOver();
+            minesweeper.updateDisplay();
+        } else {
+            minesweeper.setIcon();
+        }
     }
 
     if (event.button === rightClick) minesweeper.setIcon();
