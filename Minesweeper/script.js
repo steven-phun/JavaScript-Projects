@@ -48,19 +48,24 @@ class Minesweeper {
         this.color8   = "color-8";         // style tag for the number 8.
 
         // minesweeper instances.
+
         // {element}  the HTML table that will contain the game board.
         this.table = document.querySelector("#minesweeper>table");
         // {element}  the HTML tag that contains the amount of mines left.
-        this.minesLeft = document.querySelector("#mines-left")
-        this.row = null;                                // {number}  the row number of selected cell.
-        this.col = null;                                // {number}  the column number of selected cell.
-        this.size = this.setMineSize(level);            // {number}  the number of mines in the game.
-        this.width = this.setBoardWidth(level);         // {number}  the number of rows for the game board.
-        this.length = this.setBoardLength(level);       // {number}  the number of columns for the game board.
-        this.minesLocation = [];                        // {array}   coordinate for the location of each mine.
-        this.board = this.setMines(this.toSquareObject());  // {array}   represents each square on the game board.
+        this.minesLeft = document.querySelector("#mines-left");
 
-        // setting up the game board.
+        this.row = null;                          // {number}  the row number of selected cell.
+        this.col = null;                          // {number}  the column number of selected cell.
+        this.size = this.setMineSize(level);      // {number}  the number of mines in the game.
+        this.width = this.setBoardWidth(level);   // {number}  the number of rows for the game board.
+        this.length = this.setBoardLength(level); // {number}  the number of columns for the game board.
+        this.minesLocation = [];                  // {array}   coordinate for the location of each mine.
+        this.gameover = false;                    // {boolean} true if game is considered over.
+
+        // {array}   represents each square on the game board.
+        this.board = this.setMines(this.toSquareObject());
+
+        // set up the game board.
         this.drawGameBoard();
         this.setNumber();
         this.updateDisplay();
@@ -259,6 +264,7 @@ class Minesweeper {
     checkForMine() {
         if (this.board[this.row][this.col].mine) {
             this.countdown.innerHTML = "game over";
+            this.gameover = true;
         }
     }
 
@@ -305,9 +311,11 @@ const getCellIndex = (row, col) => {
     minesweeper.row = row;
     minesweeper.col = col;
 
-    minesweeper.revealCell();
-    minesweeper.checkForMine();
-    minesweeper.updateDisplay();
+    if (!minesweeper.gameover) {
+        minesweeper.revealCell();
+        minesweeper.checkForMine();
+        minesweeper.updateDisplay();
+    }
 }
 
 /**
