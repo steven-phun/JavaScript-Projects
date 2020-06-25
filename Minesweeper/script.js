@@ -32,11 +32,12 @@
  */
 class Minesweeper {
     constructor(level= 1) {
-        // HTML icon tags
+        // HTML tags
         this.iconMine = '<i class="fas fa-bomb"></i>';
+        this.countdown = document.querySelector("#countdown");
 
         // CSS color class instances
-        this.unhide   = "unhide-cell";       // represents a cell that hides its innerhtml from the user.
+        this.reveal   = "reveal-cell";       // represents a cell that hides its innerHTML from the user.
         this.color1   = "color-1";         // style tag for the number 1.
         this.color2   = "color-2";         // style tag for the number 2.
         this.color3   = "color-3";         // style tag for the number 3.
@@ -222,7 +223,7 @@ class Minesweeper {
 
         for (let row = 0; row < this.width; row++) {
             for (let col = 0; col < this.length; col++) {
-                if (this.board[row][col].unhide) {
+                if (this.board[row][col].reveal) {
                     if (this.board[row][col].number !== 0) {
                         this.toCellColor(row, col, this.board[row][col].number);
                         this.table.rows[row].cells[col].innerHTML = this.board[row][col].number;
@@ -246,9 +247,9 @@ class Minesweeper {
     /**
      * @function reveals the innerHTML of selected cell.
      */
-    unhideCell() {
-        this.board[this.row][this.col].unhide = true;
-        this.table.rows[this.row].cells[this.col].classList.add(this.unhide);
+    revealCell() {
+        this.board[this.row][this.col].reveal = true;
+        this.table.rows[this.row].cells[this.col].classList.add(this.reveal);
     }
 
 
@@ -257,8 +258,15 @@ class Minesweeper {
      */
     checkForMine() {
         if (this.board[this.row][this.col].mine) {
-            console.log("game over"); //TODO delete line at post production.
+            this.countdown.innerHTML = "game over";
         }
+    }
+
+    /**
+     * @function display the location of every mine.
+     */
+    displayMine() {
+        // TODO: finish coding. 
     }
 }
 
@@ -270,7 +278,7 @@ class Square {
     constructor() {
         this.number = 0;      // {number}  represents how many mines are adjacent to this object.
         this.mine = false;    // {boolean} true if the cell represents a mine.
-        this.unhide = false;  // {boolean} true if the square will display its innerHTML to user.
+        this.reveal = false;  // {boolean} true if the square will display its innerHTML to user.
     }
 }
 
@@ -297,7 +305,7 @@ const getCellIndex = (row, col) => {
     minesweeper.row = row;
     minesweeper.col = col;
 
-    minesweeper.unhideCell();
+    minesweeper.revealCell();
     minesweeper.checkForMine();
     minesweeper.updateDisplay();
 }
