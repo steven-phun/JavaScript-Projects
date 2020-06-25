@@ -331,13 +331,17 @@ const getCellIndex = (row, col) => {
     minesweeper.row = row;
     minesweeper.col = col;
 
-    console.log(minesweeper.row);
+    // event.button mouse click code.
+    const leftClick = 0;
+    const rightClick = 2;
 
-    if (!minesweeper.gameOver) {
+    if (event.button === leftClick && !minesweeper.gameOver) {
         minesweeper.revealCell();
         minesweeper.checkGameOver();
         minesweeper.updateDisplay();
     }
+
+    if (event.button === rightClick) minesweeper.setIcon();
 }
 
 
