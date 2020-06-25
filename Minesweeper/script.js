@@ -270,10 +270,23 @@ class Minesweeper {
     }
 
     /**
-     * @function display the location of every mine.
+     * @function reveal every cell that contains a mine.
      */
     displayAllMines() {
-        this.mineLocations.forEach(location => this.board[location.row][location.col].reveal = true);
+        this.mineLocations.forEach(mine => this.board[mine.row][mine.col].reveal = true);
+    }
+
+    /**
+     * @function display to the user if the flag contained a mine or not.
+     */
+    checkFlags() {
+        for (let i = 0; i < this.flagLocations.length; i++) {
+            const flag = this.flagLocations[i];
+            const tag = this.table.rows[flag.row].cells[flag.col];
+
+            if (this.board[flag.row][flag.col].mine) tag.innerHTML = this.iconCorrect;
+            else tag.innerHTML = this.iconWrong;
+        }
     }
 
     /**
@@ -343,6 +356,7 @@ class Minesweeper {
                 this.revealCell();
                 this.checkGameOver();
                 this.updateDisplay();
+                if (this.gameOver) this.checkFlags();
             } else {
                 this.setIcon();
             }
@@ -392,8 +406,6 @@ const getCellIndex = (row, col) => {
 
     minesweeper.getMouseEvent(event.button);
 }
-
-
 
 /**
  * @function catch user's right click.
