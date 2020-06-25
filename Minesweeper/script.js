@@ -231,7 +231,7 @@ class Minesweeper {
      */
     updateDisplay() {
         // update mines left count.
-        this.minesLeft.innerHTML = this.size.toString();
+        this.minesLeft.innerHTML = (this.size - this.flagLocations.length).toString();
 
         // update cells.
         if (this.row === null || this.col === null) return;
@@ -277,7 +277,7 @@ class Minesweeper {
     }
 
     /**
-     * @function display to the user if the flag contained a mine or not.
+     * @function display to the user if each flagged cell does contain a mine.
      */
     checkFlags() {
         for (let i = 0; i < this.flagLocations.length; i++) {
@@ -301,7 +301,6 @@ class Minesweeper {
         else if (tag.innerHTML === this.empty) tag.innerHTML = this.iconFlag;
 
         this.addFlagLocation();
-        this.updateSize();
     }
 
     /**
@@ -323,13 +322,6 @@ class Minesweeper {
                 return this.flagLocations.splice(i, 1);
             }
         }
-    }
-
-    /**
-     * @function update the mines left count.
-     */
-    updateSize() {
-        this.minesLeft.innerHTML = (this.size - this.flagLocations.length).toString();
     }
 
     /**
@@ -355,7 +347,6 @@ class Minesweeper {
             if (this.getEmptyCell()) {
                 this.revealCell();
                 this.checkGameOver();
-                this.updateDisplay();
                 if (this.gameOver) this.checkFlags();
             } else {
                 this.setIcon();
@@ -405,6 +396,7 @@ const getCellIndex = (row, col) => {
     minesweeper.col = col;
 
     minesweeper.getMouseEvent(event.button);
+    minesweeper.updateDisplay();
 }
 
 /**
