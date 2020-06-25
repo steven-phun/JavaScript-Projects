@@ -90,7 +90,7 @@ button {
     height: 40px;
 }
 
-#minesweeper>td:hover {
+#minesweeper td:hover {
     color: ghostwhite;
     background-color: #A3E4D7;
 }
@@ -116,7 +116,7 @@ button {
 /*** 5. color-index ***/
 
 .reveal-cell {
-    background-color: #5499C7;
+    background-color: #5499C7 !important;
 }
 
 .boom-cell {

@@ -41,31 +41,35 @@ class Minesweeper {
         this.minesLeft = document.querySelector("#mines-left");
 
         /** HTML <i> tags */
-        this.iconMine = '<i class="fas fa-bomb"></i>';
-        this.iconFlag = '<i class="fas fa-flag"></i>';
+        this.iconMine     = '<i class="fas fa-bomb"></i>';
+        this.iconFlag     = '<i class="fas fa-flag"></i>';
         this.iconQuestion = '<i class=\"fas fa-question\"></i>';
+        this.iconCorrect  = '<i class="fas fa-check"></i>';
+        this.iconWrong    = '<i class="fas fa-times"></i>';
 
         /** CSS color class instances */
-        this.reveal   = "reveal-cell";  // represents a cell that hides its innerHTML from the user.
-        this.boom     = "boom-cell"     // represents the cell that cause the game over.
-        this.color1   = "color-1";      // style tag for the number 1.
-        this.color2   = "color-2";      // style tag for the number 2.
-        this.color3   = "color-3";      // style tag for the number 3.
-        this.color4   = "color-4";      // style tag for the number 4.
-        this.color5   = "color-5";      // style tag for the number 5.
-        this.color6   = "color-6";      // style tag for the number 6.
-        this.color7   = "color-7";      // style tag for the number 7.
-        this.color8   = "color-8";      // style tag for the number 8.
+        this.reveal = "reveal-cell";  // represents a cell that hides its innerHTML from the user.
+        this.boom   = "boom-cell"     // represents the cell that cause the game over.
+        this.color1 = "color-1";      // style tag for the number 1.
+        this.color2 = "color-2";      // style tag for the number 2.
+        this.color3 = "color-3";      // style tag for the number 3.
+        this.color4 = "color-4";      // style tag for the number 4.
+        this.color5 = "color-5";      // style tag for the number 5.
+        this.color6 = "color-6";      // style tag for the number 6.
+        this.color7 = "color-7";      // style tag for the number 7.
+        this.color8 = "color-8";      // style tag for the number 8.
 
         /** minesweeper instances. */
+        this.mineLocations = [];                  // {array}   coordinate for the location of each mine.
+        this.flagLocations = []                   // {array}   coordinate for the location of each flag icon.
         this.row = null;                          // {number}  the row number of selected cell.
         this.col = null;                          // {number}  the column number of selected cell.
         this.size = this.setMineSize(level);      // {number}  the number of mines in the game.
         this.width = this.setBoardWidth(level);   // {number}  the number of rows for the game board.
         this.length = this.setBoardLength(level); // {number}  the number of columns for the game board.
-        this.mineLocations = [];                  // {array}   coordinate for the location of each mine.
-        this.gameOver = false;                    // {boolean} true after user selected a cell that contains a mine.
+
         this.empty = "";                          // {string}  represents an empty cell.
+        this.gameOver = false;                    // {boolean} true after user selected a cell that contains a mine.
 
         // {array}   represents each square on the game board.
         this.board = this.setMines(this.toSquareObject());
@@ -131,7 +135,7 @@ class Minesweeper {
         if (text === 7) color = this.color7;
         if (text === 8) color = this.color8;
 
-        if (color === this.empty) return;
+        if (color === null) return;
 
         this.table.rows[row].cells[col].classList.add(color);
     }
@@ -219,7 +223,7 @@ class Minesweeper {
      * @function reset table to prevent future tables from stacking on top of each other.
      */
     getEmptyTable() {
-        this.table.innerHTML = '';
+        this.table.innerHTML = "";
     }
 
     /**
@@ -242,17 +246,6 @@ class Minesweeper {
                 }
             }
         }
-    }
-
-    /**
-     * @function set the selected cell to the icon clicked.
-     *
-     * @param tag {string} the HTML icon clicked.
-     */
-    toIcon(tag) {
-        if (this.row === null || this.col === null) return;
-
-        this.board[this.row][this.col].number = tag;
     }
 
     /**
@@ -290,15 +283,40 @@ class Minesweeper {
         let tag = this.table.rows[this.row].cells[this.col];
 
         // Rotation cycle for icon to display: blank -> flag -> question -> (repeat).
-        if (tag.innerHTML === this.iconQuestion) return tag.innerHTML = this.empty;
+        if (tag.innerHTML === this.iconQuestion) tag.innerHTML = this.empty;
+        else if (tag.innerHTML === this.iconFlag) tag.innerHTML = this.iconQuestion;
+        else if (tag.innerHTML === this.empty) tag.innerHTML = this.iconFlag;
 
-        if(tag.innerHTML === this.iconFlag) {
-            this.minesLeft.innerHTML = (++this.size).toString(); // restore count when user removes a flag icon.
-            return tag.innerHTML = this.iconQuestion;
+        this.addFlagLocation();
+        this.updateSize();
+    }
+
+    /**
+     * @function add the coordinates of the flag icon to array.
+     */
+    addFlagLocation() {
+        if (this.table.rows[this.row].cells[this.col].innerHTML === this.iconFlag)
+            return this.flagLocations.push({row: this.row, col: this.col});
+
+        this.removeFlagLocation();
+    }
+
+    /**
+     * @function remove the coordinates of all cells that does not contain the flag icon.
+     */
+    removeFlagLocation() {
+        for (let i = 0; i < this.flagLocations.length; i++) {
+            if (this.flagLocations[i].row === this.row && this.flagLocations[i].col === this.col) {
+                return this.flagLocations.splice(i, 1);
+            }
         }
+    }
 
-        this.minesLeft.innerHTML = (--this.size).toString(); // decrement count for each flag icon on game board.
-        tag.innerHTML = this.iconFlag;
+    /**
+     * @function update the mines left count.
+     */
+    updateSize() {
+        this.minesLeft.innerHTML = (this.size - this.flagLocations.length).toString();
     }
 
     /**
