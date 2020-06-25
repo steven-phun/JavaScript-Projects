@@ -246,6 +246,8 @@ class Minesweeper {
                 }
             }
         }
+
+        if (this.gameOver) this.checkFlags();
     }
 
     /**
