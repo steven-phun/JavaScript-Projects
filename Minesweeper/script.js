@@ -288,11 +288,15 @@ class Minesweeper {
     setIcon() {
         let tag = this.table.rows[this.row].cells[this.col];
 
-        if(tag.innerHTML === this.iconFlag) return tag.innerHTML = this.iconQuestion;
+        if(tag.innerHTML === this.iconFlag) {
+            this.minesLeft.innerHTML = (++this.size).toString();
+            return tag.innerHTML = this.iconQuestion;
+        }
 
         if (tag.innerHTML === this.iconQuestion) return tag.innerHTML = "";
 
         tag.innerHTML = this.iconFlag;
+        this.minesLeft.innerHTML = (--this.size).toString();
     }
 }
 
