@@ -22,6 +22,11 @@
 
 /*jshint esversion: 6 */
 
+/** TODO List */
+// add a counter for all non mine cells to keep track when user wins.
+// write a function that takes care of cells where its number = 0.
+// set up countdown.
+// fix table and td from resizing.
 
 /*** JavaScript Classes ***/
 
