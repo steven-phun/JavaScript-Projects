@@ -90,7 +90,7 @@ button {
     height: 40px;
 }
 
-#minesweeper td:hover {
+#minesweeper>td:hover {
     color: ghostwhite;
     background-color: #A3E4D7;
 }

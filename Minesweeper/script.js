@@ -32,13 +32,18 @@
  */
 class Minesweeper {
     constructor(level= 1) {
-        /** HTML tags */
-        this.iconMine = '<i class="fas fa-bomb"></i>';
+        /** HTML id tags */
+        // {element} the HTML tag that displays the timer.
         this.countdown = document.querySelector("#countdown");
-        // {element}  the HTML table that will contain the game board.
-        this.table = document.querySelector("#minesweeper>table");
+        // {element}  the HTML table tag that will contain the game board.
+        this.table     = document.querySelector("#minesweeper>table");
         // {element}  the HTML tag that contains the amount of mines left.
         this.minesLeft = document.querySelector("#mines-left");
+
+        /** HTML <i> tags */
+        this.iconMine = '<i class="fas fa-bomb"></i>';
+        this.iconFlag = '<i class="fas fa-flag"></i>';
+        this.iconQuestion = '<i class=\"fas fa-question\"></i>';
 
         /** CSS color class instances */
         this.reveal   = "reveal-cell";  // represents a cell that hides its innerHTML from the user.
@@ -204,7 +209,7 @@ class Minesweeper {
             let row = this.table.insertRow(); // insert <tr>.
             for (let j = 0; j < this.length; j++) {
                 let cell = row.insertCell(); // insert <tr>.
-                cell.setAttribute('onclick', `getCellIndex(${i},${j})`);
+                cell.setAttribute('onmousedown', `getCellIndex(${i},${j})`);
             }
         }
     }
@@ -278,10 +283,16 @@ class Minesweeper {
     }
 
     /**
-     * @function display flag or question mark icon onto selected cell.
+     * @function display a flag or question mark icon in the selected cell.
      */
     setIcon() {
-        console.log("test");
+        let tag = this.table.rows[this.row].cells[this.col];
+
+        if(tag === this.iconFlag) return tag.innerHTML = this.iconQuestion;
+
+        if (tag === this.iconQuestion) return tag.innerHTML = "";
+
+        tag.innerHTML = this.iconFlag;
     }
 }
 
@@ -320,6 +331,8 @@ const getCellIndex = (row, col) => {
     minesweeper.row = row;
     minesweeper.col = col;
 
+    console.log(minesweeper.row);
+
     if (!minesweeper.gameOver) {
         minesweeper.revealCell();
         minesweeper.checkGameOver();
@@ -327,11 +340,13 @@ const getCellIndex = (row, col) => {
     }
 }
 
+
+
 /**
  * @function catch user's right click.
  */
 const getRightClick = () => {
-    minesweeper.setIcon();
+    console.log("test");
 }
 
 /**

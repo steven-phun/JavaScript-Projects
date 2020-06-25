@@ -21,14 +21,13 @@
             </div>
         </section>
 
-        <div oncontextmenu="javascript:getRightClick(); return false;">
-            <section id="minesweeper">
-                <table>
-                    <!-- game board is built in JavaScript -->
-                </table>
-
+            <section id="game-board">
+                <div id="minesweeper" oncontextmenu="return false;">
+                    <table>
+                        <!-- game board is built in JavaScript -->
+                    </table>
+                </div>
             </section>
-        </div>
 
         <section id="bot-bar">
             <button onclick="setLevel(1)">Beginner</button>
