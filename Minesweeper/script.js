@@ -276,6 +276,13 @@ class Minesweeper {
     displayAllMines() {
         this.mineLocations.forEach(location => this.board[location.row][location.col].reveal = true);
     }
+
+    /**
+     * @function display flag or question mark icon onto selected cell.
+     */
+    setIcon() {
+        console.log("test");
+    }
 }
 
 
@@ -321,13 +328,10 @@ const getCellIndex = (row, col) => {
 }
 
 /**
- * @function return the HTML icon tag clicked.
- *
- * @param tag {<i>} the HTML icon tag clicked.
+ * @function catch user's right click.
  */
-const getIcon = (tag) => {
-    minesweeper.toIcon(tag.toString());
-    minesweeper.updateDisplay();
+const getRightClick = () => {
+    minesweeper.setIcon();
 }
 
 /**

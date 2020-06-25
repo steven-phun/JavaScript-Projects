@@ -8,6 +8,7 @@
 </head>
 <body>
     <div class="wrapper">
+
         <section id="top-bar">
             <div id="mine-count">
                 <button>
@@ -19,11 +20,16 @@
                 <label>00:00</label>
             </div>
         </section>
-        <section id="minesweeper">
-            <table>
-                <!-- game board is built in JavaScript -->
-            </table>
-        </section>
+
+        <div oncontextmenu="javascript:getRightClick(); return false;">
+            <section id="minesweeper">
+                <table>
+                    <!-- game board is built in JavaScript -->
+                </table>
+
+            </section>
+        </div>
+
         <section id="bot-bar">
             <button onclick="setLevel(1)">Beginner</button>
             <button onclick="setLevel(2)">Intermediate</button>
