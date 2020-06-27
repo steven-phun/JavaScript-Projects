@@ -72,7 +72,6 @@ class Minesweeper {
         this.size = this.setMineSize(level);      // {number}  the number of mines in the game.
         this.width = this.setBoardWidth(level);   // {number}  the number of rows for the game board.
         this.length = this.setBoardLength(level); // {number}  the number of columns for the game board.
-
         this.empty = "";                          // {string}  represents an empty cell.
         this.gameOver = false;                    // {boolean} true after user selected a cell that contains a mine.
 
@@ -87,7 +86,9 @@ class Minesweeper {
     }
 
     /**
-     * @return an array of Square objects
+     * @function convert array elements to Square objects.
+     *
+     * @return an array of Square objects.
      */
     toSquareObject(){
         let gameBoard = [];
@@ -102,7 +103,7 @@ class Minesweeper {
     }
 
     /**
-     * @function set the number of adjacent mines for each cell.
+     * @function set the number of adjacent mine(s) for each cell.
      */
     setNumber() {
         // get adjacent cell index for each mine.
@@ -122,7 +123,7 @@ class Minesweeper {
     }
 
     /**
-     * @function add the CSS color class for each cell.
+     * @function change the innerHTML content's color of a cell depending on its number.
      *
      * @param row  {number} the row index of cell.
      * @param col  {number} the cell index of cell.
@@ -409,16 +410,15 @@ const getCellIndex = (row, col) => {
 /**
  * @function catch user's right click.
  */
-const getRightClick = () => {
-    console.log("test");
-}
+const getRightClick = () => console.log("test");
+
 
 /**
- * @function initial a new game with given level.
+ * @function initialize the game with given level.
  *
  * @param level {number} the level of difficulty.
  */
 const setLevel = (level) => minesweeper = new Minesweeper(level);
 
-// global and window listener instance
+// global and window listener instance.
 let minesweeper = new Minesweeper();
