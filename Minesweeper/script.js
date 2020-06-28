@@ -180,7 +180,7 @@ class Minesweeper {
      * @return {number} representing the number of mines in the game.
      */
     setMineSize(level) {
-        if (level === 1) return 0; // TODO change value back to 10.
+        if (level === 1) return 10; // TODO change value back to 10.
         if (level === 2) return 40;
         if (level === 3) return 99;
     }
