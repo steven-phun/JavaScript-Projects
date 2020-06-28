@@ -180,7 +180,7 @@ class Minesweeper {
      * @return {number} representing the number of mines in the game.
      */
     setMineSize(level) {
-        if (level === 1) return 10;
+        if (level === 1) return 0; // TODO change value back to 10.
         if (level === 2) return 40;
         if (level === 3) return 99;
     }
@@ -377,17 +377,17 @@ class Minesweeper {
         if (this.board[row][col].number !== 0) return;
 
         // get the top left cell of selected cell.
-        row -= 1;
-        col -= 1;
+        const tempRow = row - 1;
+        const tempCol = col - 1;
         const section = 3; // represents the 3x3.
 
-        for (let i = row; i < row + section; i++) {
-            for (let j = col; j < col + section; j++) {
+        for (let i = tempRow; i < tempRow + section; i++) {
+            for (let j = tempCol; j < tempCol + section; j++) {
                 if (this.isCellInGameBoard(i, j)) {
                     this.board[i][j].reveal = true;
                     this.table.rows[i].cells[j].classList.add(this.reveal);
-                    // recursive
-                    this.floodFill(i, j);
+                    // avoid infinite loop by not checking itself.
+                    if (i !== row && j !== col) this.floodFill(i, j);
                 }
             }
         }
