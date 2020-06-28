@@ -24,7 +24,6 @@
 
 /** TODO List */
 // add a counter for all non mine cells to keep track when user wins.
-// fix flood fill.
 // set up countdown.
 // fix table and td from resizing.
 
@@ -72,6 +71,8 @@ class Minesweeper {
         this.size = this.setMineSize(level);      // {number}  the number of mines in the game.
         this.width = this.setBoardWidth(level);   // {number}  the number of rows for the game board.
         this.length = this.setBoardLength(level); // {number}  the number of columns for the game board.
+        this.counter = this.setCounter();         // {number}  ths user wins when this counter reaches 0.
+        console.log(this.counter);
         this.empty = "";                          // {string}  represents an empty cell.
         this.gameOver = false;                    // {boolean} true after user selected a cell that contains a mine.
 
@@ -83,6 +84,13 @@ class Minesweeper {
         this.drawGameBoard();
         this.setNumber();
         this.updateDisplay();
+    }
+
+    /**
+     * @function set the win condition counter for the game.
+     */
+    setCounter() {
+        return this.width * this.length - this.size;
     }
 
     /**
@@ -180,7 +188,7 @@ class Minesweeper {
      * @return {number} representing the number of mines in the game.
      */
     setMineSize(level) {
-        if (level === 1) return 10; // TODO change value back to 10.
+        if (level === 1) return 10;
         if (level === 2) return 40;
         if (level === 3) return 99;
     }
@@ -296,6 +304,17 @@ class Minesweeper {
     }
 
     /**
+     * @function checks if the user has won the game.
+     */
+    checkWinCondition() {
+        if (this.counter <= 0) {
+            this.countdown.innerHTML = "Congratulations!";
+            this.gameOver = true;
+        }
+    }
+
+
+    /**
      * @function reveal every cell that contains a mine.
      */
     displayAllMines() {
@@ -374,6 +393,7 @@ class Minesweeper {
                 this.revealCell(this.row, this.col);
                 this.checkGameOver();
                 if (this.gameOver) this.checkFlags();
+                this.checkWinCondition();
             } else {
                 this.setIcon();
             }
