@@ -75,7 +75,7 @@ button {
 }
 
 #minesweeper table {
-    max-width: 1200px;
+    width: auto;
     margin: auto;
     border-collapse: collapse;
     table-layout: fixed;
@@ -86,8 +86,8 @@ button {
     border: #707B7C solid 1px;
     text-align: center;
     font-size: 25px;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
 }
 
 #minesweeper td:hover {

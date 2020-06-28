@@ -108,13 +108,14 @@ class Minesweeper {
     setNumber() {
         // get adjacent cell index for each mine.
         for (let index = 0; index < this.mineLocations.length; index++) {
-            let rowIndex = this.mineLocations[index].row - 1;
-            let colIndex = this.mineLocations[index].col - 1;
-            let section = 3; // one section is 3x3.
+            const rowIndex = this.mineLocations[index].row - 1;
+            const colIndex = this.mineLocations[index].col - 1;
+            const section = 3; // one section is 3x3.
 
             for (let row = rowIndex; row < rowIndex + section; row++) {
                 for (let col = colIndex; col < colIndex + section; col++) {
-                    if (row >= 0 && col >= 0 && row < this.width && col < this.length && !this.board[row][col].mine) {
+                    if (this.isCellInGameBoard(row, col)) {
+                        if (this.board[row][col].mine) continue;
                         this.board[row][col].number = this.board[row][col].number + 1;
                     }
                 }
@@ -354,6 +355,7 @@ class Minesweeper {
         if (mouseCode === leftClick) {
             if (this.getEmptyCell()) {
                 this.revealCell();
+                this.floodFill();
                 this.checkGameOver();
                 if (this.gameOver) this.checkFlags();
             } else {
@@ -362,6 +364,38 @@ class Minesweeper {
         }
 
         if (mouseCode === rightClick) this.setIcon();
+    }
+
+
+    /**
+     * @function reveal surrounding cells of a cell that number's equal 0.
+     */
+    floodFill() {
+        // get the top left cell of selected cell.
+        const row = this.row - 1;
+        const col = this.col - 1;
+        const section = 3; // represents the 3x3.
+
+        for (let i = row; i < this.row + section; i++) {
+            for (let j = col; j < this.col + section; j++) {
+                if (row >= 0 && col >= 0 && row < this.width && col < this.length && !this.board[row][col].mine) {
+                    this.board[i][j].reveal = true;
+                    this.table.rows[i].cells[j].classList.add(this.reveal);
+                }
+            }
+        }
+    }
+
+    /**
+     * @function checks if cell is within the game board.
+     *
+     * @param row {number} the row index being checked.
+     * @param col {number} the column index being checked.
+     *
+     * @return true if the cell is located within the game board.
+     */
+    isCellInGameBoard(row, col) {
+        return row >= 0 && col >= 0 && row < this.width && col < this.length;
     }
 }
 
