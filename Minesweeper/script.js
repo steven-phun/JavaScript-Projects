@@ -355,7 +355,7 @@ class Minesweeper {
         if (mouseCode === leftClick) {
             if (this.getEmptyCell()) {
                 this.revealCell();
-                this.floodFill();
+                this.floodFill(this.row, this.col);
                 this.checkGameOver();
                 if (this.gameOver) this.checkFlags();
             } else {
@@ -369,18 +369,25 @@ class Minesweeper {
 
     /**
      * @function reveal surrounding cells of a cell that number's equal 0.
+     *
+     * @param row {number} the row index of given row.
+     * @param col {number} the column index of given column.
      */
-    floodFill() {
+    floodFill(row, col) {
+        if (this.board[row][col].number !== 0) return;
+
         // get the top left cell of selected cell.
-        const row = this.row - 1;
-        const col = this.col - 1;
+        row -= 1;
+        col -= 1;
         const section = 3; // represents the 3x3.
 
-        for (let i = row; i < this.row + section; i++) {
-            for (let j = col; j < this.col + section; j++) {
-                if (row >= 0 && col >= 0 && row < this.width && col < this.length && !this.board[row][col].mine) {
+        for (let i = row; i < row + section; i++) {
+            for (let j = col; j < col + section; j++) {
+                if (this.isCellInGameBoard(i, j)) {
                     this.board[i][j].reveal = true;
                     this.table.rows[i].cells[j].classList.add(this.reveal);
+                    // recursive
+                    this.floodFill(i, j);
                 }
             }
         }
