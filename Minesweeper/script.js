@@ -259,10 +259,27 @@ class Minesweeper {
 
     /**
      * @function reveals the innerHTML of selected cell.
+     *
+     * @param row {number} the row index of given row.
+     * @param col {number} the column index of given column.
      */
-    revealCell() {
-        this.board[this.row][this.col].reveal = true;
-        this.table.rows[this.row].cells[this.col].classList.add(this.reveal);
+    revealCell(row, col) {
+        this.board[row][col].reveal = true;
+        this.table.rows[row].cells[col].classList.add(this.reveal);
+
+        // reveal surrounding cells of a cell that number's equal 0.
+        if (this.board[row][col].number !== 0) return;
+        if (!this.board[row][col].reveal) return;
+
+        // the cell index above selected cell.
+        if (this.isCellInGameBoard(row + 1, col)) this.revealCell(row + 1, col);
+        // the cell index to the left of selected cell.
+        if (this.isCellInGameBoard(row, col - 1)) this.revealCell(row, col -1);
+        // the cell index to the right of selected cell.
+        if (this.isCellInGameBoard(row, col + 1)) this.revealCell(row, col + 1);
+        // the cell index to below selected cell.
+        if(this.isCellInGameBoard(row - 1, col)) this.revealCell(row - 1, col);
+
     }
 
 
@@ -354,7 +371,7 @@ class Minesweeper {
 
         if (mouseCode === leftClick) {
             if (this.getEmptyCell()) {
-                this.revealCell();
+                this.revealCell(this.row, this.col);
                 this.checkGameOver();
                 if (this.gameOver) this.checkFlags();
             } else {
@@ -363,29 +380,6 @@ class Minesweeper {
         }
 
         if (mouseCode === rightClick) this.setIcon();
-    }
-
-
-    /**
-     * @function reveal surrounding cells of a cell that number's equal 0.
-     *
-     * @param row {number} the row index of given row.
-     * @param col {number} the column index of given column.
-     */
-    floodFill(row, col) {
-        if (this.board[row][col].number !== 0) return;
-
-
-        if (!this.board[row][col].reveal) {
-            // the cell index above selected cell.
-            if (this.isCellInGameBoard(row + 1, col)) this.floodFill(row + 1, col);
-            // the cell index to the left of selected cell.
-            if (this.isCellInGameBoard(row, col - 1)) this.floodFill(row, col -1);
-            // the cell index to the right of selected cell.
-            if (this.isCellInGameBoard(row, col + 1)) this.floodFill(row, col + 1);
-            // the cell index to below selected cell.
-            if(this.isCellInGameBoard(row - 1, col)) this.floodFill(row - 1, col);
-        }
     }
 
     /**
