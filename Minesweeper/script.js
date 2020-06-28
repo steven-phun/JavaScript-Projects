@@ -262,7 +262,7 @@ class Minesweeper {
             }
         }
 
-        if (this.gameOver) this.checkFlags();
+        if (this.gameOver) this.revealFlags();
     }
 
     /**
@@ -292,27 +292,40 @@ class Minesweeper {
     }
 
     /**
-     * @function checks if the selected cell contains a mine.
+     * @function checks if the user can continue playing the game.
      */
-    checkGameOver() {
-        if (this.board[this.row][this.col].mine) {
+    continuePlaying() {
+        if (this.checkWinCondition()) this.countdown.innerHTML = "Congratulations!";
+
+        if (this.checkGameOver()) {
             this.displayAllMines();
             this.table.rows[this.row].cells[this.col].classList.add(this.boom);
             this.countdown.innerHTML = "game over";
+        }
+
+        if (this.checkWinCondition() || this. checkGameOver()) {
+            this.revealFlags();
             this.gameOver = true;
         }
     }
 
     /**
-     * @function checks if the user has won the game.
+     * @function checks if the selected cell contains a mine.
+     *
+     * @return true if the game is over.
      */
-    checkWinCondition() {
-        if (this.counter <= 0) {
-            this.countdown.innerHTML = "Congratulations!";
-            this.gameOver = true;
-        }
+    checkGameOver() {
+        return (this.board[this.row][this.col].mine);
     }
 
+    /**
+     * @function checks if the user has won the game.
+     *
+     * @return true if the user has won.
+     */
+    checkWinCondition() {
+        return (this.counter <= 0);
+    }
 
     /**
      * @function reveal every cell that contains a mine.
@@ -322,9 +335,9 @@ class Minesweeper {
     }
 
     /**
-     * @function display to the user if each flagged cell does contain a mine.
+     * @function display to user if each flagged cells contained a mine.
      */
-    checkFlags() {
+    revealFlags() {
         for (let i = 0; i < this.flagLocations.length; i++) {
             const flag = this.flagLocations[i];
             const tag = this.table.rows[flag.row].cells[flag.col];
@@ -391,9 +404,7 @@ class Minesweeper {
         if (mouseCode === leftClick) {
             if (this.getEmptyCell()) {
                 this.revealCell(this.row, this.col);
-                this.checkGameOver();
-                if (this.gameOver) this.checkFlags();
-                this.checkWinCondition();
+                this.continuePlaying();
             } else {
                 this.setIcon();
             }
@@ -456,12 +467,6 @@ const getCellIndex = (row, col) => {
     minesweeper.getMouseEvent(event.button);
     minesweeper.updateDisplay();
 }
-
-/**
- * @function catch user's right click.
- */
-const getRightClick = () => console.log("test");
-
 
 /**
  * @function initialize the game with given level.
