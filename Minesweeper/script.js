@@ -327,11 +327,13 @@ class Minesweeper {
      * @function reveal every cell that contains a mine.
      */
     revealMines() {
-        for (let i = 0; i < this.mineLocations; i++) {
+        for (let i = 0; i < this.mineLocations.length; i++) {
             let row = this.mineLocations[i].row;
             let col = this.mineLocations[i].col;
 
-            if (!this.board[row][col].flag) this.board[row][col].reveal = true;
+            if (this.board[row][col].flag) continue;
+
+            this.board[row][col].reveal = true;
         }
     }
 
