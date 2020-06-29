@@ -25,6 +25,7 @@
 /** TODO List */
 // set up countdown.
 // fix table and td from resizing.
+// fix flood fill to search all 8 section not 4.
 
 /*** JavaScript Classes ***/
 
@@ -69,6 +70,7 @@ class Minesweeper {
         this.size = this.setMineSize(level);      // {number}  the number of mines in the game.
         this.width = this.setBoardWidth(level);   // {number}  the number of rows for the game board.
         this.length = this.setBoardLength(level); // {number}  the number of columns for the game board.
+        this.time = new Countdown(level);         // {number}  represents the remaining seconds the user has to win.
         this.counter = this.setCounter();         // {number}  ths user wins when this counter reaches 0.
         this.empty = "";                          // {string}  represents an empty cell.
         this.gameOver = false;                    // {boolean} true after user selected a cell that contains a mine.
@@ -213,7 +215,7 @@ class Minesweeper {
     setBoardWidth(difficulty) {
         if (difficulty === 1) return 10;
 
-        return 16; // rest of the level(2 and 3) row size is 16.
+        return 16; // level 2 and 3) row size is 16.
     }
 
     /**
@@ -457,13 +459,30 @@ class Square {
 
 /**
  * @classdesc represents the time the user has left to beat the game.
+ *
+ * @param level {number} the level of game difficulty.
  */
-class Timer {
-    constructor() {
+class Countdown {
+    constructor(time) {
+        this.tag = document.querySelector("#countdown");
+        this.seconds = this.setTime(time); // represents how many seconds on the countdown.
+        this.minutes = 0;                  // represents how many minutes on the countdown.
+        this.time = window.setInterval(this.getTime, 1000);
+    }
 
+    /**
+     * @function set the countdown timer for the game.
+     *
+     * @param level {number} the level of difficulty.
+     *
+     * @return {number} the amount of seconds the user has to win the game.
+     */
+    setTime(level) {
+        if (level === 1) return 300;   // 5 minutes.
+        if (level === 2) return 900;   // 15 minutes.
+        if (level === 3) return 1800;  // 30 minutes.
     }
 }
-
 
 
 /*** JavaScript Functions ***/
@@ -487,7 +506,10 @@ const getMouseEvent = (row, col) => {
  *
  * @param level {number} the level of difficulty.
  */
-const setLevel = (level) => minesweeper = new Minesweeper(level);
+const setLevel = (level) => {
+    window.clearInterval(minesweeper.countdown.time);
+    minesweeper = new Minesweeper(level);
+}
 
 // global and window listener instance.
 let minesweeper = new Minesweeper();
