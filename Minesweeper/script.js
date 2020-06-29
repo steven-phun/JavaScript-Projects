@@ -269,6 +269,7 @@ class Minesweeper {
      */
     revealCell(row, col) {
         if (this.board[row][col].reveal) return;
+        if (this.board[row][col].flag) return;
 
         this.board[row][col].reveal = true;
         this.table.rows[row].cells[col].classList.add(this.reveal);
