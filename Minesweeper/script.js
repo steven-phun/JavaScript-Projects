@@ -482,6 +482,25 @@ class Countdown {
         if (level === 2) return 900;   // 15 minutes.
         if (level === 3) return 1800;  // 30 minutes.
     }
+
+    /**
+     * @function subtracts one second from the countdown.
+     */
+    getTime() {
+        sudoku.stopwatch.seconds++;
+        sudoku.stopwatch.convertSeconds();
+        sudoku.stopwatch.printTime();
+    }
+
+    /**
+     * @function converts seconds to minutes.
+     */
+    toMinute() {
+        if (this.seconds === 60) {
+            this.seconds = 0;
+            this.minutes++;
+        }
+    }
 }
 
 
