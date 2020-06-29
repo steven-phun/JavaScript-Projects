@@ -563,7 +563,7 @@ class Stopwatch {
   }
 
   /**
-   * @function adds one second to the clock for every second.
+   * @function adds one second to the clock.
    */
   getTime() {
     sudoku.stopwatch.seconds++;
