@@ -487,9 +487,9 @@ class Countdown {
      * @function subtracts one second from the countdown.
      */
     getTime() {
-        sudoku.stopwatch.seconds++;
-        sudoku.stopwatch.convertSeconds();
-        sudoku.stopwatch.printTime();
+        minesweeper.time.seconds++;
+        minesweeper.time.toMinute();
+        minesweeper.time.printTime();
     }
 
     /**
@@ -535,7 +535,7 @@ const getMouseEvent = (row, col) => {
  * @param level {number} the level of difficulty.
  */
 const setLevel = (level) => {
-    window.clearInterval(minesweeper.countdown.time);
+    window.clearInterval(minesweeper.time.time);
     minesweeper = new Minesweeper(level);
 }
 
