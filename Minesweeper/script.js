@@ -47,20 +47,20 @@ class Minesweeper {
         /** HTML <i> tags */
         this.iconMine     = '<i class="fas fa-bomb"></i>';
         this.iconFlag     = '<i class="fas fa-flag"></i>';
-        this.iconCorrect  = '<i class="fas fa-check"></i>';
-        this.iconWrong    = '<i class="fas fa-times"></i>';
 
         /** CSS color class instances */
-        this.reveal = "reveal-cell";  // represents a cell that hides its innerHTML from the user.
-        this.boom   = "boom-cell"     // represents the cell that cause the game over.
-        this.color1 = "color-1";      // style tag for the number 1.
-        this.color2 = "color-2";      // style tag for the number 2.
-        this.color3 = "color-3";      // style tag for the number 3.
-        this.color4 = "color-4";      // style tag for the number 4.
-        this.color5 = "color-5";      // style tag for the number 5.
-        this.color6 = "color-6";      // style tag for the number 6.
-        this.color7 = "color-7";      // style tag for the number 7.
-        this.color8 = "color-8";      // style tag for the number 8.
+        this.reveal      = "reveal-cell";   // represents a cell that hides its innerHTML from the user.
+        this.boom        = "boom-cell"      // represents the cell that cause the game over.
+        this.flagCorrect = "flag-correct";  // represents the flagged cell was correct guessed.
+        this.flagWrong   = "flag-wrong";    // represents the flagged cell was incorrectly guessed.
+        this.color1      = "color-1";       // style tag for the number 1.
+        this.color2      = "color-2";       // style tag for the number 2.
+        this.color3      = "color-3";       // style tag for the number 3.
+        this.color4      = "color-4";       // style tag for the number 4.
+        this.color5      = "color-5";       // style tag for the number 5.
+        this.color6      = "color-6";       // style tag for the number 6.
+        this.color7      = "color-7";       // style tag for the number 7.
+        this.color8      = "color-8";       // style tag for the number 8.
 
         /** minesweeper instances. */
         this.mineLocations = [];                  // {array}   coordinate for the location of each mine.
@@ -71,7 +71,6 @@ class Minesweeper {
         this.width = this.setBoardWidth(level);   // {number}  the number of rows for the game board.
         this.length = this.setBoardLength(level); // {number}  the number of columns for the game board.
         this.counter = this.setCounter();         // {number}  ths user wins when this counter reaches 0.
-        console.log(this.counter);
         this.empty = "";                          // {string}  represents an empty cell.
         this.gameOver = false;                    // {boolean} true after user selected a cell that contains a mine.
 
@@ -260,8 +259,6 @@ class Minesweeper {
                 }
             }
         }
-
-        if (this.gameOver) this.revealFlags();
     }
 
     /**
@@ -297,7 +294,7 @@ class Minesweeper {
         if (this.checkWinCondition()) this.countdown.innerHTML = "Congratulations!";
 
         if (this.checkGameOver()) {
-            this.displayAllMines();
+            this.revealMines();
             this.table.rows[this.row].cells[this.col].classList.add(this.boom);
             this.countdown.innerHTML = "Game Over";
         }
@@ -329,8 +326,13 @@ class Minesweeper {
     /**
      * @function reveal every cell that contains a mine.
      */
-    displayAllMines() {
-        this.mineLocations.forEach(mine => this.board[mine.row][mine.col].reveal = true);
+    revealMines() {
+        for (let i = 0; i < this.mineLocations; i++) {
+            let row = this.mineLocations[i].row;
+            let col = this.mineLocations[i].col;
+
+            if (!this.board[row][col].flag) this.board[row][col].reveal = true;
+        }
     }
 
     /**
@@ -341,8 +343,8 @@ class Minesweeper {
             const flag = this.flagLocations[i];
             const tag = this.table.rows[flag.row].cells[flag.col];
 
-            if (this.board[flag.row][flag.col].mine) tag.innerHTML = this.iconCorrect;
-            else tag.innerHTML = this.iconWrong;
+            if (this.board[flag.row][flag.col].mine) tag.classList.add(this.flagCorrect);
+            else tag.classList.add(this.flagWrong);
         }
     }
 
@@ -366,6 +368,7 @@ class Minesweeper {
      */
     addFlagLocation() {
         this.flagLocations.push({row: this.row, col: this.col});
+        this.board[this.row][this.col].flag = true;
     }
 
     /**
@@ -374,6 +377,7 @@ class Minesweeper {
     removeFlagLocation() {
         for (let i = 0; i < this.flagLocations.length; i++) {
             if (this.flagLocations[i].row === this.row && this.flagLocations[i].col === this.col) {
+                this.board[this.row][this.col].flag = false;
                 return this.flagLocations.splice(i, 1);
             }
         }
@@ -402,9 +406,7 @@ class Minesweeper {
             if (this.isEmptyCell()) {
                 this.revealCell(this.row, this.col);
                 this.continuePlaying();
-            } else {
-                this.setFlagIcon();
-            }
+            } else this.setFlagIcon();
         }
 
         if (mouseCode === rightClick) this.setFlagIcon();
@@ -443,6 +445,7 @@ class Square {
         this.number = 0;      // {number}  represents how many mines are adjacent to this object.
         this.mine = false;    // {boolean} true if the cell represents a mine.
         this.reveal = false;  // {boolean} true if the square will display its innerHTML to user.
+        this.flag = false     // {boolean} true if the square is flagged by the user.
     }
 }
 

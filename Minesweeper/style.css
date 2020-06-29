@@ -115,6 +115,14 @@ button {
 
 /*** 5. color-index ***/
 
+.flag-correct {
+    background-color: #AFF8D8 !important;
+}
+
+.flag-wrong {
+    background-color: #F5B7B1 !important;
+}
+
 .reveal-cell {
     background-color: #5499C7 !important;
 }
