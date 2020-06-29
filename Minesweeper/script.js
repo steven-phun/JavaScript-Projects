@@ -432,7 +432,7 @@ class Minesweeper {
      * @param row {number} row index of selected cell.
      * @param col {number} column index of selected cell.
      */
-    updateSelectedCell(row, col) {
+    getSelectedCell(row, col) {
         this.row = row;
         this.col = col;
     }
@@ -474,7 +474,7 @@ const getMouseEvent = (row, col) => {
     if (minesweeper.gameOver) return;
     if (minesweeper.board[row][col].reveal) return;
 
-    minesweeper.updateSelectedCell(row, col);
+    minesweeper.getSelectedCell(row, col);
     minesweeper.getMouseEvent(event.button);
     minesweeper.updateDisplay();
 }
