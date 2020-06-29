@@ -23,7 +23,6 @@
 /*jshint esversion: 6 */
 
 /** TODO List */
-// add a counter for all non mine cells to keep track when user wins.
 // set up countdown.
 // fix table and td from resizing.
 
@@ -273,7 +272,7 @@ class Minesweeper {
 
         this.board[row][col].reveal = true;
         this.table.rows[row].cells[col].classList.add(this.reveal);
-
+        this.counter--;
 
         // reveal surrounding cells of a cell that number's equal 0.
         if (this.board[row][col].number === 0) {
@@ -295,12 +294,12 @@ class Minesweeper {
         if (this.checkWinCondition()) this.countdown.innerHTML = "Congratulations!";
 
         if (this.checkGameOver()) {
-            this.revealMines();
             this.table.rows[this.row].cells[this.col].classList.add(this.boom);
             this.countdown.innerHTML = "Game Over";
         }
 
         if (this.checkWinCondition() || this. checkGameOver()) {
+            this.revealMines();
             this.revealFlags();
             this.gameOver = true;
         }
@@ -399,8 +398,12 @@ class Minesweeper {
      * @function captures users left and right mouse clicks.
      *
      * @param mouseCode {number} 0 represents left click, 2 represents right click.
+     * @param row       {number} the row index of selected cell.
+     * @param col       {number} the column index of selected cell.
      */
-    getMouseEvent(mouseCode) {
+    getMouseEvent(mouseCode, row, col) {
+        this.getSelectedCell(row, col);
+
         // event.button mouse click code.
         const leftClick = 0;
         const rightClick = 2;
@@ -475,8 +478,7 @@ const getMouseEvent = (row, col) => {
     if (minesweeper.gameOver) return;
     if (minesweeper.board[row][col].reveal) return;
 
-    minesweeper.getSelectedCell(row, col);
-    minesweeper.getMouseEvent(event.button);
+    minesweeper.getMouseEvent(event.button, row, col);
     minesweeper.updateDisplay();
 }
 
