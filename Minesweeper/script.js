@@ -501,6 +501,15 @@ class Countdown {
             this.minutes++;
         }
     }
+
+    /**
+     * @returns {string} time in Hours:Minutes:Seconds format.
+     */
+    printTime() {
+        // minutes only when necessary
+        if (this.minutes !== 0) return this.tag.innerHTML = `${this.minutes}M ${this.seconds}S`;
+        this.tag.innerHTML = this.seconds + "S";
+    }
 }
 
 
