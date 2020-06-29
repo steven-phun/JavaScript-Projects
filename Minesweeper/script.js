@@ -47,7 +47,6 @@ class Minesweeper {
         /** HTML <i> tags */
         this.iconMine     = '<i class="fas fa-bomb"></i>';
         this.iconFlag     = '<i class="fas fa-flag"></i>';
-        this.iconQuestion = '<i class=\"fas fa-question\"></i>';
         this.iconCorrect  = '<i class="fas fa-check"></i>';
         this.iconWrong    = '<i class="fas fa-times"></i>';
 
@@ -229,7 +228,7 @@ class Minesweeper {
             let row = this.table.insertRow(); // insert <tr>.
             for (let j = 0; j < this.length; j++) {
                 let cell = row.insertCell(); // insert <tr>.
-                cell.setAttribute('onmousedown', `getCellIndex(${i},${j})`);
+                cell.setAttribute('onmousedown', `getMouseEvent(${i},${j})`);
             }
         }
     }
@@ -300,7 +299,7 @@ class Minesweeper {
         if (this.checkGameOver()) {
             this.displayAllMines();
             this.table.rows[this.row].cells[this.col].classList.add(this.boom);
-            this.countdown.innerHTML = "game over";
+            this.countdown.innerHTML = "Game Over";
         }
 
         if (this.checkWinCondition() || this. checkGameOver()) {
@@ -348,27 +347,25 @@ class Minesweeper {
     }
 
     /**
-     * @function display a flag, question, or blank icon on selected cell.
+     * @function display or remove the flag icon on selected cell.
      */
-    setIcon() {
+    setFlagIcon() {
         let tag = this.table.rows[this.row].cells[this.col];
 
-        // Rotation cycle for icon to display: blank -> flag -> question -> (repeat).
-        if (tag.innerHTML === this.iconQuestion) tag.innerHTML = this.empty;
-        else if (tag.innerHTML === this.iconFlag) tag.innerHTML = this.iconQuestion;
-        else if (tag.innerHTML === this.empty) tag.innerHTML = this.iconFlag;
-
-        this.addFlagLocation();
+        if (tag.innerHTML === this.empty) {
+            this.addFlagLocation();
+            tag.innerHTML = this.iconFlag;
+        } else {
+            this.removeFlagLocation();
+            tag.innerHTML = this.empty;
+        }
     }
 
     /**
      * @function add the coordinates of the flag icon to array.
      */
     addFlagLocation() {
-        if (this.table.rows[this.row].cells[this.col].innerHTML === this.iconFlag)
-            return this.flagLocations.push({row: this.row, col: this.col});
-
-        this.removeFlagLocation();
+        this.flagLocations.push({row: this.row, col: this.col});
     }
 
     /**
@@ -387,7 +384,7 @@ class Minesweeper {
      *
      * @return {boolean} true if the selected cell is empty.
      */
-    getEmptyCell() {
+    isEmptyCell() {
         return this.table.rows[this.row].cells[this.col].innerHTML === this.empty;
     }
 
@@ -402,15 +399,15 @@ class Minesweeper {
         const rightClick = 2;
 
         if (mouseCode === leftClick) {
-            if (this.getEmptyCell()) {
+            if (this.isEmptyCell()) {
                 this.revealCell(this.row, this.col);
                 this.continuePlaying();
             } else {
-                this.setIcon();
+                this.setFlagIcon();
             }
         }
 
-        if (mouseCode === rightClick) this.setIcon();
+        if (mouseCode === rightClick) this.setFlagIcon();
     }
 
     /**
@@ -423,6 +420,17 @@ class Minesweeper {
      */
     isCellInGameBoard(row, col) {
         return row >= 0 && col >= 0 && row < this.width && col < this.length;
+    }
+
+    /**
+     * @function set row and col to selected cell.
+     *
+     * @param row {number} row index of selected cell.
+     * @param col {number} column index of selected cell.
+     */
+    updateSelectedCell(row, col) {
+        this.row = row;
+        this.col = col;
     }
 }
 
@@ -457,13 +465,11 @@ class Timer {
  * @param row {number} the row index of selected cell.
  * @param col {number} the column index of selected cell.
  */
-const getCellIndex = (row, col) => {
+const getMouseEvent = (row, col) => {
     if (minesweeper.gameOver) return;
     if (minesweeper.board[row][col].reveal) return;
 
-    minesweeper.row = row;
-    minesweeper.col = col;
-
+    minesweeper.updateSelectedCell(row, col);
     minesweeper.getMouseEvent(event.button);
     minesweeper.updateDisplay();
 }
