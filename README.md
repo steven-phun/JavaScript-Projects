@@ -8,9 +8,9 @@ Project Inspiration
 
 Project Difficulties
 
-- Learning a new language, JavaScript
+- Syntax and semantics of a new programming language, JavaScript
 
-- Little experience with CSS prior 
+- Implementing recursive backtracking 
 
 Developed in
 
@@ -26,9 +26,9 @@ Project Inspiration
 
 Project Difficulties
 
-- Implementing a variation of the flood fill algorithm
-
 - Working with different table sizes based on the difficulty choosen
+
+- Implementing a variation of the flood fill algorithm
 
 Developed in
 
