@@ -94,6 +94,7 @@ class Minesweeper {
      */
     startCountdown() {
         this.firstSelected = false;
+        this.getTime(); // start the countdown right away.
         this.time = window.setInterval("minesweeper.getTime()", 1000);
     }
 
@@ -565,4 +566,4 @@ const setLevel = (level) => {
 }
 
 // global and window listener instance.
-let minesweeper = new Minesweeper(2);
+let minesweeper = new Minesweeper();
