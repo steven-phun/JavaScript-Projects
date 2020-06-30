@@ -38,7 +38,7 @@ class Minesweeper {
     constructor(level= 1) {
         /** HTML id tags */
         // {element} the HTML tag that displays the timer.
-        this.countdown = document.querySelector("#countdown");
+        this.tagCountdown = document.querySelector("#countdown");
         // {element}  the HTML table tag that will contain the game board.
         this.table     = document.querySelector("#minesweeper>table");
         // {element}  the HTML tag that contains the amount of mines left.
@@ -70,19 +70,70 @@ class Minesweeper {
         this.size = this.setMineSize(level);      // {number}  the number of mines in the game.
         this.width = this.setBoardWidth(level);   // {number}  the number of rows for the game board.
         this.length = this.setBoardLength(level); // {number}  the number of columns for the game board.
-        this.time = new Countdown(level);         // {number}  represents the remaining seconds the user has to win.
+        this.seconds = this.setTime(level) % 60;  // {number}  represents how many seconds on the countdown.
+        this.minutes = this.setTime(level) / 60;  // {number}  represents how many minutes on the countdown.
         this.counter = this.setCounter();         // {number}  ths user wins when this counter reaches 0.
         this.empty = "";                          // {string}  represents an empty cell.
         this.gameOver = false;                    // {boolean} true after user selected a cell that contains a mine.
+        this.win = false;                         // {boolean} true if the user wins the game.
+        this.timedOut = false;                    // {boolean} true if the countdown reaches 0.
 
         // {array}   represents each square on the game board.
         this.board = this.setMines(this.toSquareObject());
+        this.time = window.setInterval("minesweeper.getTime()", 1000);
 
         // set up the game board.
-        this.countdown.innerHTML = "00:00";
+        this.tagCountdown.innerHTML = this.seconds.toString();
         this.drawGameBoard();
         this.setNumber();
         this.updateDisplay();
+    }
+
+    /**
+     * @function set the countdown timer for the game.
+     *
+     * @param level {number} the level of difficulty.
+     *
+     * @return {number} the amount of seconds the user has to win the game.
+     */
+    setTime(level) {
+        if (level === 1) return 300;   // 5 minutes.
+        if (level === 2) return 900;   // 15 minutes.
+        if (level === 3) return 1800;  // 30 minutes.
+    }
+
+    /**
+     * @function subtracts one second from the countdown.
+     */
+    getTime() {
+        this.seconds--;
+        this.toMinute();
+        this.printTime();
+    }
+
+    /**
+     * @function converts seconds to minutes.
+     */
+    toMinute() {
+        if (this.seconds <= 0) {
+            this.minutes--
+            this.seconds = 0;
+        }
+    }
+
+    /**
+     * @returns {string} time in Hours:Minutes:Seconds format.
+     */
+    printTime() {
+        // display minutes only when necessary
+        if (this.minutes !== 0) return this.tagCountdown.innerHTML = `${this.minutes}M ${this.seconds}S`;
+        this.tagCountdown.innerHTML = this.seconds + "S";
+
+        // stop displaying when countdown reaches 0.
+        if (this.minutes <= 0 && this.seconds <= 0) {
+            this.timedOut = true;
+            this.continuePlaying();
+        }
     }
 
     /**
@@ -248,7 +299,7 @@ class Minesweeper {
         this.minesLeft.innerHTML = (this.size - this.flagLocations.length).toString();
 
         // update cells.
-        if (this.row === null || this.col === null) return;
+        //if (this.row === null || this.col === null) return;
 
         for (let row = 0; row < this.width; row++) {
             for (let col = 0; col < this.length; col++) {
@@ -293,17 +344,27 @@ class Minesweeper {
      * @function checks if the user can continue playing the game.
      */
     continuePlaying() {
-        if (this.checkWinCondition()) this.countdown.innerHTML = "Congratulations!";
+        this.checkGameOver();
+        this.checkWinCondition();
 
-        if (this.checkGameOver()) {
+
+        if (this.win) this.tagCountdown.innerHTML = "Congratulations!";
+
+        if (this.gameOver) {
             this.table.rows[this.row].cells[this.col].classList.add(this.boom);
-            this.countdown.innerHTML = "Game Over";
+            this.tagCountdown.innerHTML = "Game Over";
         }
 
-        if (this.checkWinCondition() || this. checkGameOver()) {
+        if (this.timedOut) {
+            this.tagCountdown.innerHTML = "Boom!";
+        }
+
+
+        if (this.win || this.gameOver || this.timedOut) {
             this.revealMines();
             this.revealFlags();
-            this.gameOver = true;
+            this.updateDisplay();
+            window.clearInterval(minesweeper.time);
         }
     }
 
@@ -313,7 +374,9 @@ class Minesweeper {
      * @return true if the game is over.
      */
     checkGameOver() {
-        return (this.board[this.row][this.col].mine);
+        if (this.row === null || this.col === null) return;
+
+        if (this.board[this.row][this.col].mine) this.gameOver = true;
     }
 
     /**
@@ -322,7 +385,7 @@ class Minesweeper {
      * @return true if the user has won.
      */
     checkWinCondition() {
-        return (this.counter <= 0);
+        if (this.counter <= 0) this.win = true;
     }
 
     /**
@@ -457,61 +520,6 @@ class Square {
     }
 }
 
-/**
- * @classdesc represents the time the user has left to beat the game.
- *
- * @param level {number} the level of game difficulty.
- */
-class Countdown {
-    constructor(time) {
-        this.tag = document.querySelector("#countdown");
-        this.seconds = this.setTime(time); // represents how many seconds on the countdown.
-        this.minutes = 0;                  // represents how many minutes on the countdown.
-        this.time = window.setInterval(this.getTime, 1000);
-    }
-
-    /**
-     * @function set the countdown timer for the game.
-     *
-     * @param level {number} the level of difficulty.
-     *
-     * @return {number} the amount of seconds the user has to win the game.
-     */
-    setTime(level) {
-        if (level === 1) return 300;   // 5 minutes.
-        if (level === 2) return 900;   // 15 minutes.
-        if (level === 3) return 1800;  // 30 minutes.
-    }
-
-    /**
-     * @function subtracts one second from the countdown.
-     */
-    getTime() {
-        minesweeper.time.seconds++;
-        minesweeper.time.toMinute();
-        minesweeper.time.printTime();
-    }
-
-    /**
-     * @function converts seconds to minutes.
-     */
-    toMinute() {
-        if (this.seconds === 60) {
-            this.seconds = 0;
-            this.minutes++;
-        }
-    }
-
-    /**
-     * @returns {string} time in Hours:Minutes:Seconds format.
-     */
-    printTime() {
-        // minutes only when necessary
-        if (this.minutes !== 0) return this.tag.innerHTML = `${this.minutes}M ${this.seconds}S`;
-        this.tag.innerHTML = this.seconds + "S";
-    }
-}
-
 
 /*** JavaScript Functions ***/
 
@@ -522,7 +530,7 @@ class Countdown {
  * @param col {number} the column index of selected cell.
  */
 const getMouseEvent = (row, col) => {
-    if (minesweeper.gameOver) return;
+    if (minesweeper.gameOver || minesweeper.timedOut) return;
     if (minesweeper.board[row][col].reveal) return;
 
     minesweeper.getMouseEvent(event.button, row, col);
@@ -535,7 +543,7 @@ const getMouseEvent = (row, col) => {
  * @param level {number} the level of difficulty.
  */
 const setLevel = (level) => {
-    window.clearInterval(minesweeper.time.time);
+    window.clearInterval(minesweeper.time);
     minesweeper = new Minesweeper(level);
 }
 
