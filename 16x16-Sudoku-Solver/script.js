@@ -634,8 +634,7 @@ const restartGame = () => {
   let custom = false;
   if (currentBoard === 0) custom = true;
 
-  window.clearInterval(sudoku.stopwatch.time);
-  sudoku = new Sudoku(getBoard()[currentBoard], custom);
+  setBoard(getBoard()[currentBoard], custom);
 }
 
 /**
@@ -664,8 +663,7 @@ const erase =() => sudoku.erase();
 const makeCustomBoard = () => {
   currentBoard = 0; // index 0 is an empty board.
 
-  window.clearInterval(sudoku.stopwatch.time);
-  sudoku = new Sudoku(getBoard()[currentBoard], true);
+  setBoard(getBoard()[currentBoard], true);
 }
 
 /**
@@ -679,8 +677,18 @@ const newGame = () => {
     currentBoard = (currentBoard + 1) % getBoard().length;
   }
 
+  setBoard(getBoard()[currentBoard]);
+}
+
+/**
+ * @function set the sudoku grid with given board.
+ *
+ * @param board {array} the board to initialize the game.
+ * @param blank {boolean} if array is empty.
+ */
+const setBoard = (board, blank=false) => {
   window.clearInterval(sudoku.stopwatch.time);
-  sudoku = new Sudoku(getBoard()[currentBoard]);
+  sudoku = new Sudoku(board, blank);
 }
 
 /**
