@@ -43,10 +43,7 @@ class Sudoku {
     this.colorSelected = "selected-color";
     this.colorInvalid = "invalid-color";
 
-    // setup game
-    this.fastSolve(this.copy);
-    this.drawGrid();
-    this.updateDisplay();
+    this.setup();
   }
 
   /**
@@ -534,6 +531,15 @@ class Sudoku {
     if (key >= zero && key <= nine) return key - zero;
 
     if (key >= A && key <= F) return key - A + decimal;
+  }
+
+  /**
+   * @function sets up the game grid for the user to interact with.
+   */
+  setup() {
+    this.fastSolve(this.copy);
+    this.drawGrid();
+    this.updateDisplay();
   }
 }
 
