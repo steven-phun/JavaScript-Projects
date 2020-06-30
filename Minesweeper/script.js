@@ -79,7 +79,7 @@ class Minesweeper {
 
         // {array}   represents each square on the game board.
         this.board = this.setMines(this.toSquareObject());
-        this.time = window.setInterval("minesweeper.getTime()", 1000);
+        this.firstSelected = true; // {boolean} false if user has already selected a cell.
 
         // set up the game board.
         this.printTime();
@@ -87,6 +87,14 @@ class Minesweeper {
         this.setWrapperWidth(level);
         this.setNumber();
         this.updateDisplay();
+    }
+
+    /**
+     * @function start the countdown.
+     */
+    startCountdown() {
+        this.firstSelected = false;
+        this.time = window.setInterval("minesweeper.getTime()", 1000);
     }
 
     /**
@@ -477,6 +485,7 @@ class Minesweeper {
      */
     getMouseEvent(mouseCode, row, col) {
         this.getSelectedCell(row, col);
+        if (this.firstSelected) this.startCountdown();
 
         // event.button mouse click code.
         const leftClick = 0;
