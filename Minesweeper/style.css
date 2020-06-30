@@ -46,27 +46,25 @@ button {
 /*** 2. top-bar ***/
 #top-bar {
     display: inline-grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     padding-bottom: 10px;
 }
 
-#top-bar #countdown {
+#countdown {
     color: ghostwhite;
-    text-align: end;
+    text-align: center;
     padding: 5px;
 }
 
-#top-bar #flag-question button:hover,
-#top-bar #flag-question i:hover{
-    color: ghostwhite;
-    cursor: pointer;
-    background-color: #7FB3D5;
-}
-
-#top-bar #flag-question {
+#flag-icon {
     text-align: end;
 }
 
+#flag-icon button:hover,
+#flag-icon button:active {
+    color: ghostwhite;
+    background-color: #7FB3D5;
+}
 
 /*** 3. minesweeper ***/
 #minesweeper {

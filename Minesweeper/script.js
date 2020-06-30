@@ -75,7 +75,8 @@ class Minesweeper {
         this.win = false;                         // {boolean} true if the user wins the game.
         this.timedOut = false;                    // {boolean} true if the countdown reaches 0.
         this.firstSelected = true;                // {boolean} false if user has already selected a cell.
-        this.board = this.setMines(this.toSquareObject()); // {array}   represents each square on the game board.
+        this.leftClickFlag = false;               // {boolean} true if left click is treated as a right click.
+        this.board = this.setMines(this.toSquareObject()); // {array} represents each square on the game board.
 
         this.setup(level);
     }
@@ -528,6 +529,15 @@ class Minesweeper {
         this.row = row;
         this.col = col;
     }
+
+    /**
+     * @function toggle between setting the left click between selecting and flagging a cell.
+     */
+    setFlag() {
+        if (this.leftClickFlag) return this.leftClickFlag = false;
+
+        this.leftClickFlag = true;
+    }
 }
 
 /**
@@ -567,6 +577,10 @@ const getMouseEvent = (row, col) => {
 const setLevel = (level) => {
     window.clearInterval(minesweeper.time);
     minesweeper = new Minesweeper(level);
+}
+
+const setFlag = () => {
+    minesweeper.setFlag();
 }
 
 // global and window listener instance.
