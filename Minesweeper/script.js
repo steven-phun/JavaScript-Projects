@@ -327,8 +327,12 @@ class Minesweeper {
 
         // reveal surrounding cells of a cell that number's equal 0.
         if (this.board[row][col].number === 0) {
-            for (let i = row - 1; i < row - 1 + 3; i++) {
-                for (let j = col - 1; j < col - 1 + 3; j++) {
+            let section = 3; // represents 3x3 section.
+            let rowIndex = row - 1; // row index of the first cell in a 3x3.
+            let colIndex = col - 1; // column index of the first cell in a 3x3.
+
+            for (let i = rowIndex; i < rowIndex + section; i++) {
+                for (let j = colIndex; j < colIndex + section; j++) {
                     if (this.isCellInGameBoard(i, j)) this.revealCell(i, j);
                 }
             }
