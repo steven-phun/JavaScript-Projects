@@ -18,7 +18,7 @@ Developed in
 - CSS
 - JavaScript
 
-## [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper) *not yet completed.
+## [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper)
 
 Project Inspiration 
 
@@ -26,7 +26,9 @@ Project Inspiration
 
 Project Difficulties
 
-- 
+- Implementing a variation of the flood fill algorithm
+
+- Working with different table sizes based on the difficulty choosen
 
 Developed in
 
