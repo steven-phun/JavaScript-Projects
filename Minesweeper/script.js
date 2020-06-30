@@ -24,7 +24,6 @@
 
 /** TODO List */
 // fix table and td from resizing.
-// fix flood fill to search all 8 section not 4.
 
 /*** JavaScript Classes ***/
 
@@ -328,22 +327,11 @@ class Minesweeper {
 
         // reveal surrounding cells of a cell that number's equal 0.
         if (this.board[row][col].number === 0) {
-            // the cell index above selected cell.
-            if (this.isCellInGameBoard(row + 1, col)) this.revealCell(row + 1, col);
-            // the cell index to the left of selected cell.
-            if (this.isCellInGameBoard(row, col - 1)) this.revealCell(row, col - 1);
-            // the cell index to the right of selected cell.
-            if (this.isCellInGameBoard(row, col + 1)) this.revealCell(row, col + 1);
-            // the cell index to below selected cell.
-            if (this.isCellInGameBoard(row - 1, col)) this.revealCell(row - 1, col);
-
-            if (this.isCellInGameBoard(row + 1, col + 1)) this.revealCell(row + 1, col + 1);
-
-            if (this.isCellInGameBoard(row - 1, col - 1)) this.revealCell(row - 1, col - 1);
-
-            if (this.isCellInGameBoard(row + 1, col - 1)) this.revealCell(row + 1, col - 1);
-
-            if (this.isCellInGameBoard(row - 1, col + 1)) this.revealCell(row - 1, col + 1);
+            for (let i = row - 1; i < row - 1 + 3; i++) {
+                for (let j = col - 1; j < col - 1 + 3; j++) {
+                    if (this.isCellInGameBoard(i, j)) this.revealCell(i, j);
+                }
+            }
         }
     }
 
