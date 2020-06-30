@@ -23,7 +23,6 @@
 /*jshint esversion: 6 */
 
 /** TODO List */
-// set up countdown.
 // fix table and td from resizing.
 // fix flood fill to search all 8 section not 4.
 
@@ -83,7 +82,7 @@ class Minesweeper {
         this.time = window.setInterval("minesweeper.getTime()", 1000);
 
         // set up the game board.
-        this.tagCountdown.innerHTML = this.seconds.toString();
+        this.printTime();
         this.drawGameBoard();
         this.setNumber();
         this.updateDisplay();
@@ -115,9 +114,9 @@ class Minesweeper {
      * @function converts seconds to minutes.
      */
     toMinute() {
-        if (this.seconds <= 0) {
+        if (this.seconds < 0) {
             this.minutes--
-            this.seconds = 0;
+            this.seconds = 59;
         }
     }
 
@@ -507,7 +506,6 @@ class Minesweeper {
     }
 }
 
-
 /**
  * @classdesc represents one individual square for the game.
  */
@@ -530,7 +528,7 @@ class Square {
  * @param col {number} the column index of selected cell.
  */
 const getMouseEvent = (row, col) => {
-    if (minesweeper.gameOver || minesweeper.timedOut) return;
+    if (minesweeper.gameOver || minesweeper.timedOut || minesweeper.win) return;
     if (minesweeper.board[row][col].reveal) return;
 
     minesweeper.getMouseEvent(event.button, row, col);
