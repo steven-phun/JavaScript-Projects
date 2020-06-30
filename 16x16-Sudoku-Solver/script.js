@@ -698,12 +698,12 @@ const setBoard = (board, blank=false) => {
 }
 
 /**
- * @return one array that represents the sudoku board to initialize the game with.
+ * @return an array that represents the sudoku board to initialize the game with.
  */
 const getBoard = () => {
-  let board = []       // array that will hold the sudoku boards.
-  let size = 16;       // represents the 16x16 grid.
-  let empty = "";      // represents and empty cell.
+  let board = []   // array that will hold the sudoku boards.
+  let size = 16;   // represents the 16x16 grid.
+  let empty = "";  // represents and empty cell.
 
   // index 0 will represent an empty board.
   let tempBoard = [];
