@@ -36,6 +36,7 @@
 class Minesweeper {
     constructor(level= 1) {
         /** HTML id tags */
+
         // {element} the HTML tag that displays the timer.
         this.tagCountdown = document.querySelector("#countdown");
         // {element}  the HTML table tag that will contain the game board.
@@ -243,19 +244,6 @@ class Minesweeper {
     }
 
     /**
-     * @function set the number of columns depending on the level of the game board.
-     *
-     * @param level {number} the level of difficulty.
-     *
-     * @return {number} represents the number of columns.
-     */
-    setBoardLength(level) {
-        if (level === 1) return 10;
-        if (level === 2) return 16;
-        if (level === 3) return 30;
-    }
-
-    /**
      * @function set the number of rows depending on the difficulty of the game board.
      *
      * @param difficulty {number} the level of difficulty.
@@ -263,9 +251,21 @@ class Minesweeper {
      * @return {number} represents the number of rows.
      */
     setBoardWidth(difficulty) {
-        if (difficulty === 1) return 10;
-
-        return 16; // level 2 and 3) row size is 16.
+        if (difficulty === 1) return 8;
+        if (difficulty === 2) return 13;
+        if (difficulty === 3) return 16;
+    }
+    /**
+     * @function set the number of columns depending on the level of the game board.
+     *
+     * @param level {number} the level of difficulty.
+     *
+     * @return {number} represents the number of columns.
+     */
+    setBoardLength(level) {
+        if (level === 1) return 8;
+        if (level === 2) return 15;
+        if (level === 3) return 30;
     }
 
     /**
@@ -336,6 +336,14 @@ class Minesweeper {
             if (this.isCellInGameBoard(row, col + 1)) this.revealCell(row, col + 1);
             // the cell index to below selected cell.
             if (this.isCellInGameBoard(row - 1, col)) this.revealCell(row - 1, col);
+
+            if (this.isCellInGameBoard(row + 1, col + 1)) this.revealCell(row + 1, col + 1);
+
+            if (this.isCellInGameBoard(row - 1, col - 1)) this.revealCell(row - 1, col - 1);
+
+            if (this.isCellInGameBoard(row + 1, col - 1)) this.revealCell(row + 1, col - 1);
+
+            if (this.isCellInGameBoard(row - 1, col + 1)) this.revealCell(row - 1, col + 1);
         }
     }
 
@@ -345,7 +353,6 @@ class Minesweeper {
     continuePlaying() {
         this.checkGameOver();
         this.checkWinCondition();
-
 
         if (this.win) this.tagCountdown.innerHTML = "Congratulations!";
 
@@ -357,7 +364,6 @@ class Minesweeper {
         if (this.timedOut) {
             this.tagCountdown.innerHTML = "Boom!";
         }
-
 
         if (this.win || this.gameOver || this.timedOut) {
             this.revealMines();
