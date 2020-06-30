@@ -426,6 +426,7 @@ class Minesweeper {
             this.board[row][col].reveal = true;
 
             if (this.win) this.table.rows[row].cells[col].classList.add(this.correctColor);
+            if (this.timedOut) this.table.rows[row].cells[col].classList.add(this.wrongColor);
         }
     }
 
@@ -501,7 +502,7 @@ class Minesweeper {
         const leftClick = 0;
         const rightClick = 2;
 
-        if (this.setRightClick) mouseCode = rightClick;
+        if (this.rightClickOn) mouseCode = rightClick;
 
         if (mouseCode === leftClick) {
             if (this.isEmptyCell()) {
@@ -540,6 +541,7 @@ class Minesweeper {
      * @function toggle between treating a left click as a right click.
      */
     setRightClick() {
+        console.log(this.rightClickOn);
         if (this.rightClickOn) return this.rightClickOn = false;
 
         this.rightClickOn = true;
