@@ -499,6 +499,8 @@ class Minesweeper {
         const leftClick = 0;
         const rightClick = 2;
 
+        if (this.leftClickFlag) mouseCode = rightClick;
+
         if (mouseCode === leftClick) {
             if (this.isEmptyCell()) {
                 this.revealCell(this.row, this.col);
