@@ -25,6 +25,14 @@
 
 /*** JavaScript Classes ***/
 
+/** todo */
+// fix flag icon size on bigger boards.
+// maybe make the square/overall board smaller?
+// fix mobile color.
+// restructure codes.
+// review comments.
+
+
 /**
  * @classdesc represents the game board.
  *
