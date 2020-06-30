@@ -28,7 +28,7 @@
 /**
  * @classdesc represents the game board.
  *
- * @param level {number} level of difficulty.
+ * @param level {number} the level of difficulty.
  */
 class Minesweeper {
     constructor(level=1) {
@@ -46,18 +46,18 @@ class Minesweeper {
         this.iconFlag = '<i class="fas fa-flag"></i>';
 
         /** CSS color class instances */
-        this.reveal      = "reveal-cell";   // represents a cell that hides its innerHTML from the user.
-        this.boom        = "boom-cell"      // represents the cell that cause the game over.
-        this.flagCorrect = "flag-correct";  // represents the flagged cell was correct guessed.
-        this.flagWrong   = "flag-wrong";    // represents the flagged cell was incorrectly guessed.
-        this.color1      = "color-1";       // style tag for the number 1.
-        this.color2      = "color-2";       // style tag for the number 2.
-        this.color3      = "color-3";       // style tag for the number 3.
-        this.color4      = "color-4";       // style tag for the number 4.
-        this.color5      = "color-5";       // style tag for the number 5.
-        this.color6      = "color-6";       // style tag for the number 6.
-        this.color7      = "color-7";       // style tag for the number 7.
-        this.color8      = "color-8";       // style tag for the number 8.
+        this.reveal = "reveal-cell";              // represents a cell that hides its innerHTML from the user.
+        this.boom = "boom-cell"                   // represents the cell that cause the game over.
+        this.flagCorrect = "flag-correct";        // represents the flagged cell was correct guessed.
+        this.flagWrong = "flag-wrong";            // represents the flagged cell was incorrectly guessed.
+        this.color1 = "color-1";                  // style tag for the number 1.
+        this.color2 = "color-2";                  // style tag for the number 2.
+        this.color3 = "color-3";                  // style tag for the number 3.
+        this.color4 = "color-4";                  // style tag for the number 4.
+        this.color5 = "color-5";                  // style tag for the number 5.
+        this.color6 = "color-6";                  // style tag for the number 6.
+        this.color7 = "color-7";                  // style tag for the number 7.
+        this.color8 = "color-8";                  // style tag for the number 8.
 
         /** class instances. */
         this.mineLocations = [];                  // {array}   coordinate for the location of each mine.
@@ -74,12 +74,18 @@ class Minesweeper {
         this.gameOver = false;                    // {boolean} true after user selected a cell that contains a mine.
         this.win = false;                         // {boolean} true if the user wins the game.
         this.timedOut = false;                    // {boolean} true if the countdown reaches 0.
+        this.firstSelected = true;                // {boolean} false if user has already selected a cell.
+        this.board = this.setMines(this.toSquareObject()); // {array}   represents each square on the game board.
 
-        // {array}   represents each square on the game board.
-        this.board = this.setMines(this.toSquareObject());
-        this.firstSelected = true; // {boolean} false if user has already selected a cell.
+        this.setup(level);
+    }
 
-        // set up the game board.
+    /**
+     * @function sets up the game board for the user to interact with.
+     *
+     * @param level {number} the level of difficulty.
+     */
+    setup(level) {
         this.printTime();
         this.drawGameBoard();
         this.setWrapperWidth(level);
