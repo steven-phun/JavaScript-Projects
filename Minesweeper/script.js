@@ -22,8 +22,6 @@
 
 /*jshint esversion: 6 */
 
-/** TODO List */
-// fix table and td from resizing.   max-width: 400px 750px 1500px;
 
 /*** JavaScript Classes ***/
 
