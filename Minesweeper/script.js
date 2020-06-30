@@ -542,7 +542,10 @@ class Minesweeper {
      */
     setRightClick() {
         console.log(this.rightClickOn);
-        if (this.rightClickOn) return this.rightClickOn = false;
+        if (this.rightClickOn) {
+            this.toggleFlagOff();
+            return this.rightClickOn = false;
+        }
 
         this.rightClickOn = true;
         this.toggleFlagOn();
@@ -554,6 +557,13 @@ class Minesweeper {
     toggleFlagOn() {
         this.flagIcon.style.color = "ghostwhite";
         this.flagIcon.style.backgroundColor = "#7FB3D5";
+    }
+
+    /**
+     * @function display to user if the flag icon is active.
+     */
+    toggleFlagOff() {
+        this.flagIcon.removeAttribute("style");
     }
 }
 
