@@ -33,6 +33,7 @@ button {
 }
 
 .wrapper {
+    /* min-width set in javascript */
     display: grid;
     grid-template-rows: 1fr auto 1fr;
     padding: 3%;
@@ -55,7 +56,6 @@ button {
     padding: 5px;
 }
 
-
 #top-bar #flag-question button:hover,
 #top-bar #flag-question i:hover{
     color: ghostwhite;
@@ -75,7 +75,7 @@ button {
 }
 
 #minesweeper table {
-    max-width: 1200px;
+    width: 100%;
     margin: auto;
     border-collapse: collapse;
     table-layout: fixed;

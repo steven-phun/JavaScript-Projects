@@ -23,7 +23,7 @@
 /*jshint esversion: 6 */
 
 /** TODO List */
-// fix table and td from resizing.
+// fix table and td from resizing.   max-width: 400px 750px 1500px;
 
 /*** JavaScript Classes ***/
 
@@ -33,19 +33,19 @@
  * @param level {number} level of difficulty.
  */
 class Minesweeper {
-    constructor(level= 1) {
+    constructor(level=1) {
         /** HTML id tags */
-
+        this.wrapper = document.querySelector(".wrapper"); // {element} the wrapper HTML div.
         // {element} the HTML tag that displays the timer.
         this.tagCountdown = document.querySelector("#countdown");
         // {element}  the HTML table tag that will contain the game board.
-        this.table     = document.querySelector("#minesweeper>table");
+        this.table = document.querySelector("#minesweeper>table");
         // {element}  the HTML tag that contains the amount of mines left.
         this.minesLeft = document.querySelector("#mines-left");
 
         /** HTML <i> tags */
-        this.iconMine     = '<i class="fas fa-bomb"></i>';
-        this.iconFlag     = '<i class="fas fa-flag"></i>';
+        this.iconMine = '<i class="fas fa-bomb"></i>';
+        this.iconFlag = '<i class="fas fa-flag"></i>';
 
         /** CSS color class instances */
         this.reveal      = "reveal-cell";   // represents a cell that hides its innerHTML from the user.
@@ -61,7 +61,7 @@ class Minesweeper {
         this.color7      = "color-7";       // style tag for the number 7.
         this.color8      = "color-8";       // style tag for the number 8.
 
-        /** minesweeper instances. */
+        /** class instances. */
         this.mineLocations = [];                  // {array}   coordinate for the location of each mine.
         this.flagLocations = []                   // {array}   coordinate for the location of each flag icon.
         this.row = null;                          // {number}  the row number of selected cell.
@@ -84,6 +84,7 @@ class Minesweeper {
         // set up the game board.
         this.printTime();
         this.drawGameBoard();
+        this.setWrapperWidth(level);
         this.setNumber();
         this.updateDisplay();
     }
@@ -245,14 +246,14 @@ class Minesweeper {
     /**
      * @function set the number of rows depending on the difficulty of the game board.
      *
-     * @param difficulty {number} the level of difficulty.
+     * @param level {number} the level of difficulty.
      *
      * @return {number} represents the number of rows.
      */
-    setBoardWidth(difficulty) {
-        if (difficulty === 1) return 8;
-        if (difficulty === 2) return 13;
-        if (difficulty === 3) return 16;
+    setBoardWidth(level) {
+        if (level === 1) return 8;
+        if (level === 2) return 13;
+        if (level === 3) return 16;
     }
     /**
      * @function set the number of columns depending on the level of the game board.
@@ -280,6 +281,17 @@ class Minesweeper {
                 cell.setAttribute('onmousedown', `getMouseEvent(${i},${j})`);
             }
         }
+    }
+
+    /**
+     * @function set the min-width for wrapper.
+     *
+     * @param level {number} the level of difficult.
+     */
+    setWrapperWidth(level) {
+        if (level === 1) this.wrapper.style.width = "400px";
+        if (level === 2) this.wrapper.style.width = "750px";
+        if (level === 3) this.wrapper.style.width = "1500px";
     }
 
     /**
@@ -544,4 +556,4 @@ const setLevel = (level) => {
 }
 
 // global and window listener instance.
-let minesweeper = new Minesweeper();
+let minesweeper = new Minesweeper(2);
