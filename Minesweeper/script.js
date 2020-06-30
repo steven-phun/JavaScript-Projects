@@ -40,6 +40,8 @@ class Minesweeper {
         this.table = document.querySelector("#minesweeper>table");
         // {element}  the HTML tag that contains the amount of mines left.
         this.minesLeft = document.querySelector("#mines-left");
+        // {element} the HTML tags that contains the flag icon button.
+        this.flagIcon = document.querySelector("#flag-icon>button");
 
         /** HTML <i> tags */
         this.iconMine = '<i class="fas fa-bomb"></i>';
@@ -75,7 +77,7 @@ class Minesweeper {
         this.win = false;                         // {boolean} true if the user wins the game.
         this.timedOut = false;                    // {boolean} true if the countdown reaches 0.
         this.firstSelected = true;                // {boolean} false if user has already selected a cell.
-        this.leftClickFlag = false;               // {boolean} true if left click is treated as a right click.
+        this.rightClickOn = false;                // {boolean} true if left click are treated as a right click.
         this.board = this.setMines(this.toSquareObject()); // {array} represents each square on the game board.
 
         this.setup(level);
@@ -499,7 +501,7 @@ class Minesweeper {
         const leftClick = 0;
         const rightClick = 2;
 
-        if (this.leftClickFlag) mouseCode = rightClick;
+        if (this.setRightClick) mouseCode = rightClick;
 
         if (mouseCode === leftClick) {
             if (this.isEmptyCell()) {
@@ -535,12 +537,21 @@ class Minesweeper {
     }
 
     /**
-     * @function toggle between setting the left click between selecting and flagging a cell.
+     * @function toggle between treating a left click as a right click.
      */
-    setFlag() {
-        if (this.leftClickFlag) return this.leftClickFlag = false;
+    setRightClick() {
+        if (this.rightClickOn) return this.rightClickOn = false;
 
-        this.leftClickFlag = true;
+        this.rightClickOn = true;
+        this.toggleFlagOn();
+    }
+
+    /**
+     * @function display to user if the flag icon is active.
+     */
+    toggleFlagOn() {
+        this.flagIcon.style.color = "ghostwhite";
+        this.flagIcon.style.backgroundColor = "#7FB3D5";
     }
 }
 
@@ -583,8 +594,8 @@ const setLevel = (level) => {
     minesweeper = new Minesweeper(level);
 }
 
-const setFlag = () => {
-    minesweeper.setFlag();
+const setRightClick = () => {
+    minesweeper.setRightClick();
 }
 
 // global and window listener instance.
