@@ -383,18 +383,8 @@ class Minesweeper {
         this.checkGameOver();
         this.checkWinCondition();
 
-        if (this.win) this.tagCountdown.classList.add(this.correctColor);
-
-        if (this.gameOver) {
-            this.table.rows[this.row].cells[this.col].classList.add(this.boom);
-            this.tagCountdown.innerHTML = "Game Over";
-        }
-
-        if (this.timedOut) {
-            this.tagCountdown.innerHTML = "Boom!";
-        }
-
         if (this.win || this.gameOver || this.timedOut) {
+            if (this.gameOver) this.table.rows[this.row].cells[this.col].classList.add(this.boom);
             this.revealMines();
             this.revealFlags();
             this.updateDisplay();
