@@ -121,9 +121,10 @@ class Minesweeper {
      * @return {number} the amount of seconds the user has to win the game.
      */
     setTime(level) {
-        if (level === 1) return 300;   // 5 minutes.
-        if (level === 2) return 900;   // 15 minutes.
-        if (level === 3) return 1800;  // 30 minutes.
+        const minute = 60; // 1 min = 60 seconds.
+        if (level === 1) return 3 * minute;
+        if (level === 2) return 8 * minute;
+        if (level === 3) return 15 * minute;
     }
 
     /**
