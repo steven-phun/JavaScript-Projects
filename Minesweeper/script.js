@@ -314,9 +314,9 @@ class Minesweeper {
      * @param level {number} the level of difficult.
      */
     setWrapperWidth(level) {
-        if (level === 1) this.wrapper.style.width = "400px";
-        if (level === 2) this.wrapper.style.width = "750px";
-        if (level === 3) this.wrapper.style.width = "1500px";
+        if (level === 1) this.wrapper.style.width = "330px";
+        if (level === 2) this.wrapper.style.width = "620px";
+        if (level === 3) this.wrapper.style.width = "1250px";
     }
 
     /**
@@ -610,4 +610,4 @@ const setRightClick = () => {
 }
 
 // global and window listener instance.
-let minesweeper = new Minesweeper();
+let minesweeper = new Minesweeper(3);
