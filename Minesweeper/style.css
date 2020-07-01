@@ -118,11 +118,11 @@ button {
     background-color: #F5B7B1 !important;
 }
 
-.flag-correct i {
+.correct-color i {
     color: #AFF8D8 !important;
 }
 
-.flag-wrong i {
+.wrong-color i {
     color: #F5B7B1 !important;
 }
 

@@ -58,8 +58,8 @@ class Minesweeper {
         /** CSS color class instances */
         this.reveal = "reveal-cell";              // represents a cell that hides its innerHTML from the user.
         this.boom = "boom-cell"                   // represents the cell that cause the game over.
-        this.correctColor = "flag-correct";        // represents the flagged cell was correct guessed.
-        this.wrongColor = "flag-wrong";            // represents the flagged cell was incorrectly guessed.
+        this.correctColor = "correct-color";      // represents the flagged cell was correct guessed.
+        this.wrongColor = "wrong-color";          // represents the flagged cell was incorrectly guessed.
         this.color1 = "color-1";                  // style tag for the number 1.
         this.color2 = "color-2";                  // style tag for the number 2.
         this.color3 = "color-3";                  // style tag for the number 3.
@@ -383,7 +383,7 @@ class Minesweeper {
         this.checkGameOver();
         this.checkWinCondition();
 
-        if (this.win) this.tagCountdown.innerHTML = "Congratulations!";
+        if (this.win) this.tagCountdown.classList.add(this.correctColor);
 
         if (this.gameOver) {
             this.table.rows[this.row].cells[this.col].classList.add(this.boom);
