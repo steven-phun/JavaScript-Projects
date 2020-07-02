@@ -4,13 +4,13 @@
 
 Project Inspiration 
 
-- My professor had Sudoku puzzles on his door for anyone to solve
+- My professor had Sudoku puzzles on his door for anyone to solve.
 
 Project Difficulties
 
-- Syntax and semantics of a new programming language, JavaScript
+- Syntax and semantics of a new programming language, JavaScript.
 
-- Implementing recursive backtracking 
+- Implementing recursive backtracking algorithm.
 
 Developed in
 
@@ -22,13 +22,13 @@ Developed in
 
 Project Inspiration 
 
-- First video game I spent countless hours on
+- First video game I spent countless hours on.
 
 Project Difficulties
 
-- Working with different table sizes based on the difficulty choosen
+- Working with different table sizes based on the difficulty choosen.
 
-- Implementing a variation of the flood fill algorithm
+- Implementing a variation of the flood fill algorithm.
 
 Developed in
 
