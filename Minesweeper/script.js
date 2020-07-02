@@ -26,7 +26,6 @@
 /*** JavaScript Classes ***/
 
 /** todo */
-// fix flag icon size on bigger boards.
 // fix mobile color.
 // restructure codes.
 // review comments.
