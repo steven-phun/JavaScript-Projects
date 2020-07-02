@@ -10,7 +10,7 @@ Project Difficulties
 
 - Syntax and semantics of a new programming language, JavaScript.
 
-- Implementing recursive backtracking algorithm.
+- Implementing a recursive backtracking algorithm.
 
 Developed in
 
@@ -26,9 +26,9 @@ Project Inspiration
 
 Project Difficulties
 
-- Working with different table sizes based on the difficulty choosen.
+- Working with multiple game levels on one project.
 
-- Implementing a variation of the flood fill algorithm.
+- Implementing a flood fill algorithm.
 
 Developed in
 
