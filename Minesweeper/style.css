@@ -60,6 +60,11 @@ button {
     text-align: end;
 }
 
+#flag-icon i {
+    font-size: 15px;
+}
+
+
 #flag-icon button:hover {
     color: ghostwhite;
     background-color: #7FB3D5;

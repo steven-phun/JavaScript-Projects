@@ -27,7 +27,6 @@
 
 /** todo */
 // fix flag icon size on bigger boards.
-// maybe make the square/overall board smaller?
 // fix mobile color.
 // restructure codes.
 // review comments.
@@ -60,6 +59,7 @@ class Minesweeper {
         this.boom = "boom-cell"                   // represents the cell that cause the game over.
         this.correctColor = "correct-color";      // represents the flagged cell was correct guessed.
         this.wrongColor = "wrong-color";          // represents the flagged cell was incorrectly guessed.
+        this.flagOn = "#7FB3D5";                  // represents the color to display with flag icon is selected.
         this.color1 = "color-1";                  // style tag for the number 1.
         this.color2 = "color-2";                  // style tag for the number 2.
         this.color3 = "color-3";                  // style tag for the number 3.
@@ -554,8 +554,7 @@ class Minesweeper {
      * @function display to user if the flag icon is active.
      */
     toggleFlagOn() {
-        this.flagIcon.style.color = "ghostwhite";
-        this.flagIcon.style.backgroundColor = "#7FB3D5";
+        this.flagIcon.style.backgroundColor = this.flagOn;
     }
 
     /**
@@ -610,4 +609,4 @@ const setRightClick = () => {
 }
 
 // global and window listener instance.
-let minesweeper = new Minesweeper(3);
+let minesweeper = new Minesweeper();
