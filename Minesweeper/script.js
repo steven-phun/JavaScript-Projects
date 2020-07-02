@@ -1,7 +1,7 @@
 /**
  * This JavaScript program allows the user to play the classic 1990 video game of Minesweeper (Flower Field).
  *
- * Goal is to uncover all the squares on a grid that do not contain mines without being "blown up"
+ * Goal is to uncover all the squares on a grid that does not contain mines without being "blown up"
  * by clicking on a square with a mine underneath. Clicking on the game board will revel what is
  * hidden underneath the chosen square. Squares that contain a number (from 1-8), with each number
  * being the number of mines adjacent to the uncovered square.
@@ -26,7 +26,6 @@
 /*** JavaScript Classes ***/
 
 /** todo */
-// fix mobile color.
 // restructure codes.
 // review comments.
 
@@ -37,7 +36,7 @@
  * @param level {number} the level of difficulty.
  */
 class Minesweeper {
-    constructor(level=1) {
+    constructor(level= 1) {
         /** HTML id tags */
         this.wrapper = document.querySelector(".wrapper"); // {element} the wrapper HTML div.
         // {element} the HTML tag that displays the timer.
@@ -91,16 +90,375 @@ class Minesweeper {
     }
 
     /**
-     * @function sets up the game board for the user to interact with.
+     * @function catch the user's mouse events.
+     *
+     * @param mouseCode {number} 0 represents left click, 2 represents right click.
+     * @param row       {number} the row index of selected cell.
+     * @param col       {number} the column index of selected cell.
+     */
+    getMouseEvent(mouseCode, row, col) {
+        this.updateSelectedCell(row, col);
+
+        if (this.firstSelected) this.startCountdown();
+
+        // event.button mouse click code.
+        const leftClick = 0;
+        const rightClick = 2;
+
+        if (this.rightClickOn) mouseCode = rightClick;
+
+        if (mouseCode === leftClick) {
+            if (this.isEmptyCell()) {
+                this.revealCell(this.row, this.col);
+                this.continuePlaying();
+            } else this.setFlagIcon();
+        }
+
+        if (mouseCode === rightClick) this.setFlagIcon();
+    }
+
+    /**
+     * @function updates the DOM with the recent changes to each cell.
+     */
+    updateDisplay() {
+        // update mines left count.
+        this.minesLeft.innerHTML = (this.size - this.flagLocations.length).toString();
+
+        // update cells.
+        //if (this.row === null || this.col === null) return;
+
+        for (let row = 0; row < this.width; row++) {
+            for (let col = 0; col < this.length; col++) {
+                if (this.board[row][col].reveal) {
+                    if (this.board[row][col].number !== 0) {
+                        this.toCellColor(row, col, this.board[row][col].number);
+                        this.table.rows[row].cells[col].innerHTML = this.board[row][col].number;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @function reveals the innerHTML of selected cell.
+     *
+     * @param row {number} the row index of given row.
+     * @param col {number} the column index of given column.
+     */
+    revealCell(row, col) {
+        // variation of a flood fill algorithm.
+        if (this.board[row][col].reveal) return;
+        if (this.board[row][col].flag) return;
+
+        this.board[row][col].reveal = true;
+        this.table.rows[row].cells[col].classList.add(this.reveal);
+        this.counter--;
+
+        // reveal surrounding cells of a cell that number's equal 0.
+        if (this.board[row][col].number === 0) {
+            let section = 3; // represents 3x3 section.
+            let rowIndex = row - 1; // row index of the first cell in a 3x3.
+            let colIndex = col - 1; // column index of the first cell in a 3x3.
+
+            for (let i = rowIndex; i < rowIndex + section; i++) {
+                for (let j = colIndex; j < colIndex + section; j++) {
+                    if (this.isCellInGameBoard(i, j)) this.revealCell(i, j);
+                }
+            }
+        }
+    }
+
+    /**
+     * @function reveal every cell that contains a mine.
+     */
+    revealMines() {
+        for (let i = 0; i < this.mineLocations.length; i++) {
+            let row = this.mineLocations[i].row;
+            let col = this.mineLocations[i].col;
+
+            if (this.board[row][col].flag) continue;
+
+            this.board[row][col].reveal = true;
+
+            if (this.win) this.table.rows[row].cells[col].classList.add(this.correctColor);
+            if (this.timedOut) this.table.rows[row].cells[col].classList.add(this.wrongColor);
+        }
+    }
+
+    /**
+     * @function display to user if each flagged cells contained a mine.
+     */
+    revealFlags() {
+        for (let i = 0; i < this.flagLocations.length; i++) {
+            const flag = this.flagLocations[i];
+            const tag = this.table.rows[flag.row].cells[flag.col];
+
+            if (this.board[flag.row][flag.col].mine) tag.classList.add(this.correctColor);
+            else tag.classList.add(this.wrongColor);
+        }
+    }
+
+    /**
+     * @function checks if the user can continue playing the game.
+     */
+    continuePlaying() {
+        this.checkGameOver();
+        this.checkWinCondition();
+
+        if (this.win || this.gameOver || this.timedOut) {
+            if (this.gameOver) this.table.rows[this.row].cells[this.col].classList.add(this.boom);
+            this.revealMines();
+            this.revealFlags();
+            this.updateDisplay();
+            window.clearInterval(minesweeper.time);
+        }
+    }
+
+    /**
+     * @function checks if the selected cell contains a mine.
+     *
+     * @return true if the game is over.
+     */
+    checkGameOver() {
+        if (this.row === null || this.col === null) return;
+
+        if (this.board[this.row][this.col].mine) this.gameOver = true;
+    }
+
+    /**
+     * @function checks if the user has won the game.
+     *
+     * @return true if the user has won.
+     */
+    checkWinCondition() {
+        if (this.counter <= 0) this.win = true;
+    }
+
+    /**
+     * @function set the number of adjacent mine(s) for each cell.
+     */
+    setNumber() {
+        // get adjacent cell index for each mine.
+        for (let index = 0; index < this.mineLocations.length; index++) {
+            const rowIndex = this.mineLocations[index].row - 1;
+            const colIndex = this.mineLocations[index].col - 1;
+            const section = 3; // one section is 3x3.
+
+            for (let row = rowIndex; row < rowIndex + section; row++) {
+                for (let col = colIndex; col < colIndex + section; col++) {
+                    if (this.isCellInGameBoard(row, col)) {
+                        if (this.board[row][col].mine) continue;
+                        this.board[row][col].number = this.board[row][col].number + 1;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @function add the appropriate number of mines to an array object.
+     *
+     * @param gameBoard {array} the array the mines are added.
+     *
+     * @return {array} with mines that represents the game board.
+     */
+    setMines(gameBoard) {
+        let numberOfMines = this.size;
+
+        while(numberOfMines > 0) {
+            let row = Math.floor(Math.random() * this.width);
+            let col = Math.floor(Math.random() * this.length);
+
+            // avoid placing 2 mines on the same square.
+            if (!gameBoard[row][col].mine) {
+                gameBoard[row][col].number = this.iconMine;
+                gameBoard[row][col].mine = true;
+                this.mineLocations.push({row: row, col: col})
+                numberOfMines--;
+            }
+        }
+        return gameBoard;
+    }
+
+    /**
+     * @function set the amount of mines depending on the level of the game board.
      *
      * @param level {number} the level of difficulty.
+     *
+     * @return {number} representing the number of mines in the game.
      */
-    setup(level) {
-        this.printTime();
-        this.drawGameBoard();
-        this.setWrapperWidth(level);
-        this.setNumber();
-        this.updateDisplay();
+    setMineSize(level) {
+        if (level === 1) return 10;
+        if (level === 2) return 40;
+        if (level === 3) return 99;
+    }
+
+    /**
+     * @function set the number of rows depending on the difficulty of the game board.
+     *
+     * @param level {number} the level of difficulty.
+     *
+     * @return {number} represents the number of rows.
+     */
+    setBoardWidth(level) {
+        if (level === 1) return 8;
+        if (level === 2) return 13;
+        if (level === 3) return 16;
+    }
+
+    /**
+     * @function set the number of columns depending on the level of the game board.
+     *
+     * @param level {number} the level of difficulty.
+     *
+     * @return {number} represents the number of columns.
+     */
+    setBoardLength(level) {
+        if (level === 1) return 8;
+        if (level === 2) return 15;
+        if (level === 3) return 30;
+    }
+
+    /**
+     * @function set the min-width for wrapper.
+     *
+     * @param level {number} the level of difficult.
+     */
+    setWrapperWidth(level) {
+        if (level === 1) this.wrapper.style.width = "330px";
+        if (level === 2) this.wrapper.style.width = "620px";
+        if (level === 3) this.wrapper.style.width = "1250px";
+    }
+
+    /**
+     * @function set the win condition counter for the game.
+     */
+    setCounter() {
+        return this.width * this.length - this.size;
+    }
+
+    /**
+     * @function display or remove the flag icon on selected cell.
+     */
+    setFlagIcon() {
+        let tag = this.table.rows[this.row].cells[this.col];
+
+        if (tag.innerHTML === this.empty) {
+            this.addFlagLocation();
+            tag.innerHTML = this.iconFlag;
+        } else {
+            this.removeFlagLocation();
+            tag.innerHTML = this.empty;
+        }
+    }
+
+    /**
+     * @function convert array elements to Square objects.
+     *
+     * @return an array of Square objects.
+     */
+    toSquareObject(){
+        let gameBoard = [];
+
+        for (let row = 0; row < this.width; row++) {
+            gameBoard.push([]);
+            for (let col = 0; col < this.length; col++) {
+                gameBoard[row].push(new Square());
+            }
+        }
+        return gameBoard;
+    }
+
+    /**
+     * @function change the innerHTML content's color of a cell depending on its number.
+     *
+     * @param row  {number} the row index of cell.
+     * @param col  {number} the cell index of cell.
+     * @param text {number} the number to add the color class.
+     */
+    toCellColor(row, col, text) {
+        let color = null;
+
+        if (text === 1) color = this.color1;
+        if (text === 2) color = this.color2;
+        if (text === 3) color = this.color3;
+        if (text === 4) color = this.color4;
+        if (text === 5) color = this.color5;
+        if (text === 6) color = this.color6;
+        if (text === 7) color = this.color7;
+        if (text === 8) color = this.color8;
+
+        if (color === null) return;
+
+        this.table.rows[row].cells[col].classList.add(color);
+    }
+
+    /**
+     * @function checks if the selected cell is empty.
+     *
+     * @return {boolean} true if the selected cell is empty.
+     */
+    isEmptyCell() {
+        return this.table.rows[this.row].cells[this.col].innerHTML === this.empty;
+    }
+
+    /**
+     * @function checks if cell is within the game board.
+     *
+     * @param row {number} the row index being checked.
+     * @param col {number} the column index being checked.
+     *
+     * @return true if the cell is located within the game board.
+     */
+    isCellInGameBoard(row, col) {
+        return row >= 0 && col >= 0 && row < this.width && col < this.length;
+    }
+
+    /**
+     * @function add the coordinates of the flag icon to array.
+     */
+    addFlagLocation() {
+        this.flagLocations.push({row: this.row, col: this.col});
+        this.board[this.row][this.col].flag = true;
+    }
+
+    /**
+     * @function remove the coordinates of all cells that does not contain the flag icon.
+     */
+    removeFlagLocation() {
+        for (let i = 0; i < this.flagLocations.length; i++) {
+            if (this.flagLocations[i].row === this.row && this.flagLocations[i].col === this.col) {
+                this.board[this.row][this.col].flag = false;
+                return this.flagLocations.splice(i, 1);
+            }
+        }
+    }
+
+    /**
+     * @function toggle between treating a left click as a right click when flag icon is selected.
+     */
+    toggleFlagIcon() {
+        if (this.rightClickOn) {
+            this.toggleFlagOff();
+            return this.rightClickOn = false;
+        }
+
+        this.rightClickOn = true;
+        this.toggleFlagOn();
+    }
+
+    /**
+     * @function display to user if the flag icon is active.
+     */
+    toggleFlagOn() {
+        this.flagIcon.style.backgroundColor = this.flagOn;
+    }
+
+    /**
+     * @function display to user if the flag icon is active.
+     */
+    toggleFlagOff() {
+        this.flagIcon.removeAttribute("style");
     }
 
     /**
@@ -161,138 +519,6 @@ class Minesweeper {
     }
 
     /**
-     * @function set the win condition counter for the game.
-     */
-    setCounter() {
-        return this.width * this.length - this.size;
-    }
-
-    /**
-     * @function convert array elements to Square objects.
-     *
-     * @return an array of Square objects.
-     */
-    toSquareObject(){
-        let gameBoard = [];
-
-        for (let row = 0; row < this.width; row++) {
-            gameBoard.push([]);
-            for (let col = 0; col < this.length; col++) {
-                gameBoard[row].push(new Square());
-            }
-        }
-        return gameBoard;
-    }
-
-    /**
-     * @function set the number of adjacent mine(s) for each cell.
-     */
-    setNumber() {
-        // get adjacent cell index for each mine.
-        for (let index = 0; index < this.mineLocations.length; index++) {
-            const rowIndex = this.mineLocations[index].row - 1;
-            const colIndex = this.mineLocations[index].col - 1;
-            const section = 3; // one section is 3x3.
-
-            for (let row = rowIndex; row < rowIndex + section; row++) {
-                for (let col = colIndex; col < colIndex + section; col++) {
-                    if (this.isCellInGameBoard(row, col)) {
-                        if (this.board[row][col].mine) continue;
-                        this.board[row][col].number = this.board[row][col].number + 1;
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * @function change the innerHTML content's color of a cell depending on its number.
-     *
-     * @param row  {number} the row index of cell.
-     * @param col  {number} the cell index of cell.
-     * @param text {number} the number to add the color class.
-     */
-    toCellColor(row, col, text) {
-        let color = null;
-
-        if (text === 1) color = this.color1;
-        if (text === 2) color = this.color2;
-        if (text === 3) color = this.color3;
-        if (text === 4) color = this.color4;
-        if (text === 5) color = this.color5;
-        if (text === 6) color = this.color6;
-        if (text === 7) color = this.color7;
-        if (text === 8) color = this.color8;
-
-        if (color === null) return;
-
-        this.table.rows[row].cells[col].classList.add(color);
-    }
-
-    /**
-     * @function add the appropriate number of mines to an array object.
-     *
-     * @param gameBoard {array} the array the mines are added.
-     *
-     * @return {array} with mines that represents the game board.
-     */
-    setMines(gameBoard) {
-        let numberOfMines = this.size;
-
-        while(numberOfMines > 0) {
-            let row = Math.floor(Math.random() * this.width);
-            let col = Math.floor(Math.random() * this.length);
-
-            // avoid placing 2 mines on the same square.
-            if (!gameBoard[row][col].mine) {
-                gameBoard[row][col].number = this.iconMine;
-                gameBoard[row][col].mine = true;
-                this.mineLocations.push({row: row, col: col})
-                numberOfMines--;
-            }
-        }
-        return gameBoard;
-    }
-
-    /**
-     * @function set the amount of mines depending on the level of the game board.
-     *
-     * @param level {number} the level of difficulty.
-     *
-     * @return {number} representing the number of mines in the game.
-     */
-    setMineSize(level) {
-        if (level === 1) return 10;
-        if (level === 2) return 40;
-        if (level === 3) return 99;
-    }
-
-    /**
-     * @function set the number of rows depending on the difficulty of the game board.
-     *
-     * @param level {number} the level of difficulty.
-     *
-     * @return {number} represents the number of rows.
-     */
-    setBoardWidth(level) {
-        if (level === 1) return 8;
-        if (level === 2) return 13;
-        if (level === 3) return 16;
-    }
-    /**
-     * @function set the number of columns depending on the level of the game board.
-     *
-     * @param level {number} the level of difficulty.
-     *
-     * @return {number} represents the number of columns.
-     */
-    setBoardLength(level) {
-        if (level === 1) return 8;
-        if (level === 2) return 15;
-        if (level === 3) return 30;
-    }
-
-    /**
      * @function generates html tags for a table that represents the game board.
      */
     drawGameBoard() {
@@ -308,220 +534,10 @@ class Minesweeper {
     }
 
     /**
-     * @function set the min-width for wrapper.
-     *
-     * @param level {number} the level of difficult.
-     */
-    setWrapperWidth(level) {
-        if (level === 1) this.wrapper.style.width = "330px";
-        if (level === 2) this.wrapper.style.width = "620px";
-        if (level === 3) this.wrapper.style.width = "1250px";
-    }
-
-    /**
      * @function reset table to prevent future tables from stacking on top of each other.
      */
     getEmptyTable() {
         this.table.innerHTML = "";
-    }
-
-    /**
-     * @function updates the DOM with the recent changes to each cell.
-     */
-    updateDisplay() {
-        // update mines left count.
-        this.minesLeft.innerHTML = (this.size - this.flagLocations.length).toString();
-
-        // update cells.
-        //if (this.row === null || this.col === null) return;
-
-        for (let row = 0; row < this.width; row++) {
-            for (let col = 0; col < this.length; col++) {
-                if (this.board[row][col].reveal) {
-                    if (this.board[row][col].number !== 0) {
-                        this.toCellColor(row, col, this.board[row][col].number);
-                        this.table.rows[row].cells[col].innerHTML = this.board[row][col].number;
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * @function reveals the innerHTML of selected cell.
-     *
-     * @param row {number} the row index of given row.
-     * @param col {number} the column index of given column.
-     */
-    revealCell(row, col) {
-        if (this.board[row][col].reveal) return;
-        if (this.board[row][col].flag) return;
-
-        this.board[row][col].reveal = true;
-        this.table.rows[row].cells[col].classList.add(this.reveal);
-        this.counter--;
-
-        // reveal surrounding cells of a cell that number's equal 0.
-        if (this.board[row][col].number === 0) {
-            let section = 3; // represents 3x3 section.
-            let rowIndex = row - 1; // row index of the first cell in a 3x3.
-            let colIndex = col - 1; // column index of the first cell in a 3x3.
-
-            for (let i = rowIndex; i < rowIndex + section; i++) {
-                for (let j = colIndex; j < colIndex + section; j++) {
-                    if (this.isCellInGameBoard(i, j)) this.revealCell(i, j);
-                }
-            }
-        }
-    }
-
-    /**
-     * @function checks if the user can continue playing the game.
-     */
-    continuePlaying() {
-        this.checkGameOver();
-        this.checkWinCondition();
-
-        if (this.win || this.gameOver || this.timedOut) {
-            if (this.gameOver) this.table.rows[this.row].cells[this.col].classList.add(this.boom);
-            this.revealMines();
-            this.revealFlags();
-            this.updateDisplay();
-            window.clearInterval(minesweeper.time);
-        }
-    }
-
-    /**
-     * @function checks if the selected cell contains a mine.
-     *
-     * @return true if the game is over.
-     */
-    checkGameOver() {
-        if (this.row === null || this.col === null) return;
-
-        if (this.board[this.row][this.col].mine) this.gameOver = true;
-    }
-
-    /**
-     * @function checks if the user has won the game.
-     *
-     * @return true if the user has won.
-     */
-    checkWinCondition() {
-        if (this.counter <= 0) this.win = true;
-    }
-
-    /**
-     * @function reveal every cell that contains a mine.
-     */
-    revealMines() {
-        for (let i = 0; i < this.mineLocations.length; i++) {
-            let row = this.mineLocations[i].row;
-            let col = this.mineLocations[i].col;
-
-            if (this.board[row][col].flag) continue;
-
-            this.board[row][col].reveal = true;
-
-            if (this.win) this.table.rows[row].cells[col].classList.add(this.correctColor);
-            if (this.timedOut) this.table.rows[row].cells[col].classList.add(this.wrongColor);
-        }
-    }
-
-    /**
-     * @function display to user if each flagged cells contained a mine.
-     */
-    revealFlags() {
-        for (let i = 0; i < this.flagLocations.length; i++) {
-            const flag = this.flagLocations[i];
-            const tag = this.table.rows[flag.row].cells[flag.col];
-
-            if (this.board[flag.row][flag.col].mine) tag.classList.add(this.correctColor);
-            else tag.classList.add(this.wrongColor);
-        }
-    }
-
-    /**
-     * @function display or remove the flag icon on selected cell.
-     */
-    setFlagIcon() {
-        let tag = this.table.rows[this.row].cells[this.col];
-
-        if (tag.innerHTML === this.empty) {
-            this.addFlagLocation();
-            tag.innerHTML = this.iconFlag;
-        } else {
-            this.removeFlagLocation();
-            tag.innerHTML = this.empty;
-        }
-    }
-
-    /**
-     * @function add the coordinates of the flag icon to array.
-     */
-    addFlagLocation() {
-        this.flagLocations.push({row: this.row, col: this.col});
-        this.board[this.row][this.col].flag = true;
-    }
-
-    /**
-     * @function remove the coordinates of all cells that does not contain the flag icon.
-     */
-    removeFlagLocation() {
-        for (let i = 0; i < this.flagLocations.length; i++) {
-            if (this.flagLocations[i].row === this.row && this.flagLocations[i].col === this.col) {
-                this.board[this.row][this.col].flag = false;
-                return this.flagLocations.splice(i, 1);
-            }
-        }
-    }
-
-    /**
-     * @function checks if the selected cell is empty.
-     *
-     * @return {boolean} true if the selected cell is empty.
-     */
-    isEmptyCell() {
-        return this.table.rows[this.row].cells[this.col].innerHTML === this.empty;
-    }
-
-    /**
-     * @function captures users left and right mouse clicks.
-     *
-     * @param mouseCode {number} 0 represents left click, 2 represents right click.
-     * @param row       {number} the row index of selected cell.
-     * @param col       {number} the column index of selected cell.
-     */
-    getMouseEvent(mouseCode, row, col) {
-        this.getSelectedCell(row, col);
-        if (this.firstSelected) this.startCountdown();
-
-        // event.button mouse click code.
-        const leftClick = 0;
-        const rightClick = 2;
-
-        if (this.rightClickOn) mouseCode = rightClick;
-
-        if (mouseCode === leftClick) {
-            if (this.isEmptyCell()) {
-                this.revealCell(this.row, this.col);
-                this.continuePlaying();
-            } else this.setFlagIcon();
-        }
-
-        if (mouseCode === rightClick) this.setFlagIcon();
-    }
-
-    /**
-     * @function checks if cell is within the game board.
-     *
-     * @param row {number} the row index being checked.
-     * @param col {number} the column index being checked.
-     *
-     * @return true if the cell is located within the game board.
-     */
-    isCellInGameBoard(row, col) {
-        return row >= 0 && col >= 0 && row < this.width && col < this.length;
     }
 
     /**
@@ -530,39 +546,28 @@ class Minesweeper {
      * @param row {number} row index of selected cell.
      * @param col {number} column index of selected cell.
      */
-    getSelectedCell(row, col) {
+    updateSelectedCell(row, col) {
         this.row = row;
         this.col = col;
     }
 
     /**
-     * @function toggle between treating a left click as a right click.
+     * @function sets up the game board for the user to interact with.
+     *
+     * @param level {number} the level of difficulty.
      */
-    setRightClick() {
-        console.log(this.rightClickOn);
-        if (this.rightClickOn) {
-            this.toggleFlagOff();
-            return this.rightClickOn = false;
-        }
+    setup(level) {
+        this.toggleFlagOff(); // clear any selected flag icon from previous game.
 
-        this.rightClickOn = true;
-        this.toggleFlagOn();
-    }
-
-    /**
-     * @function display to user if the flag icon is active.
-     */
-    toggleFlagOn() {
-        this.flagIcon.style.backgroundColor = this.flagOn;
-    }
-
-    /**
-     * @function display to user if the flag icon is active.
-     */
-    toggleFlagOff() {
-        this.flagIcon.removeAttribute("style");
+        // set up game board.
+        this.drawGameBoard();
+        this.setWrapperWidth(level);
+        this.setNumber();
+        this.printTime();
+        this.updateDisplay();
     }
 }
+
 
 /**
  * @classdesc represents one individual square for the game.
@@ -594,18 +599,21 @@ const getMouseEvent = (row, col) => {
 }
 
 /**
- * @function initialize the game with given level.
+ * @function initialize the game with selected level.
  *
  * @param level {number} the level of difficulty.
  */
-const setLevel = (level) => {
+const setLevel = (level= 1) => {
     window.clearInterval(minesweeper.time);
     minesweeper = new Minesweeper(level);
 }
 
-const setRightClick = () => {
-    minesweeper.setRightClick();
+/**
+ * @function catch event when user selects the flag icon.
+ */
+const toggleFlagIcon = () => {
+    minesweeper.toggleFlagIcon();
 }
 
-// global and window listener instance.
+// global instance
 let minesweeper = new Minesweeper();
