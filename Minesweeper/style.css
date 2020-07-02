@@ -93,8 +93,9 @@ button {
 }
 
 #minesweeper td:hover {
-    background-color: lightslategray;
+    background-color: ghostwhite;
 }
+
 
 
 /*** 4. bot-bar ***/
@@ -126,11 +127,11 @@ button {
 }
 
 .correct-color i {
-    color: #AFF8D8 !important;
+    color: #D5F5E3 !important;
 }
 
 .wrong-color i {
-    color: #F5B7B1 !important;
+    color: #F2D7D5 !important;
 }
 
 .color-1 {
