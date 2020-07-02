@@ -474,7 +474,7 @@ class Minesweeper {
      */
     setTime(level) {
         const minute = 60; // 1 min = 60 seconds.
-        if (level === 1) return 3 * minute;
+        if (level === 1) return 2 * minute;
         if (level === 2) return 8 * minute;
         if (level === 3) return 15 * minute;
     }
