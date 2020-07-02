@@ -40,7 +40,7 @@ button {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px 6px #ccc;
-    background-image: linear-gradient(-45deg, #5499C7, #7FB3D5, #A9CCE3);
+    background-image: linear-gradient(45deg, #7FB3D5, #A9CCE3, #D4E6F1);
 }
 
 
@@ -52,7 +52,6 @@ button {
 }
 
 #countdown {
-    color: ghostwhite;
     text-align: center;
     padding: 5px;
 }
@@ -94,7 +93,7 @@ button {
 }
 
 #minesweeper td:hover {
-    background-color: #A3E4D7;
+    background-color: lightslategray;
 }
 
 
@@ -106,13 +105,14 @@ button {
 }
 
 #bot-bar button {
-    font-size: 75%;
+    padding: 10px;
+    font-size: 9px;
     cursor: pointer;
 }
 
 #bot-bar button:hover {
     color: ghostwhite;
-    background-color: #7FB3D5;
+    background-color: #5499C7;
 }
 
 
@@ -134,7 +134,7 @@ button {
 }
 
 .color-1 {
-    color: #D4F0F0;
+    color: #E8F8F5;
 }
 
 .color-2 {
@@ -146,7 +146,7 @@ button {
 }
 
 .color-4 {
-    color: #AFF8D8;
+    color: #D4F0F0;
 }
 
 .color-5 {
