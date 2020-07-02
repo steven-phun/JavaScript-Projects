@@ -4,7 +4,7 @@
 
 Project Summary
 
-- Choose between solving any 16x16 Sudoku or attempt to solve this classic puzzle yourself.
+- Solve any 16x16 Sudoku or attempt to solve this classic puzzle yourself.
 
 Project Inspiration 
 
@@ -21,7 +21,7 @@ Project Difficulties
 
 Project Summary
 
-- Play the classic video game released in 1990 in Beginner, Intermediate, and Expert modes.
+- Play the classic video game released in 1990 with three difficulty levels.
 
 Project Inspiration 
 
@@ -29,7 +29,7 @@ Project Inspiration
 
 Project Difficulties
 
-- Working with multiple game modes in one project.
+- Working with multiple difficulty levels in one project.
 
 - Implementing a flood fill algorithm.
 
