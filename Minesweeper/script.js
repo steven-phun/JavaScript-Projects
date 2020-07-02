@@ -25,11 +25,6 @@
 
 /*** JavaScript Classes ***/
 
-/** todo */
-// restructure codes.
-// review comments.
-
-
 /**
  * @classdesc represents the game board.
  *
