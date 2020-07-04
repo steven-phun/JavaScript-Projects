@@ -22,9 +22,18 @@
  */
 class Sudoku {
   constructor(board, blank = false) {
-    // {element} the parent HTML board that the Sudoku grid will be inserted to.
-    this.tag = document.querySelector("#sudoku>table");
 
+    /** HTML tag instances. */
+    this.keypad = document.querySelector("#keypad"); // the parent div where the keypad will be built.
+    // {element} the parent HTML board that the Sudoku grid will be inserted to.
+    this.table = document.querySelector("#sudoku>table");
+
+    /** CSS color class instance. */
+    this.colorSetter = "setter-color";
+    this.colorCorrect = "correct-color";
+    this.colorWrong = "wrong-color";
+    this.colorSelected = "selected-color";
+    this.colorInvalid = "invalid-color";
 
     /** class instances. */
     this.blank = blank;  // {boolean} true if this is a blank grid.
@@ -37,12 +46,7 @@ class Sudoku {
     this.copy = this.deepCopy(this.board);           // {array} a solution to the board in its original state.
     this.stopwatch = new Stopwatch();                // {clock} keeps track of user's playing time.
 
-    /** CSS color class instance */
-    this.colorSetter = "setter-color";
-    this.colorCorrect = "correct-color";
-    this.colorWrong = "wrong-color";
-    this.colorSelected = "selected-color";
-    this.colorInvalid = "invalid-color";
+
 
     this.setup();
   }
@@ -214,7 +218,7 @@ class Sudoku {
 
     this.removeCurrentInvalid(this.row, this.col);
 
-    if (this.blank) this.tag.rows[this.row].cells[this.col].classList.add(this.colorSetter);
+    if (this.blank) this.table.rows[this.row].cells[this.col].classList.add(this.colorSetter);
 
     this.board[this.row][this.col].data = this.toColor(this.toDecimal(event.keyCode));
 
@@ -244,7 +248,7 @@ class Sudoku {
 
     if (this.board[this.row][this.col].setter === true) return;
 
-    if (this.blank) this.tag.rows[this.row].cells[this.col].classList.add(this.colorSetter);
+    if (this.blank) this.table.rows[this.row].cells[this.col].classList.add(this.colorSetter);
 
 
     this.board[this.row][this.col].data = value;
@@ -314,7 +318,7 @@ class Sudoku {
 
 
     this.board[this.row][this.col].data = this.empty;
-    this.tag.rows[this.row].cells[this.col].className = this.empty;
+    this.table.rows[this.row].cells[this.col].className = this.empty;
 
     this.removeCurrentInvalid(this.row, this.col);
     this.updateInvalid();
@@ -327,21 +331,30 @@ class Sudoku {
   drawGrid() {
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
-        this.tag.rows[row].cells[col].className = "";
+        this.table.rows[row].cells[col].className = "";
         if (this.board[row][col].setter === true) {
-          this.tag.rows[row].cells[col].innerHTML = this.board[row][col].data;
-          if (this.board[row][col].setter) this.tag.rows[row].cells[col].classList.add(this.colorSetter);
+          this.table.rows[row].cells[col].innerHTML = this.board[row][col].data;
+          if (this.board[row][col].setter) this.table.rows[row].cells[col].classList.add(this.colorSetter);
         } else {
-          this.tag.rows[row].cells[col].classList.remove(this.colorSetter);
-          this.tag.rows[row].cells[col].innerHTML = this.empty;
+          this.table.rows[row].cells[col].classList.remove(this.colorSetter);
+          this.table.rows[row].cells[col].innerHTML = this.empty;
         }
       }
     }
   }
 
   /**
-   * @function generate the input buttons (numbers 0-9 and letters A-F) for the user to interact with.
+   * @function generate the input buttons for the keypad numbers 0-9 and letters A-F.
    */
+  drawKeypad() {
+
+    for (let i = 0; i < this.size; i++) {
+      const button = document.createElement("BUTTON");
+      button.setAttribute("onclick", `buttonInput(${i})`);
+      button.innerHTML = this.toHex(i);
+      this.keypad.appendChild(button);
+    }
+  }
 
 
   /**
@@ -359,7 +372,7 @@ class Sudoku {
   updateDisplay() {
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
-        this.tag.rows[row].cells[col].innerHTML = this.toHex(this.board[row][col].data);
+        this.table.rows[row].cells[col].innerHTML = this.toHex(this.board[row][col].data);
       }
     }
   }
@@ -373,7 +386,7 @@ class Sudoku {
     const tag = document.querySelector("." + this.colorSelected);
 
     if (tag !== null) tag.classList.remove(this.colorSelected); // clear previously selected tag.
-    if (selected) this.tag.rows[this.row].cells[this.col].classList.add(this.colorSelected);
+    if (selected) this.table.rows[this.row].cells[this.col].classList.add(this.colorSelected);
   }
 
   /**
@@ -382,7 +395,7 @@ class Sudoku {
   deselect() {
     if (this.row === null || this.col === null) return;
 
-    this.tag.rows[this.row].cells[this.col].classList.remove(this.colorSelected);
+    this.table.rows[this.row].cells[this.col].classList.remove(this.colorSelected);
 
     this.row = null;
     this.col = null;
@@ -396,7 +409,7 @@ class Sudoku {
    * @return 'tag' with the color class added.
    */
   setColorTag(colorTag) {
-    this.tag.rows[this.row].cells[this.col].classList.add(colorTag);
+    this.table.rows[this.row].cells[this.col].classList.add(colorTag);
   }
 
   /**
@@ -407,7 +420,7 @@ class Sudoku {
    * @return 'tag' with the color class removed.
    */
   removeColorTag(colorTag) {
-    this.tag.rows[this.row].cells[this.col].classList.remove(colorTag)
+    this.table.rows[this.row].cells[this.col].classList.remove(colorTag)
   }
 
   /**
@@ -458,8 +471,8 @@ class Sudoku {
     this.removeAllInvalidTag();
 
     for (let i = 0; i < this.invalid.length; i++) {
-      this.tag.rows[this.invalid[i].row].cells[this.invalid[i].col].classList.add(this.colorInvalid);
-      this.tag.rows[this.invalid[i].otherRow].cells[this.invalid[i].otherCol].classList.add(this.colorInvalid);
+      this.table.rows[this.invalid[i].row].cells[this.invalid[i].col].classList.add(this.colorInvalid);
+      this.table.rows[this.invalid[i].otherRow].cells[this.invalid[i].otherCol].classList.add(this.colorInvalid);
     }
   }
 
@@ -511,6 +524,7 @@ class Sudoku {
    * @function converts a Decimal to Hexadecimal.
    *
    * @param num    {number} the number to be converted to Hexadecimal.
+   *
    * @return       {string} 'A' if num = 10  , 'B' if num = 11 ... 'F' if num = 15.
    */
   toHex(num) {
@@ -545,6 +559,7 @@ class Sudoku {
   setup() {
     this.fastSolve(this.copy);
     this.drawGrid();
+    this.drawKeypad();
     this.updateDisplay();
   }
 }
