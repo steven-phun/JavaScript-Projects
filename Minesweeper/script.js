@@ -32,7 +32,7 @@
  */
 class Minesweeper {
     constructor(level= 1) {
-        /** HTML id tags */
+        /** HTML tag instances*/
         this.wrapper = document.querySelector(".wrapper"); // {element} the wrapper HTML div.
         // {element} the HTML tag that displays the timer.
         this.tagCountdown = document.querySelector("#countdown");
@@ -42,9 +42,9 @@ class Minesweeper {
         this.minesLeft = document.querySelector("#mines-left");
         // {element} the HTML tags that contains the flag icon button.
         this.flagIcon = document.querySelector("#flag-icon>button");
-
-        /** HTML <i> tags */
+        // {<i> tag} represents the image of a mine.
         this.iconMine = '<i class="fas fa-bomb"></i>';
+        // {<i> tag} represents the image of a flag.
         this.iconFlag = '<i class="fas fa-flag"></i>';
 
         /** CSS color class instances */
