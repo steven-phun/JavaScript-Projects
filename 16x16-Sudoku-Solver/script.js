@@ -347,6 +347,7 @@ class Sudoku {
    * @function generate the input buttons for the keypad numbers 0-9 and letters A-F.
    */
   drawKeypad() {
+    this.clearChildNodes(this.keypad);
 
     for (let i = 0; i < this.size; i++) {
       const button = document.createElement("BUTTON");
@@ -356,6 +357,14 @@ class Sudoku {
     }
   }
 
+  /**
+   * @function removes all child nodes from given element.
+   *
+   * @param node {Element} the parent element' child node that is being removed.
+   */
+  clearChildNodes(node) {
+    while (node.hasChildNodes()) node.removeChild(node.firstChild);
+  }
 
   /**
    * @function performs a deep copy of the given object.
