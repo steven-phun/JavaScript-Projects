@@ -50,6 +50,16 @@ class Sudoku {
   }
 
   /**
+   * @function catch the user's mouse events.
+   *
+   * @param mouseCode {number} 0 represents left click, 2 represents right click.
+   * @param row       {number} the row index of selected cell.
+   * @param col       {number} the column index of selected cell.
+   */
+  getMouseEvent(mouseCode, row, col) {
+  }
+
+  /**
    * @function finds a solution to do the Sudoku as fast as possible, so it will
    *           not consider any user's interactions that will delay its process.
    *
@@ -397,15 +407,26 @@ class Sudoku {
   }
 
   /**
-   * @function sets the background color of the current selected cell.
+   * @function set row and col to selected cell.
    *
-   * @param selected {boolean} if true, add a background color on this cell.
+   * @param row {number} row index of selected cell.
+   * @param col {number} column index of selected cell.
    */
-  setSelected(selected) {
-    const tag = document.querySelector("." + this.colorSelected);
+  updateSelectedCell(row, col) {
+    this.row = row;
+    this.col = col;
+  }
 
-    if (tag !== null) tag.classList.remove(this.colorSelected); // clear previously selected tag.
-    if (selected) this.table.rows[this.row].cells[this.col].classList.add(this.colorSelected);
+  /**
+   * @function sets the background color of the current selected cell.
+   */
+  setSelected() {
+
+    // remove previously selected cell.
+    const selectedCell = document.querySelector("." + this.colorSelected);
+    if (selectedCell !== null) selectedCell.classList.remove(this.colorSelected);
+
+    this.table.rows[this.row].cells[this.col].classList.add(this.colorSelected);
   }
 
   /**
@@ -656,7 +677,7 @@ const getCell = (row, col) => {
   sudoku.row = row;
   sudoku.col = col;
 
-  sudoku.setSelected(true);
+  sudoku.setSelected();
 }
 
 /**
@@ -738,12 +759,24 @@ const setBoard = (board, blank=false) => {
 }
 
 /**
+ * @function returns the row and column index of the selected game board cell.
+ *
+ * @param row {number} the row index of selected cell.
+ * @param col {number} the column index of selected cell.
+ */
+const getMouseEvent = (row, col) => {
+  sudoku.updateSelectedCell(row, col)
+}
+
+/**
+ * @function an array of available game boards for the game.
+ *
  * @return an array that represents the sudoku board to initialize the game with.
  */
 const getBoard = () => {
   let board = []   // array that will hold the sudoku boards.
   let size = 16;   // represents the 16x16 grid.
-  let empty = "";  // represents and empty cell.
+  let empty = "";  // represents an empty cell.
 
   // index 0 will represent an empty board.
   let tempBoard = [];
@@ -844,7 +877,7 @@ const getBoard = () => {
 }
 
 
-//*** global variable/window listener functions  ***/
+// global instance and window listener functions.
 let currentBoard = 1; // keeps track of what board to initialize the game with.
 let sudoku = new Sudoku(getBoard()[currentBoard]);
 window.addEventListener("keydown", keyboardInput);

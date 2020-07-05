@@ -113,28 +113,6 @@ class Minesweeper {
     }
 
     /**
-     * @function updates the DOM with the recent changes to each cell.
-     */
-    updateDisplay() {
-        // update mines left count.
-        this.minesLeft.innerHTML = (this.size - this.flagLocations.length).toString();
-
-        // update cells.
-        //if (this.row === null || this.col === null) return;
-
-        for (let row = 0; row < this.width; row++) {
-            for (let col = 0; col < this.length; col++) {
-                if (this.board[row][col].reveal) {
-                    if (this.board[row][col].number !== 0) {
-                        this.toCellColor(row, col, this.board[row][col].number);
-                        this.table.rows[row].cells[col].innerHTML = this.board[row][col].number;
-                    }
-                }
-            }
-        }
-    }
-
-    /**
      * @function reveals the innerHTML of selected cell.
      *
      * @param row {number} the row index of given row.
@@ -547,6 +525,28 @@ class Minesweeper {
     updateSelectedCell(row, col) {
         this.row = row;
         this.col = col;
+    }
+
+    /**
+     * @function updates the DOM with the recent changes to each cell.
+     */
+    updateDisplay() {
+        // update mines left count.
+        this.minesLeft.innerHTML = (this.size - this.flagLocations.length).toString();
+
+        // update cells.
+        //if (this.row === null || this.col === null) return;
+
+        for (let row = 0; row < this.width; row++) {
+            for (let col = 0; col < this.length; col++) {
+                if (this.board[row][col].reveal) {
+                    if (this.board[row][col].number !== 0) {
+                        this.toCellColor(row, col, this.board[row][col].number);
+                        this.table.rows[row].cells[col].innerHTML = this.board[row][col].number;
+                    }
+                }
+            }
+        }
     }
 
     /**
