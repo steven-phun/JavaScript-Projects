@@ -52,11 +52,12 @@ class Sudoku {
   /**
    * @function catch the user's mouse events.
    *
-   * @param mouseCode {number} 0 represents left click, 2 represents right click.
    * @param row       {number} the row index of selected cell.
    * @param col       {number} the column index of selected cell.
    */
-  getMouseEvent(mouseCode, row, col) {
+  getMouseEvent(row, col) {
+    this.updateSelectedCell(row, col);
+    this.setSelected();
   }
 
   /**
@@ -330,6 +331,7 @@ class Sudoku {
 
     this.removeCurrentInvalid(this.row, this.col);
     this.updateInvalid();
+    this.deselect();
     this.updateDisplay();
   }
 
@@ -353,7 +355,7 @@ class Sudoku {
       const tempRow = this.table.insertRow();
       for (let col = 0; col < this.size; col++) {
         tempRow.insertCell();
-        this.table.rows[row].cells[col].setAttribute("onclick", `getCell(${row},${col})`)
+        this.table.rows[row].cells[col].setAttribute("onclick", `getMouseEvent(${row},${col})`)
         if (this.board[row][col].setter === true) {
           this.table.rows[row].cells[col].innerHTML = this.board[row][col].data;
           this.table.rows[row].cells[col].classList.add(this.colorSetter);
@@ -765,7 +767,7 @@ const setBoard = (board, blank=false) => {
  * @param col {number} the column index of selected cell.
  */
 const getMouseEvent = (row, col) => {
-  sudoku.updateSelectedCell(row, col)
+  sudoku.getMouseEvent(row, col)
 }
 
 /**
