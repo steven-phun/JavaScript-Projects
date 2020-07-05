@@ -90,8 +90,13 @@ header #stopwatch{
 #sudoku {
   padding-bottom: 10px;
 }
-#sudoku tbody {
+
+#sudoku tr:nth-child(4n) {
   border-bottom: #707B7C solid 3px;
+}
+
+#sudoku tr:last-child {
+  border: none;
 }
 
 #sudoku colgroup{
