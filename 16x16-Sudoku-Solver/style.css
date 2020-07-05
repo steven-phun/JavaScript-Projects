@@ -1,12 +1,13 @@
 /*** table of contents ***/
 
 /** 1. global
- *  2. header
- *  3. play area
- *   3.1 sudoku
- *   3.2 keypad
- *   3.3 options
- *  4. javascript color index */
+ *  2. menu bar
+ *  3. stopwatch
+ *  4. sudoku
+ *  5. keypad
+ *  6. options
+ *  7. javascript color index
+ */
 
 
 /*** 1. global ***/
@@ -26,25 +27,19 @@ html {
 }
 
 .container {
-  max-width: 600px;
+  min-width: 1600px;
   display: grid;
-  grid-template-rows: 1fr 12fr;
-  padding: 3%;
+  grid-template-rows: 1fr 1fr auto 3fr 1fr;
+  padding: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px 6px #ccc;
   background-image: linear-gradient(45deg, #76D7C4, #A3E4D7, #D1F2EB);
 }
 
 
-/*** 2. header ***/
+/*** 2. menu bar ***/
 
-header{
-  display: grid;
-  grid-template-rows: repeat(2, auto);
-}
-
-
-header #menu-bar {
+#menu-bar {
   display: flex;
   justify-content: space-between;
   padding-bottom: 8px;
@@ -64,31 +59,23 @@ header #menu-bar {
 }
 
 
-header #stopwatch{
+/*** 3. stopwatch ***/
+#stopwatch{
   text-align: center;
 }
 
 
-/*** 3. play area ***/
-#play-area {
-  display: grid;
-  grid-template-rows: auto auto auto;
-  text-align: center;
-}
-
-#play-area td:hover, button:hover {
-  background: lightslategray !important;
-  color: #F4F4F4;
-  cursor: pointer;
-}
-
-#play-area table {
-  width: 100%;
-}
-
-/*** 3.1 sudoku ***/
+/*** 4. sudoku ***/
 #sudoku {
   padding-bottom: 10px;
+}
+
+#sudoku table {
+  width: 100%;
+  margin: auto;
+  border-collapse: collapse;
+  table-layout: fixed;
+  align-content: center;
 }
 
 #sudoku tr:nth-child(4n) {
@@ -107,20 +94,23 @@ header #stopwatch{
   border: none;
 }
 
-#sudoku table {
-  border-collapse: collapse;
-  table-layout: fixed;
-}
-
 #sudoku td {
   text-transform: uppercase;
   font-size: 15px;
+  text-align: center;
   height: 33px;
+  width: 33px;
   border: #707B7C solid 1px;
 }
 
+#sudoku td:hover {
+  background: lightslategray !important;
+  color: #F4F4F4;
+  cursor: pointer;
+}
 
-/*** 3.2 keypad ***/
+
+/*** 5. keypad ***/
 #keypad {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -140,7 +130,14 @@ header #stopwatch{
   outline: none;
 }
 
-/*** 3.3 options ***/
+#keypad button:hover {
+  background: lightslategray !important;
+  color: #F4F4F4;
+  cursor: pointer;
+}
+
+
+/*** 6. options ***/
 #options{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -161,7 +158,7 @@ header #stopwatch{
 }
 
 
-/*** 4. javascript color index ***/
+/*** 7. javascript color index ***/
 .setter-color {
   color: ghostwhite;
   background: #76D7C4;
