@@ -670,16 +670,13 @@ class Stopwatch {
 /*** JavaScript Functions ***/
 
 /**
- * @function updates the row and column index each time the user clicks a cell.
+ * @function returns the row and column index of the selected game board cell.
  *
- * @param row    {number} the row index of the cell.
- * @param col    {number} the column index of the cell.
+ * @param row {number} the row index of selected cell.
+ * @param col {number} the column index of selected cell.
  */
-const getCell = (row, col) => {
-  sudoku.row = row;
-  sudoku.col = col;
-
-  sudoku.setSelected();
+const getMouseEvent = (row, col) => {
+  sudoku.getMouseEvent(row, col)
 }
 
 /**
@@ -687,7 +684,7 @@ const getCell = (row, col) => {
  *
  * @param event is the user's keyboard key input.
  */
-const keyboardInput = (event) => sudoku.getKeyboardInput(event);
+const getKeyboardInput = (event) => sudoku.getKeyboardInput(event);
 
 /**
  * @function displays the value of the button clicked in given cell.
@@ -719,7 +716,6 @@ const validate = () => {
  * @function display the solution to the user.
  */
 const solve = () => sudoku.solve();
-
 
 /**
  * @function removes the value of a non-setter selected cell.
@@ -758,16 +754,6 @@ const newGame = () => {
 const setBoard = (board, blank=false) => {
   window.clearInterval(sudoku.stopwatch.time);
   sudoku = new Sudoku(board, blank);
-}
-
-/**
- * @function returns the row and column index of the selected game board cell.
- *
- * @param row {number} the row index of selected cell.
- * @param col {number} the column index of selected cell.
- */
-const getMouseEvent = (row, col) => {
-  sudoku.getMouseEvent(row, col)
 }
 
 /**
@@ -882,4 +868,4 @@ const getBoard = () => {
 // global instance and window listener functions.
 let currentBoard = 1; // keeps track of what board to initialize the game with.
 let sudoku = new Sudoku(getBoard()[currentBoard]);
-window.addEventListener("keydown", keyboardInput);
+window.addEventListener("keydown", getKeyboardInput);
