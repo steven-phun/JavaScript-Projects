@@ -36,12 +36,12 @@ class Sudoku {
     this.colorInvalid = "invalid-color";
 
     /** class instances. */
-    this.blank = blank;  // {boolean} true if this is a blank grid.
-    this.invalid = []    // {array}   stores the coordinates of invalid pairs.
-    this.size = 16;      // {number}  represents the 16x16 grid.
-    this.empty = "";     // {string}  represents an empty cell.
-    this.row = null;     // {number}  the row index of the selected cell.
-    this.col = null;     // {number}  the column index of the selected cell.
+    this.blank = blank;                              // {boolean} true if this is a blank grid.
+    this.invalid = []                                // {array}   stores the coordinates of invalid pairs.
+    this.size = 16;                                  // {number}  represents the 16x16 grid.
+    this.empty = "";                                 // {string}  represents an empty cell.
+    this.row = null;                                 // {number}  the row index of the selected cell.
+    this.col = null;                                 // {number}  the column index of the selected cell.
     this.board = this.toCell(this.deepCopy(board));  // {array} a deep copy of the playing board.
     this.copy = this.deepCopy(this.board);           // {array} a solution to the board in its original state.
     this.stopwatch = new Stopwatch();                // {clock} keeps track of user's playing time.
