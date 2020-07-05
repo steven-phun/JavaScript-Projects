@@ -46,8 +46,6 @@ class Sudoku {
     this.copy = this.deepCopy(this.board);           // {array} a solution to the board in its original state.
     this.stopwatch = new Stopwatch();                // {clock} keeps track of user's playing time.
 
-
-
     this.setup();
   }
 
@@ -326,18 +324,29 @@ class Sudoku {
   }
 
   /**
-   * @function generates the grid for the Sudoku.
+   * @function generates the 16x16 table grid for the game.
    */
   drawGrid() {
+    this.clearChildNodes(this.table);
+
+    // insert <colgroup> and <col>.
+    for (let i = 0; i < Math.sqrt(this.size) - 1; i++) {
+      const colgroup = this.table.appendChild(document.createElement("colgroup"));
+      for (let j = 0; j < Math.sqrt(this.size); j++) {
+        const col = document.createElement("col");
+        colgroup.appendChild(col);
+      }
+    }
+
+    // insert <tr> and <td>
     for (let row = 0; row < this.size; row++) {
+      const tempRow = this.table.insertRow();
       for (let col = 0; col < this.size; col++) {
-        this.table.rows[row].cells[col].className = "";
+        tempRow.insertCell();
+        this.table.rows[row].cells[col].setAttribute("onclick", `getCell(${row},${col})`)
         if (this.board[row][col].setter === true) {
           this.table.rows[row].cells[col].innerHTML = this.board[row][col].data;
-          if (this.board[row][col].setter) this.table.rows[row].cells[col].classList.add(this.colorSetter);
-        } else {
-          this.table.rows[row].cells[col].classList.remove(this.colorSetter);
-          this.table.rows[row].cells[col].innerHTML = this.empty;
+          this.table.rows[row].cells[col].classList.add(this.colorSetter);
         }
       }
     }
@@ -351,6 +360,7 @@ class Sudoku {
 
     for (let i = 0; i < this.size; i++) {
       const button = document.createElement("BUTTON");
+
       button.setAttribute("onclick", `buttonInput(${i})`);
       button.innerHTML = this.toHex(i);
       this.keypad.appendChild(button);
