@@ -27,7 +27,7 @@ html {
 }
 
 .container {
-  min-width: 1600px;
+  max-width: 550px;
   display: grid;
   grid-template-rows: 1fr 1fr auto 3fr 1fr;
   padding: 20px;
