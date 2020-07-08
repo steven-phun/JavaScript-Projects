@@ -94,7 +94,7 @@ class Minesweeper {
     getMouseEvent(mouseCode, row, col) {
         this.updateSelectedCell(row, col);
 
-        if (this.firstSelected) this.startCountdown();
+        if (this.firstSelected) this.makeFirstMove()
 
         // event.button mouse click code.
         const leftClick = 0;
@@ -110,6 +110,25 @@ class Minesweeper {
         }
 
         if (mouseCode === rightClick) this.setFlagIcon();
+    }
+
+    /**
+     * @function calls any functions that will run upon the first cell being selected.
+     *           -> Start the time for the countdown.
+     *           -> Minesweeper's rule first selected cell will not be a mine.
+     */
+    makeFirstMove() {
+        this.startCountdown();
+        this.moveMine();
+
+        this.firstSelected = false;
+    }
+
+    /**
+     * @function moves a mine from given cell to another cell by random.
+     */
+    moveMine() {
+
     }
 
     /**
