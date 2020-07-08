@@ -128,7 +128,7 @@ class Minesweeper {
      * @function moves a mine from given cell to another cell by random.
      */
     moveMine() {
-
+        // TODO: complete method.
     }
 
     /**
