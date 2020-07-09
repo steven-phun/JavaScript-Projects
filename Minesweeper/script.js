@@ -79,7 +79,7 @@ class Minesweeper {
         this.timedOut = false;                    // {boolean} true if the countdown reaches 0.
         this.firstSelected = true;                // {boolean} false if user has already selected a cell.
         this.rightClickOn = false;                // {boolean} true if left click are treated as a right click.
-        this.board = this.setMines(this.toSquareObject()); // {array} represents each square on the game board.
+        this.board = this.toSquareObject();       // {array} represents each square on the game board.
 
         this.setup(level);
     }
@@ -229,7 +229,7 @@ class Minesweeper {
     /**
      * @function set the number of adjacent mine(s) for each cell.
      */
-    setNumber() {
+    addNumbers() {
         // get adjacent cell index for each mine.
         for (let index = 0; index < this.mineLocations.length; index++) {
             const rowIndex = this.mineLocations[index].row - 1;
@@ -250,11 +250,9 @@ class Minesweeper {
     /**
      * @function add the appropriate number of mines to an array object.
      *
-     * @param gameBoard {array} the array the mines are added.
-     *
-     * @return {array} with mines that represents the game board.
+     * @param amount {number} the amount of mines to add.
      */
-    setMines(gameBoard) {
+    addMines(amount) {
         let numberOfMines = this.size;
 
         while(numberOfMines > 0) {
@@ -262,14 +260,13 @@ class Minesweeper {
             let col = Math.floor(Math.random() * this.length);
 
             // avoid placing 2 mines on the same square.
-            if (!gameBoard[row][col].mine) {
-                gameBoard[row][col].number = this.iconMine;
-                gameBoard[row][col].mine = true;
+            if (!this.board[row][col].mine) {
+                this.board[row][col].number = this.iconMine;
+                this.board[row][col].mine = true;
                 this.mineLocations.push({row: row, col: col})
                 numberOfMines--;
             }
         }
-        return gameBoard;
     }
 
     /**
@@ -579,7 +576,8 @@ class Minesweeper {
         // set up game board.
         this.drawGameBoard();
         this.setWrapperWidth(level);
-        this.setNumber();
+        this.addMines()
+        this.addNumbers();
         this.printTime();
         this.updateDisplay();
     }
