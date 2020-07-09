@@ -208,47 +208,6 @@ class Minesweeper {
     }
 
     /**
-     * @function set the number of adjacent mine(s) for each cell.
-     */
-    addNumbers() {
-        // get adjacent cell index for each mine.
-        for (let index = 0; index < this.mineLocations.length; index++) {
-            const rowIndex = this.mineLocations[index].row - 1;
-            const colIndex = this.mineLocations[index].col - 1;
-            const section = 3; // one section is 3x3.
-
-            for (let row = rowIndex; row < rowIndex + section; row++) {
-                for (let col = colIndex; col < colIndex + section; col++) {
-                    if (this.isCellInGameBoard(row, col)) {
-                        if (this.board[row][col].mine) continue;
-                        this.board[row][col].number = this.board[row][col].number + 1;
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * @function add the appropriate number of mines to an array object.
-     */
-    addMines() {
-        let numberOfMines = this.size;
-
-        while(numberOfMines > 0) {
-            let row = Math.floor(Math.random() * this.width);
-            let col = Math.floor(Math.random() * this.length);
-
-            // avoid placing 2 mines on the same square and first selected cell.
-            if (!this.board[row][col].mine && (row !== this.row && col !== this.col)) {
-                this.board[row][col].number = this.iconMine;
-                this.board[row][col].mine = true;
-                this.mineLocations.push({row: row, col: col})
-                numberOfMines--;
-            }
-        }
-    }
-
-    /**
      * @function set the amount of mines depending on the level of the game board.
      *
      * @param level {number} the level of difficulty.
@@ -383,6 +342,47 @@ class Minesweeper {
     }
 
     /**
+     * @function set the number of adjacent mine(s) for each cell.
+     */
+    addNumbers() {
+        // get adjacent cell index for each mine.
+        for (let index = 0; index < this.mineLocations.length; index++) {
+            const rowIndex = this.mineLocations[index].row - 1;
+            const colIndex = this.mineLocations[index].col - 1;
+            const section = 3; // one section is 3x3.
+
+            for (let row = rowIndex; row < rowIndex + section; row++) {
+                for (let col = colIndex; col < colIndex + section; col++) {
+                    if (this.isCellInGameBoard(row, col)) {
+                        if (this.board[row][col].mine) continue;
+                        this.board[row][col].number = this.board[row][col].number + 1;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @function add the appropriate number of mines to an array object.
+     */
+    addMines() {
+        let numberOfMines = this.size;
+
+        while(numberOfMines > 0) {
+            let row = Math.floor(Math.random() * this.width);
+            let col = Math.floor(Math.random() * this.length);
+
+            // avoid placing 2 mines on the same square and first selected cell.
+            if (!this.board[row][col].mine && (row !== this.row && col !== this.col)) {
+                this.board[row][col].number = this.iconMine;
+                this.board[row][col].mine = true;
+                this.mineLocations.push({row: row, col: col})
+                numberOfMines--;
+            }
+        }
+    }
+
+    /**
      * @function add the coordinates of the flag icon to array.
      */
     addFlagLocation() {
@@ -507,7 +507,6 @@ class Minesweeper {
      * @param node {Element} the parent element' child node that is being removed.
      */
     clearChildNodes(node) {
-
         while (node.hasChildNodes()) node.removeChild(node.firstChild);
     }
 
