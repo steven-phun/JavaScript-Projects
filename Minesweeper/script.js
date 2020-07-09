@@ -113,25 +113,6 @@ class Minesweeper {
     }
 
     /**
-     * @function calls any functions that will run upon the first cell being selected.
-     *           -> Start the time for the countdown.
-     *           -> Minesweeper's rule first selected cell will not be a mine.
-     */
-    makeFirstMove() {
-        this.startCountdown();
-        this.moveMine();
-
-        this.firstSelected = false;
-    }
-
-    /**
-     * @function moves a mine from given cell to another cell by random.
-     */
-    moveMine() {
-        // TODO: complete method.
-    }
-
-    /**
      * @function reveals the innerHTML of selected cell.
      *
      * @param row {number} the row index of given row.
@@ -249,18 +230,16 @@ class Minesweeper {
 
     /**
      * @function add the appropriate number of mines to an array object.
-     *
-     * @param amount {number} the amount of mines to add.
      */
-    addMines(amount) {
+    addMines() {
         let numberOfMines = this.size;
 
         while(numberOfMines > 0) {
             let row = Math.floor(Math.random() * this.width);
             let col = Math.floor(Math.random() * this.length);
 
-            // avoid placing 2 mines on the same square.
-            if (!this.board[row][col].mine) {
+            // avoid placing 2 mines on the same square and first selected cell.
+            if (!this.board[row][col].mine && (row !== this.row && col !== this.col)) {
                 this.board[row][col].number = this.iconMine;
                 this.board[row][col].mine = true;
                 this.mineLocations.push({row: row, col: col})
@@ -551,8 +530,6 @@ class Minesweeper {
         this.minesLeft.innerHTML = (this.size - this.flagLocations.length).toString();
 
         // update cells.
-        //if (this.row === null || this.col === null) return;
-
         for (let row = 0; row < this.width; row++) {
             for (let col = 0; col < this.length; col++) {
                 if (this.board[row][col].reveal) {
@@ -566,6 +543,17 @@ class Minesweeper {
     }
 
     /**
+     * @function calls any functions that will run upon the first cell being selected.
+     */
+    makeFirstMove() {
+        this.startCountdown();
+        this.addMines(this.size)
+        this.addNumbers();
+
+        this.firstSelected = false;
+    }
+
+    /**
      * @function sets up the game board for the user to interact with.
      *
      * @param level {number} the level of difficulty.
@@ -576,8 +564,6 @@ class Minesweeper {
         // set up game board.
         this.drawGameBoard();
         this.setWrapperWidth(level);
-        this.addMines()
-        this.addNumbers();
         this.printTime();
         this.updateDisplay();
     }
