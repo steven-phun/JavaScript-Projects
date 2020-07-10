@@ -90,7 +90,8 @@ html {
   border-right: #707B7C solid 3px;
 }
 
-#sudoku tbody:first-child, #sudoku tbody:last-child {
+#sudoku tbody:first-child,
+#sudoku tbody:last-child {
   border: none;
 }
 
