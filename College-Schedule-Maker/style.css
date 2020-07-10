@@ -1,0 +1,30 @@
+/*** table of contents ***/
+
+/** 1. global
+ */
+
+
+/*** 1. global ***/
+* {
+    font-family: 'Source Sans Pro', sans-serif;
+    letter-spacing: 3px;
+    margin: 0;
+    padding: 0;
+    color: #707B7C;
+}
+
+html {
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 6px #ccc;
+    background-image: linear-gradient(45deg, #F7DC6F, #F9E79F, #FCF3CF);
+}
