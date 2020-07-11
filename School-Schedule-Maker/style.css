@@ -1,12 +1,15 @@
 /*** table of contents ***/
 
 /** 1. global
+ *  2. top bar
+ *  3. schedule
+ *  4. options
  */
 
 
 /*** 1. global ***/
 * {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Arial', sans-serif;
     letter-spacing: 3px;
     margin: 0;
     padding: 0;
@@ -29,7 +32,14 @@ html {
     background-image: linear-gradient(45deg, #F7DC6F, #F9E79F, #FCF3CF);
 }
 
+/*** top bar ***/
+
+
+
+/*** schedule ***/
 #schedule td {
     border: solid 1px;
     padding: 5px;
 }
+
+/*** 4. options ***/
