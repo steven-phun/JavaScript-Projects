@@ -45,10 +45,26 @@ html {
 }
 
 
-/*** schedule ***/
+
+/*** content ***/
+#content {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    padding: 15px;
+}
+
+    /*** schedule ***/
+#schedule {
+
+}
+
 #schedule td {
     border: solid 1px;
     padding: 5px;
 }
 
 /*** 4. options ***/
+#options {
+    display: grid;
+    grid-template-rows: auto;
+}
