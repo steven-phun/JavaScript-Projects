@@ -25,17 +25,23 @@ html {
 
 .wrapper {
     display: grid;
-    grid-template-rows: auto;
+    grid-template-rows: 1fr auto;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px 6px #ccc;
     background-image: linear-gradient(45deg, #F7DC6F, #F9E79F, #FCF3CF);
 }
 
+
 /*** top bar ***/
 #top-bar {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 3fr 8fr 1fr;
+}
+
+#top-bar input {
+    width: 95%;
+    text-align: center;
 }
 
 
