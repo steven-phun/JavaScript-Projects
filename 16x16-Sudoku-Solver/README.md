@@ -1,17 +1,15 @@
 ## [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
 
+Project Summary
+
+- Solve any 16x16 Sudoku or attempt to solve this classic puzzle yourself.
+
 Project Inspiration 
 
-- My professor had Sudoku puzzles on his door for anyone to solve
+- My professor had Sudoku puzzles on his door for anyone to solve.
 
 Project Difficulties
 
-- Learning a new language, JavaScript
+- Syntax and semantics of a new programming language, JavaScript.
 
-- Little experience with CSS prior 
-
-Developed in
-
-- HTML
-- CSS
-- JavaScript
+- Implementing a recursive backtracking algorithm.
