@@ -15,7 +15,7 @@
 /*** JavaScript Classes ***/
 
 /**
- * @classdesc represents the Sudoku grid.
+ * @class represents the Sudoku grid.
  *
  * @param board {array}    the array to initialize the game with.
  * @param blank {boolean}  true, if 'board' is blank.
@@ -608,7 +608,7 @@ class Sudoku {
 
 
 /**
- * @classdesc represents each individual cells.
+ * @class represents each individual cells.
  */
 class Cell {
   constructor(data, setter=false) {
@@ -618,7 +618,7 @@ class Cell {
 }
 
 /**
- * @classdesc represents how long the user has been playing.
+ * @class represents how long the user has been playing.
  */
 class Stopwatch {
   constructor() {
