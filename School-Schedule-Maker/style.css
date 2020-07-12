@@ -11,6 +11,7 @@
 /*** 1. global ***/
 * {
     font-family: 'Arial', sans-serif;
+    font-size: 15px;
     letter-spacing: 3px;
     margin: 0;
     padding: 0;
@@ -29,7 +30,7 @@ html {
     grid-template-rows: 1fr auto;
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 10px 6px #ccc;
+    box-shadow: 0 0 10px 6px #CCCCCC;
     background-image: linear-gradient(45deg, #F7DC6F, #F9E79F, #FCF3CF);
 }
 
@@ -58,12 +59,19 @@ html {
 #options {
     display: grid;
     grid-template-rows: auto;
+    padding: 15px;
 }
 
+#options button {
+    text-align: left;
+    padding: 10px;
+}
 
 /*** schedule ***/
 #schedule td {
+    width: 100px;
+    text-align: center;
     border: solid 1px;
-    padding: 5px;
+    padding: 10px;
 }
 
