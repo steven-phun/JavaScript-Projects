@@ -18,9 +18,32 @@
  */
 class Schedule {
     constructor() {
+        /** HTML tag instances*/
+
+        // {element} the HTML table tag where the course time slots will be inserted.
+        this.table = document.querySelector("#schedule>table");
+
+        /** CSS color class instances */
+
+        /** class instances. */
         this.course = []; // {array} represents a collection of all the courses in the schedule.
+
+        this.setup();
     }
 
+    /**
+     * @function generate the time slots for the schedule grid.
+     */
+    buildTimeGrid() {
+
+    }
+
+    /**
+     * @function set up the schedule grid to display to the user.
+     */
+    setup() {
+        this.buildTimeGrid();
+    }
 }
 
 
