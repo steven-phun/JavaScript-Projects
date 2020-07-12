@@ -2,8 +2,9 @@
 
 /** 1. global
  *  2. top bar
- *  3. schedule
- *  4. options
+ *  3. content
+ *     3.1 schedule
+ *     3.2 options
  */
 
 
@@ -45,7 +46,6 @@ html {
 }
 
 
-
 /*** content ***/
 #content {
     display: grid;
@@ -53,18 +53,17 @@ html {
     padding: 15px;
 }
 
-    /*** schedule ***/
-#schedule {
 
+/*** options ***/
+#options {
+    display: grid;
+    grid-template-rows: auto;
 }
 
+
+/*** schedule ***/
 #schedule td {
     border: solid 1px;
     padding: 5px;
 }
 
-/*** 4. options ***/
-#options {
-    display: grid;
-    grid-template-rows: auto;
-}
