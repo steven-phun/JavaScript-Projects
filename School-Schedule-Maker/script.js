@@ -9,3 +9,28 @@
  */
 
 /*jshint esversion: 6 */
+
+
+/*** JavaScript Classes ***/
+
+/**
+ * @class represents the Schedule grid.
+ */
+class Schedule {
+    constructor() {
+        this.course = []; // {array} represents a collection of all the courses in the schedule.
+    }
+
+}
+
+
+/**
+ * @class represents a course in the Schedule.
+ */
+class Course {
+    constructor() {
+        this.start = null; // {number} represents when the course starts.
+        this.end = null;   // {number} represents when the course ends.
+    }
+
+}
