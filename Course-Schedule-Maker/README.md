@@ -1,4 +1,4 @@
-## [Course Schedule Maker](https://steven-phun.github.io/Steven-Phun/Class-Schedule-Maker) *not yet completed*
+## [Course Schedule Maker](https://steven-phun.github.io/Steven-Phun/Course-Schedule-Maker) *not yet completed*
 
 Project Summary
 
