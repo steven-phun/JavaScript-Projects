@@ -6,8 +6,8 @@ Project Summary
 
 Project Inspiration 
 
-- Something practical that I often use.
+- Something practical I often use.
 
 Project Difficulties
 
-- [tbd]
+- "tbd".
