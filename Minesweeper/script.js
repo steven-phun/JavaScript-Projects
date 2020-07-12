@@ -26,7 +26,7 @@
 /*** JavaScript Classes ***/
 
 /**
- * @classdesc represents the game board.
+ * @class represents the game board.
  *
  * @param level {number} the level of difficulty.
  */
@@ -570,7 +570,7 @@ class Minesweeper {
 
 
 /**
- * @classdesc represents one individual square for the game.
+ * @class represents one individual square for the game.
  */
 class Square {
     constructor() {
