@@ -24,7 +24,7 @@ class Schedule {
         this.overlay = document.querySelector(".overlay");
 
         /** CSS class/id instances */
-        this.acitve = "active" // represent when the modal or overlay is active.
+        this.active = "active" // represent when the modal or overlay is active.
 
         /** class instances. */
         this.course = [];   // {array}  represents a collection of all the courses in the schedule.
@@ -33,6 +33,29 @@ class Schedule {
         this.latest = 24;   // {number} represents the latest time the schedule will display.
 
         this.setup();
+    }
+
+    /**
+     * @function add a Course object to the schedule grid.
+     */
+    add() {
+        this.displayModal()
+    }
+
+    /**
+     * @function display the modal.
+     */
+    displayModal() {
+        this.modal.classList.add(this.active);
+        this.overlay.classList.add(this.active);
+    }
+
+    /**
+     * @function removes the modal.
+     */
+    removeModal() {
+        this.modal.classList.remove(this.active);
+        this.overlay.classList.remove(this.active);
     }
 
     /**
@@ -167,4 +190,11 @@ class Time {
 
 
 /*** JavaScript Functions ***/
+
+const add = () => {
+    schedule.add();
+}
+
+
+// global instance
 const schedule = new Schedule();
