@@ -43,7 +43,7 @@ html {
 }
 
 #top-bar input {
-    width: 95%;
+    width: 100%;
     text-align: center;
 }
 
@@ -61,6 +61,7 @@ html {
     display: grid;
     grid-template-rows: auto;
     padding: 15px;
+    align-content: center;
 }
 
 #options button {
@@ -70,7 +71,6 @@ html {
 
 /*** schedule ***/
 #schedule table {
-    width: 100%;
     margin: auto;
     border-collapse: collapse;
     table-layout: fixed;
