@@ -13,7 +13,7 @@
 <div class="wrapper">
     <section id="top-bar">
         <label> Schedule Maker </label>
-        <label id="title"><input type="text" placeholder="Schedule Title"> </label>
+        <label id="schedule-title"><input placeholder="Schedule Title"> </label>
         <button><i class="fas fa-cog"></i></button>
     </section>
 
@@ -36,7 +36,45 @@
 
     <!-- modal -->
     <section class="modal">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium adipisci architecto beatae debitis, dolorem hic incidunt iure iusto, minus nobis nostrum pariatur perferendis quidem quod sint tempora veniam voluptate.
+        <form id="add-modal">
+            <label id="course-title"><input placeholder="Course Title" required></label>
+            <div id="meeting-time">
+                <label>Mon<input type="checkbox"></label>
+                <label>Tue<input type="checkbox"></label>
+                <label>Wed<input type="checkbox"></label>
+                <label>Thu<input type="checkbox"></label>
+                <label>Fri<input type="checkbox"></label>
+                <label>Sat<input type="checkbox"></label>
+                <label>Sun<input type="checkbox"></label>
+            </div>
+            <div id="start-time">
+                <label> Start Time </label>
+                <label> <input placeholder="HH"> : <input placeholder="MM"></label>
+
+                <div class="am-pm">
+                    <input type="radio" id="start-am" name="am/pm" value="am">
+                    <label for="start-am"> AM </label>
+                    <input type="radio" id="start-pm" name="am/pm" value="am">
+                    <label for="start-pm"> PM </label>
+                </div>
+
+            </div>
+
+            <div id="end-time">
+                <label> End Time </label>
+                <label> <input placeholder="HH"> : <input placeholder="MM"></label>
+
+                <div class="am-pm">
+                    <input type="radio" id="end-am" name="am/pm" value="am">
+                    <label for="end-am"> AM </label>
+                    <input type="radio" id="end-pm" name="am/pm" value="am">
+                    <label for="end-pm"> PM </label>
+                </div>
+
+            </div>
+
+            <label><input type="submit" value="Add Course"></label>
+        </form>
     </section>
 
     <section class="overlay"></section>
