@@ -495,7 +495,7 @@ class Minesweeper {
         for (let i = 0; i < this.width; i++) {
             let row = this.table.insertRow(); // insert <tr>.
             for (let j = 0; j < this.length; j++) {
-                let cell = row.insertCell(); // insert <tr>.
+                let cell = row.insertCell(); // insert <td>.
                 cell.setAttribute('onmousedown', `getMouseEvent(${i},${j})`);
             }
         }
