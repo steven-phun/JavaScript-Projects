@@ -26,11 +26,11 @@ html {
 }
 
 button {
+    background-color: #A9CCE3;
     border-radius: 5px;
-    border: solid 1px;
+    border: solid 0;
     padding: 5px;
     outline: none;
-    background-color: #F4F4F4;
 }
 
 .wrapper {
