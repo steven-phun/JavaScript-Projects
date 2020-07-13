@@ -24,8 +24,7 @@ class Sudoku {
   constructor(board, blank = false) {
 
     /** HTML tag instances. */
-    this.keypad = document.querySelector("#keypad"); // the parent div where the keypad will be built.
-    // {element} the parent HTML board that the Sudoku grid will be inserted to.
+    this.keypad = document.querySelector("#keypad");
     this.table = document.querySelector("#sudoku>table");
 
     /** CSS color class instance. */

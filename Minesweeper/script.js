@@ -33,19 +33,14 @@
 class Minesweeper {
     constructor(level= 1) {
         /** HTML tag instances*/
-        this.wrapper = document.querySelector(".wrapper"); // {element} the wrapper HTML div.
-        // {element} the HTML tag that displays the timer.
+        this.wrapper = document.querySelector(".wrapper");
         this.tagCountdown = document.querySelector("#countdown");
-        // {element}  the HTML table tag that will contain the game board.
         this.table = document.querySelector("#minesweeper>table");
-        // {element}  the HTML tag that contains the amount of mines left.
         this.minesLeft = document.querySelector("#mines-left");
-        // {element} the HTML tags that contains the flag icon button.
         this.flagIcon = document.querySelector("#flag-icon>button");
-        // {<i> tag} represents the image of a mine.
-        this.iconMine = '<i class="fas fa-bomb"></i>';
-        // {<i> tag} represents the image of a flag.
-        this.iconFlag = '<i class="fas fa-flag"></i>';
+
+        this.iconMine = '<i class="fas fa-bomb"></i>';  // {<i> tag} represents the image of a mine.
+        this.iconFlag = '<i class="fas fa-flag"></i>';  // {<i> tag} represents the image of a flag.
 
         /** CSS color class instances */
         this.reveal = "reveal-cell";              // represents a cell that hides its innerHTML from the user.
