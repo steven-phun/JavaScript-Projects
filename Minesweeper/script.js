@@ -490,7 +490,7 @@ class Minesweeper {
      * @function generates html tags for a table that represents the game board.
      */
     drawGameBoard() {
-        this.clearChildNodes(this.table);
+        this.clearTable();
 
         for (let i = 0; i < this.width; i++) {
             let row = this.table.insertRow(); // insert <tr>.
@@ -502,12 +502,10 @@ class Minesweeper {
     }
 
     /**
-     * @function removes all child nodes from given element.
-     *
-     * @param node {Element} the parent element' child node that is being removed.
+     * @function removes all rows from given table.
      */
-    clearChildNodes(node) {
-        while (node.hasChildNodes()) node.removeChild(node.firstChild);
+    clearTable() {
+        while (this.table.hasChildNodes()) this.table.removeChild(this.table.firstChild);
     }
 
     /**
