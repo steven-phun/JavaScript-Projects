@@ -2,9 +2,8 @@
 
 /** 1. global
  *  2. top bar
- *  3. content
- *     3.1 schedule
- *     3.2 options
+ *  3. schedule
+ *  4. options
  */
 
 
@@ -25,10 +24,24 @@ html {
     justify-content: center;
 }
 
+button {
+    background-color: #F9E79F;
+    border-radius: 5px;
+    border: solid 0;
+    padding: 5px;
+    outline: none;
+    text-align: center;
+}
+
+button:hover {
+    background-color: #F7DC6F;
+    cursor: pointer;
+}
+
 .wrapper {
     max-width: 1200px;
     display: grid;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: 1fr 3fr auto;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px 6px #CCCCCC;
@@ -39,34 +52,21 @@ html {
 /*** top bar ***/
 #top-bar {
     display: grid;
-    grid-template-columns: 3fr 8fr 1fr;
+    grid-template-columns: 4fr 20fr 1fr;
 }
 
 #top-bar input {
-    width: 100%;
+    width: 95%;
     text-align: center;
 }
-
-
-/*** content ***/
-#content {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    padding: 15px;
-}
-
 
 /*** options ***/
 #options {
     display: grid;
-    grid-template-rows: auto;
+    grid-template-columns: repeat(8, 1fr);
+    grid-gap: 15px;
     padding: 15px;
     align-content: center;
-}
-
-#options button {
-    text-align: left;
-    padding: 10px;
 }
 
 /*** schedule ***/
