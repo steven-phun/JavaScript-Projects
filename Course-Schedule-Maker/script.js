@@ -27,9 +27,9 @@ class Schedule {
 
         /** class instances. */
         this.course = [];   // {array}  represents a collection of all the courses in the schedule.
-        this.weekSize = 7;  // {number} represents how many days in a week will be displayed.
-        this.earliest = 0;  // {number} represents earliest time the schedule will display.
-        this.latest = 23;   // {number} represents the latest time the schedule will display.
+        this.size = 5;      // {number} represents how many days in a week will be displayed.
+        this.earliest = 9;  // {number} represents earliest time the schedule will display.
+        this.latest = 17;   // {number} represents the latest time the schedule will display.
 
         this.setup();
     }
@@ -37,13 +37,35 @@ class Schedule {
     /**
      * @function generate the time slots for the schedule grid.
      */
-    buildTimeGrid() {
-        for (let i = this.earliest; i <= this.latest; i++) {
-            let row = this.table.insertRow(); // insert <tr>.
+    buildGrid() {
 
-            for (let j = 0; j <  this.weekSize + 1; j++) { // add 1 to size because of indent.
-                let cell = row.insertCell(); // insert <td>.
+        for (let i = this.earliest; i <= this.latest; i++) {
+            const row = this.table.insertRow(); // insert <tr>.
+
+            for (let j = 0; j <  this.size + 1; j++) { // add 1 to size because of indent.
+                row.insertCell(); // insert <td>.
             }
+        }
+    }
+
+
+    /**
+     * @function removes all rows from the schedule grid.
+     */
+    clearGrid() {
+        while (this.table.hasChildNodes()) this.table.removeChild(this.table.firstChild);
+    }
+
+    /**
+     * @function display the days of the week.
+     */
+    setDays() {
+        const days = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        const row = this.table.insertRow();
+
+        for (let i = 0; i <= this.size; i++) {
+            row.insertCell();
+            this.table.rows[0].cells[i].innerHTML = days[i];
         }
     }
 
@@ -51,12 +73,14 @@ class Schedule {
      * @function display time slots for the schedule grid.
      */
     setTimeSlots() {
-        let count = 1;
+        this.buildGrid();
+
+        let row = 1;
 
         for (let i = this.earliest; i <= this.latest; i++) {
             const time = new Time(i)
-            this.table.rows[count].cells[0].innerHTML = time.timeToString();
-            count++;
+            this.table.rows[row].cells[0].innerHTML = time.timeToString();
+            row++;
         }
     }
 
@@ -64,7 +88,8 @@ class Schedule {
      * @function set up the schedule grid to display to the user.
      */
     setup() {
-        this.buildTimeGrid();
+        this.clearGrid();
+        this.setDays()
         this.setTimeSlots()
     }
 }
