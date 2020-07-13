@@ -68,10 +68,18 @@ html {
 }
 
 /*** schedule ***/
+#schedule table {
+    width: 100%;
+    margin: auto;
+    border-collapse: collapse;
+    table-layout: fixed;
+    text-align: center;
+}
+
 #schedule td {
     width: 100px;
-    text-align: center;
-    border: solid 1px;
     padding: 10px;
+    border: solid 1px;
 }
+
 

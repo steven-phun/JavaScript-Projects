@@ -26,7 +26,10 @@ class Schedule {
         /** CSS color class instances */
 
         /** class instances. */
-        this.course = []; // {array} represents a collection of all the courses in the schedule.
+        this.course = [];  // {array}  represents a collection of all the courses in the schedule.
+        this.weekSize = 7; // {number} represents how many days in a week will be displayed.
+        this.earliest = 9; // {number} represents earliest time the schedule will display.
+        this.latest = 14;  // {number} represents the latest time the schedule will display.
 
         this.setup();
     }
@@ -35,7 +38,13 @@ class Schedule {
      * @function generate the time slots for the schedule grid.
      */
     buildTimeGrid() {
+        for (let i = this.earliest; i <= this.latest; i++) {
+            let row = this.table.insertRow(); // insert <tr>.
 
+            for (let j = 0; j <  this.weekSize + 1; j++) { // add 1 to size because of indent.
+                let cell = row.insertCell(); // insert <tr>.
+            }
+        }
     }
 
     /**
@@ -57,3 +66,6 @@ class Course {
     }
 
 }
+
+/*** JavaScript Functions ***/
+const schedule = new Schedule();
