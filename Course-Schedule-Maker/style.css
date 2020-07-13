@@ -11,7 +11,7 @@
 /*** 1. global ***/
 * {
     font-family: 'Arial', sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     letter-spacing: 3px;
     margin: 0;
     padding: 0;
@@ -78,7 +78,7 @@ html {
 }
 
 #schedule td {
-    width: 100px;
+    min-width: 95px;
     padding: 10px;
     border: solid 1px;
 }
