@@ -11,7 +11,7 @@
 /*** 1. global ***/
 * {
     font-family: 'Arial', sans-serif;
-    font-size: 15px;
+    font-size: 13px;
     letter-spacing: 3px;
     margin: 0;
     padding: 0;
@@ -26,6 +26,7 @@ html {
 }
 
 .wrapper {
+    max-width: 1200px;
     display: grid;
     grid-template-rows: 1fr auto;
     padding: 20px;
@@ -80,6 +81,10 @@ html {
     width: 100px;
     padding: 10px;
     border: solid 1px;
+}
+
+#schedule td:first-child, #mon-sun td {
+    border: none;
 }
 
 

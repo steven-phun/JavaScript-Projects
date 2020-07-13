@@ -42,8 +42,20 @@ class Schedule {
             let row = this.table.insertRow(); // insert <tr>.
 
             for (let j = 0; j <  this.weekSize + 1; j++) { // add 1 to size because of indent.
-                let cell = row.insertCell(); // insert <tr>.
+                let cell = row.insertCell(); // insert <td>.
             }
+        }
+    }
+
+    /**
+     * @function display time slots for the schedule grid.
+     */
+    setTimeSlots() {
+        let count = 1;
+
+        for (let time = this.earliest; time <= this.latest; time++) {
+            this.table.rows[count].cells[0].innerHTML = time;
+            count++;
         }
     }
 
@@ -52,6 +64,7 @@ class Schedule {
      */
     setup() {
         this.buildTimeGrid();
+        this.setTimeSlots()
     }
 }
 
