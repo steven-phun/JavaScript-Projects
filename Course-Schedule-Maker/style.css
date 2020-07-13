@@ -4,6 +4,9 @@
  *  2. top bar
  *  3. schedule
  *  4. options
+ *  5. add modal
+ *
+ *    modal/overlay
  */
 
 
@@ -38,6 +41,14 @@ button:hover {
     cursor: pointer;
 }
 
+input, form {
+    text-align: center;
+}
+
+::placeholder {
+    color: #D7DBDD;
+}
+
 .wrapper {
     max-width: 1200px;
     display: grid;
@@ -57,8 +68,8 @@ button:hover {
 
 #top-bar input {
     width: 95%;
-    text-align: center;
 }
+
 
 /*** options ***/
 #options {
@@ -87,7 +98,39 @@ button:hover {
     border: none;
 }
 
-/*** modal ***/
+
+/*** add modal ***/
+#add-modal {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    padding: 10px;
+}
+
+#course-title input {
+    width: 80%;
+}
+
+#meeting-time {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.am-pm label {
+    display: inline-block;
+    width: 200px;
+    padding: 10px;
+    border: solid 1px;
+}
+
+.am-pm input[type="radio"] {
+    display: none;
+}
+
+.am-pm input[type="radio"]:checked + label {
+    background-color: #F5B7B1;
+}
+
+/*** modal/overlay ***/
 .modal {
     position: fixed;
     top: 50%;

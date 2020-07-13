@@ -32,6 +32,9 @@ class Schedule {
         this.earliest = 7;  // {number} represents earliest time the schedule will display.
         this.latest = 24;   // {number} represents the latest time the schedule will display.
 
+        this.days = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        this.color = ["#AED6F1", "#A3E4D7", "#E6B0AA", "#D7BDE2", "#F5CBA7", "#D6DBDF", "#F9E79F", "#FAD7A0"];
+
         this.setup();
     }
 
@@ -62,7 +65,6 @@ class Schedule {
      * @function generate the time slots for the schedule grid.
      */
     buildGrid() {
-
         for (let i = this.earliest; i <= this.latest; i++) {
             const row = this.table.insertRow(); // insert <tr>.
 
@@ -84,12 +86,11 @@ class Schedule {
      * @function display the days of the week.
      */
     setDays() {
-        const days = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
         const row = this.table.insertRow();
 
         for (let i = 0; i <= this.size; i++) {
             row.insertCell();
-            this.table.rows[0].cells[i].innerHTML = days[i];
+            this.table.rows[0].cells[i].innerHTML = this.days[i];
         }
     }
 
