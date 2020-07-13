@@ -23,7 +23,8 @@ class Schedule {
         this.modal = document.querySelector(".modal");
         this.overlay = document.querySelector(".overlay");
 
-        /** CSS color class instances */
+        /** CSS class/id instances */
+        this.acitve = "active" // represent when the modal or overlay is active.
 
         /** class instances. */
         this.course = [];   // {array}  represents a collection of all the courses in the schedule.

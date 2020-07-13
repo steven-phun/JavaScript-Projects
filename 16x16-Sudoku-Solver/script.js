@@ -27,7 +27,7 @@ class Sudoku {
     this.keypad = document.querySelector("#keypad");
     this.table = document.querySelector("#sudoku>table");
 
-    /** CSS color class instance. */
+    /** CSS class/id instance. */
     this.colorSetter = "setter-color";
     this.colorCorrect = "correct-color";
     this.colorWrong = "wrong-color";

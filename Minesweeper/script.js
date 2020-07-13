@@ -42,7 +42,7 @@ class Minesweeper {
         this.iconMine = '<i class="fas fa-bomb"></i>';  // {<i> tag} represents the image of a mine.
         this.iconFlag = '<i class="fas fa-flag"></i>';  // {<i> tag} represents the image of a flag.
 
-        /** CSS color class instances */
+        /** CSS class/id instances */
         this.reveal = "reveal-cell";              // represents a cell that hides its innerHTML from the user.
         this.boom = "boom-cell"                   // represents the cell that cause the game over.
         this.correctColor = "correct-color";      // represents the flagged cell was correct guessed.
