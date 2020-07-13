@@ -19,17 +19,17 @@
 class Schedule {
     constructor() {
         /** HTML tag instances*/
-
-        // {element} the HTML table tag where the course time slots will be inserted.
         this.table = document.querySelector("#schedule>table");
+        this.modal = document.querySelector(".modal");
+        this.overlay = document.querySelector(".overlay");
 
         /** CSS color class instances */
 
         /** class instances. */
         this.course = [];   // {array}  represents a collection of all the courses in the schedule.
-        this.size = 5;      // {number} represents how many days in a week will be displayed.
-        this.earliest = 9;  // {number} represents earliest time the schedule will display.
-        this.latest = 17;   // {number} represents the latest time the schedule will display.
+        this.size = 7;      // {number} represents how many days in a week will be displayed.
+        this.earliest = 7;  // {number} represents earliest time the schedule will display.
+        this.latest = 24;   // {number} represents the latest time the schedule will display.
 
         this.setup();
     }
