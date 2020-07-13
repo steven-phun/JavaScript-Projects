@@ -34,7 +34,7 @@ Project Difficulties
 - Implementing a flood fill algorithm.
 
 
-## [Class Schedule Maker](https://steven-phun.github.io/Steven-Phun/Class-Schedule-Maker) *not yet completed*
+## [Class Schedule Maker](https://steven-phun.github.io/Steven-Phun/Course-Schedule-Maker) *not yet completed*
 
 Project Summary
 
