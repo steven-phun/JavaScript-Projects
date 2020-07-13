@@ -33,6 +33,12 @@ button {
     outline: none;
 }
 
+button:hover {
+    color: ghostwhite;
+    background-color: #7FB3D5;
+    cursor: pointer;
+}
+
 .wrapper {
     /* min-width set in javascript */
     display: grid;
@@ -51,9 +57,13 @@ button {
     padding-bottom: 10px;
 }
 
+#mine-count {
+    padding-top: 5px;
+}
+
 #countdown {
     text-align: center;
-    padding: 5px;
+    padding-top: 5px;
 }
 
 #flag-icon {
@@ -64,11 +74,6 @@ button {
     font-size: 15px;
 }
 
-
-#flag-icon button:hover {
-    color: ghostwhite;
-    background-color: #7FB3D5;
-}
 
 /*** 3. minesweeper ***/
 #minesweeper {
@@ -108,12 +113,6 @@ button {
 #bot-bar button {
     padding: 10px;
     font-size: 9px;
-    cursor: pointer;
-}
-
-#bot-bar button:hover {
-    color: ghostwhite;
-    background-color: #5499C7;
 }
 
 
