@@ -26,10 +26,10 @@ class Schedule {
         /** CSS color class instances */
 
         /** class instances. */
-        this.course = [];                  // {array}  represents a collection of all the courses in the schedule.
-        this.weekSize = 7;                 // {number} represents how many days in a week will be displayed.
-        this.earliest = new Time(9); // {number} represents earliest time the schedule will display.
-        this.latest = new Time(14);  // {number} represents the latest time the schedule will display.
+        this.course = [];   // {array}  represents a collection of all the courses in the schedule.
+        this.weekSize = 7;  // {number} represents how many days in a week will be displayed.
+        this.earliest = 0;  // {number} represents earliest time the schedule will display.
+        this.latest = 23;   // {number} represents the latest time the schedule will display.
 
         this.setup();
     }
@@ -53,7 +53,8 @@ class Schedule {
     setTimeSlots() {
         let count = 1;
 
-        for (let time = this.earliest; time <= this.latest; time++) {
+        for (let i = this.earliest; i <= this.latest; i++) {
+            const time = new Time(i)
             this.table.rows[count].cells[0].innerHTML = time.timeToString();
             count++;
         }
@@ -87,9 +88,10 @@ class Course {
  * @param minute {number} represents the amount of minutes.
  */
 class Time {
-    constructor(hour, minute=5) {
-        this.hour = hour;                    // {number} represent the amount of hours.
-        this.minute = this.toMinute(minute); // {string} represents the amount of minutes.
+    constructor(hour, minute=0) {
+        this.hour = hour;      // {number} represent the amount of hours.
+        this.minute = minute;  // {number} represents the amount of minutes.
+        this.pm = false;       // {boolean} true if hours >= 12.
     }
 
     /**
@@ -101,18 +103,39 @@ class Time {
      * @return a string that represents the minute.
      */
     toMinute(minute) {
-        if (minute >= 10) return minute.toString();
+        if (minute > 9) return minute.toString();
 
         return `0${minute}`;
+    }
+
+    /**
+     * @function converts the hour to a 12 hour time format.
+     *
+     * @param hour {number} the hour being converted.
+     *
+     * @return a string that represents the hour.
+     */
+    toHour(hour) {
+        if (hour >= 12) {
+            if (hour !== 24) this.pm = true;
+            if (hour !== 12) hour -= 12;
+        }
+
+        if (hour === 0) hour = 12; // when hour = 0 or 24 --> 12AM
+
+        return hour.toString();
     }
 
     /**
      * @function converts given hour and minute in a 12 hour HH:MM format.
      */
     timeToString() {
-        if (this.hour > 12) return `${this.hour - 12}:${this.minute} pm`
+        const hour = this.toHour(this.hour);
+        const minute = this.toMinute(this.minute);
 
-        return `${this.hour}:${this.minute} am`;
+        if (this.pm) return `${hour}:${minute}PM`
+
+        return `${hour}:${minute}AM`;
     }
 }
 
