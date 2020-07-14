@@ -1,6 +1,6 @@
 ### Table of Projects
 - [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
-- [Course Schedule Maker](https://steven-phun.github.io/Steven-Phun/Course-Schedule-Maker)
+- [College Schedule Maker](https://steven-phun.github.io/Steven-Phun/College-Schedule-Maker)
 - [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper)
 - [Quarantine Bingo]
 
@@ -20,7 +20,7 @@ Project Difficulties
 
 - Implementing a recursive backtracking algorithm.
 
-## [Course Schedule Maker](https://steven-phun.github.io/Steven-Phun/Course-Schedule-Maker) *not yet completed*
+## [College Schedule Maker](https://steven-phun.github.io/Steven-Phun/College-Schedule-Maker) *not yet completed*
 
 Project Summary
 
