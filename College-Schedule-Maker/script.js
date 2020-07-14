@@ -70,10 +70,16 @@ class Schedule {
      */
     addCourse() {
         const course = this.course[this.course.length - 1];
-        const row = course.startHour - this.earliest + this.indent;
+        let rowStart = course.startHour - this.earliest + this.indent;
+        let rowEnd = course.endHour - this.earliest + this.indent;
 
-        for (let i = 1; i <= this.size; i++) {
-            if (course.checkbox[i]) this.table.rows[row].cells[i].innerHTML = course.courseTitle;
+        if (course.startPM) rowStart += 12;
+        if (course.endPM) rowEnd += 12;
+
+        for (let row = rowStart; row <= rowEnd; row++) {
+            for (let i = 1; i <= this.size; i++) {
+                if (course.checkbox[i]) this.table.rows[row].cells[i].innerHTML = course.courseTitle;
+            }
         }
     }
 
@@ -170,8 +176,8 @@ class Course {
         this.startMinute = parseInt(document.querySelector("#start-minute").value);
         this.endHour = parseInt(document.querySelector("#end-hour").value);
         this.endMinute = parseInt(document.querySelector("#end-minute").value);
-        this.startAM = parseInt(document.querySelector("#start-am").checked);
-        this.endAM = parseInt(document.querySelector("#end-am").checked);
+        this.startPM = document.querySelector("#start-pm").checked;
+        this.endPM = document.querySelector("#end-pm").checked;
         this.checkbox1 = document.querySelector("#mon-checkbox").checked;
         this.checkbox2 = document.querySelector("#tue-checkbox").checked;
         this.checkbox3 = document.querySelector("#wed-checkbox").checked;
