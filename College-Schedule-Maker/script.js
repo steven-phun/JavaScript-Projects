@@ -30,6 +30,7 @@ class Schedule {
 
         /** class instances. */
         this.course = [];   // {array}  represents a collection of all the courses in the schedule.
+        this.indent = 1;    // {number} represents the number of cells was used to indent the table.
         this.size = 7;      // {number} represents how many days in a week will be displayed.
         this.earliest = 7;  // {number} represents earliest time the schedule will display.
         this.latest = 24;   // {number} represents the latest time the schedule will display.
@@ -60,17 +61,7 @@ class Schedule {
     getCourse() {
         this.course.push(new Course());
 
-        for (let i = 0; i < this.course.length; i++) {
-            console.log(this.course[i].courseTitle);
-        }
-
-        this.removeAddForum();
-    }
-
-    /**
-     * @function
-     */
-    removeAddForum() {
+        this.addCourse();
         this.removeModal();
     }
 
@@ -78,14 +69,19 @@ class Schedule {
      * @function add a course to the schedule.
      */
     addCourse() {
+        const course = this.course[this.course.length - 1];
+        const row = course.startHour - this.earliest + this.indent;
 
+        for (let i = 1; i <= this.size; i++) {
+            if (course.checkbox[i]) this.table.rows[row].cells[i].innerHTML = course.courseTitle;
+        }
     }
 
     /**
      * @function closes current form.
      */
     cancel() {
-        this.removeAddForum();
+        this.removeModal();
     }
 
 
@@ -112,7 +108,7 @@ class Schedule {
         for (let i = this.earliest; i <= this.latest; i++) {
             const row = this.table.insertRow(); // insert <tr>.
 
-            for (let j = 0; j <  this.size + 1; j++) { // add 1 to size because of indent.
+            for (let j = 0; j <  this.size + this.indent; j++) {
                 row.insertCell(); // insert <td>.
             }
         }
@@ -170,19 +166,22 @@ class Course {
     constructor() {
         /** HTML Tag instances **/
         this.courseTitle = document.querySelector("#course-title").value;
-        this.startHour = document.querySelector("#start-hour").value;
-        this.startMinute = document.querySelector("#start-minute").value;
-        this.endHour = document.querySelector("#end-hour").value;
-        this.endMinute = document.querySelector("#end-minute").value;
-        this.startAM = document.querySelector("#start-am").checked;
-        this.endAM = document.querySelector("#end-am").checked;
-        this.checkboxMon = document.querySelector("#mon-checkbox").checked;
-        this.checkboxTue = document.querySelector("#tue-checkbox").checked;
-        this.checkboxWed = document.querySelector("#wed-checkbox").checked;
-        this.checkboxThu = document.querySelector("#thu-checkbox").checked;
-        this.checkboxFri = document.querySelector("#fri-checkbox").checked;
-        this.checkboxSat = document.querySelector("#sat-checkbox").checked;
-        this.checkboxSun = document.querySelector("#sun-checkbox").checked;
+        this.startHour = parseInt(document.querySelector("#start-hour").value);
+        this.startMinute = parseInt(document.querySelector("#start-minute").value);
+        this.endHour = parseInt(document.querySelector("#end-hour").value);
+        this.endMinute = parseInt(document.querySelector("#end-minute").value);
+        this.startAM = parseInt(document.querySelector("#start-am").checked);
+        this.endAM = parseInt(document.querySelector("#end-am").checked);
+        this.checkbox1 = document.querySelector("#mon-checkbox").checked;
+        this.checkbox2 = document.querySelector("#tue-checkbox").checked;
+        this.checkbox3 = document.querySelector("#wed-checkbox").checked;
+        this.checkbox4 = document.querySelector("#thu-checkbox").checked;
+        this.checkbox5 = document.querySelector("#fri-checkbox").checked;
+        this.checkbox6 = document.querySelector("#sat-checkbox").checked;
+        this.checkbox7 = document.querySelector("#sun-checkbox").checked;
+
+        this.checkbox = ["", this.checkbox1, this.checkbox2, this.checkbox3, this.checkbox4,
+                             this.checkbox5, this.checkbox6, this.checkbox7];
     }
 }
 
