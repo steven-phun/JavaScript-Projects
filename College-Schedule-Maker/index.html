@@ -29,7 +29,7 @@
         <button><i class="far fa-save"></i> Save </button>
         <button><i class="fas fa-trash"></i> Delete </button>
         <button><i class="fas fa-pencil-alt"></i> Edit </button>
-        <button onclick="add()"><i class="fas fa-plus"></i> Add </button>
+        <button onclick="add();"><i class="fas fa-plus"></i> Add </button>
     </section>
 
     <section id="schedule-header">
@@ -46,6 +46,11 @@
     <!-- modal -->
     <section class="modal">
         <form id="add-modal" onsubmit="addSubmit(); return false;">
+            <div class="exit">
+                <label> Add Course </label>
+                <i onclick="exit();" class="fas fa-times"></i>
+            </div>
+
             <label><input id="course-title" placeholder="Course Title" required></label>
 
             <div id="meeting-time">

@@ -114,13 +114,35 @@ h1 {
 /*** add modal ***/
 #add-modal {
     display: grid;
-    grid-template-rows: repeat(5, auto);
+    grid-template-rows: repeat(6, auto);
     grid-gap: 15px;
     padding: 20px;
 }
 
-#course-title input {
-    width: 75%;
+.exit {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    font-size: 16px;
+    text-align: end;
+}
+
+.exit label {
+    text-align: left;
+    color: #F4D03F;
+    font-weight: bold;
+}
+
+.exit i {
+    font-size: 14px;
+}
+
+.exit i:hover {
+    color: #F7DC6F;
+    cursor: pointer;
+}
+
+#course-title {
+    width: 65%;
     padding: 3px;
 }
 

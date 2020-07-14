@@ -81,6 +81,13 @@ class Schedule {
 
     }
 
+    /**
+     * @function closes current form.
+     */
+    cancel() {
+        this.removeAddForum();
+    }
+
 
     /**
      * @function display the modal.
@@ -240,6 +247,12 @@ class Time {
 
 
 /*** JavaScript Functions ***/
+
+/**
+ * @function catches when the user wants to cancel submitting a form.
+ */
+const exit = () => schedule.cancel();
+
 
 /**
  * @function catch the "add" button click.
