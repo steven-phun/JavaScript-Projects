@@ -1,7 +1,7 @@
 ### Table of Projects
-# [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
-# [Class Schedule Maker](https://steven-phun.github.io/Steven-Phun/Course-Schedule-Maker)
-# [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper)
+- [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
+- [Class Schedule Maker](https://steven-phun.github.io/Steven-Phun/Course-Schedule-Maker)
+- [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper)
 
 ## [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
 
