@@ -15,7 +15,7 @@
         <label> Schedule Maker </label>
 
         <form onsubmit="getScheduleTitle(); return false">
-            <label><input id="schedule-title" placeholder="Schedule Title"> </label>
+            <label><input id="schedule-header-input" placeholder="Schedule Title"> </label>
         </form>
 
         <button><i class="fas fa-cog"></i></button>
@@ -30,6 +30,11 @@
         <button><i class="fas fa-trash"></i> Delete </button>
         <button><i class="fas fa-pencil-alt"></i> Edit </button>
         <button onclick="add()"><i class="fas fa-plus"></i> Add </button>
+    </section>
+
+    <section id="schedule-header">
+        <label> <!-- empty for indent --> </label>
+        <h1> Untitled </h1>
     </section>
 
     <section id="schedule">
