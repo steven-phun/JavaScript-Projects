@@ -10,6 +10,8 @@
 
 /*jshint esversion: 6 */
 
+// TODO:
+// add more colors and remove yellow for course color code.
 
 /*** JavaScript Classes ***/
 
@@ -76,11 +78,17 @@ class Schedule {
         if (course.startPM && course.startHour !== 12) rowStart += 12;
         if (course.endPM && course.endHour !== 12) rowEnd += 12;
 
+
         for (let row = rowStart; row <= rowEnd; row++) {
             for (let i = 1; i <= this.size; i++) {
-                if (course.checkbox[i]) this.table.rows[row].cells[i].innerHTML = course.courseTitle;
+                if (course.checkbox[i]) {
+                    this.table.rows[rowStart].cells[i].innerHTML = course.courseTitle;
+                    this.table.rows[row].cells[i].style.backgroundColor = this.color[0];
+                }
             }
         }
+
+        this.color.splice(0, 1);
     }
 
 
