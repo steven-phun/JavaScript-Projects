@@ -73,12 +73,33 @@ class Schedule {
         let rowStart = course.startHour - this.earliest + this.indent;
         let rowEnd = course.endHour - this.earliest + this.indent;
 
-        if (course.startPM) rowStart += 12;
-        if (course.endPM) rowEnd += 12;
+        if (course.startPM && course.startHour !== 12) rowStart += 12;
+        if (course.endPM && course.endHour !== 12) rowEnd += 12;
 
         for (let row = rowStart; row <= rowEnd; row++) {
             for (let i = 1; i <= this.size; i++) {
                 if (course.checkbox[i]) this.table.rows[row].cells[i].innerHTML = course.courseTitle;
+            }
+        }
+    }
+
+
+    /**
+     * @function removes selected course from the schedule.
+     *
+     * @param index {number} the course index number in array.
+     */
+    removeCourse(index) {
+        const course = this.course[index];
+        let rowStart = course.startHour - this.earliest + this.indent;
+        let rowEnd = course.endHour - this.earliest + this.indent;
+
+        if (course.startPM && course.startHour !== 12) rowStart += 12;
+        if (course.endPM && course.endHour !== 12) rowEnd += 12;
+
+        for (let row = rowStart; row <= rowEnd; row++) {
+            for (let i = 1; i <= this.size; i++) {
+                if (course.checkbox[i]) this.table.rows[row].cells[i].innerHTML = "";
             }
         }
     }
