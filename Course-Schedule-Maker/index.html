@@ -13,7 +13,11 @@
 <div class="wrapper">
     <section id="top-bar">
         <label> Schedule Maker </label>
-        <label id="schedule-title"><input placeholder="Schedule Title"> </label>
+
+        <form onsubmit="getScheduleTitle(); return false">
+            <label><input id="schedule-title" placeholder="Schedule Title"> </label>
+        </form>
+
         <button><i class="fas fa-cog"></i></button>
     </section>
 
@@ -36,8 +40,8 @@
 
     <!-- modal -->
     <section class="modal">
-        <form id="add-modal">
-            <label id="course-title"><input placeholder="Course Title" required></label>
+        <form id="add-modal" onsubmit="addSubmit(); return false">
+            <label id="course-title"><input placeholder="Course Title" name="course-title" required></label>
 
             <div id="meeting-time">
                 <div><p>Mon</p><label><input type="checkbox"></label></div>
