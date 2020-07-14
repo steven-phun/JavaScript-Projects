@@ -14,8 +14,8 @@
     <section id="top-bar">
         <label> Schedule Maker </label>
 
-        <form onsubmit="getScheduleTitle(); return false">
-            <label><input id="schedule-header-input" placeholder="Schedule Title"> </label>
+        <form onkeydown="getScheduleTitle();" onsubmit="return false">
+            <label><input id="header-input" placeholder="Schedule Title"></label>
         </form>
 
         <button><i class="fas fa-cog"></i></button>

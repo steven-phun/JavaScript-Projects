@@ -22,6 +22,9 @@ class Schedule {
         this.table = document.querySelector("#schedule>table");
         this.modal = document.querySelector(".modal");
         this.overlay = document.querySelector(".overlay");
+        this.title = document.querySelector("#schedule-header>h1");
+        this.headerInput = document.querySelector("#header-input");
+
 
         /** CSS class/id instances */
         this.active = "active" // represent when the modal or overlay is active.
@@ -39,11 +42,33 @@ class Schedule {
     }
 
     /**
-     * @function add a Course object to the schedule grid.
+     * @function get the title of the schedule.
      */
-    add() {
+    getScheduleTitle() {
+        this.title.innerHTML = this.headerInput.value;
+    }
+
+    /**
+     * @function display the the forum for adding a course to the schedule.
+     */
+    addButton() {
         this.displayModal()
     }
+
+    /**
+     * @function get the course information.
+     */
+    getCourseInformation() {
+
+    }
+
+    /**
+     * @function add a course to the schedule.
+     */
+    addCourse() {
+
+    }
+
 
     /**
      * @function display the modal.
@@ -73,7 +98,6 @@ class Schedule {
             }
         }
     }
-
 
     /**
      * @function removes all rows from the schedule grid.
@@ -192,9 +216,20 @@ class Time {
 
 /*** JavaScript Functions ***/
 
-const add = () => {
-    schedule.add();
-}
+/**
+ * @function catch the "add" button click.
+ */
+const add = () => schedule.addButton();
+
+/**
+ * @function catch the form submission for adding a course.
+ */
+const addSubmit = () => schedule.getCourseInformation();
+
+/**
+ * @function catch the user's form submission for the schedule title.
+ */
+const getScheduleTitle = () => setTimeout("schedule.getScheduleTitle()", 0);
 
 
 // global instance
