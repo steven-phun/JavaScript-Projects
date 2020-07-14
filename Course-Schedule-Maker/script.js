@@ -24,20 +24,6 @@ class Schedule {
         this.overlay = document.querySelector(".overlay");
         this.title = document.querySelector("#schedule-header>h1");
         this.headerInput = document.querySelector("#header-input");
-        this.courseTitle = document.querySelector("#course-title");
-        this.startHour = document.querySelector("#start-hour");
-        this.startMinute = document.querySelector("#start-minute");
-        this.endHour = document.querySelector("#end-hour");
-        this.endMinute = document.querySelector("#end-minute");
-        this.startAM = document.querySelector("#start-am");
-        this.endAM = document.querySelector("#end-am");
-        this.checkboxMon = document.querySelector("#mon-checkbox");
-        this.checkboxTue = document.querySelector("#tue-checkbox");
-        this.checkboxWed = document.querySelector("#wed-checkbox");
-        this.checkboxThu = document.querySelector("#thu-checkbox");
-        this.checkboxFri = document.querySelector("#fri-checkbox");
-        this.checkboxSat = document.querySelector("#sat-checkbox");
-        this.checkboxSun = document.querySelector("#sun-checkbox");
 
         /** CSS class/id instances */
         this.active = "active" // represent when the modal or overlay is active.
@@ -72,20 +58,20 @@ class Schedule {
      * @function get the course information.
      */
     getCourse() {
-        // console.log(this.courseTitle.value);
-        // console.log(this.startAM.checked);
-        // console.log(this.startHour.value);
-        // console.log(this.startMinute.value);
-        // console.log(this.endAM.checked);
-        // console.log(this.endHour.value);
-        // console.log(this.endMinute.value);
-        // console.log(this.checkboxMon.checked);
-        // console.log(this.checkboxTue.checked);
-        // console.log(this.checkboxWed.checked);
-        // console.log(this.checkboxThu.checked);
-        // console.log(this.checkboxFri.checked);
-        // console.log(this.checkboxSat.checked);
-        // console.log(this.checkboxSun.checked);
+        this.course.push(new Course());
+
+        for (let i = 0; i < this.course.length; i++) {
+            console.log(this.course[i].courseTitle);
+        }
+
+        this.removeAddForum();
+    }
+
+    /**
+     * @function
+     */
+    removeAddForum() {
+        this.removeModal();
     }
 
     /**
@@ -175,8 +161,21 @@ class Schedule {
  */
 class Course {
     constructor() {
-        this.start = null; // {number} represents when the course starts.
-        this.end = null;   // {number} represents when the course ends.
+        /** HTML Tag instances **/
+        this.courseTitle = document.querySelector("#course-title").value;
+        this.startHour = document.querySelector("#start-hour").value;
+        this.startMinute = document.querySelector("#start-minute").value;
+        this.endHour = document.querySelector("#end-hour").value;
+        this.endMinute = document.querySelector("#end-minute").value;
+        this.startAM = document.querySelector("#start-am").checked;
+        this.endAM = document.querySelector("#end-am").checked;
+        this.checkboxMon = document.querySelector("#mon-checkbox").checked;
+        this.checkboxTue = document.querySelector("#tue-checkbox").checked;
+        this.checkboxWed = document.querySelector("#wed-checkbox").checked;
+        this.checkboxThu = document.querySelector("#thu-checkbox").checked;
+        this.checkboxFri = document.querySelector("#fri-checkbox").checked;
+        this.checkboxSat = document.querySelector("#sat-checkbox").checked;
+        this.checkboxSun = document.querySelector("#sun-checkbox").checked;
     }
 }
 
