@@ -33,6 +33,7 @@ class Schedule {
         this.active = "active" // represent when the modal or overlay is active.
 
         /** class instances. */
+        this.item = null;   // {object  represents the current item that the user is working with.
         this.course = [];   // {array}  represents a collection of all the courses in the schedule.
         this.indent = 1;    // {number} represents the number of cells was used to indent the table.
         this.size = 7;      // {number} represents how many days in a week will be displayed.
@@ -56,23 +57,25 @@ class Schedule {
      * @function display the the forum for adding a course to the schedule.
      */
     addButton() {
+        this.item = new Course();
         this.displayModal()
-        this.course.push(new Course());
     }
 
     /**
      * @function get the course information.
      */
     getCourse() {
+        this.course.push(this.item.update());
+
         this.addCourse();
         this.removeModal();
     }
 
     /**
-     * @function add a course to the schedule.
+     * @function display the most recent added course on the schedule.
      */
     addCourse() {
-        const course = this.course[this.course.length - 1];
+        const course = this.item;
         let rowStart = course.startHour - this.earliest + this.indent;
         let rowEnd = course.endHour - this.earliest + this.indent;
 
@@ -199,9 +202,32 @@ class Schedule {
  */
 class Course {
     constructor() {
-        this.reset();
-
         /** HTML Tag instances **/
+        this.courseTitle = document.querySelector("#course-title").value = "";
+        this.startHour = document.querySelector("#start-hour").value = "";
+        this.startMinute = document.querySelector("#start-minute").value = "";
+        this.endHour = document.querySelector("#end-hour").value = "";
+        this.endMinute = document.querySelector("#end-minute").value = "";
+        this.startAM = document.querySelector("#start-am").checked = true;
+        this.endAM = document.querySelector("#end-am").checked = true;
+        this.startPM = document.querySelector("#start-pm").checked = false;
+        this.endPM = document.querySelector("#end-pm").checked = false;
+        this.checkbox1 = document.querySelector("#mon-checkbox").checked = false;
+        this.checkbox2 = document.querySelector("#tue-checkbox").checked = false;
+        this.checkbox3 = document.querySelector("#wed-checkbox").checked = false;
+        this.checkbox4 = document.querySelector("#thu-checkbox").checked = false;
+        this.checkbox5 = document.querySelector("#fri-checkbox").checked = false;
+        this.checkbox6 = document.querySelector("#sat-checkbox").checked = false;
+        this.checkbox7 = document.querySelector("#sun-checkbox").checked = false;
+
+        this.checkbox = ["", this.checkbox1, this.checkbox2, this.checkbox3, this.checkbox4,
+                             this.checkbox5, this.checkbox6, this.checkbox7];
+    }
+
+    /**
+     * @function update all fields to the current values.
+     */
+    update() {
         this.courseTitle = document.querySelector("#course-title").value;
         this.startHour = parseInt(document.querySelector("#start-hour").value);
         this.startMinute = parseInt(document.querySelector("#start-minute").value);
@@ -220,30 +246,7 @@ class Course {
         this.checkbox7 = document.querySelector("#sun-checkbox").checked;
 
         this.checkbox = ["", this.checkbox1, this.checkbox2, this.checkbox3, this.checkbox4,
-                             this.checkbox5, this.checkbox6, this.checkbox7];
-    }
-
-    /**
-     * @function reset all fields to empty.
-     */
-    reset() {
-        document.querySelector("#course-title").value = "";
-        document.querySelector("#start-hour").value = "";
-        document.querySelector("#start-minute").value = "";
-        document.querySelector("#end-hour").value = "";
-        document.querySelector("#end-minute").value = "";
-        document.querySelector("#start-pm").checked = "";
-        document.querySelector("#end-pm").checked = "";
-        document.querySelector("#mon-checkbox").checked = "";
-        document.querySelector("#tue-checkbox").checked = "";
-        document.querySelector("#wed-checkbox").checked = "";
-        document.querySelector("#thu-checkbox").checked = "";
-        document.querySelector("#fri-checkbox").checked = "";
-        document.querySelector("#sat-checkbox").checked = "";
-        document.querySelector("#sun-checkbox").checked = "";
-
-        this.startAM = true;
-        this.endAM = true;
+            this.checkbox5, this.checkbox6, this.checkbox7];
     }
 }
 
