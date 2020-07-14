@@ -11,7 +11,9 @@
 /*jshint esversion: 6 */
 
 // TODO:
-// add more colors and remove yellow for course color code.
+// add more colors and remove yellow for course color code (brown).
+// change "Add Course" color on the add form to make it stand out more.
+// add onclick for all option buttons.
 
 /*** JavaScript Classes ***/
 
