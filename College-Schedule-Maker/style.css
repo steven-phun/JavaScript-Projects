@@ -41,9 +41,15 @@ button:hover {
     cursor: pointer;
 }
 
-input, form {
+input {
     text-align: center;
     outline-color: #F7DC6F;
+    border: 1px solid;
+    border-radius: 3px;
+}
+
+form {
+    text-align: center;
 }
 
 ::placeholder {
