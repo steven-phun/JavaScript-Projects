@@ -2,6 +2,7 @@
 - [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
 - [Course Schedule Maker](https://steven-phun.github.io/Steven-Phun/Course-Schedule-Maker)
 - [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper)
+- [Quarantine Bingo]
 
 ## [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
 
@@ -19,6 +20,19 @@ Project Difficulties
 
 - Implementing a recursive backtracking algorithm.
 
+## [Course Schedule Maker](https://steven-phun.github.io/Steven-Phun/Course-Schedule-Maker) *not yet completed*
+
+Project Summary
+
+- Generate a printable weekly schedule for school or college. 
+
+Project Inspiration 
+
+- Something practical that I often use.
+
+Project Difficulties
+
+- [tbd]
 
 ## [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper)
 
@@ -36,17 +50,16 @@ Project Difficulties
 
 - Implementing a flood fill algorithm.
 
-
-## [Course Schedule Maker](https://steven-phun.github.io/Steven-Phun/Course-Schedule-Maker) *not yet completed*
+## [Quarantine Bingo] *not yet completed*
 
 Project Summary
 
-- Generate a printable weekly schedule for school or college. 
+- Play bingo with friends without ever needing to be in the same room. Theme: Quarantine. 
 
 Project Inspiration 
 
-- Something practical that I often use.
+- A game I can play with friends during the 2020 stay at home order. 
 
 Project Difficulties
 
-- [tbd]
+- [tbd].
