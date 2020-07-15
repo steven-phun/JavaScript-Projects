@@ -75,18 +75,18 @@ class Schedule {
      * @function display the most recent added course on the schedule.
      */
     addCourse() {
-        const course = this.item;
-        let rowStart = course.startHour - this.earliest + this.indent;
-        let rowEnd = course.endHour - this.earliest + this.indent;
+        let rowStart = this.item.startHour - this.earliest + this.indent;
+        let rowEnd = this.item.endHour - this.earliest + this.indent;
 
-        if (course.startPM && course.startHour !== 12) rowStart += 12;
-        if (course.endPM && course.endHour !== 12) rowEnd += 12;
-
+        if (this.item.startPM && this.item.startHour !== 12) rowStart += 12;
+        if (this.item.endPM && this.item.endHour !== 12) rowEnd += 12;
 
         for (let row = rowStart; row <= rowEnd; row++) {
             for (let i = 1; i <= this.size; i++) {
-                if (course.checkbox[i]) {
-                    this.table.rows[rowStart].cells[i].innerHTML = course.courseTitle;
+                if (this.item.checkbox[i]) {
+                    // display course information.
+                    this.table.rows[rowStart].cells[i].innerHTML = this.item.display();
+                    // display course span over its time slots.
                     this.table.rows[row].cells[i].style.backgroundColor = this.color[0];
                 }
             }
@@ -220,8 +220,7 @@ class Course {
         this.checkbox6 = document.querySelector("#sat-checkbox").checked = false;
         this.checkbox7 = document.querySelector("#sun-checkbox").checked = false;
 
-        this.checkbox = ["", this.checkbox1, this.checkbox2, this.checkbox3, this.checkbox4,
-                             this.checkbox5, this.checkbox6, this.checkbox7];
+        this.checkbox = []; // {array} represents a collection of the days of the week checkbox.
     }
 
     /**
@@ -247,6 +246,31 @@ class Course {
 
         this.checkbox = ["", this.checkbox1, this.checkbox2, this.checkbox3, this.checkbox4,
             this.checkbox5, this.checkbox6, this.checkbox7];
+
+    }
+
+    /**
+     * @function convert start to end time to string.
+     *
+     * @return {string} HH:MM am/pm - HH:MM am/pm format.
+     */
+    timeToString() {
+        let startMeridiem = "AM";
+        let endMeridiem = "AM";
+
+        if (this.startPM) startMeridiem = "PM";
+        if (this.endPM) endMeridiem = "PM";
+
+        return `${this.startHour}:${this.startMinute} ${startMeridiem} - ${this.endHour}:${this.endMinute} ${endMeridiem}`;
+    }
+
+    /**
+     * @function display course title with time.
+     *
+     * @return {string} course title + (new line) + start time - end time.
+     */
+    display() {
+        return `${this.courseTitle}<pre><code>${this.timeToString()}</code></pre>`;
     }
 }
 
