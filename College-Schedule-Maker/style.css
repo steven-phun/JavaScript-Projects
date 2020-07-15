@@ -108,8 +108,13 @@ h1 {
 
 #schedule td {
     min-width: 85px;
+    max-width: 85px;
     padding: 10px;
     border: solid 1px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #schedule td:first-child, #mon-sun td {

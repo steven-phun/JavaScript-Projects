@@ -62,9 +62,9 @@ class Schedule {
     }
 
     /**
-     * @function get the course information.
+     * @function get all information on current course after user's submits the form.
      */
-    getCourse() {
+    submitCourse() {
         this.course.push(this.item.update());
 
         this.addCourse();
@@ -72,7 +72,7 @@ class Schedule {
     }
 
     /**
-     * @function display the most recent added course on the schedule.
+     * @function display the most recent course on the schedule.
      */
     addCourse() {
         let rowStart = this.item.startHour - this.earliest + this.indent;
@@ -94,7 +94,6 @@ class Schedule {
 
         this.color.splice(0, 1);
     }
-
 
     /**
      * @function removes selected course from the schedule.
@@ -250,33 +249,27 @@ class Course {
     }
 
     /**
-     * @function convert start to end time to string.
+     * @function display course information (name and time slot).
      *
-     * @return {string} HH:MM am/pm - HH:MM am/pm format.
+     * @return {string} course title + (new line) + start time - (new line) end time.
      */
-    timeToString() {
+    display() {
         let startMeridiem = "AM";
         let endMeridiem = "AM";
 
         if (this.startPM) startMeridiem = "PM";
         if (this.endPM) endMeridiem = "PM";
 
-        return `${this.startHour}:${this.startMinute} ${startMeridiem} - ${this.endHour}:${this.endMinute} ${endMeridiem}`;
-    }
+        const startTime = `${this.startHour}:${this.startMinute}${startMeridiem}`;
+        const endtime = `${this.endHour}:${this.endMinute}${endMeridiem}`;
+        const time = `${startTime}-<pre>${endtime}</pre>`
 
-    /**
-     * @function display course title with time.
-     *
-     * @return {string} course title + (new line) + start time - end time.
-     */
-    display() {
-        return `${this.courseTitle}<pre><code>${this.timeToString()}</code></pre>`;
+        return `${this.courseTitle}<pre>${" "}</pre><pre>${time}</pre>`;
     }
 }
 
-
 /**
- * @class represents time in hours:minute format.
+ * @class converts number to string in time format hours:minute.
  *
  * @param hour   {number} represent the amount of hours.
  * @param minute {number} represents the amount of minutes.
@@ -350,7 +343,7 @@ const add = () => schedule.addButton();
 /**
  * @function catch the form submission for adding a course.
  */
-const addSubmit = () => setTimeout("schedule.getCourse()", 0);
+const addSubmit = () => setTimeout("schedule.submitCourse()", 0);
 
 /**
  * @function catch the user's form submission for the schedule title.
