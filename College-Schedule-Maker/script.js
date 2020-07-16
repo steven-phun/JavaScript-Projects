@@ -41,7 +41,9 @@ class Schedule {
         this.latest = 24;   // {number} represents the latest time the schedule will display.
 
         this.days = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-        this.color = ["#AED6F1", "#A3E4D7", "#E6B0AA", "#D7BDE2", "#F5CBA7", "#D6DBDF", "#F9E79F", "#FAD7A0"];
+        this.color = ["#AED6F1", "#A3E4D7", "#E6B0AA", "#D7BDE2",
+                      "#F5CBA7", "#F8BBD0", "#B3E5FC", "#C5CAE9",
+                      "#BCAAA4", "#D6DBDF"];
 
         this.setup();
     }
