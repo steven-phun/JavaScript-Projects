@@ -20,7 +20,7 @@ Project Difficulties
 
 - Implementing a recursive backtracking algorithm.
 
-## [College Schedule Maker](https://steven-phun.github.io/Steven-Phun/College-Schedule-Maker) *not yet completed*
+## [College Schedule Maker](https://steven-phun.github.io/Steven-Phun/College-Schedule-Maker) *not completed*
 
 Project Summary
 
@@ -50,7 +50,7 @@ Project Difficulties
 
 - Implementing a flood fill algorithm.
 
-## [Quarantine Bingo] *not yet completed*
+## [Quarantine Bingo] *not completed*
 
 Project Summary
 
