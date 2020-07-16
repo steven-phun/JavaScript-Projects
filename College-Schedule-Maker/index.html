@@ -27,7 +27,7 @@
         <button><i class="fas fa-file-download"></i> Export </button>
         <button><i class="fas fa-print"></i> Print </button>
         <button><i class="far fa-save"></i> Save </button>
-        <button><i class="fas fa-trash"></i> Delete </button>
+        <button onclick="remove();"><i class="fas fa-trash"></i> Delete </button>
         <button onclick="edit();"><i class="fas fa-pencil-alt"></i> Edit </button>
         <button onclick="add();"><i class="fas fa-plus"></i> Add </button>
     </section>
@@ -46,12 +46,14 @@
     <!-- modal -->
     <section id="modal-forms">
         <div id="add-modal" class="modal" >
-            <form onsubmit="addSubmit(); return false;">
+            <form class="global-form">
                 <div class="exit">
-                    <label> Add Course </label>
-                    <i onclick="close('#add-modal');" class="fas fa-times"></i>
+                    <label> Add a Course </label>
+                    <button onclick="close('#add-modal')" class="fas fa-times"></button>
                 </div>
+            </form>
 
+            <form id="add-form" onsubmit="addSubmit(); return false;">
                 <label><input id="course-title" placeholder="Course Title" required></label>
 
                 <div id="meeting-time">
@@ -103,24 +105,30 @@
         </div>
 
         <div id="edit-modal" class="modal" >
-            <form onsubmit="editSubmit(); return false;">
+            <form class="global-form">
                 <div class="exit">
-                    <label> Add Course </label>
-                    <i onclick="close('#edit-modal');" class="fas fa-times"></i>
+                    <label> Edit a Course </label>
+                    <button onclick="close('#edit-modal')" class="fas fa-times"></button>
                 </div>
+            </form>
 
-                <label><input type="submit" class="submit-button" value="Add Course"></label>
+            <form onsubmit="editSubmit(); return false;">
+
+                <label><input type="submit" class="submit-button" value="Edit Course"></label>
             </form>
         </div>
 
         <div id="delete-modal" class="modal" >
-            <form onsubmit="editSubmit(); return false;">
+            <form class="global-form">
                 <div class="exit">
-                    <label> Add Course </label>
-                    <i onclick="close('#delete-modal');" class="fas fa-times"></i>
+                    <label> Delete a Course </label>
+                    <button onclick="close('#delete-modal')" class="fas fa-times"></button>
                 </div>
+            </form>
 
-                <label><input type="submit" class="submit-button" value="Add Course"></label>
+            <form onsubmit="deleteSubmit(); return false;">
+
+                <label><input type="submit" class="submit-button" value="Delete Course"></label>
             </form>
         </div>
     </section>

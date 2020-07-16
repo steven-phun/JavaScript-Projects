@@ -30,6 +30,7 @@ class Schedule {
         this.boxRequired = document.querySelector("#checkbox-required");
         this.addModal = document.querySelector("#add-modal");
         this.editModal = document.querySelector("#edit-modal");
+        this.deleteModal = document.querySelector("#delete-modal");
 
         /** CSS class/id instances */
         this.active = "modal";   // represents the pop up form for the user to interact with.
@@ -55,7 +56,7 @@ class Schedule {
      * @function display the form for editing current course that are on the schedule.
      */
     displayEditForm() {
-
+        this.displayModal(this.editModal);
     }
 
     /**
@@ -69,7 +70,7 @@ class Schedule {
      * @function display the form for deleting a course that is on the schedule.
      */
     displayDeleteForm() {
-
+        this.displayModal(this.deleteModal);
     }
 
     /**
@@ -171,10 +172,10 @@ class Schedule {
     /**
      * @function closes current form.
      *
-     * @param form {Element} the form being closed.
+     * @param form {string} the form being closed.
      */
     close(form) {
-        this.removeModal(form);
+        this.removeModal(document.querySelector(form));
     }
 
     /**
@@ -386,7 +387,7 @@ class Time {
 /**
  * @function catches when the user wants to cancel submitting a form.
  *
- * @param form {Element} the form the user wants to close.
+ * @param form {string} the form the user wants to close.
  */
 const close = (form) => schedule.close(form);
 
