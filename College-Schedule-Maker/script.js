@@ -254,31 +254,26 @@ class Course {
      * @return {string} course title + (new line) + start time - (new line) end time.
      */
     display() {
-        let startMeridiem = "AM";
-        let endMeridiem = "AM";
-
-        if (this.startPM) startMeridiem = "PM";
-        if (this.endPM) endMeridiem = "PM";
-
-        const startTime = `${this.startHour}:${this.startMinute}${startMeridiem}`;
-        const endtime = `${this.endHour}:${this.endMinute}${endMeridiem}`;
-        const time = `${startTime}-<pre>${endtime}</pre>`
+        const startTime = new Time(this.startHour, this.startMinute, this.startPM);
+        const endTime = new Time (this.endHour, this.endMinute, this.endPM);
+        const time = `${startTime.timeToString()}-<pre>${endTime.timeToString()}</pre>`
 
         return `${this.courseTitle}<pre>${" "}</pre><pre>${time}</pre>`;
     }
 }
 
 /**
- * @class converts number to string in time format hours:minute.
+ * @class converts numbers that represents time to string in hours:minute AM/PM format.
  *
- * @param hour   {number} represent the amount of hours.
- * @param minute {number} represents the amount of minutes.
+ * @param hour   {number}  represent the amount of hours.
+ * @param minute {number}  represents the amount of minutes.
+ * @param pm     {boolean} true if the hour indicator is PM.
  */
 class Time {
-    constructor(hour, minute=0) {
-        this.hour = hour;      // {number} represent the amount of hours.
-        this.minute = minute;  // {number} represents the amount of minutes.
-        this.pm = false;       // {boolean} true if hours >= 12.
+    constructor(hour, minute=0, pm=false) {
+        this.hour = hour;
+        this.minute = minute;
+        this.pm = pm;
     }
 
     /**
