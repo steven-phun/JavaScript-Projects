@@ -4,7 +4,10 @@
  *  2. top bar
  *  3. schedule
  *  4. options
- *  5. add modal
+ *  5. modal
+ *       5.1 add modal
+ *       5.2 edit modal
+ *       5.3 delete modal
  *
  *    modal/overlay
  */
@@ -122,14 +125,7 @@ h1 {
 }
 
 
-/*** add modal ***/
-#add-modal {
-    display: grid;
-    grid-template-rows: repeat(6, auto);
-    grid-gap: 15px;
-    padding: 20px;
-}
-
+/*** modal global***/
 .exit {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -150,6 +146,26 @@ h1 {
 .exit i:hover {
     color: #F7DC6F;
     cursor: pointer;
+}
+
+.submit-button {
+    width: 90%;
+    padding: 5px;
+    border: 1px solid;
+}
+
+.submit-button:hover {
+    background-color: #F7DC6F;
+    cursor: pointer;
+}
+
+
+/*** add modal ***/
+#add-modal form {
+    display: grid;
+    grid-template-rows: repeat(6, auto);
+    grid-gap: 15px;
+    padding: 20px;
 }
 
 #course-title {
@@ -209,16 +225,10 @@ h1 {
     background-color: #F7DC6F;
 }
 
-.submit-button {
-    width: 90%;
-    padding: 5px;
-    border: 1px solid;
-}
 
-.submit-button:hover {
-    background-color: #F7DC6F;
-    cursor: pointer;
-}
+/*** delete modal ***/
+
+
 
 /*** modal/overlay ***/
 .modal {

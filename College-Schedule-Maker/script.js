@@ -24,22 +24,24 @@ class Schedule {
     constructor() {
         /** HTML tag instances*/
         this.table = document.querySelector("#schedule>table");
-        this.modal = document.querySelector(".modal");
         this.overlay = document.querySelector(".overlay");
         this.title = document.querySelector("#schedule-header>h1");
         this.headerInput = document.querySelector("#header-input");
         this.boxRequired = document.querySelector("#checkbox-required");
+        this.addModal = document.querySelector("#add-modal");
+        this.editModal = document.querySelector("#edit-modal");
 
         /** CSS class/id instances */
-        this.active = "active" // represent when the modal or overlay is active.
+        this.active = "modal";   // represents the pop up form for the user to interact with.
+        this.active = "active";  // represent when a modal or overlay is active.
 
         /** class instances. */
-        this.item = null;   // {object  represents the current item that the user is working with.
+        this.item = null;   // {object} represents the current item that the user is working with.
         this.course = [];   // {array}  represents a collection of all the courses in the schedule.
         this.indent = 1;    // {number} represents the number of cells was used to indent the table.
         this.size = 7;      // {number} represents how many days in a week will be displayed.
-        this.earliest = 7;  // {number} represents earliest time the schedule will display.
-        this.latest = 24;   // {number} represents the latest time the schedule will display.
+        this.earliest = 5;  // {number} represents earliest time the schedule will display.
+        this.latest = 22;   // {number} represents the latest time the schedule will display.
 
         this.days = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
         this.color = ["#AED6F1", "#A3E4D7", "#E6B0AA", "#D7BDE2",
@@ -50,24 +52,65 @@ class Schedule {
     }
 
     /**
-     * @function display user's input for the schedule title.
+     * @function display the form for editing current course that are on the schedule.
      */
-    getScheduleTitle() {
-        this.title.innerHTML = this.headerInput.value;
+    displayEditForm() {
+
     }
 
     /**
-     * @function display the the forum for adding a course to the schedule.
+     * @function get the information on the edited course after user submits the form.
      */
-    addButton() {
+    getEditForm() {
+
+    }
+
+    /**
+     * @function display the form for deleting a course that is on the schedule.
+     */
+    displayDeleteForm() {
+
+    }
+
+    /**
+     * @function get the information on the deleted course after user submits the form.
+     */
+    getDeleteForm() {
+
+    }
+
+    /**
+     * @function removes selected course from the schedule.
+     *
+     * @param index {number} the course index number in array.
+     */
+    removeCourse(index) {
+        const course = this.course[index];
+        let rowStart = course.startHour - this.earliest + this.indent;
+        let rowEnd = course.endHour - this.earliest + this.indent;
+
+        if (course.startPM && course.startHour !== 12) rowStart += 12;
+        if (course.endPM && course.endHour !== 12) rowEnd += 12;
+
+        for (let row = rowStart; row <= rowEnd; row++) {
+            for (let i = 1; i <= this.size; i++) {
+                if (course.checkbox[i]) this.table.rows[row].cells[i].innerHTML = "";
+            }
+        }
+    }
+
+    /**
+     * @function display the form for adding a course to the schedule.
+     */
+    displayAddForm() {
         this.item = new Course();
-        this.displayModal()
+        this.displayModal(this.addModal);
     }
 
     /**
-     * @function get all information on current course after user's submits the form.
+     * @function get the information on the added course after user submits the form.
      */
-    submitCourse() {
+    getAddForm() {
         this.item.update();
 
         if (!this.checkboxRequired()) return;
@@ -75,7 +118,7 @@ class Schedule {
         this.course.push(this.item);
 
         this.addCourse();
-        this.removeModal();
+        this.removeModal(this.addModal);
     }
 
     /**
@@ -119,45 +162,38 @@ class Schedule {
     }
 
     /**
-     * @function removes selected course from the schedule.
-     *
-     * @param index {number} the course index number in array.
+     * @function display user's input for the schedule title.
      */
-    removeCourse(index) {
-        const course = this.course[index];
-        let rowStart = course.startHour - this.earliest + this.indent;
-        let rowEnd = course.endHour - this.earliest + this.indent;
-
-        if (course.startPM && course.startHour !== 12) rowStart += 12;
-        if (course.endPM && course.endHour !== 12) rowEnd += 12;
-
-        for (let row = rowStart; row <= rowEnd; row++) {
-            for (let i = 1; i <= this.size; i++) {
-                if (course.checkbox[i]) this.table.rows[row].cells[i].innerHTML = "";
-            }
-        }
+    getScheduleTitle() {
+        this.title.innerHTML = this.headerInput.value;
     }
 
     /**
      * @function closes current form.
+     *
+     * @param form {Element} the form being closed.
      */
-    cancel() {
-        this.removeModal();
+    close(form) {
+        this.removeModal(form);
     }
 
     /**
      * @function display the modal.
+     *
+     * @param form {Element} the form to be displayed.
      */
-    displayModal() {
-        this.modal.classList.add(this.active);
+    displayModal(form) {
+        form.classList.add(this.active);
         this.overlay.classList.add(this.active);
     }
 
     /**
      * @function removes the modal.
+     *
+     * @param form {Element} the form to be removed.
      */
-    removeModal() {
-        this.modal.classList.remove(this.active);
+    removeModal(form) {
+        form.classList.remove(this.active);
         this.overlay.classList.remove(this.active);
     }
 
@@ -349,19 +385,40 @@ class Time {
 
 /**
  * @function catches when the user wants to cancel submitting a form.
+ *
+ * @param form {Element} the form the user wants to close.
  */
-const exit = () => schedule.cancel();
-
+const close = (form) => schedule.close(form);
 
 /**
- * @function catch the "add" button click.
+ * @function catch the events when user selects the "add" button.
  */
-const add = () => schedule.addButton();
+const add = () => schedule.displayAddForm();
+
+/**
+ * @function catch the events when user selects the "edit" button.
+ */
+const edit = () => schedule.displayEditForm();
+
+/**
+ * @function catch the events when user selects the "delete" button.
+ */
+const remove = () => schedule.displayDeleteForm();
 
 /**
  * @function catch the form submission for adding a course.
  */
-const addSubmit = () => setTimeout("schedule.submitCourse()", 0);
+const addSubmit = () => setTimeout("schedule.getAddForm()", 0);
+
+/**
+ * @function catch the form submission for editing a course.
+ */
+const editSubmit = () => schedule.getEditForm();
+
+/**
+ * @function catch the form submission for deleting a course.
+ */
+const deleteSubmit = () => schedule.getDeleteForm();
 
 /**
  * @function catch the user's form submission for the schedule title.

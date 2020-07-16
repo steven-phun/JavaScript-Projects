@@ -28,7 +28,7 @@
         <button><i class="fas fa-print"></i> Print </button>
         <button><i class="far fa-save"></i> Save </button>
         <button><i class="fas fa-trash"></i> Delete </button>
-        <button><i class="fas fa-pencil-alt"></i> Edit </button>
+        <button onclick="edit();"><i class="fas fa-pencil-alt"></i> Edit </button>
         <button onclick="add();"><i class="fas fa-plus"></i> Add </button>
     </section>
 
@@ -44,61 +44,85 @@
     </section>
 
     <!-- modal -->
-    <section class="modal">
-        <form id="add-modal" onsubmit="addSubmit(); return false;">
-            <div class="exit">
-                <label> Add Course </label>
-                <i onclick="exit();" class="fas fa-times"></i>
-            </div>
-
-            <label><input id="course-title" placeholder="Course Title" required></label>
-
-            <div id="meeting-time">
-                <div><p>Mon</p><label><input id="mon-checkbox" type="checkbox"></label></div>
-                <div><p>Tue</p><label><input id="tue-checkbox" type="checkbox"></label></div>
-                <div><p>Wed</p><label><input id="wed-checkbox" type="checkbox"></label></div>
-                <div><p>Thu</p><label><input id="thu-checkbox" type="checkbox"></label></div>
-                <div><p>Fri</p><label><input id="fri-checkbox" type="checkbox"></label></div>
-                <div><p>Sat</p><label><input id="sat-checkbox" type="checkbox"></label></div>
-                <div><p>Sun</p><label><input id="sun-checkbox" type="checkbox"></label></div>
-            </div>
-
-            <div id="checkbox-required"><p>*At least one day must be selected.</p></div>
-
-            <div id="start-time">
-                <label class="time-text"> Start Time </label>
-                <label>
-                    <input id="start-hour" placeholder="HH" pattern="[2-9]|1[0-2]?" required> :
-                    <input id="start-minute" placeholder="MM" pattern="[0-5][0-9]" required>
-                </label>
-
-                <div class="am-pm">
-                    <input type="radio" id="start-am" name="start-am/pm" checked>
-                    <label for="start-am"> AM </label>
-                    <input type="radio" id="start-pm" name="start-am/pm">
-                    <label for="start-pm"> PM </label>
+    <section id="modal-forms">
+        <div id="add-modal" class="modal" >
+            <form onsubmit="addSubmit(); return false;">
+                <div class="exit">
+                    <label> Add Course </label>
+                    <i onclick="close('#add-modal');" class="fas fa-times"></i>
                 </div>
 
-            </div>
+                <label><input id="course-title" placeholder="Course Title" required></label>
 
-            <div id="end-time">
-                <label class="time-text"> End Time </label>
-                <label>
-                    <input id="end-hour" placeholder="HH" pattern="[2-9]|1[0-2]?" required> :
-                    <input id="end-minute" placeholder="MM" pattern="[0-5][0-9]" required>
-                </label>
-
-                <div class="am-pm">
-                    <input type="radio" id="end-am" name="end-am/pm" checked>
-                    <label for="end-am"> AM </label>
-                    <input type="radio" id="end-pm" name="end-am/pm">
-                    <label for="end-pm"> PM </label>
+                <div id="meeting-time">
+                    <div><p>Mon</p><label><input id="mon-checkbox" type="checkbox"></label></div>
+                    <div><p>Tue</p><label><input id="tue-checkbox" type="checkbox"></label></div>
+                    <div><p>Wed</p><label><input id="wed-checkbox" type="checkbox"></label></div>
+                    <div><p>Thu</p><label><input id="thu-checkbox" type="checkbox"></label></div>
+                    <div><p>Fri</p><label><input id="fri-checkbox" type="checkbox"></label></div>
+                    <div><p>Sat</p><label><input id="sat-checkbox" type="checkbox"></label></div>
+                    <div><p>Sun</p><label><input id="sun-checkbox" type="checkbox"></label></div>
                 </div>
 
-            </div>
+                <div id="checkbox-required"><p>*At least one day must be selected.</p></div>
 
-            <label><input type="submit" class="submit-button" value="Add Course"></label>
-        </form>
+                <div id="start-time">
+                    <label class="time-text"> Start Time </label>
+                    <label>
+                        <input id="start-hour" placeholder="HH" pattern="[2-9]|1[0-2]?" required> :
+                        <input id="start-minute" placeholder="MM" pattern="[0-5][0-9]" required>
+                    </label>
+
+                    <div class="am-pm">
+                        <input type="radio" id="start-am" name="start-am/pm" checked>
+                        <label for="start-am"> AM </label>
+                        <input type="radio" id="start-pm" name="start-am/pm">
+                        <label for="start-pm"> PM </label>
+                    </div>
+
+                </div>
+
+                <div id="end-time">
+                    <label class="time-text"> End Time </label>
+                    <label>
+                        <input id="end-hour" placeholder="HH" pattern="[2-9]|1[0-2]?" required> :
+                        <input id="end-minute" placeholder="MM" pattern="[0-5][0-9]" required>
+                    </label>
+
+                    <div class="am-pm">
+                        <input type="radio" id="end-am" name="end-am/pm" checked>
+                        <label for="end-am"> AM </label>
+                        <input type="radio" id="end-pm" name="end-am/pm">
+                        <label for="end-pm"> PM </label>
+                    </div>
+
+                </div>
+
+                <label><input type="submit" class="submit-button" value="Add Course"></label>
+            </form>
+        </div>
+
+        <div id="edit-modal" class="modal" >
+            <form onsubmit="editSubmit(); return false;">
+                <div class="exit">
+                    <label> Add Course </label>
+                    <i onclick="close('#edit-modal');" class="fas fa-times"></i>
+                </div>
+
+                <label><input type="submit" class="submit-button" value="Add Course"></label>
+            </form>
+        </div>
+
+        <div id="delete-modal" class="modal" >
+            <form onsubmit="editSubmit(); return false;">
+                <div class="exit">
+                    <label> Add Course </label>
+                    <i onclick="close('#delete-modal');" class="fas fa-times"></i>
+                </div>
+
+                <label><input type="submit" class="submit-button" value="Add Course"></label>
+            </form>
+        </div>
     </section>
 
     <section class="overlay"></section>
