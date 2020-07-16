@@ -11,7 +11,7 @@
 /*jshint esversion: 6 */
 
 // TODO:
-// add more colors and remove yellow for course color code (brown).
+// add more colors and remove last color grey.
 // change "Add Course" color on the add form to make it stand out more.
 // add onclick for all option buttons.
 
@@ -28,6 +28,7 @@ class Schedule {
         this.overlay = document.querySelector(".overlay");
         this.title = document.querySelector("#schedule-header>h1");
         this.headerInput = document.querySelector("#header-input");
+        this.boxRequired = document.querySelector("#checkbox-required");
 
         /** CSS class/id instances */
         this.active = "active" // represent when the modal or overlay is active.
@@ -67,10 +68,30 @@ class Schedule {
      * @function get all information on current course after user's submits the form.
      */
     submitCourse() {
-        this.course.push(this.item.update());
+        this.item.update();
+
+        if (!this.checkboxRequired()) return;
+
+        this.course.push(this.item);
 
         this.addCourse();
         this.removeModal();
+    }
+
+    /**
+     * @function checks if user has selected at least one day of the week.
+     *
+     * @return {boolean} true if at least one day of the week is selected.
+     */
+    checkboxRequired() {
+        for (let i = 0; i < this.size; i++) {
+            this.boxRequired.classList.remove(this.active);
+            if (this.item.checkbox[i]) return true;
+
+        }
+        this.boxRequired.classList.add(this.active);
+
+        return false;
     }
 
     /**
