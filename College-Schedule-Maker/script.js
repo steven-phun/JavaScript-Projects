@@ -31,6 +31,7 @@ class Schedule {
         this.addModal = document.querySelector("#add-modal");
         this.editModal = document.querySelector("#edit-modal");
         this.deleteModal = document.querySelector("#delete-modal");
+        this.displayCourse = document.querySelector(".display-course");
 
         /** CSS class/id instances */
         this.active = "modal";   // represents the pop up form for the user to interact with.
@@ -57,6 +58,13 @@ class Schedule {
      */
     displayEditForm() {
         this.displayModal(this.editModal);
+
+    }
+
+    /**
+     * @function display every course that was added to the schedule for the user to edit.
+     */
+    displayAllCourse() {
     }
 
     /**
@@ -172,10 +180,10 @@ class Schedule {
     /**
      * @function closes current form.
      *
-     * @param form {string} the form being closed.
+     * @param form {Element} the form being closed.
      */
     close(form) {
-        this.removeModal(document.querySelector(form));
+        this.removeModal(form);
     }
 
     /**
@@ -387,9 +395,9 @@ class Time {
 /**
  * @function catches when the user wants to cancel submitting a form.
  *
- * @param form {string} the form the user wants to close.
+ * @param childElement {Element} the child node of the form being closed.
  */
-const close = (form) => schedule.close(form);
+const exit = (childElement) => schedule.close(childElement.parentElement);
 
 /**
  * @function catch the events when user selects the "add" button.

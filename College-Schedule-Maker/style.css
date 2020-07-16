@@ -139,27 +139,17 @@ h1 {
     padding-bottom: 0 !important;
 }
 
-.exit {
+.global-form {
     display: grid;
     grid-template-columns: 1fr auto;
     font-size: 16px;
     text-align: end;
 }
 
-.exit label {
+.global-form label {
     text-align: left;
     font-weight: bold;
     color: #90CAF9;
-}
-
-.exit button {
-    font-size: 14px;
-    background-color: ghostwhite;
-}
-
-.exit button:hover {
-    color: #F7DC6F;
-    cursor: pointer;
 }
 
 .submit-button {
@@ -252,7 +242,7 @@ h1 {
     border-radius: 10px;
     background-color: ghostwhite;
     z-index: 1;
-    width: 400px;
+    min-width: 400px;
     max-width: 80%;
 }
 

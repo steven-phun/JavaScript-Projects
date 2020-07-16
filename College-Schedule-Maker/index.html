@@ -46,11 +46,10 @@
     <!-- modal -->
     <section id="modal-forms">
         <div id="add-modal" class="modal" >
-            <form class="global-form">
-                <div class="exit">
-                    <label> Add a Course </label>
-                    <button onclick="close('#add-modal')" class="fas fa-times"></button>
-                </div>
+
+            <form class="global-form" onsubmit="exit(this); return false;">
+                <label> Add a Course </label>
+                <label><input type="submit" class="submit-button" value="X"></label>
             </form>
 
             <form id="add-form" onsubmit="addSubmit(); return false;">
@@ -105,25 +104,24 @@
         </div>
 
         <div id="edit-modal" class="modal" >
-            <form class="global-form">
-                <div class="exit">
-                    <label> Edit a Course </label>
-                    <button onclick="close('#edit-modal')" class="fas fa-times"></button>
-                </div>
+            <form class="global-form" onsubmit="exit(this); return false;">
+                <label> Edit a Course </label>
+                <label><input type="submit" class="submit-button" value="X"></label>
             </form>
 
-            <form onsubmit="editSubmit(); return false;">
+            <div class="display-course">
+                <!-- displaying each course is built in JavaScript -->
+            </div>
 
+            <form onsubmit="editSubmit(); return false;">
                 <label><input type="submit" class="submit-button" value="Edit Course"></label>
             </form>
         </div>
 
         <div id="delete-modal" class="modal" >
-            <form class="global-form">
-                <div class="exit">
-                    <label> Delete a Course </label>
-                    <button onclick="close('#delete-modal')" class="fas fa-times"></button>
-                </div>
+            <form class="global-form" onsubmit="exit(this); return false;">
+                <label> Delete a Course </label>
+                <label><input type="submit" class="submit-button" value="X"></label>
             </form>
 
             <form onsubmit="deleteSubmit(); return false;">
