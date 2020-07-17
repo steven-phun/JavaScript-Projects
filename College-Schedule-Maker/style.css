@@ -78,18 +78,18 @@ h1 {
 /*** top bar ***/
 #top-bar {
     display: grid;
-    grid-template-columns: 4fr 20fr 1fr;
+    grid-template-columns: 1fr 7fr;
 }
 
 #top-bar input {
-    width: 95%;
+    width: 85%;
 }
 
 
 /*** options ***/
 #options {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     grid-gap: 15px;
     padding: 15px;
     align-content: center;
@@ -119,8 +119,11 @@ h1 {
     white-space: nowrap;
 }
 
-#schedule td:first-child, #mon-sun td {
+
+#schedule td:first-child {
     border: none;
+    min-width: 40px;
+    max-width: 70px;
 }
 
 

@@ -41,7 +41,7 @@ class Schedule {
         this.indent = 1;           // {number} represents the number of cells was used to indent the table.
         this.size = 7;             // {number} represents how many days in a week will be displayed.
         this.earliest = 5;         // {number} represents earliest time the schedule will display.
-        this.latest = 22;          // {number} represents the latest time the schedule will display.
+        this.latest = 20;          // {number} represents the latest time the schedule will display.
 
         this.days = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
         this.color = ["#AED6F1", "#A3E4D7", "#E6B0AA", "#D7BDE2",
@@ -490,6 +490,16 @@ const edit = () => schedule.displayEditForm();
  * @function catch the events when user selects the "delete" button.
  */
 const remove = () => schedule.displayDeleteForm();
+
+/**
+ * @function saves the schedule to desktop when user selects the "save" button.
+ */
+const save = () => console.log("pass");
+
+/**
+ * @function prints the schedule when the user selects the "print" button.
+ */
+const print = () => window.print();
 
 /**
  * @function catch the form submission for adding a course.

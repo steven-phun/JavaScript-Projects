@@ -17,8 +17,6 @@
         <form onkeydown="getScheduleTitle();" onsubmit="return false;">
             <label><input id="header-input" placeholder="Schedule Title"></label>
         </form>
-
-        <button><i class="fas fa-cog"></i></button>
     </section>
 
     <section id="options">
@@ -26,9 +24,10 @@
         <!-- // implement these function in future updates.
         <button><i class="fas fa-file-upload"></i> Import </button>
         <button><i class="fas fa-file-download"></i> Export </button>
-        <button><i class="fas fa-print"></i> Print </button>
+
         -->
-        <button><i class="far fa-save"></i> Save </button>
+        <button onclick="print();"><i class="fas fa-print"></i> Print </button>
+        <button onclick="save();"><i class="far fa-save"></i> Save </button>
         <button onclick="remove();"><i class="fas fa-trash"></i> Delete </button>
         <button onclick="edit();"><i class="fas fa-pencil-alt"></i> Edit </button>
         <button onclick="add();"><i class="fas fa-plus"></i> Add </button>
