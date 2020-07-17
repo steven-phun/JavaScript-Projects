@@ -39,13 +39,13 @@ class Schedule {
         this.active = "active";  // represent when a modal or overlay is active.
 
         /** class instances. */
-        this.course = [];   // {array}  represents a collection of all the courses in the schedule.
-        this.temp = null;   // {object} represents a course that has not been finalized.
-        this.index = null;  // {number} represents index of a course relative in the array.
-        this.indent = 1;    // {number} represents the number of cells was used to indent the table.
-        this.size = 7;      // {number} represents how many days in a week will be displayed.
-        this.earliest = 5;  // {number} represents earliest time the schedule will display.
-        this.latest = 22;   // {number} represents the latest time the schedule will display.
+        this.course = [];          // {array}  represents a collection of all the courses in the schedule.
+        this.temp = new Course();  // {object} represents a course that has not been finalized.
+        this.index = null;         // {number} represents index of a course relative in the array.
+        this.indent = 1;           // {number} represents the number of cells was used to indent the table.
+        this.size = 7;             // {number} represents how many days in a week will be displayed.
+        this.earliest = 5;         // {number} represents earliest time the schedule will display.
+        this.latest = 22;          // {number} represents the latest time the schedule will display.
 
         this.days = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
         this.color = ["#AED6F1", "#A3E4D7", "#E6B0AA", "#D7BDE2",
@@ -59,6 +59,8 @@ class Schedule {
      * @function display the form for editing current course that are on the schedule.
      */
     displayEditForm() {
+        this.index = null;
+
         this.displayModal(this.editModal, this.editModal);
         this.displayAllCourse(this.editCourse);
     }
@@ -69,12 +71,22 @@ class Schedule {
     submitEditForm() {
         if (this.index === null) return;
 
-        this.course[this.index].updateValues(this.course[this.index]); // update the form with selected course data
-        this.index = null; // reset index to default value.
-
+        this.copyCourse(this.course[this.index]);
         this.removeModal(this.editModal);
         this.displayModal(this.addModal, this.editModal);
     }
+
+    /**
+     * @function generate a new course with data from a given course.
+     *
+     * @param course {object} the course data that is being copied.
+     */
+    copyCourse(course) {
+        this.temp = new Course(course.courseTitle, course.startHour, course.startMinute, course.endHour, course.endMinute,
+            course.startAM, course.endAM, course.startPM, course.endPM, course.checkbox1, course.checkbox2,
+            course.checkbox3, course.checkbox4, course.checkbox5, course.checkbox6, course.checkbox7);
+    }
+
 
     /**
      * @function display every course that was added to the schedule for the user to edit.
@@ -105,37 +117,53 @@ class Schedule {
      * @function display the form for deleting a course that is on the schedule.
      */
     displayDeleteForm() {
+        this.index = null;
+
         this.displayModal(this.deleteModal);
         this.displayAllCourse(this.deleteCourse);
     }
 
     /**
-     * @function delete a course from the schedule.
+     * @function delete current selected course from the schedule.
      */
     submitDeleteForm() {
         if (this.index === null) return;
 
-        this.course.splice(this.index, 1);
-        this.index = null; // reset index.
+        this.removeCourse();
         this.updateDisplay();
         this.removeModal(this.deleteModal);
+    }
+
+    /**
+     * @function delete current selected course from the schedule
+     */
+    removeCourse() {
+        if (this.index === null) return;
+
+        this.course.splice(this.index, 1);
+        this.index = null;
     }
 
     /**
      * @function display the form for adding a course to the schedule.
      */
     displayAddForm() {
+        this.index = null;
+
         this.temp = new Course();
         this.displayModal(this.addModal, this.addModal);
     }
 
     /**
-     * @function get the information on the added course after user submits the form.
+     * @function adds a course to the schedule.
      */
-    submitAddForm() {
+    addCourse() {
+        this.removeCourse(); // remove previous course when user edits a schedule.
+
         this.temp.getValues();
 
         if (!this.checkboxRequired()) return;
+
 
         this.course.push(this.temp);
 
@@ -203,6 +231,7 @@ class Schedule {
      * @param form {Element} the form being closed.
      */
     close(form) {
+        this.index = null;
         this.removeModal(form);
     }
 
@@ -477,7 +506,7 @@ const remove = () => schedule.displayDeleteForm();
 /**
  * @function catch the form submission for adding a course.
  */
-const addSubmit = () => setTimeout("schedule.submitAddForm()", 0);
+const addSubmit = () => setTimeout("schedule.addCourse()", 0);
 
 /**
  * @function catch the form submission for editing a course.
