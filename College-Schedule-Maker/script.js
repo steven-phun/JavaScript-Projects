@@ -52,23 +52,14 @@ class Schedule {
                       "#F5CBA7", "#F8BBD0", "#B3E5FC", "#C5CAE9",
                       "#BCAAA4", "#D6DBDF"];
 
-        this.setup();
-    }
-
-    /**
-     * @function removes all child element of given element.
-     *
-     * @param element {Element} the element's child to be removed.
-     */
-    clearDiv(element) {
-        while (element.hasChildNodes()) element.removeChild(element.firstChild);
+        this.getEmptyGrid();
     }
 
     /**
      * @function display the form for editing current course that are on the schedule.
      */
     displayEditForm() {
-        this.displayForm(this.editModal);
+        this.displayModal(this.editModal);
         this.displayAllCourse(this.editCourse);
     }
 
@@ -101,7 +92,7 @@ class Schedule {
      * @function display the form for deleting a course that is on the schedule.
      */
     displayDeleteForm() {
-        this.displayForm(this.deleteModal);
+        this.displayModal(this.deleteModal);
         this.displayAllCourse(this.deleteCourse);
     }
 
@@ -110,27 +101,8 @@ class Schedule {
      */
     submitDeleteForm() {
         this.course.splice(this.index, 1);
+        this.updateDisplay();
         this.removeModal(this.deleteModal);
-    }
-
-    /**
-     * @function removes selected course from the schedule.
-     *
-     * @param index {number} the course index number in array.
-     */
-    removeCourse(index) {
-        const course = this.course[index];
-        let rowStart = course.startHour - this.earliest + this.indent;
-        let rowEnd = course.endHour - this.earliest + this.indent;
-
-        if (course.startPM && course.startHour !== 12) rowStart += 12;
-        if (course.endPM && course.endHour !== 12) rowEnd += 12;
-
-        for (let row = rowStart; row <= rowEnd; row++) {
-            for (let i = 1; i <= this.size; i++) {
-                if (course.checkbox[i]) this.table.rows[row].cells[i].innerHTML = "";
-            }
-        }
     }
 
     /**
@@ -138,7 +110,7 @@ class Schedule {
      */
     displayAddForm() {
         this.item = new Course();
-        this.displayForm(this.addModal);
+        this.displayModal(this.addModal);
     }
 
     /**
@@ -151,7 +123,7 @@ class Schedule {
 
         this.course.push(this.item);
 
-        this.addCourse();
+        this.updateDisplay();
         this.removeModal(this.addModal);
     }
 
@@ -161,7 +133,7 @@ class Schedule {
      * @return {boolean} true if at least one day of the week is selected.
      */
     checkboxRequired() {
-        for (let i = 0; i < this.size; i++) {
+        for (let i = 0; i <= this.size; i++) {
             this.boxRequired.classList.remove(this.active);
             if (this.item.checkbox[i]) return true;
 
@@ -172,27 +144,34 @@ class Schedule {
     }
 
     /**
-     * @function display the most recent course on the schedule.
+     * @function display each course on the schedule.
      */
-    addCourse() {
-        let rowStart = this.item.startHour - this.earliest + this.indent;
-        let rowEnd = this.item.endHour - this.earliest + this.indent;
+    updateDisplay() {
+        this.getEmptyGrid(); // remove previous grid.
 
-        if (this.item.startPM && this.item.startHour !== 12) rowStart += 12;
-        if (this.item.endPM && this.item.endHour !== 12) rowEnd += 12;
+        let counter = 0; // keeps track of color to use for the course.
 
-        for (let row = rowStart; row <= rowEnd; row++) {
-            for (let i = 1; i <= this.size; i++) {
-                if (this.item.checkbox[i]) {
-                    // display course information.
-                    this.table.rows[rowStart].cells[i].innerHTML = this.item.display();
-                    // display course span over its time slots.
-                    this.table.rows[row].cells[i].style.backgroundColor = this.color[0];
+        for (let i = 0; i < this.course.length; i++) {
+            const course = this.course[i];
+            console.log(course);
+            let rowStart = course.startHour - this.earliest + this.indent;
+            let rowEnd = course.endHour - this.earliest + this.indent;
+
+            if (course.startPM && course.startHour !== 12) rowStart += 12;
+            if (course.endPM && course.endHour !== 12) rowEnd += 12;
+
+            for (let row = rowStart; row <= rowEnd; row++) {
+                for (let j = 1; j <= this.size; j++) {
+                    if (course.checkbox[j]) {
+                        // display course information.
+                        this.table.rows[rowStart].cells[j].innerHTML = course.display();
+                        // display course span over its time slots.
+                        this.table.rows[row].cells[j].style.backgroundColor = this.color[counter];
+                    }
                 }
             }
+            counter++;
         }
-
-        this.color.splice(0, 1);
     }
 
     /**
@@ -216,7 +195,7 @@ class Schedule {
      *
      * @param form {Element} the form to be displayed.
      */
-    displayForm(form) {
+    displayModal(form) {
         form.classList.add(this.active);
         this.overlay.classList.add(this.active);
     }
@@ -245,10 +224,12 @@ class Schedule {
     }
 
     /**
-     * @function removes all rows from the schedule grid.
+     * @function removes all child element of given element.
+     *
+     * @param element {Element} the element's child to be removed.
      */
-    clearGrid() {
-        while (this.table.hasChildNodes()) this.table.removeChild(this.table.firstChild);
+    clearDiv(element) {
+        while (element.hasChildNodes()) element.removeChild(element.firstChild);
     }
 
     /**
@@ -281,8 +262,8 @@ class Schedule {
     /**
      * @function set up the schedule grid to display to the user.
      */
-    setup() {
-        this.clearGrid();
+    getEmptyGrid() {
+        this.clearDiv(this.table);
         this.setDays()
         this.setTimeSlots()
     }
