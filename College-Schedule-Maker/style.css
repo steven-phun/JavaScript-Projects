@@ -114,7 +114,6 @@ h1 {
     max-width: 100px;
     padding: 10px;
     border: solid 1px;
-
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

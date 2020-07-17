@@ -31,8 +31,8 @@ class Schedule {
         this.deleteCourse = document.querySelector("#delete-course");
 
         /** CSS class/id instances */
-        this.active = "modal";   // represents the pop up form for the user to interact with.
-        this.active = "active";  // represent when a modal or overlay is active.
+        this.active = "modal";      // represents the pop up form for the user to interact with.
+        this.active = "active";     // represents when a modal or overlay is active.
 
         /** class instances. */
         this.course = [];          // {array}  represents a collection of all the courses in the schedule.
@@ -47,6 +47,7 @@ class Schedule {
         this.color = ["#AED6F1", "#A3E4D7", "#E6B0AA", "#D7BDE2",
                       "#F5CBA7", "#F8BBD0", "#B3E5FC", "#C5CAE9",
                       "#BCAAA4", "#D6DBDF"];
+
 
         this.getEmptyGrid();
     }
@@ -167,6 +168,8 @@ class Schedule {
         this.removeModal(this.addModal);
     }
 
+
+
     /**
      * @function checks if user has selected at least one day of the week.
      *
@@ -188,8 +191,7 @@ class Schedule {
      */
     updateDisplay() {
         this.getEmptyGrid(); // remove previous grid.
-
-        let counter = 0; // keeps track of color to use for the course.
+        let counter = 0;
 
         for (let i = 0; i < this.course.length; i++) {
             const course = this.course[i];
