@@ -39,8 +39,8 @@ class Schedule {
         this.active = "active";  // represent when a modal or overlay is active.
 
         /** class instances. */
-        this.item = null;   // {object} represents the current item that the user is working with.
         this.course = [];   // {array}  represents a collection of all the courses in the schedule.
+        this.temp = null;   // {object} represents a course that has not been finalized.
         this.index = null;  // {number} represents index of a course relative in the array.
         this.indent = 1;    // {number} represents the number of cells was used to indent the table.
         this.size = 7;      // {number} represents how many days in a week will be displayed.
@@ -100,7 +100,10 @@ class Schedule {
      * @function delete a course from the schedule.
      */
     submitDeleteForm() {
+        if (this.index === null) return;
+
         this.course.splice(this.index, 1);
+        this.index = null; // reset index.
         this.updateDisplay();
         this.removeModal(this.deleteModal);
     }
@@ -109,7 +112,7 @@ class Schedule {
      * @function display the form for adding a course to the schedule.
      */
     displayAddForm() {
-        this.item = new Course();
+        this.temp = new Course();
         this.displayModal(this.addModal);
     }
 
@@ -117,11 +120,11 @@ class Schedule {
      * @function get the information on the added course after user submits the form.
      */
     submitAddForm() {
-        this.item.update();
+        this.temp.update();
 
         if (!this.checkboxRequired()) return;
 
-        this.course.push(this.item);
+        this.course.push(this.temp);
 
         this.updateDisplay();
         this.removeModal(this.addModal);
@@ -135,7 +138,7 @@ class Schedule {
     checkboxRequired() {
         for (let i = 0; i <= this.size; i++) {
             this.boxRequired.classList.remove(this.active);
-            if (this.item.checkbox[i]) return true;
+            if (this.temp.checkbox[i]) return true;
 
         }
         this.boxRequired.classList.add(this.active);
