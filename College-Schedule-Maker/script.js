@@ -10,10 +10,6 @@
 
 /*jshint esversion: 6 */
 
-// TODO:
-// add more colors and remove last color grey.
-// change "Add Course" color on the add form to make it stand out more.
-// add onclick for all option buttons.
 
 /*** JavaScript Classes ***/
 
@@ -160,7 +156,7 @@ class Schedule {
     addCourse() {
         this.removeCourse(); // remove previous course when user edits a schedule.
 
-        this.temp.getValues();
+        this.temp.updateValues();
 
         if (!this.checkboxRequired()) return;
 
@@ -342,6 +338,7 @@ class Course {
                 startAM=true, endAM=true, startPM=false, endPM=false,
                 checkbox1=false, checkbox2=false, checkbox3=false,
                 checkbox4 = false, checkbox5=false, checkbox6=false, checkbox7=false) {
+
         /** HTML Tag instances **/
         this.courseTitle = document.querySelector("#course-title").value = title;
         this.startHour = document.querySelector("#start-hour").value = startHour;
@@ -366,7 +363,7 @@ class Course {
     /**
      * @function update all instances to the current value from the DOM.
      */
-    getValues() {
+    updateValues() {
         this.courseTitle = document.querySelector("#course-title").value;
         this.startHour = document.querySelector("#start-hour").value;
         this.startMinute = document.querySelector("#start-minute").value;
@@ -390,24 +387,13 @@ class Course {
     }
 
     /**
-     * @function update the form values with the give Object's Value.
-     *
-     * @param object {Object} the object the DOM being update.
-     */
-    updateValues(object) {
-        return new Course(object.courseTitle, object.startHour, object.startMinute, object.endHour, object.endMinute,
-            object.startAM, object.endAM, object.startPM, object.endPM, object.checkbox1, object.checkbox2,
-            object.checkbox3, object.checkbox4, object.checkbox5, object.checkbox6, object.checkbox7);
-    }
-
-    /**
      * @function display course information (name and time slot).
      *
      * @return {string} course title + (new line) + start time - (new line) end time.
      */
     display() {
-        const startTime = new Time(this.startHour, this.startMinute, this.startPM);
-        const endTime = new Time (this.endHour, this.endMinute, this.endPM);
+        const startTime = new Time(parseInt(this.startHour), parseInt(this.startMinute), this.startPM);
+        const endTime = new Time (parseInt(this.endHour), parseInt(this.endMinute), this.endPM);
         const time = `${startTime.timeToString()}-<pre>${endTime.timeToString()}</pre>`
 
         return `${this.courseTitle}<pre>${" "}</pre><pre>${time}</pre>`;
