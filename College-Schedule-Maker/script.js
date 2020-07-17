@@ -406,6 +406,11 @@ class Time {
 const exit = (childElement) => schedule.close(childElement.parentElement);
 
 /**
+ * @function catch the events when user selects the "new" button.
+ */
+const newSchedule = () => location.reload();
+
+/**
  * @function catch the events when user selects the "add" button.
  */
 const add = () => schedule.displayAddForm();
