@@ -59,8 +59,21 @@ class Schedule {
      * @function display the form for editing current course that are on the schedule.
      */
     displayEditForm() {
-        this.displayModal(this.editModal);
+        this.displayModal(this.editModal, this.editModal);
         this.displayAllCourse(this.editCourse);
+    }
+
+    /**
+     * @function edit a course on the schedule.
+     */
+    submitEditForm() {
+        if (this.index === null) return;
+
+        this.course[this.index].updateValues(this.course[this.index]); // update the form with selected course data
+        this.index = null; // reset index to default value.
+
+        this.removeModal(this.editModal);
+        this.displayModal(this.addModal, this.editModal);
     }
 
     /**
@@ -113,14 +126,14 @@ class Schedule {
      */
     displayAddForm() {
         this.temp = new Course();
-        this.displayModal(this.addModal);
+        this.displayModal(this.addModal, this.addModal);
     }
 
     /**
      * @function get the information on the added course after user submits the form.
      */
     submitAddForm() {
-        this.temp.update();
+        this.temp.getValues();
 
         if (!this.checkboxRequired()) return;
 
@@ -156,7 +169,7 @@ class Schedule {
 
         for (let i = 0; i < this.course.length; i++) {
             const course = this.course[i];
-            console.log(course);
+
             let rowStart = course.startHour - this.earliest + this.indent;
             let rowEnd = course.endHour - this.earliest + this.indent;
 
@@ -196,11 +209,28 @@ class Schedule {
     /**
      * @function display the modal form.
      *
-     * @param form {Element} the form to be displayed.
+     * @param form {Element}   the form to be displayed.
+     * @param usedBy {Element} which div is using this form.
      */
-    displayModal(form) {
+    displayModal(form, usedBy=null) {
         form.classList.add(this.active);
         this.overlay.classList.add(this.active);
+
+        // update shared form with correct texts.
+        if (usedBy !== null) {
+            const title = document.querySelector("#add-form-title");
+            const button = document.querySelector("#add-form-submit");
+
+            if (usedBy === this.addModal) {
+                title.innerHTML = "Add a Course";
+                button.value = "Add Course";
+            }
+
+            if (usedBy === this.editModal) {
+                title.innerHTML = "Edit a Course";
+                button.value = "Edit Course";
+            }
+        }
     }
 
     /**
@@ -275,39 +305,44 @@ class Schedule {
 
 /**
  * @class represents a course in the Schedule.
+ *
+ * @param startHour {number}
  */
 class Course {
-    constructor() {
+    constructor(title ="", startHour="", startMinute="", endHour="", endMinute="",
+                startAM=true, endAM=true, startPM=false, endPM=false,
+                checkbox1=false, checkbox2=false, checkbox3=false,
+                checkbox4 = false, checkbox5=false, checkbox6=false, checkbox7=false) {
         /** HTML Tag instances **/
-        this.courseTitle = document.querySelector("#course-title").value = "";
-        this.startHour = document.querySelector("#start-hour").value = "";
-        this.startMinute = document.querySelector("#start-minute").value = "";
-        this.endHour = document.querySelector("#end-hour").value = "";
-        this.endMinute = document.querySelector("#end-minute").value = "";
-        this.startAM = document.querySelector("#start-am").checked = true;
-        this.endAM = document.querySelector("#end-am").checked = true;
-        this.startPM = document.querySelector("#start-pm").checked = false;
-        this.endPM = document.querySelector("#end-pm").checked = false;
-        this.checkbox1 = document.querySelector("#mon-checkbox").checked = false;
-        this.checkbox2 = document.querySelector("#tue-checkbox").checked = false;
-        this.checkbox3 = document.querySelector("#wed-checkbox").checked = false;
-        this.checkbox4 = document.querySelector("#thu-checkbox").checked = false;
-        this.checkbox5 = document.querySelector("#fri-checkbox").checked = false;
-        this.checkbox6 = document.querySelector("#sat-checkbox").checked = false;
-        this.checkbox7 = document.querySelector("#sun-checkbox").checked = false;
+        this.courseTitle = document.querySelector("#course-title").value = title;
+        this.startHour = document.querySelector("#start-hour").value = startHour;
+        this.startMinute = document.querySelector("#start-minute").value = startMinute;
+        this.endHour = document.querySelector("#end-hour").value = endHour;
+        this.endMinute = document.querySelector("#end-minute").value = endMinute;
+        this.startAM = document.querySelector("#start-am").checked = startAM;
+        this.endAM = document.querySelector("#end-am").checked = endAM;
+        this.startPM = document.querySelector("#start-pm").checked = startPM;
+        this.endPM = document.querySelector("#end-pm").checked = endPM;
+        this.checkbox1 = document.querySelector("#mon-checkbox").checked = checkbox1;
+        this.checkbox2 = document.querySelector("#tue-checkbox").checked = checkbox2;
+        this.checkbox3 = document.querySelector("#wed-checkbox").checked = checkbox3;
+        this.checkbox4 = document.querySelector("#thu-checkbox").checked = checkbox4;
+        this.checkbox5 = document.querySelector("#fri-checkbox").checked = checkbox5;
+        this.checkbox6 = document.querySelector("#sat-checkbox").checked = checkbox6;
+        this.checkbox7 = document.querySelector("#sun-checkbox").checked = checkbox7;
 
         this.checkbox = []; // {array} represents a collection of the days of the week checkbox.
     }
 
     /**
-     * @function update all fields to the current values.
+     * @function update all instances to the current value from the DOM.
      */
-    update() {
+    getValues() {
         this.courseTitle = document.querySelector("#course-title").value;
-        this.startHour = parseInt(document.querySelector("#start-hour").value);
-        this.startMinute = parseInt(document.querySelector("#start-minute").value);
-        this.endHour = parseInt(document.querySelector("#end-hour").value);
-        this.endMinute = parseInt(document.querySelector("#end-minute").value);
+        this.startHour = document.querySelector("#start-hour").value;
+        this.startMinute = document.querySelector("#start-minute").value;
+        this.endHour = document.querySelector("#end-hour").value;
+        this.endMinute = document.querySelector("#end-minute").value;
         this.startAM = document.querySelector("#start-am").checked;
         this.endAM = document.querySelector("#end-am").checked;
         this.startPM = document.querySelector("#start-pm").checked;
@@ -323,6 +358,17 @@ class Course {
         this.checkbox = ["", this.checkbox1, this.checkbox2, this.checkbox3, this.checkbox4,
             this.checkbox5, this.checkbox6, this.checkbox7];
 
+    }
+
+    /**
+     * @function update the form values with the give Object's Value.
+     *
+     * @param object {Object} the object the DOM being update.
+     */
+    updateValues(object) {
+        return new Course(object.courseTitle, object.startHour, object.startMinute, object.endHour, object.endMinute,
+            object.startAM, object.endAM, object.startPM, object.endPM, object.checkbox1, object.checkbox2,
+            object.checkbox3, object.checkbox4, object.checkbox5, object.checkbox6, object.checkbox7);
     }
 
     /**
@@ -436,7 +482,7 @@ const addSubmit = () => setTimeout("schedule.submitAddForm()", 0);
 /**
  * @function catch the form submission for editing a course.
  */
-const editSubmit = () => schedule.getEditForm();
+const editSubmit = () => schedule.submitEditForm();
 
 /**
  * @function catch the form submission for deleting a course.

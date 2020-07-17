@@ -50,7 +50,7 @@
         <div id="add-modal" class="modal" >
 
             <form class="global-form" onsubmit="exit(this); return false;">
-                <label> Add a Course </label>
+                <label id="add-form-title"> <!-- title built in JavaScript --> </label>
                 <label><input type="submit" class="submit-button" value="X"></label>
             </form>
 
@@ -100,14 +100,14 @@
                     </div>
 
                 </div>
-
-                <label><input type="submit" class="submit-button" value="Add Course"></label>
+                <!-- button value is built in JavaScript -->
+                <label><input id="add-form-submit" type="submit" class="submit-button" value=""></label>
             </form>
         </div>
 
         <div id="edit-modal" class="modal" >
             <form class="global-form" onsubmit="exit(this); return false;">
-                <label> Edit a Course </label>
+                <label id="edit-form-title"> Edit a Course </label>
                 <label><input type="submit" class="submit-button" value="X"></label>
             </form>
 
@@ -131,7 +131,7 @@
             </div>
 
             <form onsubmit="deleteSubmit(); return false;">
-                <label><input type="submit" class="submit-button" value="Delete Course"></label>
+                <label><input id="edit-form-submit" type="submit" class="submit-button" value="Delete Course"></label>
             </form>
         </div>
     </section>
