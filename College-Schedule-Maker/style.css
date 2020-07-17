@@ -35,8 +35,8 @@ button {
     border-radius: 5px;
     border: solid 0;
     padding: 5px;
-    outline: none;
     text-align: center;
+    outline-color: #707B7C;
 }
 
 button:hover {
@@ -163,6 +163,14 @@ h1 {
     cursor: pointer;
 }
 
+.display-course {
+    display: grid;
+    grid-template-rows: auto;
+    grid-gap: 10px;
+    text-align: left;
+    padding: 15px;
+}
+
 
 /*** add modal ***/
 #add-form {
@@ -229,8 +237,6 @@ h1 {
 
 
 /*** delete modal ***/
-
-
 
 /*** modal/overlay ***/
 .modal {

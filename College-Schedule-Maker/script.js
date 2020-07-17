@@ -31,7 +31,8 @@ class Schedule {
         this.addModal = document.querySelector("#add-modal");
         this.editModal = document.querySelector("#edit-modal");
         this.deleteModal = document.querySelector("#delete-modal");
-        this.displayCourse = document.querySelector(".display-course");
+        this.editCourse = document.querySelector("#edit-course");
+        this.deleteCourse = document.querySelector("#delete-course");
 
         /** CSS class/id instances */
         this.active = "modal";   // represents the pop up form for the user to interact with.
@@ -40,6 +41,7 @@ class Schedule {
         /** class instances. */
         this.item = null;   // {object} represents the current item that the user is working with.
         this.course = [];   // {array}  represents a collection of all the courses in the schedule.
+        this.index = null;  // {number} represents index of a course relative in the array.
         this.indent = 1;    // {number} represents the number of cells was used to indent the table.
         this.size = 7;      // {number} represents how many days in a week will be displayed.
         this.earliest = 5;  // {number} represents earliest time the schedule will display.
@@ -54,38 +56,61 @@ class Schedule {
     }
 
     /**
+     * @function removes all child element of given element.
+     *
+     * @param element {Element} the element's child to be removed.
+     */
+    clearDiv(element) {
+        while (element.hasChildNodes()) element.removeChild(element.firstChild);
+    }
+
+    /**
      * @function display the form for editing current course that are on the schedule.
      */
     displayEditForm() {
-        this.displayModal(this.editModal);
-
+        this.displayForm(this.editModal);
+        this.displayAllCourse(this.editCourse);
     }
 
     /**
      * @function display every course that was added to the schedule for the user to edit.
+     *
+     * @param div {Element} the div the course will be built in.
      */
-    displayAllCourse() {
+    displayAllCourse(div) {
+        this.clearDiv(div);
+
+        for (let i = 0; i < this.course.length; i++) {
+            const button = document.createElement("button");
+            button.innerHTML = this.course[i].courseTitle;
+            button.setAttribute("onclick", `updateIndex(${i})`);
+            div.appendChild(button);
+        }
     }
 
     /**
-     * @function get the information on the edited course after user submits the form.
+     * @function get the index location of selected course in array.
+     *
+     * @param index {number} the index location number in array.
      */
-    getEditForm() {
-
+    updateIndex(index) {
+        this.index = index;
     }
 
     /**
      * @function display the form for deleting a course that is on the schedule.
      */
     displayDeleteForm() {
-        this.displayModal(this.deleteModal);
+        this.displayForm(this.deleteModal);
+        this.displayAllCourse(this.deleteCourse);
     }
 
     /**
-     * @function get the information on the deleted course after user submits the form.
+     * @function delete a course from the schedule.
      */
-    getDeleteForm() {
-
+    submitDeleteForm() {
+        this.course.splice(this.index, 1);
+        this.removeModal(this.deleteModal);
     }
 
     /**
@@ -113,13 +138,13 @@ class Schedule {
      */
     displayAddForm() {
         this.item = new Course();
-        this.displayModal(this.addModal);
+        this.displayForm(this.addModal);
     }
 
     /**
      * @function get the information on the added course after user submits the form.
      */
-    getAddForm() {
+    submitAddForm() {
         this.item.update();
 
         if (!this.checkboxRequired()) return;
@@ -187,11 +212,11 @@ class Schedule {
     }
 
     /**
-     * @function display the modal.
+     * @function display the modal form.
      *
      * @param form {Element} the form to be displayed.
      */
-    displayModal(form) {
+    displayForm(form) {
         form.classList.add(this.active);
         this.overlay.classList.add(this.active);
     }
@@ -417,7 +442,7 @@ const remove = () => schedule.displayDeleteForm();
 /**
  * @function catch the form submission for adding a course.
  */
-const addSubmit = () => setTimeout("schedule.getAddForm()", 0);
+const addSubmit = () => setTimeout("schedule.submitAddForm()", 0);
 
 /**
  * @function catch the form submission for editing a course.
@@ -427,12 +452,19 @@ const editSubmit = () => schedule.getEditForm();
 /**
  * @function catch the form submission for deleting a course.
  */
-const deleteSubmit = () => schedule.getDeleteForm();
+const deleteSubmit = () => schedule.submitDeleteForm();
 
 /**
  * @function catch the user's form submission for the schedule title.
  */
 const getScheduleTitle = () => setTimeout("schedule.getScheduleTitle()", 0);
+
+/**
+ * @function update the location of selected course in array.
+ *
+ * @param index {number} the number that index is updated with.
+ */
+const updateIndex = (index) => schedule.updateIndex(index);
 
 
 // global instance

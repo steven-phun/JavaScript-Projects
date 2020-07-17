@@ -109,7 +109,7 @@
                 <label><input type="submit" class="submit-button" value="X"></label>
             </form>
 
-            <div class="display-course">
+            <div id="edit-course" class="display-course">
                 <!-- displaying each course is built in JavaScript -->
             </div>
 
@@ -124,8 +124,11 @@
                 <label><input type="submit" class="submit-button" value="X"></label>
             </form>
 
-            <form onsubmit="deleteSubmit(); return false;">
+            <div id="delete-course" class="display-course">
+                <!-- displaying each course is built in JavaScript -->
+            </div>
 
+            <form onsubmit="deleteSubmit(); return false;">
                 <label><input type="submit" class="submit-button" value="Delete Course"></label>
             </form>
         </div>
