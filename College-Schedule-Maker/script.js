@@ -56,6 +56,7 @@ class Schedule {
         this.buildSchedule();
     }
 
+
     /**
      * @function set up the schedule table for the user to interact with.
      */
