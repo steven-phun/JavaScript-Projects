@@ -2,7 +2,7 @@
 - [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
 - [College Schedule Maker](https://steven-phun.github.io/Steven-Phun/College-Schedule-Maker)
 - [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper)
-- [Quarantine Bingo]
+- [Quarantine Bingo](https://steven-phun.github.io/Steven-Phun/Quarantine-Bingo)
 
 ## [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
 
@@ -52,7 +52,7 @@ Project Difficulties
 
 - Implementing a flood fill algorithm.
 
-## [Quarantine Bingo] *not completed*
+## [Quarantine Bingo](https://steven-phun.github.io/Steven-Phun/Quarantine-Bingo) *not yet completed*
 
 Project Summary
 
@@ -60,7 +60,7 @@ Project Summary
 
 Project Inspiration 
 
-- A game I can play with friends during the 2020 stay at home order. 
+- A game that I can play with people during the 2020 stay at home order. 
 
 Project Difficulties
 
