@@ -18,13 +18,15 @@ class Bingo {
     constructor() {
         /** HTML tag instances*/
         this.scorecard = document.querySelector("#scorecard>table");
+        this.display = document.querySelector("#question>label");
 
         /** CSS class/id instances */
         this.selected = "selected-cell";
 
         /** class instances. */
         this.theme = this.getQuestions(); // {array} a collection of questions to initialize the game with.
-        this.copy = this.getQuestions(); // {array} a copy of the collection of questions.
+        this.copy1 = this.getQuestions(); // {array} a copy of the collection of questions to fill the scorecard with.
+        this.copy2 = this.getQuestions(); // {array} a copy of the collection of questions to display to user.
         this.center = "FREE SPACE (wore a mask)"; // {string} represents the innerHTML for the center square.
         this.row = null; // {number} the row index of selected cell.
         this.col = null; // {number} the column index of selected cell.
@@ -44,7 +46,8 @@ class Bingo {
             for (let j = 0; j < this.size; j++) {
                 row.insertCell(); // insert <td>.
                 this.scorecard.rows[i].cells[j].setAttribute("onclick", `getCell(${i},${j})`);
-                if (!(i === center && j === center)) this.scorecard.rows[i].cells[j].innerHTML = this.getRandomQuestion();
+                if (!(i === center && j === center))
+                    this.scorecard.rows[i].cells[j].innerHTML = this.getRandomQuestion(this.copy1);
             }
         }
         this.scorecard.rows[center].cells[center].innerHTML = this.center;
@@ -58,9 +61,9 @@ class Bingo {
     getQuestions() {
         const q1 = "slept in past noon";
         const q2 = "baked for fun";
-        const q3 = "watched more than 3 episodes of a show in on day";
+        const q3 = "watched more than 3 episodes of a show in one day";
         const q4 = "took a walk outside to exercise";
-        const q5 = "video called wearing sweat, shorts, or pajama bottoms";
+        const q5 = "video called wearing sweats, shorts, or pajama bottoms";
         const q6 = "started a workout routine or health regime";
         const q7 = "had to cancel a planned celebration or trip";
         const q8 = "made an unnecessary online purchase";
@@ -86,16 +89,25 @@ class Bingo {
     }
 
     /**
+     * @function display a random question on scorecard.
+     */
+    displayRandomQuestion() {
+        this.display.innerHTML = this.getRandomQuestion(this.copy2);
+    }
+
+    /**
      * @function get a random unique question from selected theme.
+     *
+     * @param array {array} the array that contains the questions.
      *
      * @return {string} a question.
      */
-    getRandomQuestion() {
-        const index = this.getRandomInt(this.copy.length);
+    getRandomQuestion(array) {
+        const index = this.getRandomInt(array.length);
 
-        const question = this.copy[index];
+        const question = array[index];
 
-        this.copy.splice(index, 1);
+        array.splice(index, 1);
 
         return question;
     }
@@ -108,7 +120,6 @@ class Bingo {
     getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
     }
-
 
 
     /**
@@ -174,6 +185,11 @@ class Square {
  * @param col {number} the column index of selected cell.
  */
 const getCell = (row, col) => bingo.getCell(row, col);
+
+/**
+ * @function catch the events when the use selects the dice button.
+ */
+const getQuestion = () => bingo.displayRandomQuestion();
 
 
 // global instance
