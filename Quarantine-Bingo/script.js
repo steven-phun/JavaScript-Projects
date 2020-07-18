@@ -24,7 +24,6 @@ class Bingo {
         this.selected = "selected-cell";
 
         /** class instances. */
-        this.theme = this.getQuestions(); // {array} a collection of questions to initialize the game with.
         this.copy1 = this.getQuestions(); // {array} a copy of the collection of questions to fill the scorecard with.
         this.copy2 = this.getQuestions(); // {array} a copy of the collection of questions to display to user.
         this.center = "FREE SPACE (wore a mask)"; // {string} represents the innerHTML for the center square.
