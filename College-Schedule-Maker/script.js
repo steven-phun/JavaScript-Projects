@@ -155,6 +155,7 @@ class Schedule {
             const button = document.createElement("button");
             button.innerHTML = this.course[i].courseTitle;
             button.setAttribute("onclick", `updateIndex(${i})`);
+            button.style.backgroundColor = this.color[i];
             div.appendChild(button);
         }
     }
