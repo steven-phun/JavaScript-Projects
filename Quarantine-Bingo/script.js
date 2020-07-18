@@ -91,6 +91,8 @@ class Bingo {
      * @function display a random question on scorecard.
      */
     displayRandomQuestion() {
+
+        if (this.copy2.length === 0) return this.display.innerHTML = "There are no more questions to display";
         this.display.innerHTML = this.getRandomQuestion(this.copy2);
     }
 
