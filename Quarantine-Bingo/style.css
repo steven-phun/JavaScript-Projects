@@ -2,6 +2,12 @@
 
 /**
  *  1. global
+ *  2. theme
+ *  3. questions
+ *  4. scorecard
+ *  5. bingo button
+ *  6. modal/overlay
+ *  7. color index
  */
 
 /*** 1. global ***/
@@ -21,6 +27,20 @@ html {
     justify-content: center;
 }
 
+button {
+    padding: 5px;
+    font-size: 17px;
+    border-radius: 5px;
+    border: solid 0;
+    background-color: #F6DDCC;
+    outline-color: #EDBB99;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #EDBB99;
+}
+
 .wrapper {
     max-width: 1000px;
     display: grid;
@@ -32,3 +52,76 @@ html {
     background-image: linear-gradient(45deg, #EDBB99, #F6DDCC, #FBEEE6);
 }
 
+
+/** 2. theme **/
+
+/** 3. questions **/
+#question {
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
+#question label {
+    text-align: center;
+}
+
+/** 4. scorecard **/
+#scorecard table {
+    margin: auto;
+    border-collapse: collapse;
+    table-layout: fixed;
+    text-align: center;
+    cursor: pointer;
+}
+
+#scorecard td {
+    min-width: 50px;
+    max-width: 50px;
+    height: 50px;
+    padding: 10px;
+    border: solid 1px;
+}
+
+
+/** 5. bingo button **/
+#bingo button {
+    width: 100%;
+}
+
+
+/*** 6. modal/overlay ***/
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    border: 1px solid;
+    border-radius: 10px;
+    background-color: ghostwhite;
+    z-index: 1;
+    min-width: 400px;
+    max-width: 80%;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.overlay {
+    position: fixed;
+    opacity: 0;
+    transition: 200ms ease-in-out;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .5);
+    pointer-events: none;
+}
+
+.overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/** 7. color index **/
