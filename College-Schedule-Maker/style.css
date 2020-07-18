@@ -103,6 +103,11 @@ h1 {
 }
 
 /*** schedule ***/
+.scroll-box {
+    overflow-y: scroll;
+    height: 500px;
+}
+
 #schedule table {
     margin: auto;
     border-collapse: collapse;

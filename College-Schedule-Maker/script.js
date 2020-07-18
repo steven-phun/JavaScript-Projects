@@ -29,14 +29,16 @@ class Schedule {
         this.deleteModal = document.querySelector("#delete-modal");
         this.editCourse = document.querySelector("#edit-course");
         this.deleteCourse = document.querySelector("#delete-course");
+        this.schedule = document.querySelector("#schedule");
         this.topbarDiv = document.querySelector("#top-bar")
         this.opitionDiv = document.querySelector("#options");
 
 
         /** CSS class/id instances */
-        this.active = "modal";   // represents the pop up form for the user to interact with.
-        this.active = "active";  // represents when a modal or overlay is active.
-        this.used   = "used";    // represents course is placed on current timeslot.
+        this.active = "modal";     // represents the pop up form for the user to interact with.
+        this.active = "active";    // represents when a modal or overlay is active.
+        this.used   = "used";      // represents course is placed on current timeslot.
+        this.scroll = "scroll-box" // represents the scroll box.
 
         /** class instances. */
         this.course = [];            // {array}  represents a collection of all the courses in the schedule.
@@ -68,6 +70,7 @@ class Schedule {
         this.latest = this.getLatestCourse();
         this.topbarDiv.style.display = "none";
         this.opitionDiv.style.display = "none";
+        this.schedule.classList.remove(this.scroll);
         this.updateDisplay();
 
         window.print();
@@ -77,6 +80,7 @@ class Schedule {
         this.latest = tempLatest;
         this.topbarDiv.style.display = "grid";
         this.opitionDiv.style.display = "grid";
+        this.schedule.classList.add(this.scroll);
         this.updateDisplay();
     }
 
