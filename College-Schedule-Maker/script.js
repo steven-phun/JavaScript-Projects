@@ -31,25 +31,82 @@ class Schedule {
         this.deleteCourse = document.querySelector("#delete-course");
 
         /** CSS class/id instances */
-        this.active = "modal";      // represents the pop up form for the user to interact with.
-        this.active = "active";     // represents when a modal or overlay is active.
+        this.active = "modal";   // represents the pop up form for the user to interact with.
+        this.active = "active";  // represents when a modal or overlay is active.
+        this.used   = "used";    // represents course is placed on current timeslot.
 
         /** class instances. */
-        this.course = [];          // {array}  represents a collection of all the courses in the schedule.
-        this.temp = new Course();  // {object} represents a course that has not been finalized.
-        this.index = null;         // {number} represents index of a course relative in the array.
-        this.indent = 1;           // {number} represents the number of cells was used to indent the table.
-        this.size = 7;             // {number} represents how many days in a week will be displayed.
-        this.earliest = 5;         // {number} represents earliest time the schedule will display.
-        this.latest = 20;          // {number} represents the latest time the schedule will display.
+        this.course = [];            // {array}  represents a collection of all the courses in the schedule.
+        this.temp = new Course();    // {object} represents a course that has not been finalized.
+        this.index = null;           // {number} represents index of a course relative in the array.
+        this.indent = 1;             // {number} represents the number of cells was used to indent the table.
+        this.size = 7;               // {number} represents how many days in a week will be displayed.
+        this.earliest = 0;           // {number} represents earliest time the schedule will display.
+        this.latest = 23;            // {number} represents the latest time the schedule will display.
 
         this.days = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
         this.color = ["#AED6F1", "#A3E4D7", "#E6B0AA", "#D7BDE2",
                       "#F5CBA7", "#F8BBD0", "#B3E5FC", "#C5CAE9",
                       "#BCAAA4", "#D6DBDF"];
 
-
         this.getEmptyGrid();
+    }
+
+    /**
+     * @function save current schedule to user's desktop.
+     */
+    save() {
+        console.log(this.getEarliestCourse());
+        console.log(this.getLatestCourse());
+
+        this.removeUnusedTopRow();
+        this.removeUnusedBottomRow();
+        //window.print();
+    }
+
+    /**
+     * @function get the earliest timeslot from schedule.
+     *
+     * @return {number} the earliest hour in current schedule
+     */
+    getEarliestCourse() {
+        let earliestCourse = this.latest; // start at highest value.
+
+        for (let i = 0; i < this.course.length; i++) {
+            if (this.course[i].startTime.hour < earliestCourse) earliestCourse = this.course[i].startTime.hour;
+        }
+
+        return earliestCourse;
+    }
+
+    /**
+     * @function get the latest timeslot from schedule.
+     *
+     * @return {number} the latest hour in current schedule.
+     */
+    getLatestCourse() {
+        let latestCourse = this.earliest; // start at lowest value.
+
+        for (let i = 0; i < this.course.length; i++) {
+            if (this.course[i].endTime.hour > latestCourse) latestCourse = this.course[i].endTime.hour;
+        }
+
+        return latestCourse;
+    }
+
+
+    /**
+     * @function remove unused rows before the earliest
+     */
+    removeUnusedTopRow() {
+        const earliestCourse = this.getEarliestCourse();
+    }
+
+    /**
+     * @function remove used rows after the latest course time.
+     */
+    removeUnusedBottomRow() {
+        const latestCourse = this.getLatestCourse();
     }
 
     /**
@@ -191,28 +248,25 @@ class Schedule {
      */
     updateDisplay() {
         this.getEmptyGrid(); // remove previous grid.
-        let counter = 0;
 
         for (let i = 0; i < this.course.length; i++) {
             const course = this.course[i];
 
-            let rowStart = course.startHour - this.earliest + this.indent;
-            let rowEnd = course.endHour - this.earliest + this.indent;
+            console.log(course.startTime.hour);
+            console.log(course.endTime.hour);
 
-            if (course.startPM && course.startHour !== 12) rowStart += 12;
-            if (course.endPM && course.endHour !== 12) rowEnd += 12;
+            let rowStart = course.startTime.hour - this.earliest + this.indent;
+            let rowEnd = course.endTime.hour - this.earliest + this.indent;
 
             for (let row = rowStart; row <= rowEnd; row++) {
                 for (let j = 1; j <= this.size; j++) {
                     if (course.checkbox[j]) {
-                        // display course information.
                         this.table.rows[rowStart].cells[j].innerHTML = course.display();
-                        // display course span over its time slots.
-                        this.table.rows[row].cells[j].style.backgroundColor = this.color[counter];
+                        this.table.rows[row].cells[j].style.backgroundColor = this.color[i];
+                        this.table.rows[row].cells[j].classList.add(this.used);
                     }
                 }
             }
-            counter++;
         }
     }
 
@@ -313,8 +367,9 @@ class Schedule {
         let row = 1;
 
         for (let i = this.earliest; i <= this.latest; i++) {
-            const time = new Time(i)
-            this.table.rows[row].cells[0].innerHTML = time.timeToString();
+            let time = new Time(i)
+            if (i >= 12) time = new Time(i, 0, true, true);
+            this.table.rows[row].cells[0].innerHTML = time.toTime();
             row++;
         }
     }
@@ -360,6 +415,7 @@ class Course {
         this.checkbox7 = document.querySelector("#sun-checkbox").checked = checkbox7;
 
         this.checkbox = []; // {array} represents a collection of the days of the week checkbox.
+
     }
 
     /**
@@ -386,6 +442,8 @@ class Course {
         this.checkbox = ["", this.checkbox1, this.checkbox2, this.checkbox3, this.checkbox4,
             this.checkbox5, this.checkbox6, this.checkbox7];
 
+        this.startTime = new Time(parseInt(this.startHour), parseInt(this.startMinute), this.startPM);
+        this.endTime = new Time (parseInt(this.endHour), parseInt(this.endMinute), this.endPM);
     }
 
     /**
@@ -394,13 +452,12 @@ class Course {
      * @return {string} course title + (new line) + start time - (new line) end time.
      */
     display() {
-        const startTime = new Time(parseInt(this.startHour), parseInt(this.startMinute), this.startPM);
-        const endTime = new Time (parseInt(this.endHour), parseInt(this.endMinute), this.endPM);
-        const time = `${startTime.timeToString()}-<pre>${endTime.timeToString()}</pre>`
+        const time = `${this.startTime.toTime()}-<pre>${this.endTime.toTime()}</pre>`
 
         return `${this.courseTitle}<pre>${" "}</pre><pre>${time}</pre>`;
     }
 }
+
 
 /**
  * @class converts numbers that represents time to string in hours:minute AM/PM format.
@@ -408,12 +465,45 @@ class Course {
  * @param hour   {number}  represent the amount of hours.
  * @param minute {number}  represents the amount of minutes.
  * @param pm     {boolean} true if the hour indicator is PM.
+ * @param hour24 {boolean} true if the time is given in 24 hour format.
  */
 class Time {
-    constructor(hour, minute=0, pm=false) {
-        this.hour = hour;
-        this.minute = minute;
+    constructor(hour, minute=0, pm=false, hour24=false) {
         this.pm = pm;
+        this.hour24 = hour24;
+        this.minute = minute;
+        this.hour = this.to24Hour(hour);
+    }
+
+    /**
+     * @function convert give hour to a 24 hour format.
+     */
+    to24Hour(hour) {
+        if (!this.hour24) {
+            if (this.pm && hour !== 12) hour += 12;
+            if (!this.pm && hour === 12) hour = 0;
+        }
+
+        return hour;
+    }
+
+    /**
+     * @function converts given hour to a 12 hour time format.
+     *
+     * @param hour {number} the hour being converted.
+     *
+     * @return a string that represents the hour.
+     */
+    to12Hour(hour) {
+        if (hour >= 12 && hour < 24) {
+            this.pm = true
+
+            hour -= 12;
+        }
+
+        if (hour === 0) return "12";
+
+        return hour.toString();
     }
 
     /**
@@ -431,28 +521,10 @@ class Time {
     }
 
     /**
-     * @function converts the hour to a 12 hour time format.
-     *
-     * @param hour {number} the hour being converted.
-     *
-     * @return a string that represents the hour.
-     */
-    toHour(hour) {
-        if (hour >= 12) {
-            if (hour !== 24) this.pm = true;
-            if (hour !== 12) hour -= 12;
-        }
-
-        if (hour === 0) hour = 12; // when hour = 0 or 24 --> 12AM
-
-        return hour.toString();
-    }
-
-    /**
      * @function converts given hour and minute in a 12 hour HH:MM format.
      */
-    timeToString() {
-        const hour = this.toHour(this.hour);
+    toTime() {
+        const hour = this.to12Hour(this.hour);
         const minute = this.toMinute(this.minute);
 
         if (this.pm) return `${hour}:${minute}PM`
@@ -494,12 +566,7 @@ const remove = () => schedule.displayDeleteForm();
 /**
  * @function saves the schedule to desktop when user selects the "save" button.
  */
-const save = () => console.log("pass");
-
-/**
- * @function prints the schedule when the user selects the "print" button.
- */
-const print = () => window.print();
+const save = () => schedule.save();
 
 /**
  * @function catch the form submission for adding a course.
