@@ -1,7 +1,7 @@
 /**
  * This JavaScript program allows the user to generate a weekly schedule for school.
  *
- * The schedule can be printed, saved onto the computer, or exported to allow changes in the future.
+ * The schedule can be saved onto the computer.
  *
  *
  * @author Steven Phun
@@ -33,7 +33,6 @@ class Schedule {
         this.topbarDiv = document.querySelector("#top-bar")
         this.opitionDiv = document.querySelector("#options");
 
-
         /** CSS class/id instances */
         this.active = "modal";     // represents the pop up form for the user to interact with.
         this.active = "active";    // represents when a modal or overlay is active.
@@ -55,6 +54,275 @@ class Schedule {
                       "#BCAAA4", "#D6DBDF"];
 
         this.getEmptyGrid();
+    }
+
+    /**
+     * @function set up the schedule grid for the user to interact with.
+     */
+    getEmptyGrid() {
+        this.clearDiv(this.table);
+        this.setDaysOfWeek();
+        this.buildGrid();
+        this.setTimeSlots();
+    }
+
+    /**
+     * @function removes all child element from given element.
+     *
+     * @param div {Element} the element's child to be removed.
+     */
+    clearDiv(div) {
+        while (div.hasChildNodes()) div.removeChild(div.firstChild);
+    }
+
+    /**
+     * @function display the days of the week on the top row.
+     */
+    setDaysOfWeek() {
+        const row = this.table.insertRow();
+
+        for (let i = 0; i <= this.size; i++) {
+            row.insertCell();
+            this.table.rows[0].cells[i].innerHTML = this.days[i];
+        }
+    }
+
+    /**
+     * @function generate table grid.
+     */
+    buildGrid() {
+        for (let i = this.earliest; i <= this.latest; i++) {
+            const row = this.table.insertRow(); // insert <tr>.
+
+            for (let j = 0; j <  this.size + this.indent; j++) {
+                row.insertCell(); // insert <td>.
+            }
+        }
+    }
+
+    /**
+     * @function display the time slot on the first column.
+     */
+    setTimeSlots() {
+        let row = 1;
+
+        for (let i = this.earliest; i <= this.latest; i++) {
+            let time = new Time(i)
+            if (i >= 12) time = new Time(i, 0, true, true);
+            this.table.rows[row].cells[0].innerHTML = time.toTime();
+            row++;
+        }
+    }
+
+    /**
+     * @function display the modal form to user.
+     *
+     * @param form {Element}   the form to be displayed.
+     * @param usedBy {Element} the div that opened the form.
+     */
+    displayModal(form, usedBy=null) {
+        form.classList.add(this.active);
+        this.overlay.classList.add(this.active);
+
+        // update shared form with correct texts.
+        if (usedBy !== null) {
+            const title = document.querySelector("#add-form-title");
+            const button = document.querySelector("#add-form-submit");
+
+            if (usedBy === this.addModal) {
+                title.innerHTML = "Add a Course";
+                button.value = "Add Course";
+            }
+
+            if (usedBy === this.editModal) {
+                title.innerHTML = "Edit a Course";
+                button.value = "Edit Course";
+            }
+        }
+    }
+
+    /**
+     * @function removes the modal form.
+     *
+     * @param form {Element} the form to be removed.
+     */
+    removeModal(form) {
+        form.classList.remove(this.active);
+        this.overlay.classList.remove(this.active);
+    }
+
+    /**
+     * @function closes current form without adding the course to the schedule.
+     *
+     * @param form {Element} the form being closed.
+     */
+    closeModal(form) {
+        this.index = null;
+        this.removeModal(form);
+    }
+
+    /**
+     * @function display each course on the schedule.
+     */
+    updateDisplay() {
+        this.getEmptyGrid(); // remove previous grid.
+
+        for (let i = 0; i < this.course.length; i++) {
+            const course = this.course[i];
+
+            let rowStart = course.startTime.hour - this.earliest + this.indent;
+            let rowEnd = course.endTime.hour - this.earliest + this.indent;
+
+            for (let row = rowStart; row <= rowEnd; row++) {
+                for (let j = 1; j <= this.size; j++) {
+                    if (course.checkbox[j]) {
+                        this.table.rows[rowStart].cells[j].innerHTML = course.display();
+                        this.table.rows[row].cells[j].style.backgroundColor = this.color[i % this.color.length];
+                        this.table.rows[row].cells[j].classList.add(this.used);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @function display user's input for the schedule title.
+     */
+    displayScheduleTitle() {
+        this.title.innerHTML = this.headerInput.value;
+    }
+
+    /**
+     * @function display the form for adding a course to the schedule.
+     */
+    displayAddForm() {
+        this.index = null;
+
+        this.temp = new Course();
+        this.displayModal(this.addModal, this.addModal);
+    }
+
+    /**
+     * @function display the form for editing current course that are on the schedule.
+     */
+    displayEditForm() {
+        this.index = null;
+
+        this.displayModal(this.editModal, this.editModal);
+        this.displayAllCourse(this.editCourse);
+    }
+
+    /**
+     * @function display the form for deleting a course that is on the schedule.
+     */
+    displayDeleteForm() {
+        this.index = null;
+
+        this.displayModal(this.deleteModal);
+        this.displayAllCourse(this.deleteCourse);
+    }
+
+    /**
+     * @function display every course that was added to the schedule for the user to edit.
+     *
+     * @param div {Element} the div the course will be built in.
+     */
+    displayAllCourse(div) {
+        this.clearDiv(div);
+
+        for (let i = 0; i < this.course.length; i++) {
+            const button = document.createElement("button");
+            button.innerHTML = this.course[i].courseTitle;
+            button.setAttribute("onclick", `updateIndex(${i})`);
+            button.style.backgroundColor = this.color[i % this.color.length];
+            div.appendChild(button);
+        }
+    }
+
+    /**
+     * @function edit a course on the schedule.
+     */
+    submitEditForm() {
+        if (this.index === null) return;
+
+        this.copyCourse(this.course[this.index]);
+        this.removeModal(this.editModal);
+        this.displayModal(this.addModal, this.editModal);
+    }
+
+    /**
+     * @function generate a new course with data from a given course.
+     *
+     * @param course {object} the course data that is being copied.
+     */
+    copyCourse(course) {
+        this.temp = new Course(course.courseTitle, course.startHour, course.startMinute, course.endHour, course.endMinute,
+            course.startAM, course.endAM, course.startPM, course.endPM, course.checkbox1, course.checkbox2,
+            course.checkbox3, course.checkbox4, course.checkbox5, course.checkbox6, course.checkbox7);
+    }
+
+    /**
+     * @function delete current selected course from the schedule.
+     */
+    submitDeleteForm() {
+        if (this.index === null) return;
+
+        this.removeCourse();
+        this.updateDisplay();
+        this.removeModal(this.deleteModal);
+    }
+
+    /**
+     * @function adds a course to the schedule.
+     */
+    addCourse() {
+        this.removeCourse(); // remove previous course when user edits a schedule.
+
+        this.temp.updateValues();
+
+        if (!this.checkboxValidate()) return;
+
+
+        this.course.push(this.temp);
+
+        this.updateDisplay();
+        this.removeModal(this.addModal);
+    }
+
+    /**
+     * @function delete current selected course from the schedule
+     */
+    removeCourse() {
+        if (this.index === null) return;
+
+        this.course.splice(this.index, 1);
+        this.index = null;
+    }
+
+    /**
+     * @function get the index location of selected course in array.
+     *
+     * @param index {number} the index location number in array.
+     */
+    updateIndex(index) {
+        this.index = index;
+    }
+
+
+    /**
+     * @function checks if user has selected at least one day of the week.
+     *
+     * @return {boolean} true if at least one day of the week is selected.
+     */
+    checkboxValidate() {
+        for (let i = 0; i <= this.size; i++) {
+            this.boxRequired.classList.remove(this.active);
+            if (this.temp.checkbox[i]) return true;
+
+        }
+        this.boxRequired.classList.add(this.active);
+
+        return false;
     }
 
     /**
@@ -114,277 +382,28 @@ class Schedule {
         return latestCourse;
     }
 
-    /**
-     * @function display the form for editing current course that are on the schedule.
-     */
-    displayEditForm() {
-        this.index = null;
-
-        this.displayModal(this.editModal, this.editModal);
-        this.displayAllCourse(this.editCourse);
-    }
-
-    /**
-     * @function edit a course on the schedule.
-     */
-    submitEditForm() {
-        if (this.index === null) return;
-
-        this.copyCourse(this.course[this.index]);
-        this.removeModal(this.editModal);
-        this.displayModal(this.addModal, this.editModal);
-    }
-
-    /**
-     * @function generate a new course with data from a given course.
-     *
-     * @param course {object} the course data that is being copied.
-     */
-    copyCourse(course) {
-        this.temp = new Course(course.courseTitle, course.startHour, course.startMinute, course.endHour, course.endMinute,
-            course.startAM, course.endAM, course.startPM, course.endPM, course.checkbox1, course.checkbox2,
-            course.checkbox3, course.checkbox4, course.checkbox5, course.checkbox6, course.checkbox7);
-    }
-
-
-    /**
-     * @function display every course that was added to the schedule for the user to edit.
-     *
-     * @param div {Element} the div the course will be built in.
-     */
-    displayAllCourse(div) {
-        this.clearDiv(div);
-
-        for (let i = 0; i < this.course.length; i++) {
-            const button = document.createElement("button");
-            button.innerHTML = this.course[i].courseTitle;
-            button.setAttribute("onclick", `updateIndex(${i})`);
-            button.style.backgroundColor = this.color[i % this.color.length];
-            div.appendChild(button);
-        }
-    }
-
-    /**
-     * @function get the index location of selected course in array.
-     *
-     * @param index {number} the index location number in array.
-     */
-    updateIndex(index) {
-        this.index = index;
-    }
-
-    /**
-     * @function display the form for deleting a course that is on the schedule.
-     */
-    displayDeleteForm() {
-        this.index = null;
-
-        this.displayModal(this.deleteModal);
-        this.displayAllCourse(this.deleteCourse);
-    }
-
-    /**
-     * @function delete current selected course from the schedule.
-     */
-    submitDeleteForm() {
-        if (this.index === null) return;
-
-        this.removeCourse();
-        this.updateDisplay();
-        this.removeModal(this.deleteModal);
-    }
-
-    /**
-     * @function delete current selected course from the schedule
-     */
-    removeCourse() {
-        if (this.index === null) return;
-
-        this.course.splice(this.index, 1);
-        this.index = null;
-    }
-
-    /**
-     * @function display the form for adding a course to the schedule.
-     */
-    displayAddForm() {
-        this.index = null;
-
-        this.temp = new Course();
-        this.displayModal(this.addModal, this.addModal);
-    }
-
-    /**
-     * @function adds a course to the schedule.
-     */
-    addCourse() {
-        this.removeCourse(); // remove previous course when user edits a schedule.
-
-        this.temp.updateValues();
-
-        if (!this.checkboxRequired()) return;
-
-
-        this.course.push(this.temp);
-
-        this.updateDisplay();
-        this.removeModal(this.addModal);
-    }
 
 
 
-    /**
-     * @function checks if user has selected at least one day of the week.
-     *
-     * @return {boolean} true if at least one day of the week is selected.
-     */
-    checkboxRequired() {
-        for (let i = 0; i <= this.size; i++) {
-            this.boxRequired.classList.remove(this.active);
-            if (this.temp.checkbox[i]) return true;
 
-        }
-        this.boxRequired.classList.add(this.active);
 
-        return false;
-    }
 
-    /**
-     * @function display each course on the schedule.
-     */
-    updateDisplay() {
-        this.getEmptyGrid(); // remove previous grid.
 
-        for (let i = 0; i < this.course.length; i++) {
-            const course = this.course[i];
 
-            let rowStart = course.startTime.hour - this.earliest + this.indent;
-            let rowEnd = course.endTime.hour - this.earliest + this.indent;
 
-            for (let row = rowStart; row <= rowEnd; row++) {
-                for (let j = 1; j <= this.size; j++) {
-                    if (course.checkbox[j]) {
-                        this.table.rows[rowStart].cells[j].innerHTML = course.display();
-                        this.table.rows[row].cells[j].style.backgroundColor = this.color[i % this.color.length];
-                        this.table.rows[row].cells[j].classList.add(this.used);
-                    }
-                }
-            }
-        }
-    }
 
-    /**
-     * @function display user's input for the schedule title.
-     */
-    getScheduleTitle() {
-        this.title.innerHTML = this.headerInput.value;
-    }
 
-    /**
-     * @function closes current form.
-     *
-     * @param form {Element} the form being closed.
-     */
-    close(form) {
-        this.index = null;
-        this.removeModal(form);
-    }
 
-    /**
-     * @function display the modal form.
-     *
-     * @param form {Element}   the form to be displayed.
-     * @param usedBy {Element} which div is using this form.
-     */
-    displayModal(form, usedBy=null) {
-        form.classList.add(this.active);
-        this.overlay.classList.add(this.active);
 
-        // update shared form with correct texts.
-        if (usedBy !== null) {
-            const title = document.querySelector("#add-form-title");
-            const button = document.querySelector("#add-form-submit");
 
-            if (usedBy === this.addModal) {
-                title.innerHTML = "Add a Course";
-                button.value = "Add Course";
-            }
 
-            if (usedBy === this.editModal) {
-                title.innerHTML = "Edit a Course";
-                button.value = "Edit Course";
-            }
-        }
-    }
 
-    /**
-     * @function removes the modal.
-     *
-     * @param form {Element} the form to be removed.
-     */
-    removeModal(form) {
-        form.classList.remove(this.active);
-        this.overlay.classList.remove(this.active);
-    }
 
-    /**
-     * @function generate the time slots for the schedule grid.
-     */
-    buildGrid() {
-        for (let i = this.earliest; i <= this.latest; i++) {
-            const row = this.table.insertRow(); // insert <tr>.
 
-            for (let j = 0; j <  this.size + this.indent; j++) {
-                row.insertCell(); // insert <td>.
-            }
-        }
-    }
 
-    /**
-     * @function removes all child element of given element.
-     *
-     * @param element {Element} the element's child to be removed.
-     */
-    clearDiv(element) {
-        while (element.hasChildNodes()) element.removeChild(element.firstChild);
-    }
 
-    /**
-     * @function display the days of the week.
-     */
-    setDays() {
-        const row = this.table.insertRow();
 
-        for (let i = 0; i <= this.size; i++) {
-            row.insertCell();
-            this.table.rows[0].cells[i].innerHTML = this.days[i];
-        }
-    }
 
-    /**
-     * @function display time slots for the schedule grid.
-     */
-    setTimeSlots() {
-        this.buildGrid();
-
-        let row = 1;
-
-        for (let i = this.earliest; i <= this.latest; i++) {
-            let time = new Time(i)
-            if (i >= 12) time = new Time(i, 0, true, true);
-            this.table.rows[row].cells[0].innerHTML = time.toTime();
-            row++;
-        }
-    }
-
-    /**
-     * @function set up the schedule grid to display to the user.
-     */
-    getEmptyGrid() {
-        this.clearDiv(this.table);
-        this.setDays()
-        this.setTimeSlots()
-    }
 }
 
 
@@ -544,7 +563,7 @@ class Time {
  *
  * @param childElement {Element} the child node of the form being closed.
  */
-const exit = (childElement) => schedule.close(childElement.parentElement);
+const exit = (childElement) => schedule.closeModal(childElement.parentElement);
 
 /**
  * @function catch the events when user selects the "new" button.
@@ -589,7 +608,7 @@ const deleteSubmit = () => schedule.submitDeleteForm();
 /**
  * @function catch the user's form submission for the schedule title.
  */
-const getScheduleTitle = () => setTimeout("schedule.getScheduleTitle()", 0);
+const getScheduleTitle = () => setTimeout("schedule.displayScheduleTitle()", 0);
 
 /**
  * @function update the location of selected course in array.
