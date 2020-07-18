@@ -12,4 +12,4 @@ Project Difficulties
 
 - Working with modal and extracting its data. 
 
-- Finding an efficient way to deal with overlapping schedule.
+- Finding an efficient way to display overlapping schedule.
