@@ -21,8 +21,11 @@ class Bingo {
 
 
         /** CSS class/id instances */
+        this.selected = "selected-cell";
 
         /** class instances. */
+        this.row = null; // {number} the row index of selected cell.
+        this.col = null; // {number} the column index of selected cell.
         this.size = 5; // {number} represents the width and length of the scorecard.
 
         this.buildScorecard();
@@ -36,9 +39,55 @@ class Bingo {
             const row = this.scorecard.insertRow(); // insert <tr>.
             for (let j = 0; j < this.size; j++) {
                 row.insertCell(); // insert <td>.
+                this.scorecard.rows[i].cells[j].setAttribute("onclick", `getCell(${i},${j})`);
             }
         }
     }
+
+
+    /**
+     * @function get the selected cell's index.
+     *
+     * @param row {number} the row index of selected cell.
+     * @param col {number} the column index of selected cell.
+     */
+    getCell(row, col) {
+        this.row = row;
+        this.col = col;
+
+        this.toggleSelected();
+    }
+
+    /**
+     * @function toggle between selected and deselected cell.
+     */
+    toggleSelected() {
+        if (this.scorecard.rows[this.row].cells[this.col].classList.contains(this.selected)) {
+            this.removeClass(this.selected);
+            return;
+        }
+
+        this.addClass(this.selected);
+    }
+
+    /**
+     * @function add given class to selected cell.
+     *
+     * @param text {string} given class to add.
+     */
+    addClass(text) {
+        this.scorecard.rows[this.row].cells[this.col].classList.add(text);
+    }
+
+    /**
+     * @function remove given class from selected cell.
+     *
+     * @param text {string} given class to remove.
+     */
+    removeClass(text) {
+        this.scorecard.rows[this.row].cells[this.col].classList.remove(text);
+    }
+
 }
 
 
@@ -63,7 +112,13 @@ class Theme {
 
 
 /*** JavaScript Functions ***/
-
+/**
+ * @function get the selected cell's index.
+ *
+ * @param row {number} the row index of selected cell.
+ * @param col {number} the column index of selected cell.
+ */
+const getCell = (row, col) => bingo.getCell(row, col);
 
 
 // global instance

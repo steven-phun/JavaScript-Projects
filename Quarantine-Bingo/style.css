@@ -125,3 +125,6 @@ button:hover {
 }
 
 /** 7. color index **/
+.selected-cell {
+    background-color: #EDBB99;
+}
