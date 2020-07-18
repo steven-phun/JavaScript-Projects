@@ -56,7 +56,7 @@ Project Difficulties
 
 Project Summary
 
-- Play bingo with friends without ever needing to be in the same room. Theme: Quarantine. 
+- Play bingo with friends without ever needing to be in the same room.
 
 Project Inspiration 
 
