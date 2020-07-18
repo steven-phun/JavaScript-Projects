@@ -28,13 +28,13 @@ Project Summary
 
 Project Inspiration 
 
-- Something practical that I often use.
+- Something practical I often use and rely on.
 
 Project Difficulties
 
 - Working with modal and extracting its data. 
 
-- Converting 24-hour to 12-hour format and displaying the correct meridiem.
+- Finding an efficient way to display overlapping schedule.
 
 ## [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper)
 
