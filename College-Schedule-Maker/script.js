@@ -155,7 +155,7 @@ class Schedule {
             const button = document.createElement("button");
             button.innerHTML = this.course[i].courseTitle;
             button.setAttribute("onclick", `updateIndex(${i})`);
-            button.style.backgroundColor = this.color[i];
+            button.style.backgroundColor = this.color[i % this.color.length];
             div.appendChild(button);
         }
     }
@@ -261,7 +261,7 @@ class Schedule {
                 for (let j = 1; j <= this.size; j++) {
                     if (course.checkbox[j]) {
                         this.table.rows[rowStart].cells[j].innerHTML = course.display();
-                        this.table.rows[row].cells[j].style.backgroundColor = this.color[i];
+                        this.table.rows[row].cells[j].style.backgroundColor = this.color[i % this.color.length];
                         this.table.rows[row].cells[j].classList.add(this.used);
                     }
                 }
