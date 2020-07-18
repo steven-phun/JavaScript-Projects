@@ -1,4 +1,4 @@
-## [Course Schedule Maker](https://steven-phun.github.io/Steven-Phun/Course-Schedule-Maker) *not yet completed*
+## [College Schedule Maker](https://steven-phun.github.io/Steven-Phun/College-Schedule-Maker)
 
 Project Summary
 
@@ -6,8 +6,10 @@ Project Summary
 
 Project Inspiration 
 
-- Something practical I often use.
+- Something practical I often use and rely on.
 
 Project Difficulties
 
-- "tbd".
+- Working with modal and extracting its data. 
+
+- Finding an efficient way to deal with overlapping schedule.
