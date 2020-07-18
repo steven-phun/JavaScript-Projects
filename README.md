@@ -20,7 +20,7 @@ Project Difficulties
 
 - Implementing a recursive backtracking algorithm.
 
-## [College Schedule Maker](https://steven-phun.github.io/Steven-Phun/College-Schedule-Maker) *not completed*
+## [College Schedule Maker](https://steven-phun.github.io/Steven-Phun/College-Schedule-Maker)
 
 Project Summary
 
@@ -32,7 +32,9 @@ Project Inspiration
 
 Project Difficulties
 
-- [tbd]
+- Working with modal and extracting its data. 
+
+- Converting 24-hour to 12-hour format and displaying the correct meridiem.
 
 ## [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper)
 
