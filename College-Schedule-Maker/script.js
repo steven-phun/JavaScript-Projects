@@ -53,13 +53,13 @@ class Schedule {
                       "#F5CBA7", "#F8BBD0", "#B3E5FC", "#C5CAE9",
                       "#BCAAA4", "#D6DBDF"];
 
-        this.getEmptyGrid();
+        this.buildSchedule();
     }
 
     /**
-     * @function set up the schedule grid for the user to interact with.
+     * @function set up the schedule table for the user to interact with.
      */
-    getEmptyGrid() {
+    buildSchedule() {
         this.clearDiv(this.table);
         this.setDaysOfWeek();
         this.buildGrid();
@@ -88,7 +88,7 @@ class Schedule {
     }
 
     /**
-     * @function generate table grid.
+     * @function generate the table grid to allow courses to be displayed.
      */
     buildGrid() {
         for (let i = this.earliest; i <= this.latest; i++) {
@@ -101,7 +101,7 @@ class Schedule {
     }
 
     /**
-     * @function display the time slot on the first column.
+     * @function display the time slots on the first column.
      */
     setTimeSlots() {
         let row = 1;
@@ -115,7 +115,7 @@ class Schedule {
     }
 
     /**
-     * @function display the modal form to user.
+     * @function display the modal form for the user to interact with.
      *
      * @param form {Element}   the form to be displayed.
      * @param usedBy {Element} the div that opened the form.
@@ -142,7 +142,7 @@ class Schedule {
     }
 
     /**
-     * @function removes the modal form.
+     * @function hide the modal form from user.
      *
      * @param form {Element} the form to be removed.
      */
@@ -152,11 +152,11 @@ class Schedule {
     }
 
     /**
-     * @function closes current form without adding the course to the schedule.
+     * @function hide the modal form without adding the course to the schedule.
      *
      * @param form {Element} the form being closed.
      */
-    closeModal(form) {
+    cancelModal(form) {
         this.index = null;
         this.removeModal(form);
     }
@@ -164,8 +164,8 @@ class Schedule {
     /**
      * @function display each course on the schedule.
      */
-    updateDisplay() {
-        this.getEmptyGrid(); // remove previous grid.
+    displayEachCourse() {
+        this.buildSchedule(); // remove previous grid.
 
         for (let i = 0; i < this.course.length; i++) {
             const course = this.course[i];
@@ -186,7 +186,7 @@ class Schedule {
     }
 
     /**
-     * @function display user's input for the schedule title.
+     * @function display the user's title for the schedule.
      */
     displayScheduleTitle() {
         this.title.innerHTML = this.headerInput.value;
@@ -203,31 +203,31 @@ class Schedule {
     }
 
     /**
-     * @function display the form for editing current course that are on the schedule.
+     * @function display the form for editing a course.
      */
     displayEditForm() {
         this.index = null;
 
         this.displayModal(this.editModal, this.editModal);
-        this.displayAllCourse(this.editCourse);
+        this.displayEditCourse(this.editCourse);
     }
 
     /**
-     * @function display the form for deleting a course that is on the schedule.
+     * @function display the form for deleting a course.
      */
     displayDeleteForm() {
         this.index = null;
 
         this.displayModal(this.deleteModal);
-        this.displayAllCourse(this.deleteCourse);
+        this.displayEditCourse(this.deleteCourse);
     }
 
     /**
-     * @function display every course that was added to the schedule for the user to edit.
+     * @function display every course for the user to edit.
      *
      * @param div {Element} the div the course will be built in.
      */
-    displayAllCourse(div) {
+    displayEditCourse(div) {
         this.clearDiv(div);
 
         for (let i = 0; i < this.course.length; i++) {
@@ -240,7 +240,7 @@ class Schedule {
     }
 
     /**
-     * @function edit a course on the schedule.
+     * @function execute events prior to user confirming changes made to a course.
      */
     submitEditForm() {
         if (this.index === null) return;
@@ -251,29 +251,29 @@ class Schedule {
     }
 
     /**
-     * @function generate a new course with data from a given course.
+     * @function generate a new course with given data.
      *
-     * @param course {object} the course data that is being copied.
+     * @param data {object} the data the course is being initialized with.
      */
-    copyCourse(course) {
-        this.temp = new Course(course.courseTitle, course.startHour, course.startMinute, course.endHour, course.endMinute,
-            course.startAM, course.endAM, course.startPM, course.endPM, course.checkbox1, course.checkbox2,
-            course.checkbox3, course.checkbox4, course.checkbox5, course.checkbox6, course.checkbox7);
+    copyCourse(data) {
+        this.temp = new Course(data.courseTitle, data.startHour, data.startMinute, data.endHour, data.endMinute,
+            data.startAM, data.endAM, data.startPM, data.endPM, data.checkbox1, data.checkbox2,
+            data.checkbox3, data.checkbox4, data.checkbox5, data.checkbox6, data.checkbox7);
     }
 
     /**
-     * @function delete current selected course from the schedule.
+     * @function execute events prior to user deleting a course.
      */
     submitDeleteForm() {
         if (this.index === null) return;
 
         this.removeCourse();
-        this.updateDisplay();
+        this.displayEachCourse();
         this.removeModal(this.deleteModal);
     }
 
     /**
-     * @function adds a course to the schedule.
+     * @function add the most recently made course to the schedule.
      */
     addCourse() {
         this.removeCourse(); // remove previous course when user edits a schedule.
@@ -285,12 +285,12 @@ class Schedule {
 
         this.course.push(this.temp);
 
-        this.updateDisplay();
+        this.displayEachCourse();
         this.removeModal(this.addModal);
     }
 
     /**
-     * @function delete current selected course from the schedule
+     * @function delete selected course from the schedule
      */
     removeCourse() {
         if (this.index === null) return;
@@ -300,17 +300,16 @@ class Schedule {
     }
 
     /**
-     * @function get the index location of selected course in array.
+     * @function keeps track of the selected course.
      *
-     * @param index {number} the index location number in array.
+     * @param index {number} the selected course index in array.
      */
-    updateIndex(index) {
+    getIndex(index) {
         this.index = index;
     }
 
-
     /**
-     * @function checks if user has selected at least one day of the week.
+     * @function validate that at least one day of the week has been selected.
      *
      * @return {boolean} true if at least one day of the week is selected.
      */
@@ -339,7 +338,7 @@ class Schedule {
         this.topbarDiv.style.display = "none";
         this.opitionDiv.style.display = "none";
         this.schedule.classList.remove(this.scroll);
-        this.updateDisplay();
+        this.displayEachCourse();
 
         window.print();
 
@@ -349,11 +348,11 @@ class Schedule {
         this.topbarDiv.style.display = "grid";
         this.opitionDiv.style.display = "grid";
         this.schedule.classList.add(this.scroll);
-        this.updateDisplay();
+        this.displayEachCourse();
     }
 
     /**
-     * @function get the earliest timeslot from schedule.
+     * @function get the earliest starting course time from schedule.
      *
      * @return {number} the earliest hour in current schedule
      */
@@ -368,7 +367,7 @@ class Schedule {
     }
 
     /**
-     * @function get the latest timeslot from schedule.
+     * @function get the latest course time from schedule.
      *
      * @return {number} the latest hour in current schedule.
      */
@@ -381,38 +380,32 @@ class Schedule {
 
         return latestCourse;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
 /**
  * @class represents a course in the Schedule.
- *
- * @param startHour {number}
  */
 class Course {
+    /**
+     *
+     * @param title        {string} the title of the course.
+     * @param startHour    {string} the starting hour for the course.
+     * @param startMinute  {string} the starting minute for the course.
+     * @param endHour      {string} the ending hour for the course.
+     * @param endMinute    {string} the ending minute for the course.
+     * @param startAM      {boolean} true if the starting hour's meridiem is "AM".
+     * @param endAM        {boolean} true if the ending hour's meridiem is "AM".
+     * @param startPM      {boolean} true if the starting hour's meridiem is "PM".
+     * @param endPM        {boolean} true if the ending hour's meridiem is "PM.
+     * @param checkbox1    {boolean} true if the Monday checkbox is selected.
+     * @param checkbox2    {boolean} true if the Monday checkbox is selected.
+     * @param checkbox3    {boolean} true if the Monday checkbox is selected.
+     * @param checkbox4    {boolean} true if the Monday checkbox is selected.
+     * @param checkbox5    {boolean} true if the Monday checkbox is selected.
+     * @param checkbox6    {boolean} true if the Monday checkbox is selected.
+     * @param checkbox7    {boolean} true if the Monday checkbox is selected.
+     */
     constructor(title ="", startHour="", startMinute="", endHour="", endMinute="",
                 startAM=true, endAM=true, startPM=false, endPM=false,
                 checkbox1=false, checkbox2=false, checkbox3=false,
@@ -437,7 +430,6 @@ class Course {
         this.checkbox7 = document.querySelector("#sun-checkbox").checked = checkbox7;
 
         this.checkbox = []; // {array} represents a collection of the days of the week checkbox.
-
     }
 
     /**
@@ -469,7 +461,7 @@ class Course {
     }
 
     /**
-     * @function display course information (name and time slot).
+     * @function display course information on the schedule.
      *
      * @return {string} course title + (new line) + start time - (new line) end time.
      */
@@ -484,10 +476,11 @@ class Course {
 /**
  * @class converts numbers that represents time to string in hours:minute AM/PM format.
  *
- * @param hour   {number}  represent the amount of hours.
- * @param minute {number}  represents the amount of minutes.
- * @param pm     {boolean} true if the hour indicator is PM.
- * @param hour24 {boolean} true if the time is given in 24 hour format.
+ * @param hour    {number}  represent the amount of hours.
+ * @param minute  {number}  represents the amount of minutes.
+ * @param pm      {boolean} true if the hour meridiem is PM.
+ * @param hour24  {boolean} true if the time is given in 24-hour format.
+ *                          false if the time is given in 12-hour format.
  */
 class Time {
     constructor(hour, minute=0, pm=false, hour24=false) {
@@ -498,7 +491,11 @@ class Time {
     }
 
     /**
-     * @function convert give hour to a 24 hour format.
+     * @function convert give hour to a 24 hour time format.
+     *
+     * @param hour {number} the hour being converted.
+     *
+     * @return {number} that represents the hour in a 24 hour time format.
      */
     to24Hour(hour) {
         if (!this.hour24) {
@@ -559,63 +556,58 @@ class Time {
 /*** JavaScript Functions ***/
 
 /**
- * @function catches when the user wants to cancel submitting a form.
+ * @function catch the events when the user wants to cancel submitting a form.
  *
  * @param childElement {Element} the child node of the form being closed.
  */
-const exit = (childElement) => schedule.closeModal(childElement.parentElement);
+const exit = (childElement) => schedule.cancelModal(childElement.parentElement);
 
 /**
- * @function catch the events when user selects the "new" button.
- */
-const newSchedule = () => location.reload();
-
-/**
- * @function catch the events when user selects the "add" button.
+ * @function catch the events when the user wants to add a course to the schedule.
  */
 const add = () => schedule.displayAddForm();
 
 /**
- * @function catch the events when user selects the "edit" button.
+ * @function catch the events when the user wants to edit a course on the schedule.
  */
 const edit = () => schedule.displayEditForm();
 
 /**
- * @function catch the events when user selects the "delete" button.
+ * @function catch the events when the user selects wants to delete a course from the schedule.
  */
 const remove = () => schedule.displayDeleteForm();
 
 /**
- * @function saves the schedule to desktop when user selects the "save" button.
+ * @function catch the events when the user wants to save= the current schedule to the desktop.
  */
 const save = () => schedule.save();
 
 /**
- * @function catch the form submission for adding a course.
+ * @function catch the events when the user submits a course to be added to the schedule.
  */
 const addSubmit = () => setTimeout("schedule.addCourse()", 0);
 
 /**
- * @function catch the form submission for editing a course.
+ * @function catch the events when the user confirms the changes made to a course.
  */
 const editSubmit = () => schedule.submitEditForm();
 
 /**
- * @function catch the form submission for deleting a course.
+ * @function catch the events when the user deleting a course from the schedule.
  */
 const deleteSubmit = () => schedule.submitDeleteForm();
 
 /**
- * @function catch the user's form submission for the schedule title.
+ * @function catch the events when the user adds a title for the schedule.
  */
 const getScheduleTitle = () => setTimeout("schedule.displayScheduleTitle()", 0);
 
 /**
- * @function update the location of selected course in array.
+ * @function get the user's selected course when editing or deleting.
  *
  * @param index {number} the number that index is updated with.
  */
-const updateIndex = (index) => schedule.updateIndex(index);
+const updateIndex = (index) => schedule.getIndex(index);
 
 
 // global instance
