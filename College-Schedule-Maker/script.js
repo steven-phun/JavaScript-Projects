@@ -325,29 +325,38 @@ class Schedule {
     }
 
     /**
-     * @function print the current schedule or it to user's desktop.
+     * @function print the current schedule.
      */
     print() {
-        // keep original values to restore later.
-        const tempEarliest = this.earliest;
-        const tempLatest = this.latest;
+        this.trim();
+        window.print();
+        this.unTrim();
+    }
 
-        // trim unnecessary elements for printing.
+    /**
+     * @function trim the schedule of unneeded elements to print or save.
+     */
+    trim() {
         this.earliest = this.getEarliestCourse();
         this.latest = this.getLatestCourse();
+
         this.topbarDiv.style.display = "none";
         this.opitionDiv.style.display = "none";
         this.schedule.classList.remove(this.scroll);
         this.displayEachCourse();
+    }
 
-        window.print();
+    /**
+     * @function restore element that were trimmed.
+     */
+    unTrim() {
+        this.earliest = 0;
+        this.latest = 23;
 
-        // restore values to its original state before trim.
-        this.earliest = tempEarliest;
-        this.latest = tempLatest;
         this.topbarDiv.style.display = "grid";
         this.opitionDiv.style.display = "grid";
         this.schedule.classList.add(this.scroll);
+
         this.displayEachCourse();
     }
 
@@ -576,11 +585,6 @@ const edit = () => schedule.displayEditForm();
  * @function catch the events when the user selects wants to delete a course from the schedule.
  */
 const remove = () => schedule.displayDeleteForm();
-
-/**
- * @function catch the events when the user wants to save the current schedule to the desktop.
- */
-const save = () => schedule.save();
 
 /**
  * @function catch the events when the user wants to print the current schedule.

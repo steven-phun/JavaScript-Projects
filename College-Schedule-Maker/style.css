@@ -30,7 +30,7 @@ html {
 }
 
 button {
-    background-color: #F9E79F;
+    background-color: #FCF3CF;
     border-radius: 5px;
     border: solid 0;
     padding: 5px;
@@ -89,7 +89,7 @@ h1 {
 /*** 3. options ***/
 #options {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 15px;
     padding: 15px;
     align-content: center;
