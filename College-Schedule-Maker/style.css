@@ -39,13 +39,13 @@ button {
 }
 
 button:hover {
-    background-color: #F7DC6F;
+    background-color: #F9E79F;
     cursor: pointer;
 }
 
 input {
     text-align: center;
-    outline-color: #F7DC6F;
+    outline-color: #F9E79F;
     border: 1px solid;
     border-radius: 3px;
 }
@@ -71,7 +71,7 @@ h1 {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px 6px #CCCCCC;
-    background-image: linear-gradient(45deg, #F7DC6F, #F9E79F, #FCF3CF);
+    background-image: linear-gradient(45deg, #F9E79F, #FCF3CF, #FEF9E7);
 }
 
 
@@ -89,7 +89,7 @@ h1 {
 /*** 3. options ***/
 #options {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     grid-gap: 15px;
     padding: 15px;
     align-content: center;
@@ -199,7 +199,7 @@ h1 {
 }
 
 .submit-button:hover {
-    background-color: #F7DC6F;
+    background-color: #F9E79F;
     cursor: pointer;
 }
 
@@ -272,5 +272,5 @@ h1 {
 }
 
 .am-pm input[type="radio"]:checked + label {
-    background-color: #F7DC6F;
+    background-color: #F9E79F;
 }

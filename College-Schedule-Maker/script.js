@@ -1,7 +1,7 @@
 /**
  * This JavaScript program allows the user to generate a weekly schedule for school.
  *
- * The schedule can be saved onto the computer.
+ * The schedule can be saved onto the computer as a .JPEG or printed.
  *
  *
  * @author Steven Phun
@@ -325,9 +325,9 @@ class Schedule {
     }
 
     /**
-     * @function save current schedule to user's desktop.
+     * @function print the current schedule or it to user's desktop.
      */
-    save() {
+    print() {
         // keep original values to restore later.
         const tempEarliest = this.earliest;
         const tempLatest = this.latest;
@@ -578,9 +578,14 @@ const edit = () => schedule.displayEditForm();
 const remove = () => schedule.displayDeleteForm();
 
 /**
- * @function catch the events when the user wants to save= the current schedule to the desktop.
+ * @function catch the events when the user wants to save the current schedule to the desktop.
  */
 const save = () => schedule.save();
+
+/**
+ * @function catch the events when the user wants to print the current schedule.
+ */
+const print = () => schedule.print();
 
 /**
  * @function catch the events when the user submits a course to be added to the schedule.
