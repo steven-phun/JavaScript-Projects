@@ -29,6 +29,9 @@ class Schedule {
         this.deleteModal = document.querySelector("#delete-modal");
         this.editCourse = document.querySelector("#edit-course");
         this.deleteCourse = document.querySelector("#delete-course");
+        this.topbarDiv = document.querySelector("#top-bar")
+        this.opitionDiv = document.querySelector("#options");
+
 
         /** CSS class/id instances */
         this.active = "modal";   // represents the pop up form for the user to interact with.
@@ -56,12 +59,25 @@ class Schedule {
      * @function save current schedule to user's desktop.
      */
     save() {
-        console.log(this.getEarliestCourse());
-        console.log(this.getLatestCourse());
+        // keep original values to restore later.
+        const tempEarliest = this.earliest;
+        const tempLatest = this.latest;
 
-        this.removeUnusedTopRow();
-        this.removeUnusedBottomRow();
-        //window.print();
+        // trim unnecessary elements for printing.
+        this.earliest = this.getEarliestCourse();
+        this.latest = this.getLatestCourse();
+        this.topbarDiv.style.display = "none";
+        this.opitionDiv.style.display = "none";
+        this.updateDisplay();
+
+        window.print();
+
+        // restore values to its original state before trim.
+        this.earliest = tempEarliest;
+        this.latest = tempLatest;
+        this.topbarDiv.style.display = "grid";
+        this.opitionDiv.style.display = "grid";
+        this.updateDisplay();
     }
 
     /**
@@ -92,21 +108,6 @@ class Schedule {
         }
 
         return latestCourse;
-    }
-
-
-    /**
-     * @function remove unused rows before the earliest
-     */
-    removeUnusedTopRow() {
-        const earliestCourse = this.getEarliestCourse();
-    }
-
-    /**
-     * @function remove used rows after the latest course time.
-     */
-    removeUnusedBottomRow() {
-        const latestCourse = this.getLatestCourse();
     }
 
     /**
@@ -251,9 +252,6 @@ class Schedule {
 
         for (let i = 0; i < this.course.length; i++) {
             const course = this.course[i];
-
-            console.log(course.startTime.hour);
-            console.log(course.endTime.hour);
 
             let rowStart = course.startTime.hour - this.earliest + this.indent;
             let rowEnd = course.endTime.hour - this.earliest + this.indent;

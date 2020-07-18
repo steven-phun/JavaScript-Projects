@@ -67,7 +67,8 @@ h1 {
 .wrapper {
     max-width: 1000px;
     display: grid;
-    grid-template-rows: 1fr 3fr 1fr auto;
+    grid-template-rows: auto;
+    grid-gap: 5px;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px 6px #CCCCCC;
