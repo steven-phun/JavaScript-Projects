@@ -422,7 +422,6 @@ class Sudoku {
    * @function sets the background color of the current selected cell.
    */
   setSelected() {
-
     // remove previously selected cell.
     const selectedCell = document.querySelector("." + this.colorSelected);
     if (selectedCell !== null) selectedCell.classList.remove(this.colorSelected);
