@@ -37,14 +37,17 @@ class Bingo {
      * @function generate a bingo scorecard.
      */
     buildScorecard() {
+        const center = Math.floor(this.size / 2);
+
         for (let i = 0; i < this.size; i++) {
             const row = this.scorecard.insertRow(); // insert <tr>.
             for (let j = 0; j < this.size; j++) {
                 row.insertCell(); // insert <td>.
                 this.scorecard.rows[i].cells[j].setAttribute("onclick", `getCell(${i},${j})`);
-                this.scorecard.rows[i].cells[j].innerHTML = this.getRandomQuestion();
+                if (!(i === center && j === center)) this.scorecard.rows[i].cells[j].innerHTML = this.getRandomQuestion();
             }
         }
+        this.scorecard.rows[center].cells[center].innerHTML = this.center;
     }
 
     /**
