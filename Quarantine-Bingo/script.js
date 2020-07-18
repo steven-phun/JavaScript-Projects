@@ -15,22 +15,34 @@
  * @class represents the bingo scorecard.
  */
 class Bingo {
-    constructor() {
+    /**
+     * @param i {number} represents the theme index in an array.
+     */
+    constructor(i=0) {
         /** HTML tag instances*/
         this.scorecard = document.querySelector("#scorecard>table");
         this.display = document.querySelector("#question>label");
+        this.theme = document.querySelector("#theme-header>#theme-custom");
+        this.modal = document.querySelector(".modal");
+        this.overlay = document.querySelector(".overlay");
+        this.list = document.querySelector("#theme-list");
 
         /** CSS class/id instances */
-        this.selected = "selected-cell";
+        this.selected = "selected-cell"; // represents the cell that was selected by the user.
+        this.active = "active"; // represents a div that is to be displayed to the user.
 
         /** class instances. */
-        this.copy1 = this.getQuestions(); // {array} a copy of the collection of questions to fill the scorecard with.
-        this.copy2 = this.getQuestions(); // {array} a copy of the collection of questions to display to user.
-        this.center = "FREE SPACE (wore a mask)"; // {string} represents the innerHTML for the center square.
+        this.array = this.getTheme(); // {array} stores every available theme.
+        this.center = ""; // {string} represents the innerHTML for the center square of the scorecard.
+        this.copy1 = this.getTheme()[i]; // {array} a copy of the collection of questions to fill the scorecard with.
+        this.copy2 = this.getTheme()[i]; // {array} a copy of the collection of questions to display to user.
+        this.bingo = false; // {boolean} true if the user has a BINGO.
+        this.size = this.array.length; // {number} represents the number of available theme.
         this.row = null; // {number} the row index of selected cell.
         this.col = null; // {number} the column index of selected cell.
-        this.size = 5; // {number} represents the width and length of the scorecard.
+        this.width = 5; // {number} represents the width and length of the scorecard.
 
+        // set up score card for the user to interact with.
         this.buildScorecard();
     }
 
@@ -38,11 +50,13 @@ class Bingo {
      * @function generate a bingo scorecard.
      */
     buildScorecard() {
-        const center = Math.floor(this.size / 2);
+        this.clearDiv(this.scorecard);
 
-        for (let i = 0; i < this.size; i++) {
+        const center = Math.floor(this.width / 2);
+
+        for (let i = 0; i < this.width; i++) {
             const row = this.scorecard.insertRow(); // insert <tr>.
-            for (let j = 0; j < this.size; j++) {
+            for (let j = 0; j < this.width; j++) {
                 row.insertCell(); // insert <td>.
                 this.scorecard.rows[i].cells[j].setAttribute("onclick", `getCell(${i},${j})`);
                 if (!(i === center && j === center))
@@ -53,45 +67,9 @@ class Bingo {
     }
 
     /**
-     * @function fill the array with questions.
-     *
-     * @return {array} of questions.
-     */
-    getQuestions() {
-        const q1 = "slept in past noon";
-        const q2 = "baked for fun";
-        const q3 = "watched more than 3 episodes of a show in one day";
-        const q4 = "took a walk outside to exercise";
-        const q5 = "video called wearing sweats, shorts, or pajama bottoms";
-        const q6 = "started a workout routine or health regime";
-        const q7 = "had to cancel a planned celebration or trip";
-        const q8 = "made an unnecessary online purchase";
-        const q9 = "started a puzzle";
-        const q10 = "video called to hangout with friends";
-        const q11 = "purchased hand sanitizer or hand soap";
-        const q12 = "did not leave home property for more than 5 days in a row";
-        const q13 = "cleaned or organized something at home";
-        const q14 = "made a tik-tok video or participated in one";
-        const q15 = "forgot to unmute yourself in a video call";
-        const q16 = "got an at home or DIY haircut";
-        const q17 = 'joined the Facebook group "Zoom Memes for Self-Quaranteens"';
-        const q18 = "disconnected from a Zoom call because of bad connectivity";
-        const q19 = "picked up a new hobby";
-        const q20 = "started a new book";
-        const q21 = "did not know what Zoom was before March 2020";
-        const q22 = "had food delivered to your house";
-        const q23 = "went to sleep past 2am";
-        const q24 = 'asked "what day is it?"';
-
-        return [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13,
-            q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24];
-    }
-
-    /**
      * @function display a random question on scorecard.
      */
     displayRandomQuestion() {
-
         if (this.copy2.length === 0) return this.display.innerHTML = "There are no more questions to display";
         this.display.innerHTML = this.getRandomQuestion(this.copy2);
     }
@@ -105,7 +83,6 @@ class Bingo {
      */
     getRandomQuestion(array) {
         const index = this.getRandomInt(array.length);
-
         const question = array[index];
 
         array.splice(index, 1);
@@ -121,7 +98,6 @@ class Bingo {
     getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
     }
-
 
     /**
      * @function get the selected cell's index.
@@ -149,6 +125,14 @@ class Bingo {
     }
 
     /**
+     * @function execute events when the user has selected the "BINGO" button.
+     */
+    bingo() {
+        this.displayEachTheme();
+        this.displayModal();
+    }
+
+    /**
      * @function add given class to selected cell.
      *
      * @param text {string} given class to add.
@@ -166,17 +150,112 @@ class Bingo {
         this.scorecard.rows[this.row].cells[this.col].classList.remove(text);
     }
 
+    /**
+     * @function hide the selected modal when user selects the "cancel" button.
+     */
+    cancel() {
+        this.hideModal();
+    }
+
+    /**
+     * @function display all the available theme for user to select a new game with.
+     */
+    displayEachTheme() {
+        this.clearDiv(this.list);
+        console.log(this.size);
+
+        for (let i = 0; i < this.size; i++) {
+            const button = document.createElement("button");
+            button.innerHTML = this.theme.innerHTML;
+            button.setAttribute("onclick", `newGame(${i})`);
+            this.list.appendChild(button);
+        }
+
+        // add new themes in the future.
+        const color = ["#A3E4D7", "#AED6F1"];
+        for (let i = 0; i < 2; i++) {
+            const button = document.createElement("button");
+            button.innerHTML = "Coming Soon".italics();
+            button.style.backgroundColor = color[i % color.length];
+            button.style.outline = "none";
+            this.list.appendChild(button);
+        }
+    }
+
+    /**
+     * @function removes all child element from given element.
+     *
+     * @param div {Element} the element's child to be removed.
+     */
+    clearDiv(div) {
+        while (div.hasChildNodes()) div.removeChild(div.firstChild);
+    }
+
+    /**
+     * @function display the modal form for the user to interact with.
+     */
+    displayModal() {
+        this.modal.classList.add(this.active);
+        this.overlay.classList.add(this.active);
+    }
+
+    /**
+     * @function hide the modal form from user.
+     */
+    hideModal() {
+        this.modal.classList.remove(this.active);
+        this.overlay.classList.remove(this.active);
+    }
+
+    /**
+     * @function stores all the themes in one array.
+     */
+    getTheme() {
+        const array = [];
+
+        array.push(this.getTheme1());
+
+        return array;
+    }
+
+    /**
+     * @function stores the questions, center square, and ending message for current theme.
+     *
+     * @return {array} of questions.
+     */
+    getTheme1() {
+        this.theme.innerHTML = "Quarantine";
+        this.center = "FREE SPACE (wore a mask)";
+
+        const q1 = "slept in past noon";
+        const q2 = "baked for fun";
+        const q3 = "watched more than 3 episodes of a show in one day";
+        const q4 = "took a walk outside to exercise";
+        const q5 = "video called wearing sweats, shorts, or pajama bottoms";
+        const q6 = "started a workout routine or health regime";
+        const q7 = "had to cancel a planned celebration or trip";
+        const q8 = "made an unnecessary online purchase";
+        const q9 = "started a puzzle";
+        const q10 = "video called to hangout with friends";
+        const q11 = "purchased hand sanitizer or hand soap";
+        const q12 = "did not leave home property for more than 5 days in a row";
+        const q13 = "cleaned or organized something at home";
+        const q14 = "made a tik-tok video or participated in one";
+        const q15 = "forgot to unmute yourself in a video call";
+        const q16 = "got an at home or DIY haircut";
+        const q17 = 'joined the Facebook group "Zoom Memes for Self-Quaranteens"';
+        const q18 = "disconnected from a Zoom call because of bad connectivity";
+        const q19 = "picked up a new hobby";
+        const q20 = "started a new book";
+        const q21 = "did not know what Zoom was before March 2020";
+        const q22 = "had food delivered to your house";
+        const q23 = "went to sleep past 2am";
+        const q24 = 'asked "what day is it?"';
+
+        return ([q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13,
+                         q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24]);
+    }
 }
-
-
-/**
- * @class represents one individual cell on the scorecard.
- */
-class Square {
-
-}
-
-
 
 /*** JavaScript Functions ***/
 /**
@@ -188,10 +267,26 @@ class Square {
 const getCell = (row, col) => bingo.getCell(row, col);
 
 /**
- * @function catch the events when the use selects the dice button.
+ * @function catch the events when the use selects the "get random question" button.
  */
 const getQuestion = () => bingo.displayRandomQuestion();
 
+/**
+ * @function catch the events when the user selects the "BINGO" button.
+ */
+const getBingo = () => bingo.bingo();
+
+/**
+ * @function catch the event when user wants the close a modal.
+ */
+const cancel = () => bingo.cancel();
+
+/**
+ * @function start a new game with selected theme.
+ *
+ * @param index {number} the index location in array that contains the selected theme.
+ */
+const newGame = (index) => bingo = bingo.newGame(index);
 
 // global instance
-const bingo = new Bingo;
+let bingo = new Bingo;

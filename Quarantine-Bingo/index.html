@@ -11,19 +11,37 @@
     <link rel="stylesheet" href="style.css">
 <body>
     <div class="wrapper">
-        <div id="theme">
-            <label> Theme: <!-- theme is set in JavaScript --> </label>
+        <div id="theme-header">
+            <label> Theme: </label>
+            <label id="theme-custom"> <!-- theme is set in JavaScript --> </label>
         </div>
         <div id="question">
             <label> <!-- questions are built in JavaScript --> </label>
-            <button onclick="getQuestion()" class="fas fa-dice"></button>
+            <button onclick="getQuestion();" class="fas fa-dice"></button>
         </div>
         <div id="scorecard">
             <table> <!-- built in JavaScript --> </table>
         </div>
         <div id="bingo">
-            <button> B I N G O </button>
+            <button onclick="getBingo();"> B I N G O </button>
         </div>
+
+        <!-- modal -->
+        <section class="modal">
+            <div class="exit">
+                <label> Select a Theme </label>
+                <button onclick="cancel();" class="fas fa-times"></button>
+            </div>
+
+            <div id="ending-message">
+                <label> Congratulations! </label>
+            </div>
+
+            <div id="theme-list"> <!-- list is built in JavaScript --> </div>
+
+        </section>
+
+        <section class="overlay"></section>
     </div>
 
     <script src="script.js"></script>

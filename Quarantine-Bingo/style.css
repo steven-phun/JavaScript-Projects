@@ -46,7 +46,7 @@ button:hover {
     max-width: 1000px;
     display: grid;
     grid-template-rows: auto;
-    grid-gap: 5px;
+    grid-gap: 15px;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px 6px #CCCCCC;
@@ -76,9 +76,9 @@ button:hover {
 }
 
 #scorecard td {
-    height: 100px;
-    min-width: 100px;
-    max-width: 100px;
+    height: 70px;
+    min-width: 140px;
+    max-width: 140px;
     padding: 10px;
     border: solid 1px;
 }
@@ -87,11 +87,16 @@ button:hover {
 /** 5. bingo button **/
 #bingo button {
     width: 100%;
+    padding: 10px;
 }
 
 
 /*** 6. modal/overlay ***/
 .modal {
+    display: grid;
+    grid-template-rows: auto;
+    grid-gap: 15px;
+    padding: 20px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -123,6 +128,38 @@ button:hover {
 .overlay.active {
     opacity: 1;
     pointer-events: all;
+}
+
+/** 6.1 exit **/
+.exit {
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
+.exit label {
+    color: #EDBB99;
+}
+
+.exit button {
+    background: none;
+    outline: none;
+    padding: 0;
+}
+
+.exit button:hover {
+    color: #EDBB99;
+}
+
+/** 6.2 ending message **/
+#ending-message {
+    text-align: center;
+}
+
+/** theme list **/
+#theme-list {
+    display: grid;
+    grid-template-rows: auto;
+    grid-gap: 10px;
 }
 
 /** 7. color index **/
