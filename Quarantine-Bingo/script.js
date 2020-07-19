@@ -33,10 +33,11 @@ class Bingo {
         this.active = "active"; // represents a div that is to be displayed to the user.
 
         /** class instances. */
-        this.array = this.toArray(); // {array} stores every available theme.
-        this.center = ""; // {string} represents the innerHTML for the center square of the scorecard.
-        this.copy1 = this.toArray()[i]; // {array} a copy of the collection of questions to fill the scorecard with.
-        this.copy2 = this.toArray()[i]; // {array} a copy of the collection of questions to display to user.
+        this.index = i; // {number} represents the current theme location in an array.
+        this.array = this.getTheme(); // {array} stores every available theme.
+        this.center = this.array[this.index].center; // {string} represents the innerHTML of the center square.
+        this.copy1 = this.getTheme()[this.index].questions; // {array} a copy of the collection of questions to fill the scorecard with.
+        this.copy2 = this.getTheme()[this.index].questions; // {array} a copy of the collection of questions to display to user.
         this.win = false; // {boolean} true if the user has a BINGO.
         this.size = this.array.length; // {number} represents the number of available theme.
         this.row = null; // {number} the row index of selected cell.
@@ -65,6 +66,7 @@ class Bingo {
             }
         }
         this.scorecard.rows[center].cells[center].innerHTML = this.center;
+        this.theme.innerHTML = this.array[this.index].theme;
     }
 
     /**
@@ -222,20 +224,17 @@ class Bingo {
 
         for (let i = 0; i < this.size; i++) {
             const button = document.createElement("button");
-            button.innerHTML = this.theme.innerHTML;
+            button.innerHTML = this.array[i].theme;
             button.setAttribute("onclick", `newGame(${i})`);
             this.list.appendChild(button);
         }
 
-        // add new themes in the future.
-        const color = ["#A3E4D7", "#AED6F1"];
-        for (let i = 0; i < 2; i++) {
-            const button = document.createElement("button");
-            button.innerHTML = "Coming Soon".italics();
-            button.style.backgroundColor = color[i % color.length];
-            button.style.outline = "none";
-            this.list.appendChild(button);
-        }
+        // display a coming soon theme.
+        const button = document.createElement("button");
+        button.innerHTML = "Coming Soon".italics();
+        button.style.backgroundColor = "#AED6F1";
+        button.style.outline = "none";
+        this.list.appendChild(button);
     }
 
     /**
@@ -244,8 +243,9 @@ class Bingo {
      * @param theme {number} the index number in array the theme is located.
      */
     newGame(theme) {
-        this.copy1 = this.toArray()[theme];
-        this.copy2 = this.toArray()[theme];
+        this.index = theme;
+        this.copy1 = this.getTheme()[this.index].questions;
+        this.copy2 = this.getTheme()[this.index].questions;
         this.display.innerHTML = "";
         this.win = false;
 
@@ -305,52 +305,54 @@ class Bingo {
     }
 
     /**
-     * @function stores all available themes in one array.
-     */
-    toArray() {
-        const array = [];
-
-        array.push(this.getTheme1());
-
-        return array;
-    }
-
-    /**
      * @function stores the questions, center square, and ending message for current theme.
      *
      * @return {array} of questions.
      */
-    getTheme1() {
-        this.theme.innerHTML = "Quarantine";
-        this.center = "FREE SPACE (wore a mask)";
+    getTheme() {
+        const array = [];
 
-        const q1 = "slept in past noon";
-        const q2 = "baked for fun";
-        const q3 = "watched more than 3 episodes of a show in one day";
-        const q4 = "took a walk outside to exercise";
-        const q5 = "video called wearing sweats, shorts, or pajama bottoms";
-        const q6 = "started a workout routine or health regime";
-        const q7 = "had to cancel a planned celebration or trip";
-        const q8 = "made an unnecessary online purchase";
-        const q9 = "started a puzzle";
-        const q10 = "video called to hangout with friends";
-        const q11 = "purchased hand sanitizer or hand soap";
-        const q12 = "did not leave home property for more than 5 days in a row";
-        const q13 = "cleaned or organized something at home";
-        const q14 = "made a tik-tok video or participated in one";
-        const q15 = "forgot to unmute yourself in a video call";
-        const q16 = "got an at home or DIY haircut";
-        const q17 = 'joined the Facebook group "Zoom Memes for Self-Quaranteens"';
-        const q18 = "disconnected from a Zoom call because of bad connectivity";
-        const q19 = "picked up a new hobby";
-        const q20 = "started a new book";
-        const q21 = "did not know what Zoom was before March 2020";
-        const q22 = "had food delivered to your house";
-        const q23 = "went to sleep past 2am";
-        const q24 = 'asked "what day is it?"';
+        array.push(new Theme("Quarantine", "FREE SPACE (wore a mask)",
+            ["slept in past noon",
+                    "baked for fun",
+                    "watched more than 3 episodes of a show in one day",
+                    "took a walk outside to exercise",
+                    "video called wearing sweats, shorts, or pajama bottoms",
+                    "started a workout routine or health regime",
+                    "had to cancel a planned celebration or trip",
+                    "made an unnecessary online purchase",
+                    "started a puzzle",
+                    "video called to hangout with friends",
+                    "purchased hand sanitizer or hand soap",
+                    "did not leave home property for more than 5 days in a row",
+                    "cleaned or organized something at home",
+                    "made a tik-tok video or participated in one",
+                    "forgot to unmute yourself in a video call",
+                    "got an at home or DIY haircut",
+                    'joined the Facebook group "Zoom Memes for Self-Quaranteens"',
+                    "disconnected from a Zoom call because of bad connectivity",
+                    "picked up a new hobby",
+                    "started a new book",
+                    "did not know what Zoom was before March 2020",
+                    "had food delivered to your house",
+                    "went to sleep past 2am",
+                    'asked "what day is it?"']));
 
-        return ([q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13,
-                         q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24]);
+        array.push(new Theme("Extroverts", "FREE SPACE (be an Extrovert)", []));
+
+        return array;
+    }
+}
+
+
+/**
+ * @class represents a single theme.
+ */
+class Theme {
+    constructor(theme, center, array) {
+        this.theme = theme;
+        this.center = center;
+        this.questions = array;
     }
 }
 
