@@ -60,9 +60,10 @@ class Bingo {
             const row = this.scorecard.insertRow(); // insert <tr>.
             for (let j = 0; j < this.width; j++) {
                 row.insertCell(); // insert <td>.
-                if (!(i === center && j === center))
+                if (!(i === center && j === center)) {
                     this.scorecard.rows[i].cells[j].setAttribute("onclick", `getCell(${i},${j})`);
                     this.scorecard.rows[i].cells[j].innerHTML = this.getRandomQuestion(this.copy1);
+                }
             }
         }
         this.scorecard.rows[center].cells[center].innerHTML = this.center;
@@ -342,7 +343,7 @@ class Bingo {
             'asked "what day is it?"'
         ]));
 
-        array.push(new Theme("Extroverts", "FREE SPACE<pre>(be an Extrovert)</pre>", [
+        array.push(new Theme("Extroverts", "FREE SPACE <pre>(be an Extrovert)</pre>", [
             'shared way too much with a stranger',
             'prefer traveling in a large group',
             'get excited when you have a visitor',
@@ -368,6 +369,33 @@ class Bingo {
             'have fun on a group tour guide',
             'talk with your hands too much'
         ]));
+
+        array.push(new Theme("Introverts", "FREE SPACE <pre>(be an Introvert)</pre>", [
+            'screen a phone call from a friend',
+            'get excited about canceled plans',
+            'take a lot of time for yourself',
+            'constantly reading a book',
+            'finding the pets at a house party',
+            'rehearse your food order beforehand',
+            'pretend to not see someone in public',
+            'hide when someone knocks',
+            'check online before you make a call',
+            'avoiding crowds like the plague',
+            'panicking when you have the make a phone call',
+            'online ordering has been your best friend',
+            'traveled somewhere on your own',
+            'people watched for hours',
+            'shop online instead of going out',
+            'left a party early to be home alone',
+            'avoid the office kitchen because of small talk',
+            'stay close to exits so you can escape',
+            'avoid public restrooms',
+            'watched a movie 13121 times',
+            'deleted or hide your birthday from social media',
+            'kept an item you wanted to return',
+            'forget a persons name after they say it',
+            'googling a movie after you watched it'
+        ]))
 
         return array;
     }
