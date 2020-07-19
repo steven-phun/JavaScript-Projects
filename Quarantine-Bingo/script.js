@@ -33,10 +33,10 @@ class Bingo {
         this.active = "active"; // represents a div that is to be displayed to the user.
 
         /** class instances. */
-        this.array = this.getTheme(); // {array} stores every available theme.
+        this.array = this.toArray(); // {array} stores every available theme.
         this.center = ""; // {string} represents the innerHTML for the center square of the scorecard.
-        this.copy1 = this.getTheme()[i]; // {array} a copy of the collection of questions to fill the scorecard with.
-        this.copy2 = this.getTheme()[i]; // {array} a copy of the collection of questions to display to user.
+        this.copy1 = this.toArray()[i]; // {array} a copy of the collection of questions to fill the scorecard with.
+        this.copy2 = this.toArray()[i]; // {array} a copy of the collection of questions to display to user.
         this.win = false; // {boolean} true if the user has a BINGO.
         this.size = this.array.length; // {number} represents the number of available theme.
         this.row = null; // {number} the row index of selected cell.
@@ -113,7 +113,6 @@ class Bingo {
         this.toggleSelected();
 
         this.win = this.validateWin();
-        console.log(this.win);
 
         this.displayBingo();
     }
@@ -147,11 +146,11 @@ class Bingo {
 
         // check if user has 5 squares in a row.
         for (let col = 0; col < this.width; col++) {
-            if (count === this.width) return true;
             count = 0;
             for (let row = 0; row < this.width; row++) {
                 if (this.scorecard.rows[row].cells[col].classList.contains(this.selected)) count++;
             }
+            if (count === this.width) return true;
         }
         return false;
     }
@@ -163,11 +162,11 @@ class Bingo {
         let count = 0;
 
         for (let row = 0; row < this.width; row++) {
-            if (count === this.width) return true;
             count = 0;
             for (let col = 0; col < this.width; col++) {
                 if (this.scorecard.rows[row].cells[col].classList.contains(this.selected)) count++;
             }
+            if (count === this.width) return true;
         }
         return false;
     }
@@ -184,7 +183,6 @@ class Bingo {
 
         return count === this.width;
     }
-
 
     /**
      * @function check if the user has all squares selected diagonally (forward slash).
@@ -211,42 +209,15 @@ class Bingo {
     /**
      * @function execute events when the user has selected the "BINGO" button.
      */
-    bingo() {
-        if (!this.win) return;
-
-        this.displayEachTheme();
+    displayThemes() {
+        this.toThemeButton();
         this.displayModal();
     }
 
     /**
-     * @function add given class to selected cell.
-     *
-     * @param text {string} given class to add.
+     * @function display all the available theme as a button for user to select.
      */
-    addClass(text) {
-        this.scorecard.rows[this.row].cells[this.col].classList.add(text);
-    }
-
-    /**
-     * @function remove given class from selected cell.
-     *
-     * @param text {string} given class to remove.
-     */
-    removeClass(text) {
-        this.scorecard.rows[this.row].cells[this.col].classList.remove(text);
-    }
-
-    /**
-     * @function hide the selected modal when user selects the "cancel" button.
-     */
-    cancel() {
-        this.hideModal();
-    }
-
-    /**
-     * @function display all the available theme for user to select a new game with.
-     */
-    displayEachTheme() {
+    toThemeButton() {
         this.clearDiv(this.list);
 
         for (let i = 0; i < this.size; i++) {
@@ -273,14 +244,39 @@ class Bingo {
      * @param theme {number} the index number in array the theme is located.
      */
     newGame(theme) {
-        this.copy1 = this.getTheme()[theme];
-        this.copy2 = this.getTheme()[theme];
+        this.copy1 = this.toArray()[theme];
+        this.copy2 = this.toArray()[theme];
         this.display.innerHTML = "";
         this.win = false;
 
         this.displayBingo();
         this.buildScorecard();
         this.hideModal();
+    }
+
+    /**
+     * @function hide the selected modal when user selects the "cancel" button.
+     */
+    cancel() {
+        this.hideModal();
+    }
+
+    /**
+     * @function add given class to selected cell.
+     *
+     * @param text {string} given class to add.
+     */
+    addClass(text) {
+        this.scorecard.rows[this.row].cells[this.col].classList.add(text);
+    }
+
+    /**
+     * @function remove given class from selected cell.
+     *
+     * @param text {string} given class to remove.
+     */
+    removeClass(text) {
+        this.scorecard.rows[this.row].cells[this.col].classList.remove(text);
     }
 
     /**
@@ -309,9 +305,9 @@ class Bingo {
     }
 
     /**
-     * @function stores all the themes in one array.
+     * @function stores all available themes in one array.
      */
-    getTheme() {
+    toArray() {
         const array = [];
 
         array.push(this.getTheme1());
@@ -375,7 +371,7 @@ const getQuestion = () => bingo.displayRandomQuestion();
 /**
  * @function catch the events when the user selects the "BINGO" button.
  */
-const getBingo = () => bingo.bingo();
+const getBingo = () => bingo.displayThemes();
 
 /**
  * @function catch the event when user wants the close a modal.
