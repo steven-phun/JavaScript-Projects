@@ -112,7 +112,9 @@ class Bingo {
 
         this.toggleSelected();
 
-        if (this.validateWin()) this.win = true;
+        this.win = this.validateWin();
+        console.log(this.win);
+
         this.displayBingo();
     }
 
@@ -131,18 +133,76 @@ class Bingo {
     /**
      * @function validate if the scorecard scored BINGO.
      *
-     * @return {boolean} true if the user has won.
+     * @return {boolean} true if the user has selected 5 adjacent squares (row, column or diagonally).
      */
     validateWin() {
+        return this.validateRow() || this.validateColumn() || this.validateBackslash() || this.validateForwardSlash();
+    }
 
-        return true;
+    /**
+     * @function check if user has all squares selected in a row.
+     */
+    validateRow() {
+        let count = 0;
+
+        // check if user has 5 squares in a row.
+        for (let col = 0; col < this.width; col++) {
+            if (count === this.width) return true;
+            count = 0;
+            for (let row = 0; row < this.width; row++) {
+                if (this.scorecard.rows[row].cells[col].classList.contains(this.selected)) count++;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @function check if user has all squares selected in a column.
+     */
+    validateColumn() {
+        let count = 0;
+
+        for (let row = 0; row < this.width; row++) {
+            if (count === this.width) return true;
+            count = 0;
+            for (let col = 0; col < this.width; col++) {
+                if (this.scorecard.rows[row].cells[col].classList.contains(this.selected)) count++;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @function check if the user has all squares selected diagonally (backslash).
+     */
+    validateBackslash() {
+        let count = 0;
+
+        for (let i = 0; i < this.width; i++) {
+            if (this.scorecard.rows[i].cells[i].classList.contains(this.selected)) count++;
+        }
+
+        return count === this.width;
+    }
+
+
+    /**
+     * @function check if the user has all squares selected diagonally (forward slash).
+     */
+    validateForwardSlash() {
+        let count = 0;
+
+        for (let i = 0; i < this.width; i++) {
+            if (this.scorecard.rows[i].cells[(this.width - 1) - i].classList.contains(this.selected)) count++;
+        }
+
+        return count === this.width;
     }
 
     /**
      * @function display the BINGO button.
      */
     displayBingo() {
-        console.log("click pass");
         if (this.win) return this.bingoButton.classList.add(this.active);
 
         this.bingoButton.classList.remove(this.active);
