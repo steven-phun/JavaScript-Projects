@@ -246,6 +246,7 @@ class Bingo {
         this.index = theme;
         this.copy1 = this.getTheme()[this.index].questions;
         this.copy2 = this.getTheme()[this.index].questions;
+        this.center = this.array[this.index].center;
         this.display.innerHTML = "";
         this.win = false;
 
@@ -312,7 +313,7 @@ class Bingo {
     getTheme() {
         const array = [];
 
-        array.push(new Theme("Quarantine", "FREE SPACE (wore a mask)",
+        array.push(new Theme("Quarantine", "FREE SPACE <pre>(wore a mask)</pre>",
             ["slept in past noon",
                     "baked for fun",
                     "watched more than 3 episodes of a show in one day",
@@ -338,7 +339,7 @@ class Bingo {
                     "went to sleep past 2am",
                     'asked "what day is it?"']));
 
-        array.push(new Theme("Extroverts", "FREE SPACE (be an Extrovert)", []));
+        array.push(new Theme("Extroverts", "FREE SPACE<pre>(be an Extrovert)</pre>", []));
 
         return array;
     }
