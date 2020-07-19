@@ -7,7 +7,10 @@
  *  4. scorecard
  *  5. bingo button
  *  6. modal/overlay
- *  7. color index
+ *      6.1 exit
+ *      6.2 congratulations message
+ *  7. theme list
+ *  8. color index
  */
 
 /*** 1. global ***/
@@ -155,18 +158,18 @@ button:hover {
 }
 
 /** 6.2 ending message **/
-#ending-message {
+#congratulations-message {
     text-align: center;
 }
 
-/** theme list **/
+/** 7. theme list **/
 #theme-list {
     display: grid;
     grid-template-rows: auto;
     grid-gap: 10px;
 }
 
-/** 7. color index **/
+/** 8. color index **/
 .selected-cell {
     background-color: #EDBB99;
 }
