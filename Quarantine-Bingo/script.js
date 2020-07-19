@@ -60,12 +60,13 @@ class Bingo {
             const row = this.scorecard.insertRow(); // insert <tr>.
             for (let j = 0; j < this.width; j++) {
                 row.insertCell(); // insert <td>.
-                this.scorecard.rows[i].cells[j].setAttribute("onclick", `getCell(${i},${j})`);
                 if (!(i === center && j === center))
+                    this.scorecard.rows[i].cells[j].setAttribute("onclick", `getCell(${i},${j})`);
                     this.scorecard.rows[i].cells[j].innerHTML = this.getRandomQuestion(this.copy1);
             }
         }
         this.scorecard.rows[center].cells[center].innerHTML = this.center;
+        this.scorecard.rows[center].cells[center].classList.add(this.selected);
 
         this.theme.innerHTML = this.array[this.index].theme;
     }
