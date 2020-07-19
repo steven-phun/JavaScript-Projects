@@ -381,7 +381,7 @@ class Bingo {
             'hide when someone knocks',
             'check online before you make a call',
             'avoiding crowds like the plague',
-            'panicking when you have the make a phone call',
+            'panicking when you have to make a phone call',
             'online ordering has been your best friend',
             'traveled somewhere on your own',
             'people watched for hours',
