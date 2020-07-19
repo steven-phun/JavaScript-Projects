@@ -26,6 +26,7 @@ class Bingo {
         this.modal = document.querySelector(".modal");
         this.overlay = document.querySelector(".overlay");
         this.list = document.querySelector("#theme-list");
+        this.bingoButton = document.querySelector("#bingo-button");
 
         /** CSS class/id instances */
         this.selected = "selected-cell"; // represents the cell that was selected by the user.
@@ -36,7 +37,7 @@ class Bingo {
         this.center = ""; // {string} represents the innerHTML for the center square of the scorecard.
         this.copy1 = this.getTheme()[i]; // {array} a copy of the collection of questions to fill the scorecard with.
         this.copy2 = this.getTheme()[i]; // {array} a copy of the collection of questions to display to user.
-        this.bingo = false; // {boolean} true if the user has a BINGO.
+        this.win = false; // {boolean} true if the user has a BINGO.
         this.size = this.array.length; // {number} represents the number of available theme.
         this.row = null; // {number} the row index of selected cell.
         this.col = null; // {number} the column index of selected cell.
@@ -110,6 +111,9 @@ class Bingo {
         this.col = col;
 
         this.toggleSelected();
+
+        if (this.validateWin()) this.win = true;
+        this.displayBingo();
     }
 
     /**
@@ -125,9 +129,31 @@ class Bingo {
     }
 
     /**
+     * @function validate if the scorecard scored BINGO.
+     *
+     * @return {boolean} true if the user has won.
+     */
+    validateWin() {
+
+        return true;
+    }
+
+    /**
+     * @function display the BINGO button.
+     */
+    displayBingo() {
+        console.log("click pass");
+        if (this.win) return this.bingoButton.classList.add(this.active);
+
+        this.bingoButton.classList.remove(this.active);
+    }
+
+    /**
      * @function execute events when the user has selected the "BINGO" button.
      */
     bingo() {
+        if (!this.win) return;
+
         this.displayEachTheme();
         this.displayModal();
     }
@@ -162,7 +188,6 @@ class Bingo {
      */
     displayEachTheme() {
         this.clearDiv(this.list);
-        console.log(this.size);
 
         for (let i = 0; i < this.size; i++) {
             const button = document.createElement("button");
@@ -180,6 +205,22 @@ class Bingo {
             button.style.outline = "none";
             this.list.appendChild(button);
         }
+    }
+
+    /**
+     * @function start a new game of BINGO with given theme.
+     *
+     * @param theme {number} the index number in array the theme is located.
+     */
+    newGame(theme) {
+        this.copy1 = this.getTheme()[theme];
+        this.copy2 = this.getTheme()[theme];
+        this.display.innerHTML = "";
+        this.win = false;
+
+        this.displayBingo();
+        this.buildScorecard();
+        this.hideModal();
     }
 
     /**
@@ -286,7 +327,7 @@ const cancel = () => bingo.cancel();
  *
  * @param index {number} the index location in array that contains the selected theme.
  */
-const newGame = (index) => bingo = bingo.newGame(index);
+const newGame = (index) => bingo.newGame(index);
 
 // global instance
 let bingo = new Bingo;
