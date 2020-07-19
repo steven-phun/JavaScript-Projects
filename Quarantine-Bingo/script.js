@@ -66,6 +66,7 @@ class Bingo {
             }
         }
         this.scorecard.rows[center].cells[center].innerHTML = this.center;
+
         this.theme.innerHTML = this.array[this.index].theme;
     }
 
@@ -313,33 +314,59 @@ class Bingo {
     getTheme() {
         const array = [];
 
-        array.push(new Theme("Quarantine", "FREE SPACE <pre>(wore a mask)</pre>",
-            ["slept in past noon",
-                    "baked for fun",
-                    "watched more than 3 episodes of a show in one day",
-                    "took a walk outside to exercise",
-                    "video called wearing sweats, shorts, or pajama bottoms",
-                    "started a workout routine or health regime",
-                    "had to cancel a planned celebration or trip",
-                    "made an unnecessary online purchase",
-                    "started a puzzle",
-                    "video called to hangout with friends",
-                    "purchased hand sanitizer or hand soap",
-                    "did not leave home property for more than 5 days in a row",
-                    "cleaned or organized something at home",
-                    "made a tik-tok video or participated in one",
-                    "forgot to unmute yourself in a video call",
-                    "got an at home or DIY haircut",
-                    'joined the Facebook group "Zoom Memes for Self-Quaranteens"',
-                    "disconnected from a Zoom call because of bad connectivity",
-                    "picked up a new hobby",
-                    "started a new book",
-                    "did not know what Zoom was before March 2020",
-                    "had food delivered to your house",
-                    "went to sleep past 2am",
-                    'asked "what day is it?"']));
+        array.push(new Theme("Quarantine", "FREE SPACE <pre>(wore a mask)</pre>", [
+            "slept in past noon",
+            "baked for fun",
+            "watched more than 3 episodes of a show in one day",
+            "took a walk outside to exercise",
+            "video called wearing sweats, shorts, or pajama bottoms",
+            "started a workout routine or health regime",
+            "had to cancel a planned celebration or trip",
+            "made an unnecessary online purchase",
+            "started a puzzle",
+            "video called to hangout with friends",
+            "purchased hand sanitizer or hand soap",
+            "did not leave home property for more than 5 days in a row",
+            "cleaned or organized something at home",
+            "made a tik-tok video or participated in one",
+            "forgot to unmute yourself in a video call",
+            "got an at home or DIY haircut",
+            'joined the Facebook group "Zoom Memes for Self-Quaranteens"',
+            "disconnected from a Zoom call because of bad connectivity",
+            "picked up a new hobby",
+            "started a new book",
+            "did not know what Zoom was before March 2020",
+            "had food delivered to your house",
+            "went to sleep past 2am",
+            'asked "what day is it?"'
+        ]));
 
-        array.push(new Theme("Extroverts", "FREE SPACE<pre>(be an Extrovert)</pre>", []));
+        array.push(new Theme("Extroverts", "FREE SPACE<pre>(be an Extrovert)</pre>", [
+            'shared way too much with a stranger',
+            'prefer traveling in a large group',
+            'get excited when you have a visitor',
+            'go to theme parks with a group',
+            'hug people way too often',
+            'have long conversations with your server',
+            'talk too much in drive thru windows',
+            'have your friendliness confused with flirting',
+            'have way too much energy',
+            'get called extra for just living your best life',
+            'get excited about plans',
+            'get loud when you are excited',
+            'you get hyper after hanging out with people',
+            'group classes',
+            'packed your social calender up',
+            'get excited to talk to new people',
+            'go to an event and make six new friends',
+            'start talking to strangers at grocery stores',
+            'initiate most of the hangouts',
+            'do crazy things at parties',
+            'celebrate your birthday for a whole week',
+            'hate unexpected alone time',
+            'have fun on a group tour guide',
+            'talk with your hands too much'
+        ]));
 
         return array;
     }
