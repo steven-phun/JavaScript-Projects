@@ -52,7 +52,7 @@ Project Difficulties
 
 - Implementing a flood fill algorithm.
 
-## [Quarantine Bingo](https://steven-phun.github.io/Steven-Phun/Quarantine-Bingo) *not yet completed*
+## [Quarantine Bingo](https://steven-phun.github.io/Steven-Phun/Quarantine-Bingo)
 
 Project Summary
 
@@ -64,4 +64,6 @@ Project Inspiration
 
 Project Difficulties
 
-- [tbd].
+- Validating a winning Bingo scorecard.
+
+- Implementing multiple themes/questions. 
