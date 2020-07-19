@@ -6,7 +6,7 @@ Project Summary
 
 Project Inspiration 
 
-- A game that I can play with people during the 2020 stay at home order. 
+- A game I can play with people during the 2020 stay at home order. 
 
 Project Difficulties
 
