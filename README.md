@@ -1,4 +1,5 @@
 ### Table of Projects
+- [Personal Website](https://steven-phun.github.io/Personal-Projects/Personal-Website)
 - [16x16 Sudoku Solver](https://steven-phun.github.io/Personal-Projects/16x16-Sudoku-Solver)
 - [College Schedule Maker](https://steven-phun.github.io/Personal-Projects/College-Schedule-Maker)
 - [Minesweeper](https://steven-phun.github.io/Personal-Projects/Minesweeper)
