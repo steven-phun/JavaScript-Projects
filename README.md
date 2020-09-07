@@ -1,10 +1,26 @@
 ### Table of Projects
-- [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
-- [College Schedule Maker](https://steven-phun.github.io/Steven-Phun/College-Schedule-Maker)
-- [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper)
-- [Quarantine Bingo](https://steven-phun.github.io/Steven-Phun/Quarantine-Bingo)
+- [Personal Website](https://steven-phun.github.io/Personal-Projects/Personal-Website)
+- [16x16 Sudoku Solver](https://steven-phun.github.io/Personal-Projects/16x16-Sudoku-Solver)
+- [College Schedule Maker](https://steven-phun.github.io/Personal-Projects/College-Schedule-Maker)
+- [Minesweeper](https://steven-phun.github.io/Personal-Projects/Minesweeper)
+- [Quarantine Bingo](https://steven-phun.github.io/Personal-Projects/Quarantine-Bingo)
 
-## [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
+## [Personal Website](https://steven-phun.github.io/Personal-Projects/Personal-Website)
+
+Project Summary
+
+- Find all my personal projects, about me, and more on my website.
+
+Project Inspiration 
+
+- I wanted to have an single landing page for others to find everything about me.
+
+Project Difficulties
+
+- Coming up with the layout and font for the website.
+
+
+## [16x16 Sudoku Solver](https://steven-phun.github.io/Personal-Projects/16x16-Sudoku-Solver)
 
 Project Summary
 
@@ -20,7 +36,7 @@ Project Difficulties
 
 - Implementing a recursive backtracking algorithm.
 
-## [College Schedule Maker](https://steven-phun.github.io/Steven-Phun/College-Schedule-Maker)
+## [College Schedule Maker](https://steven-phun.github.io/Personal-Projects/College-Schedule-Maker)
 
 Project Summary
 
@@ -36,7 +52,7 @@ Project Difficulties
 
 - Implemeting an efficient way to display overlapping schedule.
 
-## [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper)
+## [Minesweeper](https://steven-phun.github.io/Personal-Projects/Minesweeper)
 
 Project Summary
 
@@ -52,7 +68,7 @@ Project Difficulties
 
 - Implementing a flood fill algorithm.
 
-## [Quarantine Bingo](https://steven-phun.github.io/Steven-Phun/Quarantine-Bingo)
+## [Quarantine Bingo](https://steven-phun.github.io/Personal-Projects/Quarantine-Bingo)
 
 Project Summary
 
