@@ -1,0 +1,147 @@
+
+/*** table of contents ***/
+
+/**
+ *  1. GLOBAL
+ *  2. INTRODUCTION
+ *      COLOR INDEX
+ */
+
+
+/* ======= 1. GLOBAL ======= */
+html {
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    letter-spacing: 3px;
+    user-select: none;
+}
+
+body {
+    width: 100%;
+    background-color: #FFF;
+    margin: 0 auto;
+    position: relative;
+    font-weight: normal;
+    letter-spacing: 2px;
+    line-height: 1.7;
+    font-family: 'Poppins', sans-serif;
+    color: #272829;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: 65px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    color: #45505b;
+}
+
+label,
+p {
+    margin: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+/* ======= 1. TOP ======= */
+#top {
+   background-color: #F4F4F4;
+    margin: 0 0 15%;
+}
+
+#top-links {
+    text-align: end;
+    padding: 50px;
+}
+
+#top-links label {
+    font-size: 18px;
+    margin-left: 35px;
+    font-family: 'Poppins', sans-serif;
+}
+
+#intro {
+    height: 570px;
+    margin: 25% 10% 0;
+}
+
+#intro-msg p {
+    font-size: 25px;
+    color: #0563bb;
+}
+
+/* ======= 2. RESUME ======= */
+#skills-grid {
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin: 0 0 15%;
+}
+
+#experience-grid {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    margin: 0 0 15%;
+}
+
+#projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    margin: 0 0 15%;
+}
+
+.resume-content-title {
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 2px;
+    font-family: 'Raleway', sans-serif;
+}
+
+.resume-content-description {
+    font-size: 18px;
+    text-align: end;
+    padding-right: 45px;
+    color: #0563bb;
+}
+
+.resume-content {
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.resume-content button {
+    font-family: 'Source Code Pro', monospace;
+    border-radius: 5px;
+    border: solid 1px;
+    background-color: #FFF;
+    outline-color: #0563bb;
+    color: #0563bb;
+}
+
+.resume-content div {
+    margin-bottom: 25px;
+}
+
+.experience-grid-date {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.experience-date {
+    text-align: end;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 12px;
+}
