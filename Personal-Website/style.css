@@ -88,6 +88,16 @@ a:active {
     color: #0563bb;
 }
 
+#social-media-links {
+    padding-top: 25px;
+}
+
+#social-media-links a {
+    font-size: 20px;
+    padding-right: 25px;
+    color: #45505b;
+}
+
 /* ======= 2. RESUME ======= */
 #skills-grid {
     text-align: center;
