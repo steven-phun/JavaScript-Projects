@@ -15,6 +15,7 @@ html {
     justify-content: center;
     letter-spacing: 3px;
     user-select: none;
+    scroll-behavior: smooth;
 }
 
 body {
