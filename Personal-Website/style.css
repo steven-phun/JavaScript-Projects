@@ -56,8 +56,9 @@ a:active {
 }
 
 .container {
-    max-width: 1000px;
-    margin: 0 0 0 160px; /* same width as the nav-bar */
+    max-width: 1200px;
+    margin: auto;
+    padding: 160px; /* same width as the nav-bar */
 }
 
 /* ======= 1. NAVBAR ======= */
@@ -105,7 +106,6 @@ a:active {
 /* ======= 1. TOP ======= */
 #top {
    background-color: #F4F4F4;
-    padding-top: 10%;
 }
 
 #intro {
