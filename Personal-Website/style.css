@@ -39,7 +39,6 @@ h6 {
     font-size: 65px;
     font-weight: 700;
     letter-spacing: 4px;
-    margin: 0 160px 0 0; /* same width as the nav-bar */
     font-family: 'Raleway', sans-serif;
     color: #45505b;
 }
@@ -58,7 +57,7 @@ a:active {
 
 .container {
     max-width: 1000px;
-    margin: auto;
+    margin: 0 0 0 160px; /* same width as the nav-bar */
 }
 
 /* ======= 1. NAVBAR ======= */
