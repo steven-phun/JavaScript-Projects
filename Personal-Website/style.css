@@ -39,7 +39,7 @@ h6 {
     font-size: 65px;
     font-weight: 700;
     letter-spacing: 4px;
-    margin: 0;
+    margin: 0 160px 0 0; /* same width as the nav-bar */
     font-family: 'Raleway', sans-serif;
     color: #45505b;
 }
@@ -57,31 +57,61 @@ a:active {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: auto;
 }
 
+/* ======= 1. NAVBAR ======= */
+#nav-menu {
+    height: 100%;
+    width: 160px;
+    position: fixed;
+    z-index: 2;
+    top: 30%;
+    left: 0;
+    overflow-x: hidden;
+}
+
+#nav-links {
+    margin-left: 15px;
+}
+
+#nav-links button {
+    text-align: center;
+    font-size: 17px;
+    font-family: 'Poppins', sans-serif;
+    color: #45505b ;
+
+    width: 135px;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 25px 2px;
+    cursor: pointer;
+    border-radius: 22px;
+    outline: none;
+}
+
+#nav-links button:hover {
+    color: #F4F4F4;
+    background-color: #0563bb;
+}
+
+#nav-links i {
+    font-size: 12px;
+    padding: 5px;
+}
 
 /* ======= 1. TOP ======= */
 #top {
    background-color: #F4F4F4;
-    margin: 0 0 15%;
-}
-
-#top-links {
-    text-align: end;
-    padding: 50px;
-}
-
-#top-links label {
-    font-size: 18px;
-    margin-left: 35px;
-    font-family: 'Poppins', sans-serif;
+    padding-top: 10%;
 }
 
 #intro {
     height: 570px;
-    margin: 25% 10% 0;
+    margin: 20% 10% 0;
 }
 
 #intro-msg p {
@@ -100,6 +130,9 @@ a:active {
 }
 
 /* ======= 2. RESUME ======= */
+#resume {
+    padding-top: 5%;
+}
 #skills-grid {
     text-align: center;
     display: grid;
