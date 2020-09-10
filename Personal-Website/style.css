@@ -175,6 +175,7 @@ a:active {
 
 .resume-content button {
     font-family: 'Source Code Pro', monospace;
+    margin-left: 5px;
     border-radius: 5px;
     border: solid 1px;
     background-color: #FFF;
