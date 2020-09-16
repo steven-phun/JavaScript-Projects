@@ -50,7 +50,7 @@ Project Difficulties
 
 - Working with modal and extracting its data. 
 
-- Implemeting an efficient way to display overlapping schedule.
+- Implementing an efficient way to display overlapping schedule.
 
 ## [Minesweeper](https://steven-phun.github.io/Personal-Projects/Minesweeper)
 
