@@ -183,7 +183,6 @@ a:active {
 .experience-grid-date {
     display: grid;
     grid-template-rows: auto 1fr;
-    margin-bottom: 25px;
 }
 
 .experience-date {
