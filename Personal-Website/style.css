@@ -144,7 +144,7 @@ a:active {
 #projects-grid {
     display: grid;
     grid-template-columns: 1fr 4fr;
-    margin: 10% 0 0;
+    padding: 10% 0 0;
 }
 
 .resume-content-title {
