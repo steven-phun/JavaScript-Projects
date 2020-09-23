@@ -1,4 +1,4 @@
-## [Minesweeper](https://steven-phun.github.io/Steven-Phun/Minesweeper)
+## [Minesweeper](https://steven-phun.github.io/Personal-Projects/Minesweeper)
 
 Project Summary
 
