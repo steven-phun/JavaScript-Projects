@@ -1,4 +1,4 @@
-## [Quarantine Bingo](https://steven-phun.github.io/Steven-Phun/Quarantine-Bingo)
+## [Quarantine Bingo](https://steven-phun.github.io/Personal-Projects/Quarantine-Bingo)
 
 Project Summary
 
