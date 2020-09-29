@@ -1,4 +1,4 @@
-## [College Schedule Maker](https://steven-phun.github.io/Steven-Phun/College-Schedule-Maker)
+## [College Schedule Maker](https://steven-phun.github.io/Personal-Projects/College-Schedule-Maker)
 
 Project Summary
 

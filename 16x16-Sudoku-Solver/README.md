@@ -1,4 +1,4 @@
-## [16x16 Sudoku Solver](https://steven-phun.github.io/Steven-Phun/16x16-Sudoku-Solver)
+## [16x16 Sudoku Solver](https://steven-phun.github.io/Personal-Projects/16x16-Sudoku-Solver)
 
 Project Summary
 
