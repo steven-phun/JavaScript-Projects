@@ -1,11 +1,11 @@
 ### Table of Projects
-- [Personal Website](https://steven-phun.github.io/Personal-Projects/Personal-Website)
-- [16x16 Sudoku Solver](https://steven-phun.github.io/Personal-Projects/16x16-Sudoku-Solver)
-- [College Schedule Maker](https://steven-phun.github.io/Personal-Projects/College-Schedule-Maker)
-- [Minesweeper](https://steven-phun.github.io/Personal-Projects/Minesweeper)
-- [Quarantine Bingo](https://steven-phun.github.io/Personal-Projects/Quarantine-Bingo)
+- [Personal Website](https://steven-phun.github.io/Personal-Website)
+- [16x16 Sudoku Solver](https://steven-phun.github.io/JavaScript-Projects/16x16-Sudoku-Solver)
+- [College Schedule Maker](https://steven-phun.github.io/JavaScript-Projects/College-Schedule-Maker)
+- [Minesweeper](https://steven-phun.github.io/JavaScript-Projects/Minesweeper)
+- [Quarantine Bingo](https://steven-phun.github.io/JavaScript-Projects/Quarantine-Bingo)
 
-## [Personal Website](https://steven-phun.github.io/Personal-Projects/Personal-Website)
+## [Personal Website](https://steven-phun.github.io/Personal-Website)
 
 Project Summary
 
@@ -20,7 +20,7 @@ Project Difficulties
 - Coming up with the layout and font for the website.
 
 
-## [16x16 Sudoku Solver](https://steven-phun.github.io/Personal-Projects/16x16-Sudoku-Solver)
+## [16x16 Sudoku Solver](https://steven-phun.github.io/JavaScript-Projects/16x16-Sudoku-Solver)
 
 Project Summary
 
@@ -36,7 +36,7 @@ Project Difficulties
 
 - Implementing a recursive backtracking algorithm.
 
-## [College Schedule Maker](https://steven-phun.github.io/Personal-Projects/College-Schedule-Maker)
+## [College Schedule Maker](https://steven-phun.github.io/JavaScript-Projects/College-Schedule-Maker)
 
 Project Summary
 
@@ -52,7 +52,7 @@ Project Difficulties
 
 - Implementing an efficient way to display overlapping schedule.
 
-## [Minesweeper](https://steven-phun.github.io/Personal-Projects/Minesweeper)
+## [Minesweeper](https://steven-phun.github.io/JavaScript-Projects/Minesweeper)
 
 Project Summary
 
@@ -68,7 +68,7 @@ Project Difficulties
 
 - Implementing a flood fill algorithm.
 
-## [Quarantine Bingo](https://steven-phun.github.io/Personal-Projects/Quarantine-Bingo)
+## [Quarantine Bingo](https://steven-phun.github.io/JavaScript-Projects/Quarantine-Bingo)
 
 Project Summary
 
