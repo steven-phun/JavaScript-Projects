@@ -1,24 +1,8 @@
 ### Table of Projects
-- [Personal Website](https://steven-phun.github.io/Website)
 - [16x16 Sudoku Solver](https://steven-phun.github.io/JavaScript-Projects/16x16-Sudoku-Solver)
 - [College Schedule Maker](https://steven-phun.github.io/JavaScript-Projects/College-Schedule-Maker)
 - [Minesweeper](https://steven-phun.github.io/JavaScript-Projects/Minesweeper)
 - [Quarantine Bingo](https://steven-phun.github.io/JavaScript-Projects/Quarantine-Bingo)
-
-## [Personal Website](https://steven-phun.github.io/Website)
-
-Project Summary
-
-- Find all my personal projects, about me, and more on my website.
-
-Project Inspiration 
-
-- I wanted to have an single landing page for others to find everything about me.
-
-Project Difficulties
-
-- Coming up with the layout and font for the website.
-
 
 ## [16x16 Sudoku Solver](https://steven-phun.github.io/JavaScript-Projects/16x16-Sudoku-Solver)
 
